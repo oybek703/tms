@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-#IDE files
+# IDE files
 .idea
 .vscode
 
@@ -19,7 +19,10 @@ backend/oracle/Balance Query
 # dependencies
 frontend/node_modules
 frontend/.pnp
-frontend.pnp.js
+frontend/.pnp.js
+
+# shell scripts
+copy.sh
 
 # testing
 frontend/coverage

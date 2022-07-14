@@ -2,6 +2,7 @@ const path = require('path')
 require('dotenv').config({path: path.join(__dirname, './config/.env')})
 const express = require('express')
 const morgan = require('morgan')
+const {address} = require('ip')
 const cors = require('cors')
 const userRoutes = require('./src/routes/Admin/auth')
 const operDayRoutes = require('./src/routes/operDays')
@@ -33,7 +34,7 @@ const {checkConnection} = require("./src/models/db_apis")
 const app = express()
 const port = process.env.PORT || 4200
 
-if(process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV === 'development' || address().startsWith('192.168')) {
     app.use(morgan('dev'))
 }
 
