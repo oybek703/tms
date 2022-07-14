@@ -34,7 +34,7 @@ const {checkConnection} = require("./src/models/db_apis")
 const app = express()
 const port = process.env.PORT || 4200
 
-if(process.env.NODE_ENV === 'development' || address().startsWith('192.168')) {
+if(process.env.NODE_ENV === 'development' || address().startsWith('192.168.')) {
     app.use(morgan('dev'))
 }
 
@@ -80,11 +80,11 @@ app.use(errorHandler)
 
 checkConnection()
     .then(() => {
-            app.listen(
-              port,
-              console.log.bind(
-                null,
-                `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold
-              )
-            )
+    app.listen(
+        port,
+        console.log.bind(
+          null,
+          `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold
+        )
+    )
 })

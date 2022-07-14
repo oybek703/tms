@@ -24,6 +24,9 @@ frontend/.pnp.js
 # shell scripts
 copy.sh
 
+# temporary files
+tr-api.tar.gz
+
 # testing
 frontend/coverage
 
