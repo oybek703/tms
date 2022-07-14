@@ -1,0 +1,40 @@
+input[type='text']:disabled {
+  cursor: not-allowed;
+}
+
+* {
+  font-family: "SF UI Text", "Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+}
+
+body {
+  background-color: #ebf5ff;
+  margin: 0 !important;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#root header.MuiAppBar-positionFixed {
+  height: 70px;
+  max-height: 15vh;
+}
+
+#root main {
+  margin-top: 3vh;
+  flex: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+  align-content: center;
+}
+
+#root footer {
+  height: 5vh;
+  max-height: 10vh;
+  align-content: center;
+  width: 100vw;
+}
