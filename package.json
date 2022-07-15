@@ -1,0 +1,32 @@
+{
+  "name": "tms",
+  "version": "1.0.0",
+  "description": "Treasury Management System",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm start --prefix backend",
+    "client": "npm start --prefix frontend",
+    "server": "npm run dev --prefix backend",
+    "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
+    "build": "cd frontend && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oybek703/tms.git"
+  },
+  "keywords": [
+    "js",
+    "nodejs",
+    "react",
+    "rest-api"
+  ],
+  "author": "Yoriqulov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oybek703/tms/issues"
+  },
+  "homepage": "https://github.com/oybek703/tms#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.2"
+  }
+}

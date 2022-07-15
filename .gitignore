@@ -6,6 +6,7 @@
 
 # dependencies
 backend/node_modules
+node_modules/*
 
 # temporary client build
 backend/client/*
