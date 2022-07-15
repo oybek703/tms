@@ -58,7 +58,7 @@ function LimitOfBanks({rows = {}}) {
                                     <TableCell className={classes.noWrap}>{formatNumber(r[`LIMIT_${c}`], true)}</TableCell>
                                     <TableCell
                                         style={{
-                                            background: `${r[`DIFFER_${c}`] < 0 ? 'red' : 
+                                            background: `${r[`DIFFER_${c}`] < 0 ? '#ff8a1b' : 
                                                 r[`${c}`] !== 0 && r[`LIMIT_${c}`] !== 0 && r[`DIFFER_${c}`] === 0  ? '#ff8a1b' : 'white'}`,
                                             color: `${r[`DIFFER_${c}`] >= 0 ? 'green' : 'white'}`
                                         }}
