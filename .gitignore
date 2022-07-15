@@ -7,6 +7,9 @@
 # dependencies
 backend/node_modules
 
+# temporary client build
+backend/client/*
+
 # environment variables
 backend/config/.env
 backend/config/data.js
