@@ -1,14 +1,14 @@
-import React, {Fragment, memo, useCallback, useState} from 'react'
+import React, { Fragment, memo, useCallback, useState } from 'react'
 import TableContainer from '@material-ui/core/TableContainer'
 import Paper from '@material-ui/core/Paper'
-import Table from "@material-ui/core/Table"
-import InterbankDepositsHead from "../UI/helpers/InterbankDeposits/InterbankDepositsHead"
-import InterbankDepositsBody from "../UI/helpers/InterbankDeposits/InterbankDepositsBody"
-import TableCap from "../UI/helpers/TableCap"
-import InterbankDepositsTab from '../UI/Layout/Tabs/InterbankDepositsTab'
-import ExportButton from "../UI/Layout/ExportButton"
-import {useSelector} from "react-redux"
-import {formatOneDate} from "../../utils"
+import Table from '@material-ui/core/Table'
+import InterbankDepositsHead from '../UI/helpers/InterbankDeposits/InterbankDepositsHead'
+import InterbankDepositsBody from '../UI/helpers/InterbankDeposits/InterbankDepositsBody'
+import TableCap from '../UI/helpers/TableCap'
+import ButtonTabs from '../UI/Layout/Tabs/ButtonsTab'
+import ExportButton from '../UI/Layout/ExportButton'
+import { useSelector } from 'react-redux'
+import { formatOneDate } from '../../utils'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -16,6 +16,12 @@ const useStyles = makeStyles(theme => ({
         maxHeight: '70vh'
     }
 }))
+
+const titles = [
+    { title: 'Межбанковские депозиты', code: 'all' },
+    { title: 'Привлеченные', code: 'borrow' },
+    { title: 'Размещенные', code: 'land' }
+]
 
 function InterbankDepositsTable({rows = []}) {
     const classes = useStyles()
@@ -25,7 +31,7 @@ function InterbankDepositsTable({rows = []}) {
     const handleChange = useCallback(code => setExpanded(code), [])
     return (
         <Fragment>
-            <InterbankDepositsTab handleChange={handleChange} active={expanded}/>
+            <ButtonTabs handleChange={handleChange} active={expanded} titles={titles}/>
             {<TableContainer classes={{root: classes.tableContainer}} component={Paper}>
                 <ExportButton id={`${expanded === 'all' ? 'interbank-deposits' : expanded}-${formatOneDate(reportDate)}`}/>
                 <Table size='small'

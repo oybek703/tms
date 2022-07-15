@@ -1,28 +1,35 @@
-import React, {Fragment, memo, useEffect} from 'react'
+import React, { Fragment, memo, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import {makeStyles, Typography} from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import Valute from '../../UI/Layout/Dashboard/Valute'
 import TimeDepositsChart from '../../charts/Dashboard/Funding/TimeDepositsChart'
-import InterbankDepositsChart from '../../charts/Dashboard/Funding/InterbankDepositsChart'
-import {useDispatch, useSelector} from 'react-redux'
-import {formatNumber, getDashboardLiquidityIndicator} from '../../../utils'
-import CreditPortfolio from '../../charts/Dashboard/CreditPortfolio/RiskPart/CreditPortfolio'
-import CPBreakdown from '../../charts/Dashboard/CreditPortfolio/RiskPart/CPBreakdown'
-import FundingStructure from '../../charts/Dashboard/CreditPortfolio/FundingStructure'
+import InterbankDepositsChart
+    from '../../charts/Dashboard/Funding/InterbankDepositsChart'
+import { useDispatch, useSelector } from 'react-redux'
+import { formatNumber, getDashboardLiquidityIndicator } from '../../../utils'
+import CreditPortfolio
+    from '../../charts/Dashboard/CreditPortfolio/RiskPart/CreditPortfolio'
+import CPBreakdown
+    from '../../charts/Dashboard/CreditPortfolio/RiskPart/CPBreakdown'
+import FundingStructure
+    from '../../charts/Dashboard/CreditPortfolio/FundingStructure'
 import CurrencyMFI from '../../charts/Dashboard/Funding/CurrencyMFI'
 import CurrencyMBD from '../../charts/Dashboard/Funding/CurrencyMBD'
-import CurrencyTimeDeposits from '../../charts/Dashboard/Funding/CurrencyTimeDeposits'
+import CurrencyTimeDeposits
+    from '../../charts/Dashboard/Funding/CurrencyTimeDeposits'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
-import {fetchDashboard} from '../../../redux/actions'
+import { fetchDashboard } from '../../../redux/actions'
 import DashboardTabs from '../../UI/Layout/Tabs/DashboardTabs'
-import DashboardCurrencyRates, {ExternalCurrencyRates} from '../../UI/Layout/DashboardCurrencyRates'
-import LiquidityPoints from '../../charts/Dashboard/DailyIndicators/LiquidityPoints'
+import DashboardCurrencyRates, { ExternalCurrencyRates } from '../../UI/Layout/DashboardCurrencyRates'
+import LiquidityPoints
+    from '../../charts/Dashboard/DailyIndicators/LiquidityPoints'
 import LiquidityCard from '../../UI/Layout/Dashboard/LiquidityCard'
 import DashboardMonthly from '../../UI/Layout/DashboardMonthly'
 import Position from '../../UI/Layout/DashboardCurrencyRates/Position'
-import CurrencyPositionChart from '../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
+import CurrencyPositionChart
+    from '../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
 import FakeSuspense from '../../UI/helpers/FakeSuspense'
 import PlacedAndAttracted from '../Treasury/PlacedAndAttracted'
 import CalcFor from '../Treasury/CalcFor'
@@ -31,10 +38,12 @@ import Fcrb from './Fcrb'
 import CapitalPoints from '../../charts/Dashboard/Capital/CapitalPoints'
 import RWAPoints from '../../charts/Dashboard/Capital/RWAPoints'
 import Card from '@material-ui/core/Card'
-import CurrencyRateLine from '../../UI/Layout/DashboardCurrencyRates/CurrencyRateLine'
-import {v4 as uuid} from 'uuid'
+import CurrencyRateLine
+    from '../../UI/Layout/DashboardCurrencyRates/CurrencyRateLine'
+import { v4 as uuid } from 'uuid'
 import Covenants from '../../UI/Layout/Dashboard/Covenants'
 import Normatives from '../../UI/Layout/Dashboard/Normatives'
+import BankLimits from './BankLimits'
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -96,7 +105,8 @@ const Dashboard = () => {
         vla = {},
         lcr = {},
         nsfr = {},
-        currencyRates
+        currencyRates,
+        bankLimits = []
     } = dashboard
     const {vlaCurrent = []} = vla
     const {currencyPosition = [], position = []} = dashboardCurrencyPosition
@@ -207,6 +217,7 @@ const Dashboard = () => {
                                     </Fragment>
                                 },
                                 {name: 'ЦРБ', panel: <Fcrb/>},
+                                {name: 'Лимиты', panel: <BankLimits rows={bankLimits}/>},
                                 {
                                     name: 'ФОР', panel: <WithDetailsButton link={'/calcfor'}>
                                         <CalcFor forDashboard/>

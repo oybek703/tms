@@ -11,19 +11,14 @@ const useStyles = makeStyles(theme => ({
   btn: theme.mixins.tabBtn
 }))
 
-export default function InterbankTabs ({ handleChange = () => {}, active = 'all' }) {
-  const titles = [
-    { title: 'Межбанковские депозиты', code: 'all' },
-    { title: 'Привлеченные', code: 'borrow' },
-    { title: 'Размещенные', code: 'land' }
-  ]
+export default function ButtonTabs ({ handleChange = () => {}, active = 'all', titles = [] }) {
   const classes = useStyles()
   return (
     <div className={classes.content}>
       <ButtonGroup size='small' color='primary'>
         {titles.map(({ title, code }, i) =>
           <Button classes={{ root: classes.btn }}
-                  onClick={() => handleChange(code)}
+                  onClick={handleChange.bind(null, code)}
                   size='medium'
                   key={uuid()}
                   variant={`${active === code ? 'contained' : 'outlined'}`}>

@@ -4,6 +4,7 @@ const DashboardCurrencyPosition = require("./dashboardCurrencyPosition")
 const Deposits = require("./Deposits")
 const DashboardLiquidity = require("./dashboardLiquidity")
 const CurrencyRates = require('./currencyRates')
+const BankLimits = require('./BankLimits')
 
 async function getDashboardData(date) {
     const [
@@ -14,14 +15,16 @@ async function getDashboardData(date) {
             currencyTimeDeposits, interbankDeposits,
             fundingStructure, currencyMBD},
         {vla, lcr, nsfr},
-        currencyRates
+        currencyRates,
+        bankLimits
     ] = await Promise.all([
         new DashboardCorrespondent(date).getRows(),
         new CreditPart(date).getRows(),
         new DashboardCurrencyPosition(date).getRows(),
         new Deposits(date).getRows(),
         new DashboardLiquidity(date).getRows(),
-        new CurrencyRates(date).getRows()
+        new CurrencyRates(date).getRows(),
+        new BankLimits(date).getRows()
     ])
     return {
         dashboardCorrespondent,
@@ -38,7 +41,8 @@ async function getDashboardData(date) {
         vla,
         lcr,
         nsfr,
-        currencyRates
+        currencyRates,
+        bankLimits
     }
 }
 
