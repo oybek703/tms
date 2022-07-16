@@ -8,32 +8,32 @@ import {formatNumber} from '../../../../utils'
 const useStyles = makeStyles(theme => ({
     greens: {
         color: '#00B050',
-        fontSize: '12pt'
+        fontSize: '1.2em'
     },
     liquidityCard: {
         ...theme.mixins.smallCard,
         padding: 0,
-        paddingLeft: 5,
+        paddingLeft: 2,
         marginBottom: -5,
         paddingBottom: 5
     },
     totalText: {
-        fontSize: '34px',
+        fontSize: '1.4em',
         fontWeight: '400',
         textAlign: 'left',
         padding: 0
     },
     totalValue: {
         fontWeight: '400',
-        fontSize: '31px'
+        fontSize: '1.5em'
     },
     secondaryText: {
         lineHeight: 0,
         color: '#000',
-        fontSize: '15px'
+        fontSize: '0.7em'
     },
     natValue: {
-        fontSize: '28px',
+        fontSize: '1.3em',
         fontWeight: '300'
     },
     labelPart: {

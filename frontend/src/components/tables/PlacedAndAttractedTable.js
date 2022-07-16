@@ -47,10 +47,10 @@ function PlacedAndAttractedTable({rows = {}, forDashboard = false}) {
     if(forDashboard) return (<Fragment>
         <Grid container spacing={2} justify='space-between'>
             <Grid item xs={12} sm={6}>
-                <InvolvedFunds series={involvedSeries} categories={involvedCategories}/>
+                <PlacedFunds series={placedSeries} categories={placedCategories}/>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <PlacedFunds series={placedSeries} categories={placedCategories}/>
+                <InvolvedFunds series={involvedSeries} categories={involvedCategories}/>
             </Grid>
         </Grid>
     </Fragment>)
@@ -63,10 +63,10 @@ function PlacedAndAttractedTable({rows = {}, forDashboard = false}) {
                     <TableHead className={classes.stickyTableHead}>
                         <TableRow>
                             <TableCell align='center' colSpan={4}>
-                                <BoldWithColor>ПРИВЛЕЧЕННЫЕ СРЕДСТВА</BoldWithColor>
+                                <BoldWithColor>РАЗМЕЩЕННЫЕ СРЕДСТВА</BoldWithColor>
                             </TableCell>
                             <TableCell align='center' colSpan={4}>
-                                <BoldWithColor>РАЗМЕЩЕННЫЕ СРЕДСТВА</BoldWithColor>
+                                <BoldWithColor>ПРИВЛЕЧЕННЫЕ СРЕДСТВА</BoldWithColor>
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -81,18 +81,18 @@ function PlacedAndAttractedTable({rows = {}, forDashboard = false}) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {involvedFunds.map((f, i) => (
+                        {placedFunds.map((f, i) => (
                             <TableRow key={f['fund_name']}>
                                 <TableCell className={classes.wrappedRow}>{f['fund_name']}</TableCell>
                                 <TableCell align='center'>{f['balance_code']}</TableCell>
                                 <TableCell align='center' className={classes.noWrap}>{formatNumber(f['sum'])}</TableCell>
                                 <TableCell align='center'>{f['percent']}</TableCell>
-                                <TableCell>{placedFunds[i]['fund_name']}</TableCell>
+                                <TableCell>{involvedFunds[i]['fund_name']}</TableCell>
                                 <TableCell align='center'
-                                           className={classes.noWrap}>{placedFunds[i]['balance_code']}</TableCell>
+                                           className={classes.noWrap}>{involvedFunds[i]['balance_code']}</TableCell>
                                 <TableCell align='center'
-                                           className={classes.noWrap}>{formatNumber(placedFunds[i]['sum'])}</TableCell>
-                                <TableCell align='center'>{placedFunds[i]['percent']}</TableCell>
+                                           className={classes.noWrap}>{formatNumber(involvedFunds[i]['sum'])}</TableCell>
+                                <TableCell align='center'>{involvedFunds[i]['percent']}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

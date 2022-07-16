@@ -150,9 +150,9 @@ const Dashboard = () => {
                                         {/*VLA LCR NSFR*/}
                                         <Grid className={classes.smallCardContainer} container>
                                             {[
-                                                {label: 'ВЛА', data: vlaCurrent},
-                                                {label: 'LCR', data: lcrLastPointers},
-                                                {label: 'NSFR', data: nsfrLastPointers}
+                                                {label: 'ЮЛА (HQLA)', data: vlaCurrent},
+                                                {label: 'ЛКМК (LCR)', data: lcrLastPointers},
+                                                {label: 'СБМК (NSFR)', data: nsfrLastPointers}
                                             ].map(({data, label}) => (
                                                 <LiquidityCard key={uuid()} data={data} label={label}/>
                                             ))}
