@@ -33,6 +33,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import InProcess from './components/pages/InProcess'
 import GapSimulation from './components/pages/Admin/GapSimulation'
+import AdminRoute from './components/UI/Layout/Admin/AdminRoute'
 
 function App () {
   const { user: { token } } = useSelector(state => state.auth)
@@ -62,7 +63,7 @@ function App () {
                   <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
                   <PrivateRoute component={GAP} path='/gap'/>
                   <PrivateRoute component={GapSimulation} path='/gapsimulation'/>
-                  <PrivateRoute component={Settings} path='/settings'/>
+                  <AdminRoute component={Settings} path='/settings'/>
                   <PrivateRoute component={Forbidden} path='/403'/>
                   <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>
                   <PrivateRoute component={NotFound}/>

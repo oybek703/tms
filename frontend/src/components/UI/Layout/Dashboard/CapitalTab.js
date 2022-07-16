@@ -1,0 +1,110 @@
+import React, {Fragment} from 'react'
+import Grid from '@material-ui/core/Grid'
+import {v4 as uuid} from 'uuid'
+import Card from '@material-ui/core/Card'
+import {makeStyles, Typography} from '@material-ui/core'
+import {formatNumber} from '../../../../utils'
+import RWAPoints from '../../../charts/Dashboard/Capital/RWAPoints'
+import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
+
+const useStyles = makeStyles(theme => ({
+  greens: {
+    color: '#00B050',
+    fontSize: '12pt'
+  },
+  smallCardContainer: theme.mixins.smallCardContainer,
+  smallCard: theme.mixins.smallCard,
+  capitalText: {
+    padding: 10,
+    fontSize: '1.2em',
+    fontWeight: 600,
+    color: '#555'
+  },
+  capitalNumber: {
+    fontSize: '1.05em'
+  }
+}))
+
+const CapitalTab = ({vla = {}}) => {
+  const classes = useStyles()
+  const capitalPoints = {rc: 6177.2, car: 13.68, rwa: 45162.35, forecast: 14.05}
+  return (
+      <>
+        <Grid container justify='space-between' alignItems='center' spacing={2}>
+          {[
+            {title: 'Регулативний капитал', shortKey: 'rc'},
+            {title: 'Коэффициент адекватности капитала', shortKey: 'car'}
+          ].map(({title, shortKey}, i) => <Grid key={uuid()} item sm={6}>
+            <Card>
+              <Typography
+                  className={`${classes.greens} ${classes.capitalText}`}
+                  align='center'>
+                {title}
+                &nbsp;
+                <span
+                    className={`${classes.greens} ${classes.capitalNumber}`}>
+                                                                {formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
+                                                            </span>
+              </Typography>
+            </Card>
+          </Grid>)}
+        </Grid>
+        <Grid spacing={2} container justify='space-between'>
+          <Grid item sm={6}>
+            <RWAPoints
+                data={{
+                  ...vla,
+                  series: [5933.4, 5940.72, 5944.44, 5902.41, 6221.8, 6177.2]
+                }} id='rc'/>
+          </Grid>
+          <Grid item sm={6}>
+            <CapitalPoints
+                data={{
+                  ...vla,
+                  series: [14.37, 14.23, 13.51, 13.10, 13.83, 13.68]
+                }} id='car' label='Коеф. адек. капитала' normative={13}/>
+          </Grid>
+        </Grid>
+        <Grid container justify='space-between' alignItems='center' spacing={2}>
+          {[
+            {title: 'Активы взвешенные с учетом риска', shortKey: 'rwa'},
+            {
+              title: 'Прогноз коэффициента адекватности капитала',
+              shortKey: 'forecast'
+            }
+          ]
+          .map(({title, shortKey}, i) => <Grid key={uuid()} item sm={6}>
+            <Card>
+              <Typography
+                  className={`${classes.greens} ${classes.capitalText}`}
+                  align='center'>
+                {title}
+                &nbsp;
+                <span
+                    className={`${classes.greens} ${classes.capitalNumber}`}>
+                                                                {formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
+                                                            </span>
+              </Typography>
+            </Card>
+          </Grid>)}
+        </Grid>
+        <Grid spacing={2} container justify='space-between'>
+          <Grid item sm={6}>
+            <RWAPoints data={{
+              ...vla,
+              series: [41281.38, 41753.69, 44008.56, 45056.56, 44976.20, 45162.35]
+            }} id='rwa'/>
+          </Grid>
+          <Grid item sm={6}>
+            <CapitalPoints
+                data={{
+                  ...vla,
+                  series: [14.30, 13.80, 13.90, 13.95, 14.10, 14.05]
+                }} id='forecast' label='Прогноз' normative={13}/>
+          </Grid>
+        </Grid>
+      </>
+  )
+}
+
+export default CapitalTab

@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import {makeStyles, Paper, Table, TableBody, TableHead, TableRow} from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import {v4 as uuid} from 'uuid'
-import {formatNumber} from '../../../../utils'
+import {formatNumber} from '../../../../../utils'
 import PercentIndicator from './PercentIndicator'
 
 const useStyles = makeStyles(theme => ({

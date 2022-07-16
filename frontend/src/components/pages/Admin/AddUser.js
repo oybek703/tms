@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import {makeStyles} from '@material-ui/core/styles'
+import {useDispatch, useSelector} from 'react-redux'
 import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
-import { addUser } from '../../../redux/actions'
+import {addUser} from '../../../redux/actions'
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -40,7 +39,6 @@ export default function AddUser() {
     const classes = useStyles()
     const dispatch = useDispatch()
     const [allowedPages, setAllowedPages] = useState([])
-    const {user: {role}} = useSelector(state => state.auth)
     const {loading, error} = useSelector(state => state.addUser)
     const [formData, setFormData] = useState({username: '', password: '', confirmpassword: ''})
     const [userNameHelperText, setUsernameHelperText] = useState('')
@@ -95,8 +93,6 @@ export default function AddUser() {
         }
         // eslint-disable-next-line
     }, [error])
-
-    if (role !== 'admin') return <Redirect to='/403'/>
 
     return (
         <>
@@ -156,8 +152,7 @@ export default function AddUser() {
                     type="submit"
                     variant="outlined"
                     color="primary"
-                    className={classes.submit}
-                >
+                    className={classes.submit}>
                     Add
                 </Button>
             </form>

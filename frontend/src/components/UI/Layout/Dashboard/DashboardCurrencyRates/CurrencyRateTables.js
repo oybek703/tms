@@ -1,9 +1,9 @@
 import React from 'react'
 import {makeStyles, Table, TableBody, TableHead, TableRow} from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
-import FormattedCell from '../../helpers/FormattedCell/FormattedCell'
+import FormattedCell from '../../../helpers/FormattedCell/FormattedCell'
 import {v4 as uuid} from 'uuid'
-import {formatNumber} from '../../../../utils'
+import {formatNumber} from '../../../../../utils'
 
 const useStyles = makeStyles(theme => ({
     noWrap: theme.mixins.noWrap

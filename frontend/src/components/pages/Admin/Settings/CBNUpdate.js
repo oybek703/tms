@@ -13,7 +13,7 @@ import Dialog from '@material-ui/core/Dialog'
 import {useDispatch} from 'react-redux'
 import axiosInstance, {withToken} from '../../../../utils/axiosInstance'
 import {UPDATE_CBN} from '../../../../redux/actions/types'
-import Alert from '../Alert'
+import Alert from '../../../UI/Layout/Alert'
 
 const useStyles = makeStyles(theme => ({
     editIcon: {

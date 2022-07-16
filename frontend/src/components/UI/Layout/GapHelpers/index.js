@@ -33,26 +33,27 @@ const useStyles = makeStyles(theme => ({
     bordered: theme.mixins.dottedBorder
 }))
 
-function RenderByMonth({months, row, total = false, blueBackground = false, withPercent = false}) {
+function RenderByMonth({months = [], row = {}, total = false,
+    blueBackground = false, withPercent = false}) {
     const classes = useStyles()
-    return <>
+    return <Fragment>
         {months.map((_, monthIndex) => <Fragment key={uuid()}>
             {['TOTAL', 'NATIONAL_CURRENCY', 'FOREIGN_CURRENCY', 'USD', 'EUR'].map((propName, index) =>
                 <Fragment key={uuid()}>
                     <TableCell
                         className={`${classes.noWrap} ${total && classes.darkBackground} 
                         ${blueBackground ? classes.blueBackground : ''} 
-                        ${row[monthIndex]['editable'] && classes.bordered}`}
+                        ${(row[monthIndex] || {})['editable'] && classes.bordered}`}
                         style={{
                             borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
                             borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee'
                         }}
                         align="center">
-                        {formatNumber((row[monthIndex] || {})[[propName]], true)}{withPercent && '%'}
+                        {formatNumber(((row[monthIndex] || {}) || {})[propName], true)}{withPercent && '%'}
                     </TableCell>
                 </Fragment>)}
         </Fragment>)}
-    </>
+    </Fragment>
 }
 
 function TotalOrBoldRow({months, total, align = 'center', blueBackground = false, withPercent = false}) {
@@ -66,7 +67,7 @@ function TotalOrBoldRow({months, total, align = 'center', blueBackground = false
     </TableRow>
 }
 
-function VerticalColumn({data = [], text = 'источники ликвидности'}) {
+function VerticalColumn({data = [], text = 'приток'}) {
     const classes = useStyles()
     return <TableRow>
         <TableCell align='center' rowSpan={data.length + 1}>
@@ -81,7 +82,7 @@ function InnerDataRows({data = [], months}) {
     return <>
         {data.map(row => (
             <TableRow key={uuid()}>
-                <TableCell align='left'
+                <TableCell align='center'
                            className={classes.noWrap}>
                     {(row[0] || {})['INDICATOR_NAME']}
                 </TableCell>

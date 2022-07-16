@@ -15,37 +15,37 @@ import { toast } from 'react-toastify'
 
 const useStyles = makeStyles(theme => ({
     darkText: {
-        color: theme.palette.common.dark
+        color: theme.palette.common.dark,
     },
     boldText: {
         textTransform: 'uppercase',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     formFields: {
         minWidth: '40em',
         margin: '1em auto 2.5em',
         textAlign: 'center',
         [theme.breakpoints.down('sm')]: {
-            minWidth: '25em'
-        }
+            minWidth: '25em',
+        },
     },
     form: {
         backgroundColor: 'white',
-        padding: '30px 20px'
+        padding: '30px 20px',
     },
     root: {
-        margin: '50px auto'
+        margin: '50px auto',
     },
     submit_btn: {
-        backgroundColor: theme.palette.success['main']
+        backgroundColor: theme.palette.success['main'],
     },
     submit_end_icon: {
-        color: theme.palette.error['main']
+        color: theme.palette.error['main'],
     },
     logo: {
         marginTop: -80,
-        marginBottom: -60
-    }
+        marginBottom: -60,
+    },
 }))
 
 const LoginPage = () => {
@@ -64,14 +64,14 @@ const LoginPage = () => {
         switch (name) {
             case 'username':
                 /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(
-                  value) ? setUsernameHelperText('') : setUsernameHelperText(
-                  'Please enter valid username.')
+                    value) ? setUsernameHelperText('') : setUsernameHelperText(
+                    'Please enter valid username.')
                 break
             case 'password':
                 value.length >= 6
-                  ? setPasswordHelperText('')
-                  : setPasswordHelperText(
-                  'Password should contain at least 6 characters.')
+                    ? setPasswordHelperText('')
+                    : setPasswordHelperText(
+                    'Password should contain at least 6 characters.')
                 break
             default:
                 return
@@ -84,7 +84,7 @@ const LoginPage = () => {
     useEffect(() => {
         const btnStatus = !!formData.username && !!formData.password && !loading
         setBtnDisabled(!btnStatus)
-        //    eslint-disable-next-line
+        // eslint-disable-next-line
     }, [formData, loading])
     useEffect(() => {
         if (error) {
@@ -101,76 +101,77 @@ const LoginPage = () => {
         }
     }, [error])
     if (token) return <Redirect
-      to={(redirectTo === '/' || !redirectTo) ? '/' : redirectTo}/>
+        to={(redirectTo === '/' || !redirectTo) ? '/' : redirectTo}/>
     return (
-      <Grid container direction='column' alignItems='center' justify='center'
-            className={classes.root}>
-          <Grid item>
-              <Grid className={classes.logo}>
-                  <Grid>
-                      <img src={process.env.PUBLIC_URL + '/asakabank.jpg'}
-                           width='350' height='300' alt="Treasury Reports"/>
-                  </Grid>
-              </Grid>
-              <br/>
-          </Grid>
-          <Grid item>
-              <Typography className={`${classes.darkText} ${classes.boldText}`}
-                          variant='h5' gutterBottom align='center'>
-                  Treasury Management System
-              </Typography>
-          </Grid>
-          <Grid item>
-              <Card classes={{ root: classes.form }} elevation={12}
-                    variant='elevation'>
-                  <CardContent>
-                      <form onSubmit={handleSubmit}>
-                          <Grid container className={classes.formFields}
-                                justify='center'>
-                              <TextField
-                                error={!!usernameHelperText}
-                                helperText={usernameHelperText}
-                                name='username'
-                                value={formData.username}
-                                onChange={handleChange}
-                                variant='outlined' fullWidth label='Username*'/>
-                          </Grid>
-                          <Grid container className={classes.formFields}
-                                justify='center'>
-                              <TextField
-                                type={showPassword ? 'text' : 'password'}
-                                error={!!passwordHelperText}
-                                helperText={passwordHelperText}
-                                name='password' value={formData.password}
-                                onChange={handleChange} variant='outlined'
-                                fullWidth label='Password*'
-                                InputProps={{
-                                    endAdornment: <IconButton size='small'
-                                                              onClick={() => setShowPassword(
-                                                                !showPassword)}>{showPassword
-                                      ?
-                                      <Visibility fontSize='small'/>
-                                      : <VisibilityOff
-                                        fontSize='small'/>}</IconButton>
-                                }}/>
-                          </Grid>
-                          <Grid container justify='center'>
-                              <Button type='submit'
-                                      disabled={btnDisabled}
-                                      size='large'
-                                      variant='contained' fullWidth
-                                      className={classes.submit_btn}
-                                      endIcon={loading && <CircularProgress
-                                        className={classes.submit_end_icon}
-                                        size='20px'/>}>
-                                  Sign In
-                              </Button>
-                          </Grid>
-                      </form>
-                  </CardContent>
-              </Card>
-          </Grid>
-      </Grid>
+        <Grid container direction='column' alignItems='center' justify='center'
+              className={classes.root}>
+            <Grid item>
+                <Grid className={classes.logo}>
+                    <Grid>
+                        <img src={process.env.PUBLIC_URL + '/asakabank.jpg'}
+                             width='350' height='300' alt="Treasury Reports"/>
+                    </Grid>
+                </Grid>
+                <br/>
+            </Grid>
+            <Grid item>
+                <Typography
+                    className={`${classes.darkText} ${classes.boldText}`}
+                    variant='h5' gutterBottom align='center'>
+                    Treasury Management System
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Card classes={{ root: classes.form }} elevation={12}
+                      variant='elevation'>
+                    <CardContent>
+                        <form onSubmit={handleSubmit}>
+                            <Grid container className={classes.formFields}
+                                  justify='center'>
+                                <TextField
+                                    error={!!usernameHelperText}
+                                    helperText={usernameHelperText}
+                                    name='username'
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    variant='outlined' fullWidth
+                                    label='Username*'/>
+                            </Grid>
+                            <Grid container className={classes.formFields}
+                                  justify='center'>
+                                <TextField
+                                    type={showPassword ? 'text' : 'password'}
+                                    error={!!passwordHelperText}
+                                    helperText={passwordHelperText}
+                                    name='password' value={formData.password}
+                                    onChange={handleChange} variant='outlined'
+                                    fullWidth label='Password*'
+                                    InputProps={{
+                                        endAdornment: <IconButton size='small'
+                                                                  onClick={() => setShowPassword(
+                                                                      !showPassword)}>{showPassword
+                                            ? <Visibility fontSize='small'/>
+                                            : <VisibilityOff
+                                                fontSize='small'/>}</IconButton>,
+                                    }}/>
+                            </Grid>
+                            <Grid container justify='center'>
+                                <Button type='submit'
+                                        disabled={btnDisabled}
+                                        size='large'
+                                        variant='contained' fullWidth
+                                        className={classes.submit_btn}
+                                        endIcon={loading && <CircularProgress
+                                            className={classes.submit_end_icon}
+                                            size='20px'/>}>
+                                    Sign In
+                                </Button>
+                            </Grid>
+                        </form>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
     )
 }
 

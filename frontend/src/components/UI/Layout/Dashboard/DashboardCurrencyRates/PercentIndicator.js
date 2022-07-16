@@ -2,7 +2,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core'
-import {formatNumber} from '../../../../utils'
+import {formatNumber} from '../../../../../utils'
 import StopIcon from '@material-ui/icons/Stop'
 
 const useStyles = makeStyles(theme => ({
