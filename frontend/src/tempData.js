@@ -1,16 +1,16 @@
 export const covenantData = [
     {title: 'Коэффициенты достаточности капитала',
-        bank_asaka: '13.51%', bank_1: 'мин 10%', bank_2: '',
+        bank_asaka: '14.24%', bank_1: 'мин 10%', bank_2: '',
         bank_3: 'мин 13%', bank_4: '', bank_5: 'мин 13%', bank_6: 'мин 13%',
         bank_7: 'мин 13%', bank_8: 'мин 14%', bank_9: 'мин 13%'
     },
     {title: 'Коэффициенты достаточности капитала уровня I',
-        bank_asaka: '12.48%', bank_1: 'мин 7.5%', bank_2: '',
+        bank_asaka: '13.03%', bank_1: 'мин 7.5%', bank_2: '',
         bank_3: 'мин 11%', bank_4: '', bank_5: '', bank_6: '',
         bank_7: 'мин 10%', bank_8: '', bank_9: ''
     },
     {title: 'Коэффициент не действующих активов (NPL) МСФО',
-        bank_asaka: '4.83%', bank_1: 'макс 5%', bank_2: '',
+        bank_asaka: '4.8%', bank_1: 'макс 5%', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: ''
     },
@@ -47,22 +47,22 @@ export const covenantData = [
         bank_7: '', bank_8: '', bank_9: ''
     },
     {title: 'Соотношение расходов и доходов',
-        bank_asaka: '58.12%', bank_1: '', bank_2: '',
+        bank_asaka: '68.59%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: 'макс 75%', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: ''
     },
     {title: 'Соотношение среднего показателя доходности активов (ROA)',
-        bank_asaka: '0.08%', bank_1: '', bank_2: '',
+        bank_asaka: '0.09%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: 'мин 1%', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: ''
     },
     {title: 'Чистая доля проблемной задолженности в общем объеме выданных кредитов (NPL) НСБУ',
-        bank_asaka: '2.99%', bank_1: '', bank_2: '',
+        bank_asaka: '2.85%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: 'макс 5%', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: ''
     },
     {title: 'Максимальный предел по индивидуальному размеру риска на группу связанных заёмщиков',
-        bank_asaka: '3.99%', bank_1: '', bank_2: '',
+        bank_asaka: '3.36%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: 'макс 25%', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: ''
     },
@@ -77,22 +77,22 @@ export const covenantData = [
         bank_7: '', bank_8: '', bank_9: ''
     },
     {title: 'Левераж',
-        bank_asaka: '9.62%', bank_1: '', bank_2: '',
+        bank_asaka: '9.82%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: 'мин 6%', bank_8: '', bank_9: ''
     },
     {title: 'Коэффициент открытого кредитного риска',
-        bank_asaka: '16.25%', bank_1: '', bank_2: '',
+        bank_asaka: '12.72%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: 'макс 20%', bank_9: ''
     },
     {title: 'Коэффициент ликвидности',
-        bank_asaka: '160.50%', bank_1: '', bank_2: '',
+        bank_asaka: '161%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: 'мин 50%', bank_9: ''
     },
     {title: `Максимальный размер риска на одного заемщика или группу взаимосвязанных заемщиков / Регулятивный капитал (согласно контракту 20% при этом, получено письмо об изменении требования до 26% до 31.12.2022г).`,
-        bank_asaka: '21.32%', bank_1: '', bank_2: '',
+        bank_asaka: '19.14%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: 'макс 20%', bank_9: ''
     },
@@ -102,12 +102,12 @@ export const covenantData = [
         bank_7: '', bank_8: 'макс 800%', bank_9: ''
     },
     {title: 'Выданные кредиты (не включая государственных гарантий обеспеченных Правительством Узбекистан) компании UzAutoMotors не превышает 65% регулятивного капитала до 01.01.2021. (согласно контракту 20% при этом, получено письмо об изменении требования до 55% до 31.12.2021г).',
-        bank_asaka: '54.26%', bank_1: '', bank_2: '',
+        bank_asaka: '50.24%', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: 'макс 55%', bank_9: ''
     },
     {title: 'Собственный капитал',
-        bank_asaka: '6.6 трлн.сум', bank_1: '', bank_2: '',
+        bank_asaka: '6.2 трлн.сум', bank_1: '', bank_2: '',
         bank_3: '', bank_4: '', bank_5: '', bank_6: '',
         bank_7: '', bank_8: '', bank_9: 'мин 6.2 трлн.сум'
     }

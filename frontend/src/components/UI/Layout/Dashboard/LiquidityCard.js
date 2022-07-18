@@ -18,14 +18,19 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: 5
     },
     totalText: {
-        fontSize: '1.4em',
-        fontWeight: '400',
+        fontSize: '1.5em',
+        fontWeight: '550',
+        textAlign: 'left',
+        padding: 0
+    },
+    totalSecondaryText: {
+        fontSize: '1.5em',
         textAlign: 'left',
         padding: 0
     },
     totalValue: {
         fontWeight: '400',
-        fontSize: '1.5em'
+        fontSize: '1.4em'
     },
     secondaryText: {
         lineHeight: 0,
@@ -44,16 +49,16 @@ const useStyles = makeStyles(theme => ({
 const LiquidityCard = ({data = [], label = 'ВЛА'}) => {
     const [lastTotal, lastNat, lastForeign] = data
     const classes = useStyles()
+    const splittedLabel = label.split(' ')
     return (
         <Grid className={classes.liquidityCard} item component={Paper} variant='outlined'>
             <Grid container justify='space-between' alignItems='center'>
                 <Grid item xs={6}>
                     <Grid container justify='space-around'
                           alignItems='baseline' className={classes.labelPart}>
-                        <Grid item><h1
-                            className={classes.totalText}>
-                            {label}
-                        </h1>
+                        <Grid item>
+                            <span className={classes.totalText}>{splittedLabel[0]}</span> {' '}
+                            <span className={classes.totalSecondaryText}>{splittedLabel[1]}</span>
                         </Grid>
                         <Grid item>
                             {lastTotal && <ListItemText

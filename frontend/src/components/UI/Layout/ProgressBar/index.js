@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
   percent: {
     position: 'absolute',
-    top: 0,
+    top: -1,
     left: 0,
     bottom: 0,
     right: 0,
@@ -45,7 +45,7 @@ export default function ProgressBar ({ value = 0 }) {
         }}
         variant="determinate" value={value > 100 ? 100 : +value}/>
       <span className={classes.percent} title={value}> &nbsp; {value > 100
-        ? 'болше 100'
+        ? 'больше 100'
         : `${value}%`}</span>
     </div>
   )

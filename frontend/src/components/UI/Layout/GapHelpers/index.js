@@ -17,7 +17,9 @@ const useStyles = makeStyles(theme => ({
     verticalText: {
         writingMode: 'vertical-rl',
         transform: 'rotate(180deg)',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: '1.1em'
     },
     darkBackground: {
         backgroundColor: '#eeeeee',
@@ -82,7 +84,7 @@ function InnerDataRows({data = [], months}) {
     return <>
         {data.map(row => (
             <TableRow key={uuid()}>
-                <TableCell align='center'
+                <TableCell align='left'
                            className={classes.noWrap}>
                     {(row[0] || {})['INDICATOR_NAME']}
                 </TableCell>

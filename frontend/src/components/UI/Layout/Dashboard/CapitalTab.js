@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { v4 as uuid } from 'uuid'
 import Card from '@material-ui/core/Card'
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const CapitalTab = ({ vla = {categories: []} }) => {
+const CapitalTab = ({ vla = { categories: [] } }) => {
     const classes = useStyles()
     const capitalPoints = {
         rc: 6183.7,
@@ -35,9 +35,13 @@ const CapitalTab = ({ vla = {categories: []} }) => {
     }
     const forecastCategories = Object.assign([], vla.categories)
     const now = new Date()
-    const current = new Date(now.getFullYear(), now.getMonth()+1, 1)
-    const nextMonth = new Date(current).toLocaleDateString('ru', {month: 'long'})
-    const nextMonthSliced = [...nextMonth].map((letter, index) => index === 0 ? letter.toUpperCase() : letter).slice(0, 3).join('')
+    const current = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+    const nextMonth = new Date(current).toLocaleDateString('ru',
+        { month: 'long' })
+    const nextMonthSliced = [...nextMonth].map(
+        (letter, index) => index === 0 ? letter.toUpperCase() : letter)
+        .slice(0, 3)
+        .join('')
     forecastCategories.shift()
     forecastCategories.push(nextMonthSliced)
     return (
@@ -61,8 +65,7 @@ const CapitalTab = ({ vla = {categories: []} }) => {
                                 <span
                                     className={`${classes.greens} ${classes.capitalNumber}`}>
                                                                 {formatNumber(
-                                                                    capitalPoints[shortKey])} {i ===
-                                1 && '%'}
+                                                                    capitalPoints[shortKey])} {i === 1 && '%'}
                                                             </span>
                             </Typography>
                         </Card>
