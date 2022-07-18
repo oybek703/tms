@@ -48,11 +48,7 @@ function renderOptions (series, categories) {
             width: 200
           },
           legend: {
-            horizontalAlign: 'center',
-            itemMargin: {
-              horizontal: 150,
-              vertical: 10
-            }
+            horizontalAlign: 'center'
           }
         }
       }],
@@ -65,8 +61,7 @@ function renderOptions (series, categories) {
       position: 'bottom',
       fontSize: 20,
       itemMargin: {
-        horizontal: 100,
-        vertical: 3
+        vertical: 10
       }
     },
     colors
