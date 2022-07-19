@@ -29,9 +29,9 @@ const CapitalTab = ({ vla = { categories: [] } }) => {
     const classes = useStyles()
     const capitalPoints = {
         rc: 6183.7,
-        car: 13.68,
+        car: 14.24,
         rwa: 43432.64,
-        forecast: 14.24,
+        forecast: 14.05,
     }
     const forecastCategories = Object.assign([], vla.categories)
     const now = new Date()
@@ -77,19 +77,19 @@ const CapitalTab = ({ vla = { categories: [] } }) => {
                         data={{
                             ...vla,
                             series: [
-                                5933.4,
                                 5940.72,
                                 5944.44,
                                 5902.41,
                                 6221.8,
-                                6177.2],
+                                6177.2,
+                                6183.7],
                         }} id='rc'/>
                 </Grid>
                 <Grid item sm={6}>
                     <CapitalPoints
                         data={{
                             ...vla,
-                            series: [14.37, 14.23, 13.51, 13.10, 13.83, 13.68],
+                            series: [14.23, 13.51, 13.10, 13.83, 13.68, 14.24],
                         }} id='car' label='Коеф. адек. капитала'
                         normative={13}/>
                 </Grid>
@@ -128,12 +128,12 @@ const CapitalTab = ({ vla = { categories: [] } }) => {
                     <RWAPoints data={{
                         ...vla,
                         series: [
-                            41281.38,
                             41753.69,
                             44008.56,
                             45056.56,
                             44976.20,
-                            45162.35],
+                            45162.35,
+                            43432.64],
                     }} id='rwa'/>
                 </Grid>
                 <Grid item sm={6}>

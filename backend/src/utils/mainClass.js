@@ -35,6 +35,9 @@ class MainClass {
             return result
         } catch (e) {
             console.log(e)
+            const error = new Error(e)
+            const errorMessage = error.message
+            console.log('Error on server side: ', errorMessage)
             return {}
         }
     }

@@ -70,7 +70,7 @@ const Dashboard = () => {
                         {name: 'ЦРБ', panel: <Fcrb/>},
                         {
                           name: 'Лимиты',
-                          panel: <BankLimits rows={bankLimits}/>
+                          panel: <BankLimits bankLimits={bankLimits}/>
                         },
                         {
                           name: 'ФОР',

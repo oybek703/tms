@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 0,
     position: 'relative',
     backgroundColor: '#ccc',
+    minWidth: 100
   },
   bar: {
     borderRadius: 0,
