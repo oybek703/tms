@@ -52,7 +52,7 @@ const InterbankDepositsBody = ({rows = [], extraCurrency, isInterbank = false, c
                                 <b>{formatNumber(((rows[j] || {}).sumRow || [])[1])}</b>
                             </TableCell>
                             <TableCell colSpan={2} className={classes.weighted_percent}>Средневзвешенные % ставка</TableCell>
-                            <TableCell className={classes.noWrap} align='center'><b>{formatNumber(((rows[j] || {}).sumRow || [])[2])}%</b></TableCell>
+                            <TableCell className={`${classes.noWrap} ${classes.weighted_percent}`} align='center'><b>{formatNumber(((rows[j] || {}).sumRow || [])[2])}%</b></TableCell>
                             <TableCell className={classes.noWrap} align='center'><b>{formatNumber(((rows[j] || {}).sumRow || [])[3])}</b></TableCell>
                             <TableCell className={classes.noWrap} align='center'>
                                 <b>{formatNumber(((rows[j] || {}).sumRow || [])[4])}</b>
