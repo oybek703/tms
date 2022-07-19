@@ -24,9 +24,10 @@ const useStyles = makeStyles(theme => ({
     blueBackground: theme.mixins.blueBackground
 }))
 
-function NoWrapCell ({ cellData = 0 }) {
+function NoWrapCell ({ cellData = 0, colSpan = 0 }) {
     const classes = useStyles()
-    return <TableCell align='center' className={classes.noWrap}>
+    return <TableCell colSpan={colSpan} align='center'
+                      className={classes.noWrap}>
         {typeof cellData === 'number' ? formatNumber(cellData) : cellData}
     </TableCell>
 }
@@ -86,31 +87,46 @@ function BankLimitsTableHead ({ localBanks = false }) {
 
 function ForeignBankTable ({ rows = [] }) {
     const classes = useStyles()
-    return <TableContainer component={Paper}>
-        <Table size='small'>
-            <BankLimitsTableHead/>
-            <TableBody>
-                {rows.map((row, index) => <TableRow key={uuid()}>
-                    <TableCell align='center'><b>{index + 1}</b></TableCell>
-                    <TableCell className={classes.noWrap}><b>{row['NAME']}</b></TableCell>
-                    <NoWrapCell cellData={row['SALDO_EQUIVAL_OUT']}/>
-                    <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
-                    <NoWrapCell cellData={row['DIFFER']}/>
-                    <NoWrapCell cellData={<ProgressOrText cellData={row['FOR_PERCENT']}/>}/>
-                    <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
-                </TableRow>)}
-            </TableBody>
-        </Table>
-    </TableContainer>
+    if (JSON.stringify(rows) === JSON.stringify({})) rows = []
+    return (<TableContainer component={Paper}>
+      <Table size='small'>
+        <BankLimitsTableHead/>
+        <TableBody>
+          {rows.map((row, index) => <TableRow key={uuid()}>
+            <TableCell align='center'><b>{index + 1}</b></TableCell>
+            <TableCell
+                className={classes.noWrap}><b>{row['NAME']}</b></TableCell>
+            <NoWrapCell cellData={row['SALDO_EQUIVAL_OUT']}/>
+            <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
+            <NoWrapCell cellData={row['DIFFER']}/>
+            <NoWrapCell cellData={<ProgressOrText
+                cellData={row['FOR_PERCENT']}/>}/>
+            <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
+          </TableRow>)}
+        </TableBody>
+      </Table>
+    </TableContainer>)
 }
 
-function LocalBanksTable ({ rows = [] }) {
+function LocalBanksTable ({ rows = [], nationalBank = [] }) {
+    if (JSON.stringify(rows) === JSON.stringify({})) rows = []
+    if (JSON.stringify(nationalBank) === JSON.stringify({})) nationalBank = []
     return <TableContainer component={Paper}>
         <Table size='small'>
             <BankLimitsTableHead localBanks/>
             <TableBody>
+                {nationalBank.map(row => <TableRow key={uuid()}>
+                  <TableCell><b>1</b></TableCell>
+                  <TableCell><b>{row['NAME']}</b></TableCell>
+                  <NoWrapCell colSpan={2} cellData={row['SALDO_EQUIVAL_OUT']}/>
+                  <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_22']}/>
+                  <NoWrapCell colSpan={2} cellData={row['DIFFER']}/>
+                  <NoWrapCell colSpan={2} cellData={<ProgressOrText
+                      cellData={row['NAT_PERCENT']}/>}/>
+                  <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_24']}/>
+                </TableRow>)}
                 {rows.map((row, index) => <TableRow key={uuid()}>
-                    <TableCell align='center'><b>{index + 1}</b></TableCell>
+                    <TableCell align='center'><b>{index + 2}</b></TableCell>
                     <TableCell><b>{row['NAME']}</b></TableCell>
                     <NoWrapCell cellData={row['NAT_CURR']}/>
                     <NoWrapCell cellData={row['FOR_CURR']}/>
@@ -118,8 +134,10 @@ function LocalBanksTable ({ rows = [] }) {
                     <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
                     <NoWrapCell cellData={row['DIFFER_NAT']}/>
                     <NoWrapCell cellData={row['DIFFER_FOR']}/>
-                    <NoWrapCell cellData={<ProgressOrText cellData={row['NAT_CURR_PERCENT']}/>}/>
-                    <NoWrapCell cellData={<ProgressOrText cellData={row['FOR_CURR_PERCENT']}/>}/>
+                    <NoWrapCell cellData={<ProgressOrText
+                        cellData={row['NAT_CURR_PERCENT']}/>}/>
+                    <NoWrapCell cellData={<ProgressOrText
+                        cellData={row['FOR_CURR_PERCENT']}/>}/>
                     <NoWrapCell cellData={row['NATIONAL_CURRENCY_24']}/>
                     <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
                 </TableRow>)}
@@ -134,17 +152,17 @@ const titles = [
 ]
 
 const BankLimits = ({ bankLimits = {} }) => {
-    let { foreignBanks = [], localBanks = [] } = bankLimits
+    let { foreignBanks = [], localBanks = [], nationalBank = [] } = bankLimits
     const [expanded, setExpanded] = useState('local')
     const handleChange = useCallback(code => setExpanded(code), [])
-    if (JSON.stringify(localBanks) === JSON.stringify({})) localBanks = []
     return (
         <Fragment>
             <ButtonTabs handleChange={handleChange} active={expanded}
                         titles={titles}/>
             {
                 expanded === 'local'
-                    ? <LocalBanksTable rows={localBanks}/>
+                    ? <LocalBanksTable rows={localBanks}
+                                       nationalBank={nationalBank}/>
                     : <ForeignBankTable rows={foreignBanks}/>
             }
         </Fragment>
