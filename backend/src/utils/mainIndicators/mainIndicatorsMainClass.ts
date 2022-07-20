@@ -7,7 +7,7 @@ class MainIndicatorsMainClass extends MainClass {
         super(date)
     }
 
-    formatQuery(date: string, where_query: string) {
+    formatQuery(date: string, whereQuery: string) {
         const {monthFirstDate, yearFirstDate} = this.dates
         return `SELECT year_begin,
                        month_begin,
@@ -23,7 +23,7 @@ class MainIndicatorsMainClass extends MainClass {
                                                                             'DD-MM-YYYY')
                                                   AND ROWNUM = 1) AS saldo_equival_out
                                         FROM   ibs.accounts@iabs AC
-                                        WHERE  ${where_query})) AS selected_date,
+                                        WHERE  ${whereQuery})) AS selected_date,
                                (SELECT ABS(ROUND(SUM(saldo_equival_out) / POWER(10, 11), 1))
                                 FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
                                                        saldo_equival_out
@@ -32,7 +32,7 @@ class MainIndicatorsMainClass extends MainClass {
                                                   AND sl.oper_day < TO_DATE('${monthFirstDate}', 'DD.MM.YYYY')
                                                   AND ROWNUM = 1) AS saldo_equival_out
                                         FROM   ibs.accounts@iabs AC
-                                        WHERE  ${where_query})) AS month_begin,
+                                        WHERE  ${whereQuery})) AS month_begin,
                                (SELECT ABS(ROUND(SUM(saldo_equival_out) / POWER(10, 11), 1))
                                 FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
                                                        saldo_equival_out
@@ -41,7 +41,7 @@ class MainIndicatorsMainClass extends MainClass {
                                                   AND sl.oper_day < TO_DATE('${yearFirstDate}', 'DD.MM.YYYY')
                                                   AND ROWNUM = 1) AS saldo_equival_out
                                         FROM   ibs.accounts@iabs AC
-                                        WHERE  ${where_query})) AS year_begin
+                                        WHERE  ${whereQuery})) AS year_begin
                         FROM   dual)`
     }
 

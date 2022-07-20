@@ -7,7 +7,7 @@ class CurrencyRates extends DashboardMainClass {
 
     constructor(date) {
         super(date)
-        this.currencyNames = [
+        this.currencyCodes = [
             {code: '978', currName:'EUR', nominal: '1 EUR', equival: 0, differ: 0},
             {code: '840', currName:'USD', nominal: '1 USD', equival: 0, differ: 0},
             {code: '826', currName:'GBP', nominal: '1 GBP', equival: 0, differ: 0},

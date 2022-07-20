@@ -11,7 +11,7 @@ class LiquidityMainClass extends MainClass {
         this.columns = ['total', 'nat_curr', 'for_curr', 'usa_dollar', 'evro']
     }
 
-    formatQuery(date: string, where_query = `code_coa like '101%'`) {
+    formatQuery(date: string, whereQuery = `code_coa like '101%'`) {
         return `SELECT TOTAL,
                        NAT_CURR,
                        ROUND((TOTAL - NAT_CURR) / (SELECT EQUIVAL
@@ -31,7 +31,7 @@ class LiquidityMainClass extends MainClass {
                                                       AND OPER_DAY < TO_DATE('${date}', 'DD.MM.YYYY')
                                                       AND ROWNUM = 1))) / POWER(10, 8), 2) AS SALDO_OUT
                               FROM IBS.ACCOUNTS@IABS AC
-                              WHERE ${where_query})  AS TOTAL,
+                              WHERE ${whereQuery})  AS TOTAL,
                              (SELECT ROUND(ABS(SUM((SELECT
                                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
                                                         SALDO_OUT
@@ -40,7 +40,7 @@ class LiquidityMainClass extends MainClass {
                                                       AND OPER_DAY < TO_DATE('${date}', 'DD.MM.YYYY')
                                                       AND ROWNUM = 1))) / POWER(10, 8), 2 ) AS SALDO_OUT
                               FROM IBS.ACCOUNTS@IABS AC
-                              WHERE ${where_query}
+                              WHERE ${whereQuery}
                                 AND CODE_CURRENCY = '000') AS NAT_CURR,
                              (SELECT ROUND(ABS(SUM((SELECT
                                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
@@ -50,7 +50,7 @@ class LiquidityMainClass extends MainClass {
                                                       AND OPER_DAY < TO_DATE('${date}', 'DD.MM.YYYY') 
                                                       AND ROWNUM = 1))) / POWER(10, 8), 2) AS SALDO_OUT
                               FROM IBS.ACCOUNTS@IABS AC
-                              WHERE ${where_query}
+                              WHERE ${whereQuery}
                                 AND CODE_CURRENCY = '840') AS USA_DOLLAR,
                              (SELECT ROUND(ABS(SUM((SELECT
                                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
@@ -60,7 +60,7 @@ class LiquidityMainClass extends MainClass {
                                                       AND OPER_DAY < TO_DATE( '${date}', 'DD.MM.YYYY') 
                                                       AND ROWNUM = 1))) / POWER(10, 8), 2 ) AS SALDO_OUT
                               FROM IBS.ACCOUNTS@IABS AC
-                              WHERE ${where_query}
+                              WHERE ${whereQuery}
                                 AND CODE_CURRENCY = '978') AS EVRO
                       FROM DUAL)`
     }

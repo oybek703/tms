@@ -5,7 +5,7 @@ class CreditPart extends DashboardMainClass {
         super(date)
         // ADDED TOXIC(Токсич.) AND DELAYED(Просрочка) CREDITS
         this.queries = [`AND CREDIT_STATUS IN (0, 1, 2)`, `AND CREDIT_STATUS = 2`]
-        this.currencyNames = ['000', '840', '978']
+        this.currencyCodes = ['000', '840', '978']
     }
 
     formatQuery(date, where_query = '') {

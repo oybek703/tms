@@ -1,12 +1,14 @@
-const asyncMiddleware = require('../../utils/async')
-const getCalcForTable = require("../../utils/calcFor")
-const {getData} = require("../../models/db_apis")
+import {Request, Response} from 'express'
+import asyncMiddleware from '../../utils/async'
+import getCalcForTable from '../../utils/calcFor'
+import { getData } from '../../models/db_apis'
 
 // @desc Get Calculate FOR
 // @route /api/calc-for
 // access Private
-exports.getCalcFor = asyncMiddleware(async (req, res) => {
+export const getCalcFor = asyncMiddleware(async (req: Request, res: Response) => {
     const {date} = req.query
+    // @ts-ignore
     const calcForTable = await getCalcForTable(date)
     res.status(200).json({success: true, rows: calcForTable})
 })
@@ -14,7 +16,7 @@ exports.getCalcFor = asyncMiddleware(async (req, res) => {
 // @desc Put Update CB Standard
 // @route /api/updatecbn
 // access Admin
-exports.updateCbn = asyncMiddleware(async (req, res) => {
+export const updateCbn = asyncMiddleware(async (req: Request, res: Response) => {
     const {fromDate, toDate, cbNorm} = req.body
     const {rows: [existingData]} = await getData(`SELECT
                                            *

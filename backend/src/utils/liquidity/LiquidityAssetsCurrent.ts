@@ -6,7 +6,7 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
         super('')
     }
 
-    formatQuery(date: string, where_query = `CODE_COA LIKE '101%'`) {
+    formatQuery(date: string, whereQuery = `CODE_COA LIKE '101%'`) {
         return `SELECT ABS((NVL(UZS_SE, 0) + NVL(EUR_SE, 0) + NVL(USD_SE, 0) + NVL(RUB_SE, 0) + NVL(JPY_SE, 0) + NVL(KZT_SE, 0) +
                             NVL(GBP_SE, 0) + NVL(CHF_SE, 0) + NVL(CHN_SE, 0)))              AS TOTAL,
                        ABS(UZS) NAT_CURR,
@@ -23,7 +23,7 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                            ROUND(SUM(SALDO_OUT) / POWER(10, 8), 2)         AS SALDO_OUT,
                            ROUND(SUM(SALDO_EQUIVAL_OUT) / POWER(10, 8), 2) AS SALDO_EQUIVAL_OUT
                     FROM IBS.ACCOUNTS@IABS
-                    WHERE ${where_query}
+                    WHERE ${whereQuery}
                     GROUP BY CODE_CURRENCY)
                     PIVOT ( SUM(NVL(SALDO_OUT, 0)), SUM(NVL(SALDO_EQUIVAL_OUT, 0)) AS SE FOR CODE_CURRENCY IN ('000' AS UZS,
                         '840' AS USD,

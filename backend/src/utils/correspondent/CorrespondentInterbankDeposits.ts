@@ -37,7 +37,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
         ]
     }
 
-    formatQuery(date: string, where_query = '99991286') {
+    formatQuery(date: string, whereQuery = '99991286') {
         return `SELECT (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
                                saldo_out
@@ -48,7 +48,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                           AND ROWNUM = 1) AS saldo_out
                 FROM   ibs.accounts@iabs AC
                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                   AND code_currency = '000')) AS UZS,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 6), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -60,7 +60,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '156')) AS CNY,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 6), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -72,7 +72,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '392')) AS JPY,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -84,7 +84,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '398')) AS KZT,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -96,7 +96,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '643')) AS RUB,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -108,7 +108,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '756')) AS CHF,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -120,7 +120,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '826')) AS GBP,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -132,7 +132,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '840')) AS USD,
                        (SELECT ROUND(SUM(saldo_out) / POWER(10, 8), 2)
                         FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
@@ -144,7 +144,7 @@ class CorrespondentInterbankDeposits extends CorrespondentMainClass {
                                           AND ROWNUM = 1) AS saldo_out
                                 FROM   ibs.accounts@iabs AC
                                 WHERE  CODE_COA IN ('10597', '10531', '10541', '10521')
-                                  AND SUBSTR(code, 17, 8) = '${where_query}'
+                                  AND SUBSTR(code, 17, 8) = '${whereQuery}'
                                   AND code_currency = '978')) AS EUR
                 FROM   dual`
     }

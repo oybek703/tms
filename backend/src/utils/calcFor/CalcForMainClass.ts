@@ -1,24 +1,24 @@
-const MainClass = require("../mainClass")
-const {formatOneDate} = require("../dateFormatter")
-const {getDatesBetweenDates} = require("./calcfor_pure_functions")
+import MainClass from '../mainClass'
+import { getDatesBetweenDates } from './calcfor_pure_functions'
+import { formatOneDate } from '../dateFormatter'
 
 class CalcForMainClass extends MainClass {
-    constructor(date) {
+    constructor(date: string) {
         super(date)
     }
 
-    startEndDateQuery() {
+    startEndDateQuery = () => {
         return `SELECT FROM_DATE, END_DATE FROM FOR_STANDARD
                 WHERE TO_DATE('${this.date}', 'DD-MM-YYYY')>=FROM_DATE
                   AND TO_DATE('${this.date}', 'DD-MM-YYYY')<=END_DATE`
     }
 
     async getDates() {
-        const {FROM_DATE, END_DATE} = await this.getDataInDates('', false, this.startEndDateQuery.bind(this))
+        const {FROM_DATE, END_DATE} = await this.getDataInDates('', this.startEndDateQuery)
         return getDatesBetweenDates(FROM_DATE, END_DATE)
     }
 
-    formatQuery(date, where_query) {
+    formatQuery(date: string, whereQuery: string = '') {
         return `SELECT
                        DATE_VALUE,
                        F_O_R,
@@ -54,13 +54,13 @@ class CalcForMainClass extends MainClass {
                                      FROM DUAL))`
     }
 
-    async getOneRow(date) {
-        return await this.getDataInDates('', false, this.formatQuery.bind(this, date))
+    async getOneRow(date: string) {
+        return await this.getDataInDates('', this.formatQuery.bind(this, date))
     }
 
     async getRows() {
         const dates = await this.getDates()
-        return await Promise.all(dates.map(date => {
+        return await Promise.all(dates.map((date: string) => {
         if(new Date(date) <= new Date(Date.now() - 86400000)) {
             return this.getOneRow(formatOneDate(date))
         }
@@ -75,4 +75,4 @@ class CalcForMainClass extends MainClass {
     }
 }
 
-module.exports = CalcForMainClass
+export default CalcForMainClass

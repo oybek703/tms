@@ -3,7 +3,7 @@ const MainClass = require("../mainClass")
 class TopDepositsMainClass extends MainClass {
     constructor(date) {
         super(date)
-        this.currencyNames = ['000', '840', '978']
+        this.currencyCodes = ['000', '840', '978']
         this.codes = ['20200', '20600', '20400', '22602', '22613', '22614']
         this.accounts = this.codes.reduce((acc, val) => {
             acc[val] = this.currencies

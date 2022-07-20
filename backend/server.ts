@@ -14,12 +14,12 @@ import profitAndLostRoutes from './src/routes/Treasury/profitAndLost'
 import capitalRoutes from './src/routes/Treasury/capital'
 import liquidityRoutes from './src/routes/Treasury/liquidity'
 import correspondentRoutes from './src/routes/Treasury/correspondent'
-// const currencyPositionRoutes = require('./src/routes/Treasury/currencyPosition')
+import calcForRoutes from './src/routes/Treasury/calcFor'
+import currencyPositionRoutes from './src/routes/Treasury/currencyPosition'
+import platRoutes from './src/routes/Treasury/plat'
 // const dashboardRoutes = require('./src/routes/Analytics/dashboard')
-// const calcForRoutes = require('./src/routes/Treasury/calcFor')
 // const gmRoutes = require('./src/routes/Treasury/gm')
 // const interbankDepositsRoutes = require('./src/routes/Treasury/interbankDeposits')
-// const platRoutes = require('./src/routes/Treasury/plat')
 // const topDepositsRoutes = require('./src/routes/Treasury/topDeposits')
 // const timeDepoClientsRoutes = require('./src/routes/Treasury/timeDepoClients')
 // const timeDepositsRoutes = require('./src/routes/Treasury/timeDeposits')
@@ -48,15 +48,15 @@ app.use('/api/profitandlost', profitAndLostRoutes)
 app.use('/api/capital', capitalRoutes)
 app.use('/api/liquidity', liquidityRoutes)
 app.use('/api/correspondent', correspondentRoutes)
+app.use('/api/calcfor', calcForRoutes)
+app.use('/api/currencyposition', currencyPositionRoutes)
+app.use('/api/plat', platRoutes)
 // app.use('/api/banklimits', bankLimitsRoutes)
 // app.use('/api/gapsimulation', gapManualRoutes)
 // app.use('/api/correspondent', correspondentRoutes)
-// app.use('/api/currencyposition', currencyPositionRoutes)
 // app.use('/api/dashboard', dashboardRoutes)
-// app.use('/api/calcfor', calcForRoutes)
 // app.use('/api/gm', gmRoutes)
 // app.use('/api/interbankdeposits', interbankDepositsRoutes)
-// app.use('/api/plat', platRoutes)
 // app.use('/api/topdeposits', topDepositsRoutes)
 // app.use('/api/timedepoclients', timeDepoClientsRoutes)
 // app.use('/api/timedeposits', timeDepositsRoutes)

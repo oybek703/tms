@@ -37,42 +37,42 @@ class CorrespondentInterbankDepositsCurrent extends CorrespondentInterbankDeposi
                     '398' AS KZT))`
     }
 
-    formatQuery(date: string, where_query = '') {
+    formatQuery(date: string, whereQuery = '') {
         return `SELECT ROUND((SELECT ABS(SUM(SALDO_OUT))
                               from IBS.ACCOUNTS@IABS
-                              WHERE ${where_query}
+                              WHERE ${whereQuery}
                                 AND CODE_CURRENCY = '000') / POWER(10, 8), 2) AS UZS,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '156'), 0) / POWER(10, 8), 2) AS CNY,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '392'), 0) / POWER(10, 8), 2) AS JPY,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '398'), 0) / POWER(10, 8), 2) AS KZT,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '643'), 0) / POWER(10, 8), 2) AS RUB,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '756'), 0) / POWER(10, 8), 2) AS CHF,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '826'), 0) / POWER(10, 8), 2) AS GBP,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '840'), 0) / POWER(10, 8), 2) AS USD,
                        ROUND(NVL((SELECT ABS(SUM(SALDO_OUT))
                                   from IBS.ACCOUNTS@IABS
-                                  WHERE ${where_query}
+                                  WHERE ${whereQuery}
                                     AND CODE_CURRENCY = '978'), 0) / POWER(10, 8), 2) AS EUR
                 FROM   dual`
     }

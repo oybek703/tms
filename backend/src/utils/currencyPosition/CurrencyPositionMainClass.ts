@@ -1,9 +1,12 @@
-const MainClass = require("../mainClass")
+import MainClass from '../mainClass'
 
 class CurrencyPositionMainClass extends MainClass {
-    constructor(date) {
+
+    currencyCodes: {code: string, isHead: boolean}[]
+
+    constructor(date: string) {
         super(date)
-        this.currencyNames = [
+        this.currencyCodes = [
             {code: '036', isHead: false},
             {code: '051', isHead: false},
             {code: '124', isHead: false},
@@ -40,21 +43,21 @@ class CurrencyPositionMainClass extends MainClass {
         ]
     }
 
-    regularCapitalQuery(date) {
+    regularCapitalQuery = () => {
         return `SELECT 
                    EQUIVAL  AS REG_CAP
                 FROM (SELECT * FROM REGULATORYCAPITAL ORDER BY OPER_DAY DESC) 
                 WHERE 
-                      OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND ROLE='R_C'
+                      OPER_DAY<TO_DATE('${this.date}', 'DD-MM-YYYY') AND ROLE='R_C'
                   AND 
                       ROWNUM=1`
     }
 
     async regular_capital() {
-        return await this.getDataInDates('', false, this.regularCapitalQuery)
+        return await this.getDataInDates('', this.regularCapitalQuery)
     }
 
-    formatQuery(date, where_query) {
+    formatQuery(date: string, whereQuery: string) {
         return `SELECT
                        CURRENCY_CODE,
                        CURRENCY_NAME,
@@ -97,12 +100,12 @@ class CurrencyPositionMainClass extends MainClass {
                     FROM DUAL) AS SHORT_VAL, /* короткая */
                    (SELECT EQUIVAL FROM REGULATORYCAPITAL WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) AS REG_CAP
                FROM (SELECT * FROM CURRENCYPOSITION ORDER BY OPER_DAY DESC)
-               WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND CURRENCY_CODE='${where_query}' AND ROWNUM=1)`
+               WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND CURRENCY_CODE='${whereQuery}' AND ROWNUM=1)`
     }
 
-    async getOneRow(currency_code, isTableHead) {
+    async getOneRow(currencyCode: string, isTableHead: boolean) {
         const {
-            CURRENCY_CODE = currency_code,
+            CURRENCY_CODE = currencyCode,
             CURRENCY_NAME = 'no_data',
             RCC = 0,
             REQUIREMENTS = 0,
@@ -116,7 +119,7 @@ class CurrencyPositionMainClass extends MainClass {
             LONG_VAL = 0,
             SHORT_VAL = 0,
             POS_RATIO = 0
-        } =  await this.getDataInDates(currency_code)
+        } =  await this.getDataInDates(currencyCode)
         return {
             CURRENCY_CODE,
             CURRENCY_NAME,
@@ -137,7 +140,7 @@ class CurrencyPositionMainClass extends MainClass {
     }
 
     async getRows() {
-        const allRows = (await Promise.all(this.currencies
+        const allRows = (await Promise.all(this.currencyCodes
             .map(({code, isHead}) => this.getOneRow(code, isHead))))
             .map(currency => {
                 if(currency.CURRENCY_CODE === 392) {
@@ -182,4 +185,4 @@ class CurrencyPositionMainClass extends MainClass {
     }
 }
 
-module.exports = CurrencyPositionMainClass
+export default CurrencyPositionMainClass

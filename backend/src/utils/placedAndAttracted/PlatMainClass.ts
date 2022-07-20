@@ -1,11 +1,18 @@
-const MainClass = require("../mainClass")
+import MainClass, { OwnQuery } from '../mainClass'
+
+interface FundData {
+    fund_name: string
+    balance_code: string
+    sum: number
+    percent: string
+}
 
 class PlatMainClass extends MainClass {
-    constructor(date) {
+    constructor(date: string) {
         super(date)
     }
 
-    formatQuery(date, where_query) {
+    formatQuery(date: string, whereQuery: string) {
         return `SELECT
                     ABS(ROUND(NVL(SUM(SALDO_EQUIVAL_OUT)/POWER(10, 5), 0), 2)) SUM
                 FROM
@@ -16,23 +23,25 @@ class PlatMainClass extends MainClass {
                                AND sl.OPER_DAY < TO_DATE('${date}', 'DD.MM.YYYY')
                                AND ROWNUM = 1) AS SALDO_EQUIVAL_OUT
                      FROM IBS.ACCOUNTS@IABS AC
-                     WHERE ${where_query})`
+                     WHERE ${whereQuery})`
     }
 
-    platQuery(role) {
-        return function (date) {
+    platQuery(role: string) {
+        const _this = this
+        return function () {
             return `SELECT SALDO_EQUIVAL_OUT SUM FROM (SELECT * FROM PLACED_ATTRACTED ORDER BY OPER_DAY DESC)
-                WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND ROLE='${role}' AND ROWNUM=1`
+                WHERE OPER_DAY<TO_DATE('${_this.date}', 'DD-MM-YYYY') AND ROLE='${role}' AND ROWNUM=1`
         }
     }
 
-    async getOneRow(fund_name, balance_code, code_coa, ownQuery, forChart) {
+    async getOneRow(fund_name: string, balance_code: string,
+        code_coa: string, ownQuery? : OwnQuery, forChart: boolean = false) {
         let sum
-        if (code_coa) {
+        if (Boolean(code_coa)) {
             const {SUM} = await this.getDataInDates(code_coa)
             sum = SUM
         } else {
-            const {SUM} = await this.getDataInDates('', false, ownQuery)
+            const {SUM} = await this.getDataInDates('', ownQuery)
             sum = SUM
         }
         return {
@@ -94,7 +103,7 @@ class PlatMainClass extends MainClass {
             'Кредиты к оплате',
             '216, 220, 23602',
             `code_coa like '216%' or code_coa like '220%' or code_coa='23602'`,
-            '',
+            null,
             true
         )
     } /* Кредиты к оплате */
@@ -141,7 +150,7 @@ class PlatMainClass extends MainClass {
             'Кассовая наличность',
             '101',
             `code_coa like '101%'`,
-            '',
+            null,
             true
         )
     } /* Кассовая наличность */
@@ -151,7 +160,7 @@ class PlatMainClass extends MainClass {
             'Средства в ЦБ РУз',
             '103',
             `code_coa like '103%'`,
-            '',
+            null,
             true
         )
     } /* Средства в ЦБ РУз */
@@ -161,7 +170,7 @@ class PlatMainClass extends MainClass {
             'Коррсчета в других банках',
             '105',
             `code_coa like '105%'`,
-            '',
+            null,
             true
         )
     } /* Коррсчета в других банках */
@@ -305,7 +314,7 @@ class PlatMainClass extends MainClass {
             this.payed_funds()
         ])
 
-        let involvedFunds = [demandDeposits,
+        let involvedFunds: FundData[] = [demandDeposits,
             organizationDeposits,
             savingDeposits,
             timeDeposits,
@@ -315,7 +324,7 @@ class PlatMainClass extends MainClass {
             otherClientDeposits,
             issuedBills,
             ownResources] /* ПРИВЛЕЧЕННЫЕ СРЕДСТВА */
-        let placedFunds = [cashOnHand,
+        let placedFunds: FundData[] = [cashOnHand,
             fundsInCB,
             corrAccounts,
             billsInvestments,
@@ -329,7 +338,7 @@ class PlatMainClass extends MainClass {
         const minOfTwoFunds = Math.min(receivedFunds['sum'], payedFunds['sum'])
 
         /* Прочие обязательства */
-        let otherLiabilities = +(ownResources['sum']+requirements['sum']-(involvedMiddleValue+minOfTwoFunds)).toFixed(2)
+        let otherLiabilities: any = +(ownResources['sum']+requirements['sum']-(involvedMiddleValue+minOfTwoFunds)).toFixed(2)
         otherLiabilities = {
             fund_name: 'Прочие обязательства',
             balance_code: '',
@@ -341,7 +350,7 @@ class PlatMainClass extends MainClass {
         const involvedFundsSum = [...involvedFunds].filter((_, i) => i !== 1).reduce((acc, val) => acc+=val['sum'], 0)
 
         /* Прочие активы */
-        let otherActives = +(involvedFundsSum-[...placedFunds].reduce((acc, val) => acc+=val['sum'], 0)).toFixed(2)
+        let otherActives: any = +(involvedFundsSum-[...placedFunds].reduce((acc, val) => acc+=val['sum'], 0)).toFixed(2)
         otherActives = {
             fund_name: 'Прочие активы',
             balance_code: '',
@@ -349,22 +358,22 @@ class PlatMainClass extends MainClass {
             percent: 'no_calc'
         }
         placedFunds.push(otherActives)
-        const placedFundsSum = +placedFunds.reduce((acc, val) => acc+=val['sum'], 0).toFixed(2)
+        const placedFundsSum = +placedFunds.reduce((acc: number, val: FundData) => acc+=val['sum'], 0).toFixed(2)
 
-        involvedFunds = involvedFunds.map((v, i) => {
+        involvedFunds = involvedFunds.map((v: FundData, i: number) => {
             if(i !== 1) {
-                v['percent'] = +(v['sum']*100/involvedFundsSum).toFixed(2)
+                v['percent'] = (v['sum']*100/involvedFundsSum).toFixed(2)
             }
             return v
         })
-        placedFunds = placedFunds.map((v, i) => {
-            v['percent'] = +(v['sum']*100/placedFundsSum).toFixed(2)
+        placedFunds = placedFunds.map((v: FundData, i: number) => {
+            v['percent'] = (v['sum']*100/placedFundsSum).toFixed(2)
             return v
         })
-        involvedFunds.push({fund_name: 'ВСЕГО РЕСУРСОВ', balance_code: '', sum: involvedFundsSum, percent: 100.00})
-        placedFunds.push({fund_name: 'ВСЕГО ВЛОЖЕНИЙ', balance_code: '', sum: placedFundsSum, percent: 100.00})
+        involvedFunds.push({fund_name: 'ВСЕГО РЕСУРСОВ', balance_code: '', sum: involvedFundsSum, percent: '100.00'})
+        placedFunds.push({fund_name: 'ВСЕГО ВЛОЖЕНИЙ', balance_code: '', sum: placedFundsSum, percent: '100.00'})
         return {involvedFunds, placedFunds}
     }
 }
 
-module.exports = PlatMainClass
+export default PlatMainClass
