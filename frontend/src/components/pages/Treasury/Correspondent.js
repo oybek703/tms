@@ -15,7 +15,7 @@ const Correspondent = () => {
     const currentState = useSelector(state => state.correspondentCurrentState)
     const { correspondent, loading, error } = useSelector(
       state => state.correspondent)
-    const [correspondentData, setCorrespondentData] = useState(correspondent)
+    let [correspondentData, setCorrespondentData] = useState(correspondent)
     const {
         correspondent: currentCorrespondent,
         loading: currentLoading,
@@ -39,6 +39,7 @@ const Correspondent = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [correspondent, currentCorrespondent])
+    if(!correspondentData) correspondentData = {}
     return (
       <>
           <PageTitle title='Информация о ликвидных средствах банка'/>

@@ -13,12 +13,15 @@ backend/client/*
 
 # environment variables
 backend/config/.env
-backend/config/data.js
+backend/config/data.ts
 
 # data
 backend/data/*
 backend/oracle/sql/*
 backend/oracle/Balance Query
+
+# build files
+backend/dist/*
 
 # dependencies
 frontend/node_modules

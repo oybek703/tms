@@ -3,7 +3,7 @@ const MainClass = require("../mainClass")
 class CurrencyPositionMainClass extends MainClass {
     constructor(date) {
         super(date)
-        this.currencies = [
+        this.currencyNames = [
             {code: '036', isHead: false},
             {code: '051', isHead: false},
             {code: '124', isHead: false},
