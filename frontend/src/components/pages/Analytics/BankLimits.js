@@ -116,7 +116,7 @@ function LocalBanksTable ({ rows = [], nationalBank = [] }) {
             <BankLimitsTableHead localBanks/>
             <TableBody>
                 {nationalBank.map(row => <TableRow key={uuid()}>
-                  <TableCell><b>1</b></TableCell>
+                  <TableCell align='center'><b>1</b></TableCell>
                   <TableCell><b>{row['NAME']}</b></TableCell>
                   <NoWrapCell colSpan={2} cellData={row['SALDO_EQUIVAL_OUT']}/>
                   <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_22']}/>
