@@ -5,8 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "build": "node tsc",
-    "start": "node dist/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\""
+    "start": "node build/server.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon build/server.js\""
   },
   "author": "",
   "license": "ISC",

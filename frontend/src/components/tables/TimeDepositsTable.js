@@ -94,7 +94,7 @@ function TimeDepositsTable({rows= {}, pickedDate}) {
                             <TableCell align='center'><BoldWithColor>А</BoldWithColor></TableCell>
                             <TableCell align='center'><BoldWithColor>Б</BoldWithColor></TableCell>
                             {Array(11).fill('')
-                            .map((_, i) => <TableCell align='center'><BoldWithColor>{i+1}</BoldWithColor></TableCell>)}
+                            .map((_, i) => <TableCell key={uuid()} align='center'><BoldWithColor>{i+1}</BoldWithColor></TableCell>)}
                         </TableRow>
                     </TableHead>
                     <TableBody>

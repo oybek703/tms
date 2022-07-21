@@ -21,7 +21,7 @@ backend/oracle/sql/*
 backend/oracle/Balance Query
 
 # build files
-backend/dist/*
+backend/build/*
 
 # dependencies
 frontend/node_modules

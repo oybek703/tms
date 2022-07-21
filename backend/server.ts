@@ -5,11 +5,12 @@ import { checkConnection } from './src/models/db_apis'
 import morgan from 'morgan'
 import { address } from 'ip'
 import cors from 'cors'
-import userRoutes from './src/routes/Admin/auth'
-import operDayRoutes from './src/routes/operDays'
-import mainIndicatorsRoutes from './src/routes/Treasury/mainIndicators'
 import notFoundPage from './src/middleware/notFound'
 import errorHandler from './src/middleware/errorHandler'
+import userRoutes from './src/routes/Admin/auth'
+import operDayRoutes from './src/routes/operDays'
+import dashboardRoutes from './src/routes/Analytics/dashboard'
+import mainIndicatorsRoutes from './src/routes/Treasury/mainIndicators'
 import profitAndLostRoutes from './src/routes/Treasury/profitAndLost'
 import capitalRoutes from './src/routes/Treasury/capital'
 import liquidityRoutes from './src/routes/Treasury/liquidity'
@@ -17,24 +18,23 @@ import correspondentRoutes from './src/routes/Treasury/correspondent'
 import calcForRoutes from './src/routes/Treasury/calcFor'
 import currencyPositionRoutes from './src/routes/Treasury/currencyPosition'
 import platRoutes from './src/routes/Treasury/plat'
-// const dashboardRoutes = require('./src/routes/Analytics/dashboard')
-// const gmRoutes = require('./src/routes/Treasury/gm')
-// const interbankDepositsRoutes = require('./src/routes/Treasury/interbankDeposits')
-// const topDepositsRoutes = require('./src/routes/Treasury/topDeposits')
-// const timeDepoClientsRoutes = require('./src/routes/Treasury/timeDepoClients')
-// const timeDepositsRoutes = require('./src/routes/Treasury/timeDeposits')
-// const dashboardMonthlyRoutes = require('./src/routes/Analytics/dashboardMonthly')
-// const depositsByDeadlineRoutes = require('./src/routes/Analytics/depositsByDeadline')
-// const reportLiabilitiesRoutes = require('./src/routes/Analytics/reportLiabilities')
-// const gapRoutes = require('./src/routes/Analytics/gap')
-// const fcrbRoutes = require('./src/routes/Analytics/fcrb')
-// const bankLimitsRoutes = require('./src/routes/Admin/Manual/bankLimits')
-// const gapManualRoutes = require('./src/routes/Admin/Manual/gapManual')
+import interbankDepositsRoutes from './src/routes/Treasury/interbankDeposits'
+import topDepositsRoutes from './src/routes/Treasury/topDeposits'
+import timeDepoClientsRoutes from './src/routes/Treasury/timeDepoClients'
+import timeDepositsRoutes from './src/routes/Treasury/timeDeposits'
+import depositsByDeadlineRoutes from './src/routes/Analytics/depositsByDeadline'
+import reportLiabilitiesRoutes from './src/routes/Analytics/reportLiabilities'
+import gmRoutes from './src/routes/Treasury/gm'
+import dashboardMonthlyRoutes from './src/routes/Analytics/dashboardMonthly'
+import fcrbRoutes from './src/routes/Analytics/fcrb'
+import gapRoutes from './src/routes/Analytics/gap'
+import gapManualRoutes from './src/routes/Admin/Manual/gapManual'
+import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
+
 const app: Express = express()
 const port = process.env.PORT || 4200
 
-if (process.env.NODE_ENV === 'development' ||
-    address().startsWith('192.168.')) {
+if (process.env.NODE_ENV === 'development' || address().startsWith('192.168.')) {
     app.use(morgan('dev'))
 }
 
@@ -51,20 +51,20 @@ app.use('/api/correspondent', correspondentRoutes)
 app.use('/api/calcfor', calcForRoutes)
 app.use('/api/currencyposition', currencyPositionRoutes)
 app.use('/api/plat', platRoutes)
-// app.use('/api/banklimits', bankLimitsRoutes)
-// app.use('/api/gapsimulation', gapManualRoutes)
-// app.use('/api/correspondent', correspondentRoutes)
-// app.use('/api/dashboard', dashboardRoutes)
-// app.use('/api/gm', gmRoutes)
-// app.use('/api/interbankdeposits', interbankDepositsRoutes)
-// app.use('/api/topdeposits', topDepositsRoutes)
-// app.use('/api/timedepoclients', timeDepoClientsRoutes)
-// app.use('/api/timedeposits', timeDepositsRoutes)
-// app.use('/api/dashboardmonthly', dashboardMonthlyRoutes)
-// app.use('/api/depositsbydeadline', depositsByDeadlineRoutes)
-// app.use('/api/reportliabilities', reportLiabilitiesRoutes)
-// app.use('/api/gap', gapRoutes)
-// app.use('/api/fcrb', fcrbRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/interbankdeposits', interbankDepositsRoutes)
+app.use('/api/topdeposits', topDepositsRoutes)
+app.use('/api/timedepoclients', timeDepoClientsRoutes)
+app.use('/api/timedeposits', timeDepositsRoutes)
+app.use('/api/depositsbydeadline', depositsByDeadlineRoutes)
+app.use('/api/reportliabilities', reportLiabilitiesRoutes)
+app.use('/api/gm', gmRoutes)
+app.use('/api/dashboardmonthly', dashboardMonthlyRoutes)
+app.use('/api/fcrb', fcrbRoutes)
+app.use('/api/gap', gapRoutes)
+app.use('/api/gapsimulation', gapManualRoutes)
+app.use('/api/banklimits', bankLimitsRoutes)
+
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(join(__dirname, '/client')))
