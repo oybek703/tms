@@ -7,7 +7,7 @@ oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 export async function checkConnection() {
     try {
         const db_connection = await oracledb.getConnection(connection)
-        await db_connection.execute(`select * from dual`)
+        await db_connection.execute(`SELECT * FROM DUAL`)
         console.log(`Successfully connected to database!`.blue.underline)
     } catch (e) {
         console.log(`Error while connecting database:`.red)
@@ -15,9 +15,9 @@ export async function checkConnection() {
     }
 }
 
-export async function getData(sql: string, bindParams = [], autoCommit = true) {
+export async function getData(query: string, bindParams = [], autoCommit = true) {
     const db_connection = await oracledb.getConnection(connection)
-    const result = await db_connection.execute(sql, bindParams, {autoCommit})
+    const result = await db_connection.execute(query, bindParams, {autoCommit})
     await db_connection.release()
     return result
 }

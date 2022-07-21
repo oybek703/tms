@@ -7,17 +7,15 @@ import GapSimulation from './GapSimulation'
 // @route /gapmanual
 // access Admin
 export const getGapManual = asyncMiddleware(async (req: Request, res: Response) => {
-    // @ts-ignore
-    let {forEditing} = req.query.forEditing
+    const {forEditing} = req.query
     const booleanForEditing = forEditing === 'true'
-    if(!booleanForEditing) await getData(`
-        BEGIN
-            DELETE FROM GAP_SIMULATION_AUTO WHERE 1=1;
-            DELETE FROM GAP_SIMULATION_MANUAL WHERE 1=1;
-            INSERT INTO GAP_SIMULATION_AUTO (SELECT * FROM GAP_ANALYSIS_AUTO);
-            INSERT INTO GAP_SIMULATION_MANUAL (SELECT * FROM GAP_ANALYSIS_MANUAL);
-        END;
-    `)
+    const query = `BEGIN
+                       DELETE FROM GAP_SIMULATION_AUTO WHERE 1=1;
+                       DELETE FROM GAP_SIMULATION_MANUAL WHERE 1=1;
+                       INSERT INTO GAP_SIMULATION_AUTO (SELECT * FROM GAP_ANALYSIS_AUTO);
+                       INSERT INTO GAP_SIMULATION_MANUAL (SELECT * FROM GAP_ANALYSIS_MANUAL);
+                   END;`
+    if(!booleanForEditing) await getData(query)
     const gapManualData = await (new GapSimulation(booleanForEditing).getRows())
     res.json({success: true, data: gapManualData})
 })
@@ -27,7 +25,7 @@ export const getGapManual = asyncMiddleware(async (req: Request, res: Response) 
 // access Admin
 export const updateGapManual = asyncMiddleware(async (req: Request, res: Response) => {
     const {colName, newValue, role, date, source} = req.body
-    let updateQuery = `UPDATE GAP_SIMULATION_MANUAL SET ${colName}=${+newValue} 
+    let updateQuery: string = `UPDATE GAP_SIMULATION_MANUAL SET ${colName}=${+newValue} 
                        WHERE ROLE='${role}' AND OPER_DAY=${date}`
     if (source === 'AUTO') updateQuery = `UPDATE GAP_SIMULATION_AUTO
                                             SET ${colName}=${+newValue}
@@ -45,13 +43,14 @@ export const updateGapManual = asyncMiddleware(async (req: Request, res: Respons
 // @route /gapmanual/saveChanges
 // access Admin
 export const saveGapChanges = asyncMiddleware(async (req: Request, res: Response) => {
-    await getData(`
+    const query = `
        BEGIN
             DELETE FROM GAP_ANALYSIS_MANUAL WHERE 1=1;
             DELETE FROM GAP_SIMULATION_AUTO WHERE 1=1;
             INSERT INTO GAP_ANALYSIS_MANUAL (SELECT * FROM GAP_SIMULATION_MANUAL);
             INSERT INTO GAP_SIMULATION_AUTO (SELECT * FROM GAP_ANALYSIS_AUTO);
         END;
-    `)
+    `
+    await getData(query)
     res.json({success: true, message: 'changes saved'})
 })

@@ -32,7 +32,7 @@ import gapManualRoutes from './src/routes/Admin/Manual/gapManual'
 import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
 
 const app: Express = express()
-const port = process.env.PORT || 4200
+const port: string = process.env.PORT || '4200'
 
 if (process.env.NODE_ENV === 'development' || address().startsWith('192.168.')) {
     app.use(morgan('dev'))
@@ -67,7 +67,7 @@ app.use('/api/banklimits', bankLimitsRoutes)
 
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(join(__dirname, '/client')))
+    app.use(express.static(join(__dirname, '../client')))
     app.get('*', (req: Request, res: Response) => {
         res.sendFile(resolve(__dirname, '../client', 'index.html'))
     })
@@ -80,7 +80,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFoundPage)
 app.use(errorHandler)
 
-checkConnection().then(() => {
+checkConnection().then(_ => {
     app.listen(
         port,
         console.log.bind(

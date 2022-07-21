@@ -17,8 +17,8 @@ backend/config/data.ts
 
 # data
 backend/data/*
-backend/oracle/sql/*
-backend/oracle/Balance Query
+backend/oracle/*
+backend/changed_codes.txt
 
 # build files
 backend/build/*

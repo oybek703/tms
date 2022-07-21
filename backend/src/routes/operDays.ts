@@ -1,6 +1,5 @@
 import { getLastUpdateTime, getOperDays } from '../controllers/operDays'
-
-const {Router} = require('express')
+import { Router } from 'express'
 
 const router = Router()
 

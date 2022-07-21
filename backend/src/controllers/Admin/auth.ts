@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from 'express'
+import {Request, Response} from 'express'
 import asyncMiddleware from '../../utils/async'
 import ErrorResponse from '../../utils/errorResponse'
 import { getData } from '../../models/db_apis'
@@ -6,32 +6,35 @@ import { compare, genSalt, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 
 
+interface User {
+    ID: number
+    USERNAME: string
+    PASSWORD: string
+    ROLE: string
+    ALLOWED_PAGES: string
+}
+
 // @desc Sign in user
 // @route /auth/login
 // access Public
 export const signInUser = asyncMiddleware(async (req: Request, res: Response) => {
     const {username, password} = req.body
-    // @ts-ignore
-    const {rows: [user]} = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+    const query = `SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`
+    const {rows = []} = await getData(query)
+    const user: User | undefined = rows[0] as User
     if(user) {
-        // @ts-ignore
         const matchPassword = await compare(password, user.PASSWORD)
         if(matchPassword) {
             const token = sign(
-                // @ts-ignore
                 { id: user.ID },
-                // @ts-ignore
-                process.env.JWT_SECRET,
+                process.env.JWT_SECRET as string,
                 { expiresIn: '4h' }
             )
             res.status(200).json({
                 success: true,
                 token,
-                // @ts-ignore
                 username: user.USERNAME,
-                // @ts-ignore
                 ROLE: user.ROLE,
-                // @ts-ignore
                 pages: user.ALLOWED_PAGES
             })
         } else {
@@ -47,7 +50,8 @@ export const signInUser = asyncMiddleware(async (req: Request, res: Response) =>
 // access Admin
 export const addUser = asyncMiddleware(async (req: Request, res: Response) => {
     const {username, password, confirmpassword, allowedPages} = req.body
-    const {rows: [existingUser]} = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+    const {rows = []} = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+    const existingUser: User = rows[0] as User
     if(existingUser) throw new ErrorResponse(400, 'user_exists')
     if(password !== confirmpassword) throw new ErrorResponse(400, 'match_password')
     const salt = await genSalt(10)
@@ -63,7 +67,8 @@ export const addUser = asyncMiddleware(async (req: Request, res: Response) => {
 // access Admin
 export const deleteUserByName = asyncMiddleware(async (req: Request, res: Response) => {
     const {username} = req.params
-    const {rows: [user]} = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+    const {rows = []} = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+    const user: User = rows[0] as User
     if(!user) throw new ErrorResponse(404, 'User does not exists.')
     await getData(`DELETE FROM TRS_USERS WHERE USERNAME='${username}'`)
     res.json({success: true, message: `${username} deleted successfully.`})
@@ -83,83 +88,91 @@ export const getAllUsers = asyncMiddleware(async (req: Request, res: Response) =
 export const getUserByName = asyncMiddleware(async function (req: Request, res: Response) {
     const {id} = req.params
     const date = '02.06.2021'
-    const {rows: [user]} = await getData(`SELECT
-                                              (SELECT sum(saldo_equival_out)
-                                               FROM
-                                                   (SELECT
-                                                        (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                saldo_equival_out
-                                                         FROM ibs.saldo@iabs sl
-                                                         WHERE sl.account_code=ac.code
-                                                           AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                           AND rownum =1 ) AS saldo_equival_out
-                                                    FROM ibs.accounts@iabs AC
-                                                    WHERE code_coa like '101%' )) AS total,
-                                              (SELECT sum(saldo_equival_out)
-                                               FROM
-                                                   (SELECT
-                                                        (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                saldo_equival_out
-                                                         FROM ibs.saldo@iabs sl
-                                                         WHERE sl.account_code=ac.code
-                                                           AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                           AND rownum =1 ) AS saldo_equival_out
-                                                    FROM ibs.accounts@iabs AC
-                                                    WHERE code_coa like '101%'
-                                                      AND code_currency='000' )) AS nat_curr,
-                                              trunc(((select (
-                                                                 (SELECT sum(saldo_equival_out)
-                                                                  FROM
-                                                                      (SELECT
-                                                                           (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                                   saldo_equival_out
-                                                                            FROM ibs.saldo@iabs sl
-                                                                            WHERE sl.account_code=ac.code
-                                                                              AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                                              AND rownum =1 ) AS saldo_equival_out
-                                                                       FROM ibs.accounts@iabs AC
-                                                                       WHERE code_coa like '101%' ))-(SELECT sum(saldo_equival_out)
-                                                                     FROM
-                                                                     (SELECT
-                                                                     (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                     saldo_equival_out
-                                                                     FROM ibs.saldo@iabs sl
-                                                                     WHERE sl.account_code=ac.code
-                                                                     AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                                     AND rownum =1 ) AS saldo_equival_out
-                                                                     FROM ibs.accounts@iabs AC
-                                                                     WHERE code_coa like '101%'
-                                                                     AND code_currency='000' ))
-                                                             ) from dual)/(select equival from ibs.s_rate_cur@IABS where date_cross=to_date('${date}', 'DD-MM-YYYY') and code='840')),2)
-                                                                                  as for_curr_dollar,
-                                              (SELECT sum(saldo_out)
-                                               FROM
-                                                   (SELECT
-                                                        (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                saldo_out
-                                                         FROM ibs.saldo@iabs sl
-                                                         WHERE sl.account_code=ac.code
-                                                           AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                           AND rownum =1 ) AS saldo_out
-                                                    FROM ibs.accounts@iabs AC
-                                                    WHERE code_coa like '101%'
-                                                      AND code_currency='840' )) AS usa_dollar,
-                                              (SELECT sum(saldo_out)
-                                               FROM
-                                                   (SELECT
-                                                        (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                saldo_out
-                                                         FROM ibs.saldo@iabs sl
-                                                         WHERE sl.account_code=ac.code
-                                                           AND sl.oper_day<=to_date('${date}', 'DD-MM-YYYY')
-                                                           AND rownum =1 ) AS saldo_out
-                                                    FROM ibs.accounts@iabs AC
-                                                    WHERE code_coa like '101%'
-                                                      AND code_currency='978' )) AS evro
-                                          FROM ibs.saldo@iabs s,
-                                               ibs.accounts@iabs a
-                                          WHERE a.code=s.account_code
-                                            AND rownum=1`)
+    const query = `SELECT (SELECT SUM(SALDO_EQUIVAL_OUT)
+                    FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                   SALDO_EQUIVAL_OUT
+                                    FROM   IBS.SALDO@IABS SL
+                                    WHERE  SL.ACCOUNT_CODE = AC.CODE
+                                           AND SL.OPER_DAY <= TO_DATE('${date}',
+                                                              'DD-MM-YYYY')
+                                           AND ROWNUM = 1) AS saldo_equival_out
+                            FROM   IBS.ACCOUNTS@IABS AC
+                            WHERE  CODE_COA LIKE '101%'))      AS total,
+                   (SELECT SUM(SALDO_EQUIVAL_OUT)
+                    FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                   SALDO_EQUIVAL_OUT
+                                    FROM   IBS.SALDO@IABS SL
+                                    WHERE  SL.ACCOUNT_CODE = AC.CODE
+                                           AND SL.OPER_DAY <= TO_DATE('${date}',
+                                                              'DD-MM-YYYY')
+                                           AND ROWNUM = 1) AS saldo_equival_out
+                            FROM   IBS.ACCOUNTS@IABS AC
+                            WHERE  CODE_COA LIKE '101%'
+                                   AND CODE_CURRENCY = '000')) AS nat_curr,
+                   TRUNC(( (SELECT ( (SELECT SUM(SALDO_EQUIVAL_OUT)
+                                      FROM   (SELECT (SELECT
+                                                     --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                                     SALDO_EQUIVAL_OUT
+                                                      FROM   IBS.SALDO@IABS SL
+                                                      WHERE  SL.ACCOUNT_CODE = AC.CODE
+                                                             AND
+                                                     SL.OPER_DAY <= TO_DATE('${date}',
+                                                                    'DD-MM-YYYY')
+                                                             AND ROWNUM = 1) AS
+                                                     saldo_equival_out
+                                              FROM   IBS.ACCOUNTS@IABS AC
+                                              WHERE  CODE_COA LIKE '101%')) - (SELECT
+                                             SUM(SALDO_EQUIVAL_OUT)
+                                                                               FROM   (
+                                     SELECT
+                                             (SELECT
+                                             --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                             SALDO_EQUIVAL_OUT
+                                              FROM
+                   IBS.SALDO@IABS SL
+                            WHERE
+                   SL.ACCOUNT_CODE = AC.CODE
+                   AND
+                   SL.OPER_DAY <= TO_DATE('${date}',
+                   'DD-MM-YYYY')
+                   AND ROWNUM = 1) AS
+                   saldo_equival_out
+                   FROM   IBS.ACCOUNTS@IABS AC
+                   WHERE  CODE_COA LIKE '101%'
+                   AND CODE_CURRENCY =
+                   '000')) )
+                   FROM   DUAL) / (SELECT EQUIVAL
+                   FROM   IBS.S_RATE_CUR@IABS
+                   WHERE  DATE_CROSS = TO_DATE('${date}', 'DD-MM-YYYY')
+                   AND CODE = '840') ), 2)                     AS for_curr_dollar,
+                   (SELECT SUM(SALDO_OUT)
+                    FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                   SALDO_OUT
+                                    FROM   IBS.SALDO@IABS SL
+                                    WHERE  SL.ACCOUNT_CODE = AC.CODE
+                                           AND SL.OPER_DAY <= TO_DATE('${date}',
+                                                              'DD-MM-YYYY')
+                                           AND ROWNUM = 1) AS saldo_out
+                            FROM   IBS.ACCOUNTS@IABS AC
+                            WHERE  CODE_COA LIKE '101%'
+                                   AND CODE_CURRENCY = '840')) AS usa_dollar,
+                   (SELECT SUM(SALDO_OUT)
+                    FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                   SALDO_OUT
+                                    FROM   IBS.SALDO@IABS SL
+                                    WHERE  SL.ACCOUNT_CODE = AC.CODE
+                                           AND SL.OPER_DAY <= TO_DATE('${date}',
+                                                              'DD-MM-YYYY')
+                                           AND ROWNUM = 1) AS saldo_out
+                            FROM   IBS.ACCOUNTS@IABS AC
+                            WHERE  CODE_COA LIKE '101%'
+                                   AND CODE_CURRENCY = '978')) AS evro
+                FROM   IBS.SALDO@IABS S,
+                   IBS.ACCOUNTS@IABS A
+                WHERE  A.CODE = S.ACCOUNT_CODE
+                   AND ROWNUM = 1`
+    const {rows = []} = await getData(query)
+    const user: User = rows[0] as User
     if(!user) throw new ErrorResponse(404, `User with id of ${id} not found.`)
     res.status(200).json({success: true, user})
 })
