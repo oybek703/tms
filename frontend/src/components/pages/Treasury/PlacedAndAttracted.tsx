@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fetchPlat } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import PlacedAndAttractedTable from '../../tables/PlacedAndAttractedTable'
+import useTypedSelector from '../../../hooks/useTypedSelector'
 
-const PlacedAndAttracted = ({ forDashboard = false }) => {
+interface PlacedAndAttractedProps {
+    forDashboard?: boolean
+}
+
+const PlacedAndAttracted: React.FC<PlacedAndAttractedProps> = ({ forDashboard = false }) => {
     const dispatch = useDispatch()
-    const { plat, loading, error } = useSelector(state => state.plat)
-    const { reportDate } = useSelector(state => state.date)
+    const { plat, loading, error } = useTypedSelector(state => state.plat)
+    const { reportDate } = useTypedSelector(state => state.date)
     useEffect(() => {
         dispatch(fetchPlat(reportDate))
     }, [dispatch, reportDate])
@@ -17,15 +22,12 @@ const PlacedAndAttracted = ({ forDashboard = false }) => {
       [])
     return (
       <>
-          {!forDashboard && <PageTitle
-            title='Информация о привлеченных и размещенных средствах банка'
-            disabled={loading}/>}
+          {!forDashboard && <PageTitle title='Информация о привлеченных и размещенных средствах банка'/>}
           {loading ?
             <Loader/> :
             error ? <Alert message={error}/>
               :
-              <PlacedAndAttractedTable forDashboard={forDashboard}
-                                       rows={plat}/>}
+              <PlacedAndAttractedTable forDashboard={forDashboard} rows={plat}/>}
       </>
     )
 }

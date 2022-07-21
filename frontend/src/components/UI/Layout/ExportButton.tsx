@@ -15,7 +15,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const ExportButton = ({id = 'table_id'}) => {
+interface ExportButtonProps {
+    id: string
+}
+
+const ExportButton: React.FC<ExportButtonProps> = ({id = 'table_id'}) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
 
@@ -28,7 +32,7 @@ const ExportButton = ({id = 'table_id'}) => {
     }, [])
     const export2Excel = useCallback(() => {
         const table = new TableExport(
-            document.getElementById(id),
+            document.getElementById(id) as Node,
             {
                 formats: ['xlsx'],
                 position: 'top',
@@ -36,7 +40,7 @@ const ExportButton = ({id = 'table_id'}) => {
                 trimWhitespace: true
             }
         )
-        const exportData = table.getExportData()
+        const exportData: any = table.getExportData()
         /* convert export data to a file for download */
         const xlsxData = exportData[id]['xlsx']
         table.export2file(
@@ -54,6 +58,8 @@ const ExportButton = ({id = 'table_id'}) => {
     const popover_id = open ? 'simple-popover' : undefined
     return (
         <Grid container justify='flex-start'>
+            {/*
+            //@ts-ignore*/}
             <IconButton aria-describedby={popover_id} variant="contained" color="primary" onClick={handleClick}>
                 <MoreHorizIcon/>
             </IconButton>

@@ -55,7 +55,6 @@ declare module '@material-ui/core/styles/createMixins' {
 }
 
 
-// @ts-ignore
 const theme = createTheme({
     typography: {
         fontWeightBold: 600,

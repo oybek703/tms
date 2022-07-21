@@ -1,15 +1,24 @@
 import 'date-fns'
-import React, {memo, useCallback} from 'react'
+import React, { memo, useCallback } from 'react'
 import DateFnsUtils from '@date-io/date-fns'
-import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers'
-import {disableDays} from "../../../../utils"
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { disableDays } from '../../../../utils'
+import { WrapperVariant } from '@material-ui/pickers/wrappers/Wrapper'
 
-function MonthlyPicker({
+interface MonthlyPickerProps {
+    reportDate: string,
+    disabled: boolean,
+    operDays: any,
+    variant?: WrapperVariant,
+    handleDateChange: (date: any) => void
+}
+
+const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
                            reportDate,
                            disabled = false,
                            operDays = [],
                            variant='inline',
-                           handleDateChange= () => {}}) {
+                           handleDateChange= () => {}}) => {
     const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
         [operDays]
@@ -17,7 +26,7 @@ function MonthlyPicker({
     return (
         <MuiPickersUtilsProvider
             utils={DateFnsUtils} >
-                <KeyboardDatePicker
+                <KeyboardDatePicker onChange={handleDateChange} onError={handleDateChange}
                     disableToolbar
                     shouldDisableDate={memoizedDisableWeekends}
                     margin="dense"
@@ -27,13 +36,8 @@ function MonthlyPicker({
                     disabled={disabled}
                     value={reportDate}
                     helperText=''
-                    onChange={handleDateChange}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date'
-                    }}
-                    onError={handleDateChange}
                     invalidDateMessage='Please enter valid date!'
-                    maxDate={new Date(new Date()-86400000)}
+                    maxDate={new Date(new Date() as any -86400000)}
                     autoComplete='off'
                 />
         </MuiPickersUtilsProvider>

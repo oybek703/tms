@@ -2,14 +2,19 @@ import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
-import CalcForTable from '../../tables/CalcForTable'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fetchCalcFor } from '../../../redux/actions'
+import useTypedSelector from '../../../hooks/useTypedSelector'
+import CalcForTable from '../../tables/CalcForTable'
 
-const CalcFor = ({forDashboard = false}) => {
+interface CalcForProps {
+    forDashboard: boolean
+}
+
+const CalcFor: React.FC<CalcForProps> = ({forDashboard = false}) => {
     const dispatch = useDispatch()
-    const {calcfor = [], loading, error} = useSelector(state => state.calcFor)
-    const {reportDate} = useSelector(state => state.date)
+    const {calcfor = [], loading, error} = useTypedSelector(state => state.calcFor)
+    const {reportDate} = useTypedSelector(state => state.date)
     const {DATE_VALUE: startDate} = [...calcfor].shift() || {}
     const {DATE_VALUE: endDate} = [...calcfor].pop() || {}
     useEffect(() => {

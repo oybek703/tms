@@ -1,9 +1,8 @@
-import React, {Fragment, memo, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React, { Fragment, memo, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
-import {fetchDashboard} from '../../../redux/actions'
-import DashboardTabs from '../../UI/Layout/Tabs/DashboardTabs'
+import { fetchDashboard } from '../../../redux/actions'
 import DashboardMonthly from '../../UI/Layout/DashboardMonthly'
 import PlacedAndAttracted from '../Treasury/PlacedAndAttracted'
 import CalcFor from '../Treasury/CalcFor'
@@ -17,11 +16,13 @@ import CurrencyRatesTab from '../../UI/Layout/Dashboard/DashboardCurrencyRates'
 import CapitalTab from '../../UI/Layout/Dashboard/CapitalTab'
 import FundingTab from '../../UI/Layout/Dashboard/FundingTab'
 import CreditPortfolioTab from '../../UI/Layout/Dashboard/CreditPortfolioTab'
+import useTypedSelector from '../../../hooks/useTypedSelector'
+import DashboardTabs from '../../UI/Layout/Tabs/DashboardTabs'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
-  const {reportDate} = useSelector(state => state.date)
-  const {dashboard, loading, error} = useSelector(state => state.dashboard)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { dashboard, loading, error } = useTypedSelector(state => state.dashboard)
   const {
     dashboardCorrespondent = {},
     creditPart = [],
@@ -44,7 +45,7 @@ const Dashboard = () => {
     dispatch(fetchDashboard(reportDate))
   }, [dispatch, reportDate])
   useEffect(() => {
-    window.scrollTo({left: 0, top: 0, behavior: 'smooth'})
+    window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
   }, [])
   return (
       <Fragment>
@@ -67,7 +68,7 @@ const Dashboard = () => {
                           panel: <CurrencyRatesTab
                               currencyRates={currencyRates}/>
                         },
-                        {name: 'ЦРБ', panel: <Fcrb/>},
+                        { name: 'ЦРБ', panel: <Fcrb/> },
                         {
                           name: 'Лимиты',
                           panel: <BankLimits bankLimits={bankLimits}/>
@@ -110,7 +111,7 @@ const Dashboard = () => {
                                                      disaggregatedByTime={disaggregatedByTime}
                                                      fundingStructure={fundingStructure}/>
                         },
-                        {name: 'Dashboard', panel: <DashboardMonthly/>}
+                        { name: 'Dashboard', panel: <DashboardMonthly/> }
                       ]}/>
                 </>
         }

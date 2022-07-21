@@ -9,12 +9,13 @@ import Paper from '@material-ui/core/Paper'
 import {formatNumber, formatOneDate} from '../../../../utils'
 import TableCap from '../../helpers/TableCap'
 import StyledTableRow from '../../helpers/StyledTableRow'
-import ExportButton from '../ExportButton'
 import MonthlyPicker from './MonthlyPicker'
 import {v4 as uuid} from 'uuid'
 import {makeStyles} from '@material-ui/core'
+import ExportButton from '../ExportButton'
+import theme from '../../theme'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     pickerCell: {
         minWidth: 140,
         maxWidth: 150
@@ -22,15 +23,24 @@ const useStyles = makeStyles(theme => ({
     noWrap: theme.mixins.noWrap,
     centeredTitleRow: {
         ...theme.mixins.blueBackground,
-        fontWeight: '700'
+        fontWeight: 700
     }
-}))
+})
 
-function DashboardMonthlyTable({rows = [], firstDate, secondDate, handleDateChange, operDays, operDaysLoading}) {
+interface DashboardMonthlyTableProps {
+    rows: any
+    firstDate: string
+    secondDate: string
+    handleDateChange: (date: string) => void
+    operDays: string[]
+    operDaysLoading: boolean
+}
+
+const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({rows = [], firstDate, secondDate, handleDateChange, operDays, operDaysLoading}) => {
     const classes = useStyles()
     const {capital = [], liquidity = [], riskPart = []} = rows
     const colCount = (([...riskPart].pop() || {})['data'] || []).length
-    const colsHead = (([...riskPart].pop() || {})['data'] || []).map((c, i) => {
+    const colsHead = (([...riskPart].pop() || {})['data'] || []).map((c: any, i: number) => {
         if(i !== 0 && i !== colCount-1) {
             return c['MONTH_BEGIN'] || c['DATE_VALUE']
         }
@@ -54,10 +64,10 @@ function DashboardMonthlyTable({rows = [], firstDate, secondDate, handleDateChan
                                     disabled={operDaysLoading}
                                     reportDate={firstDate}
                                     operDays={operDays}
-                                    handleDateChange={handleDateChange('first_date')}
+                                    handleDateChange={handleDateChange.bind(null, 'first_date')}
                                     />
                             </TableCell>
-                            {colsHead.map(h => <TableCell align='center'
+                            {colsHead.map((h: any) => <TableCell align='center'
                                 className={classes.noWrap} key={uuid()} rowSpan={2}>{h}</TableCell>)}
                             <TableCell className={classes.pickerCell} align="center" rowSpan={2}>
                                 <span hidden>{secondDate}</span>
@@ -65,7 +75,7 @@ function DashboardMonthlyTable({rows = [], firstDate, secondDate, handleDateChan
                                     disabled={operDaysLoading}
                                     reportDate={secondDate}
                                     operDays={operDays}
-                                    handleDateChange={handleDateChange('second_date')}
+                                    handleDateChange={handleDateChange.bind(null, 'second_date')}
                                 />
                             </TableCell>
                             <TableCell align="center" colSpan={2}><b>Разница</b></TableCell>
@@ -88,11 +98,11 @@ function DashboardMonthlyTable({rows = [], firstDate, secondDate, handleDateChan
                                         <b>{title}</b>
                                     </TableCell>
                                 </TableRow>
-                                {rows.map((row,index) => (
+                                {rows.map((row: any,index: number) => (
                                     <StyledTableRow key={index}>
                                         <TableCell align="center"><b>{row['count']}</b></TableCell>
                                         <TableCell>{row['isTableHead'] ? <b>{row['state']}</b> : row['state']}</TableCell>
-                                        {row['data'].map((d, j) => <TableCell className={classes.noWrap}
+                                        {row['data'].map((d: any, j: number) => <TableCell className={classes.noWrap}
                                                                               align='center' key={uuid()}
                                                                               title={`${row['state']} - ${j === 0
                                                                                   ? formatOneDate(firstDate)

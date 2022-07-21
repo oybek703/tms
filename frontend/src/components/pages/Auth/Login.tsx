@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Button, CardContent, IconButton, makeStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -6,59 +6,61 @@ import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Redirect } from 'react-router-dom'
 import { parse } from 'query-string'
 import { signInUser } from '../../../redux/actions'
 import { toast } from 'react-toastify'
+import useTypedSelector from '../../../hooks/useTypedSelector'
 
 const useStyles = makeStyles(theme => ({
     darkText: {
-        color: theme.palette.common.dark,
+        color: '#000'
     },
     boldText: {
         textTransform: 'uppercase',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     formFields: {
         minWidth: '40em',
         margin: '1em auto 2.5em',
         textAlign: 'center',
         [theme.breakpoints.down('sm')]: {
-            minWidth: '25em',
-        },
+            minWidth: '25em'
+        }
     },
     form: {
         backgroundColor: 'white',
-        padding: '30px 20px',
+        padding: '30px 20px'
     },
     root: {
-        margin: '50px auto',
+        margin: '50px auto'
     },
     submit_btn: {
-        backgroundColor: theme.palette.success['main'],
+        backgroundColor: theme.palette.success['main']
     },
     submit_end_icon: {
-        color: theme.palette.error['main'],
+        color: theme.palette.error['main']
     },
     logo: {
         marginTop: -80,
-        marginBottom: -60,
-    },
+        marginBottom: -60
+    }
 }))
 
 const LoginPage = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const { user: { token }, loading, error } = useSelector(state => state.auth)
+    const { user: { token }, loading, error } = useTypedSelector(
+        state => state.auth)
     const [formData, setFormData] = useState({ username: '', password: '' })
     const [usernameHelperText, setUsernameHelperText] = useState('')
     const [passwordHelperText, setPasswordHelperText] = useState('')
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [showPassword, setShowPassword] = useState(false)
     const { redirectTo } = parse(window.location.search)
-    const handleChange = e => {
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
         switch (name) {
@@ -77,7 +79,7 @@ const LoginPage = () => {
                 return
         }
     }
-    const handleSubmit = e => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(signInUser(formData))
     }
@@ -100,8 +102,9 @@ const LoginPage = () => {
             }
         }
     }, [error])
-    if (token) return <Redirect
-        to={(redirectTo === '/' || !redirectTo) ? '/' : redirectTo}/>
+    if (token) { // @ts-ignore
+        return <Redirect to={(redirectTo === '/' || !redirectTo) ? '/' : redirectTo}/>
+    }
     return (
         <Grid container direction='column' alignItems='center' justify='center'
               className={classes.root}>
@@ -152,7 +155,7 @@ const LoginPage = () => {
                                                                       !showPassword)}>{showPassword
                                             ? <Visibility fontSize='small'/>
                                             : <VisibilityOff
-                                                fontSize='small'/>}</IconButton>,
+                                                fontSize='small'/>}</IconButton>
                                     }}/>
                             </Grid>
                             <Grid container justify='center'>

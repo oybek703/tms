@@ -3,24 +3,18 @@ import Table from '@material-ui/core/Table'
 import TableContainer from '@material-ui/core/TableContainer'
 import Paper from '@material-ui/core/Paper'
 import TableCap from '../UI/helpers/TableCap'
-import {
-    Grid,
-    makeStyles,
-    TableBody,
-    TableHead,
-    TableRow,
-} from '@material-ui/core'
+import { Grid, makeStyles, TableBody, TableHead, TableRow } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import { formatNumber, formatOneDate } from '../../utils'
 import InvolvedFunds from '../charts/Dashboard/PlacedAndAttracted/InvolvedFunds'
 import PlacedFunds from '../charts/Dashboard/PlacedAndAttracted/PlacedFunds'
 import ExportButton from '../UI/Layout/ExportButton'
-import { useSelector } from 'react-redux'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
-function getFundCategoryAndSeries(fundData = []) {
+function getFundCategoryAndSeries(fundData: any = []) {
     let fundChartData = [...fundData].filter(f => f['forChart'])
-        .map(f => ({category: f['fund_name'], sum: f['sum']}))
+        .map((f: any) => ({category: f['fund_name'], sum: f['sum']}))
     const involvedChartLeftData = ([...fundData].pop() || {})['sum'] - fundChartData
         .reduce((acc, val) => acc += val['sum'], 0)
     fundChartData = fundChartData.concat({category: 'Прочие', sum: involvedChartLeftData})
@@ -38,9 +32,14 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function PlacedAndAttractedTable({rows = {}, forDashboard = false}) {
+interface PlacedAndAttractedTableProps {
+    rows: any
+    forDashboard: boolean
+}
+
+const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({rows = {}, forDashboard = false}) => {
     const classes = useStyles()
-    const {reportDate} = useSelector(state => state.date)
+    const {reportDate} = useTypedSelector(state => state.date)
     const {involvedFunds = [], placedFunds = []} = rows
     const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
     const [placedCategories, placedSeries] = getFundCategoryAndSeries(placedFunds)
@@ -81,7 +80,7 @@ function PlacedAndAttractedTable({rows = {}, forDashboard = false}) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {placedFunds.map((f, i) => (
+                        {placedFunds.map((f: any, i: number) => (
                             <TableRow key={f['fund_name']}>
                                 <TableCell className={classes.wrappedRow}>{f['fund_name']}</TableCell>
                                 <TableCell align='center'>{f['balance_code']}</TableCell>

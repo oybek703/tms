@@ -5,10 +5,11 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 import {v4 as uuid} from 'uuid'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {updateDashboardActiveTab} from '../../../../redux/actions'
+import useTypedSelector from '../../../../hooks/useTypedSelector'
 
-function TabPanel(props) {
+function TabPanel(props: any) {
     const {children, value, index, ...other} = props
     return (
         <div
@@ -31,17 +32,25 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function DashboardTabs({tabs = []}) {
+interface DashboardTabsProps {
+    tabs: {name: string; panel: JSX.Element}[]
+}
+
+const DashboardTabs: React.FC<DashboardTabsProps> = function({tabs = []}) {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const dashboardActiveTab = useSelector(state => state.dashboardActiveTab)
-    const handleChange = (event, newValue) => {
+    const dashboardActiveTab = useTypedSelector(state => state.dashboardActiveTab)
+    const handleChange = (event: React.ChangeEvent, newValue: any) => {
         dispatch(updateDashboardActiveTab(newValue))
     }
     return (
         <Fragment>
             <AppBar position="static" className={classes.tabContainer}>
-                <Tabs value={dashboardActiveTab} onChange={handleChange} variant='scrollable' scrollButtons='auto'>
+                {/*
+                // @ts-ignore*/}
+                <Tabs onChange={handleChange}
+                    value={dashboardActiveTab}
+                      variant='scrollable' scrollButtons='auto'>
                     {tabs.map(({name}) =>
                         <Tab key={uuid()}
                              label={`${name}`} />
@@ -57,3 +66,5 @@ export default function DashboardTabs({tabs = []}) {
         </Fragment>
     )
 }
+
+export default DashboardTabs
