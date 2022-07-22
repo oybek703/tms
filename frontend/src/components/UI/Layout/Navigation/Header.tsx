@@ -235,7 +235,7 @@ function Header () {
     const list = useCallback(
         () => (<Fragment>
             <Toolbar component={Grid} container className={classes.logo}
-                     alignItems='center' justify='center'>
+                     alignItems='center' justifyContent='center'>
                 <Link to='/' onClick={handleAnchorClose}>
                     <Button>
                         <img src={process.env.PUBLIC_URL + '/logo.svg'}

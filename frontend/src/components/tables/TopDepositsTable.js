@@ -82,7 +82,7 @@ function TopDepositsTable({rows= {}}) {
             <TopDepositsTab handleChange={handleTabChange} active={activeTabIndex}/>
             {accountCodes.map(({code}) => <Fragment key={uuid()}>
                     <Card>
-                        {expanded === code && <Grid container spacing={2} justify='center'>
+                        {expanded === code && <Grid container spacing={2} justifyContent='center'>
                             {rows[expanded].map((card, cardIndex) => (
                                 <Grid key={uuid()} item xs={4}>
                                     <TopDepositCard

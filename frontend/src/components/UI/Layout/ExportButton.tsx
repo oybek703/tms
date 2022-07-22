@@ -57,7 +57,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({id = 'table_id'}) => {
     const open = Boolean(anchorEl)
     const popover_id = open ? 'simple-popover' : undefined
     return (
-        <Grid container justify='flex-start'>
+        <Grid container justifyContent='flex-start'>
             {/*
             //@ts-ignore*/}
             <IconButton aria-describedby={popover_id} variant="contained" color="primary" onClick={handleClick}>

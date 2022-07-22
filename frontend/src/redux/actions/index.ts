@@ -39,7 +39,8 @@ import { Dispatch } from 'redux'
 
 async function checkCashOrSave(date: string, property = 'capital', dispatch: Dispatch) {
     const queryDate = formatOneDate(date)
-    const cacheData = JSON.parse(localStorage.getItem(property) || '')
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const cacheData = JSON.parse(<string>localStorage.getItem(property))
     const action = `${property.toUpperCase()}_`
     try {
         if(Boolean(cacheData)) {

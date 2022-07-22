@@ -94,7 +94,7 @@ function GMTable({rows = {}}) {
     ].map(v => Math.round(Math.abs(v)))
     return (
         <Fragment>
-            <Grid container spacing={2} justify='space-between'>
+            <Grid container spacing={2} justifyContent='space-between'>
                 <Grid item xs={6}>
                     <Fragment>
                         <Table size ='small'>
@@ -150,7 +150,7 @@ function GMTable({rows = {}}) {
                         </TableContainer>
                     </Fragment>
                 </Grid>
-                <Grid item container alignItems='center' justify='center' xs={6}>
+                <Grid item container alignItems='center' justifyContent='center' xs={6}>
                     <GMLiabilities series={gmLiabilities}/>
                 </Grid>
                 <Grid item xs={7}>
@@ -194,7 +194,7 @@ function GMTable({rows = {}}) {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Grid item container alignItems='center' justify='center' xs={5}>
+                <Grid item container alignItems='center' justifyContent='center' xs={5}>
                     <GMClassification series={classificationLastRow} data={classificationSumRow}/>
                 </Grid>
             </Grid>

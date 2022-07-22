@@ -75,7 +75,7 @@ const Users = () => {
                     : error
                     ? <Alert message={error}/>
                     : <>
-                        <Grid container justify='space-between' alignItems='center'>
+                        <Grid container justifyContent='space-between' alignItems='center'>
                             <Grid item>
                                 <Typography><b>ALL USERS</b></Typography>
                             </Grid>

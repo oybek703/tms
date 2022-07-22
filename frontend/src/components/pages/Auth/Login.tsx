@@ -106,7 +106,7 @@ const LoginPage = () => {
         return <Redirect to={(redirectTo === '/' || !redirectTo) ? '/' : redirectTo}/>
     }
     return (
-        <Grid container direction='column' alignItems='center' justify='center'
+        <Grid container direction='column' alignItems='center' justifyContent='center'
               className={classes.root}>
             <Grid item>
                 <Grid className={classes.logo}>
@@ -130,7 +130,7 @@ const LoginPage = () => {
                     <CardContent>
                         <form onSubmit={handleSubmit}>
                             <Grid container className={classes.formFields}
-                                  justify='center'>
+                                  justifyContent='center'>
                                 <TextField
                                     error={!!usernameHelperText}
                                     helperText={usernameHelperText}
@@ -141,7 +141,7 @@ const LoginPage = () => {
                                     label='Username*'/>
                             </Grid>
                             <Grid container className={classes.formFields}
-                                  justify='center'>
+                                  justifyContent='center'>
                                 <TextField
                                     type={showPassword ? 'text' : 'password'}
                                     error={!!passwordHelperText}
@@ -158,7 +158,7 @@ const LoginPage = () => {
                                                 fontSize='small'/>}</IconButton>
                                     }}/>
                             </Grid>
-                            <Grid container justify='center'>
+                            <Grid container justifyContent='center'>
                                 <Button type='submit'
                                         disabled={btnDisabled}
                                         size='large'

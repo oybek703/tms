@@ -114,13 +114,7 @@ export function getErrorMessage(e: any) {
     return message
 }
 
-interface DashboardLiquidityIndicatorArgs {
-    total: string[]
-    nat: string[]
-    foreign: string[]
-}
-
-export function getDashboardLiquidityIndicator(data: DashboardLiquidityIndicatorArgs) {
+export function getDashboardLiquidityIndicator(data: any) {
     const {total = [], nat = [], foreign = []} = data
     const lastTotal = [...total].pop()
     const lastNat = [...nat].pop()

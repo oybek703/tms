@@ -15,8 +15,8 @@ const useStyles = makeStyles(theme => ({
 const Loader = () => {
     const classes = useStyles()
     return (
-        <Grid className={classes.loaderContent}
-              container justify='center' alignItems='center'>
+        <Grid className={classes.loaderContent} justifyContent='center'
+              container alignItems='center'>
             <div className="loader quantum-spinner"/>
         </Grid>
     )

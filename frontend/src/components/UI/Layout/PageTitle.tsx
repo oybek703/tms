@@ -35,7 +35,7 @@ const PageTitle: React.FC<PageTitleProps> = ({ title }) => {
                 <Grid
                     classes={{ root: classes.cardContent }}
                     component={Grid} container
-                    justify='space-between'>
+                    justifyContent='space-between'>
                     <Typography className={classes.title}
                                 variant='body1'><b>{title}</b></Typography>
                 </Grid>

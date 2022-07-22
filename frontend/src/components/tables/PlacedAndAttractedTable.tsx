@@ -44,7 +44,7 @@ const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({rows =
     const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
     const [placedCategories, placedSeries] = getFundCategoryAndSeries(placedFunds)
     if(forDashboard) return (<Fragment>
-        <Grid container spacing={2} justify='space-between'>
+        <Grid container spacing={2} justifyContent='space-between'>
             <Grid item xs={12} sm={6}>
                 <PlacedFunds series={placedSeries} categories={placedCategories}/>
             </Grid>

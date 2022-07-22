@@ -59,7 +59,7 @@ const CbnUpdate = () => {
         <>
             <Card>
                 <CardContent>
-                    {updateMsg && <Grid container justify='flex-start'>
+                    {updateMsg && <Grid container justifyContent='flex-start'>
                         <Alert type='success'
                                message={updateMsg}/>
                     </Grid>}
@@ -86,7 +86,7 @@ const CbnUpdate = () => {
                 <DialogTitle id="form-dialog-title">Update CB Norm</DialogTitle>
                 <form onSubmit={handleDialogClose}>
                     <DialogContent>
-                        <Grid container spacing={3} justify='space-between' alignItems='center'>
+                        <Grid container spacing={3} justifyContent='space-between' alignItems='center'>
                             <Grid item>
                                 <TextField
                                     required

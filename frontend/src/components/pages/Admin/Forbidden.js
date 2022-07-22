@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 const Forbidden = () => {
     const classes = useStyles()
     return (
-        <Grid container direction='column' alignItems='center' justify='center'>
+        <Grid container direction='column' alignItems='center' justifyContent='center'>
             <div>
               <Typography variant='h2' align='center'>
                 <b><PanToolOutlinedIcon fontSize='large'/></b>
