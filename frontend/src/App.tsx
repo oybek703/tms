@@ -29,8 +29,13 @@ import ReportLiabilities from './components/pages/Analytics/ReportLiabilities'
 import GM from './components/pages/Treasury/GM'
 import GAP from './components/pages/Analytics/GAP'
 import GapSimulation from './components/pages/Admin/GapSimulation'
+import NotFound from './components/pages/NotFound'
+import InProcess from './components/pages/InProcess'
+import Forbidden from './components/pages/Admin/Forbidden'
+import AdminRoute from './components/UI/Layout/Admin/AdminRoute'
+import Settings from './components/pages/Admin/Settings'
 
-function App () {
+function App (){
     const { user: { token } } = useTypedSelector(state => state.auth)
     return (
         <ErrorBoundary>
@@ -58,10 +63,10 @@ function App () {
                             <PrivateRoute component={GM} path='/gm'/>
                             <PrivateRoute component={GAP} path='/gap'/>
                             <PrivateRoute component={GapSimulation} path='/gapsimulation'/>
-                            {/*    <AdminRoute component={Settings} path='/settings'/>*/}
-                            {/*    <PrivateRoute component={Forbidden} path='/403'/>*/}
-                            {/*    <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>*/}
-                            {/*    <PrivateRoute component={NotFound}/>*/}
+                            <AdminRoute component={Settings} path='/settings'/>
+                            <PrivateRoute component={Forbidden} path='/403'/>
+                            <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>
+                            <PrivateRoute component={NotFound}/>
                         </Switch>
                     </main>
                     {token && <Footer/>}

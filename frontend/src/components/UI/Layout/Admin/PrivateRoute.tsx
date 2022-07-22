@@ -1,9 +1,10 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import { RouteComponentProps } from 'react-router'
 
 interface PrivateRouteProps {
-  component: any
+  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | undefined
   path?: string
   exact?: boolean
 }
