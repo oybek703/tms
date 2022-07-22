@@ -36,6 +36,7 @@ function formatForTen(number: number) {
 export function formatNumber(number: number, isDash: boolean| string = false) {
     if (isDash === 'e' &&  number === 0) return ' '
     if(isDash && number === 0) return '-'
+    if(typeof number !== 'number') return number
     if (number === 0) return '0.00'
     const integerPart = Math.trunc(number)
     const decimalPart = (number-integerPart).toFixed(2).slice(2)

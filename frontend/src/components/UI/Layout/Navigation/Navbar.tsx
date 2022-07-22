@@ -142,7 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                                     '/logo.png'}
                                          width='25' height='25'
                                          alt="Treasury Reports"/>
-                                    &nbsp;Treasury Management System
+                                    <b>&nbsp;Treasury Management System</b>
                                 </Button>
                                 {pathname === '/' &&
                                 <p className={classes.fontItalic}> &nbsp;
