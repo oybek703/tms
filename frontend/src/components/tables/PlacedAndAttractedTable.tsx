@@ -11,6 +11,7 @@ import PlacedFunds from '../charts/Dashboard/PlacedAndAttracted/PlacedFunds'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import { v4 as uuid } from 'uuid'
 
 function getFundCategoryAndSeries(fundData: any = []) {
     let fundChartData = [...fundData].filter(f => f['forChart'])
@@ -81,7 +82,7 @@ const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({rows =
                     </TableHead>
                     <TableBody>
                         {placedFunds.map((f: any, i: number) => (
-                            <TableRow key={f['fund_name']}>
+                            <TableRow key={uuid()}>
                                 <TableCell className={classes.wrappedRow}>{f['fund_name']}</TableCell>
                                 <TableCell align='center'>{f['balance_code']}</TableCell>
                                 <TableCell align='center' className={classes.noWrap}>{formatNumber(f['sum'])}</TableCell>

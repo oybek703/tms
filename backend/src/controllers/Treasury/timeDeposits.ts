@@ -1,4 +1,4 @@
-import {Request, Response} from 'express'
+import { Request, Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getTimeDepositsTable from '../../utils/timeDeposits'
 
@@ -6,10 +6,10 @@ import getTimeDepositsTable from '../../utils/timeDeposits'
 // @route /api/timedeposits
 // access Private
 const getTimeDeposits = asyncMiddleware(async (req: Request, res: Response) => {
-    const {date} = req.query
-    // @ts-ignore
-    const timeDepositsTable = await getTimeDepositsTable(date)
-    res.status(200).json({success: true, rows: timeDepositsTable})
+  const { date } = req.query
+  // @ts-ignore
+  const timeDepositsTable = await getTimeDepositsTable(date)
+  res.status(200).json({ success: true, rows: timeDepositsTable })
 })
 
 export default getTimeDeposits

@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { admin, auth } from '../../../middleware/auth'
-import { getBankLimits, updateDates, updateLimit } from '../../../controllers/Admin/Manual/bankLimits'
+import { getBankLimits,
+  updateDates, updateLimit } from '../../../controllers/Admin/Manual/bankLimits'
 
 const router = Router()
 

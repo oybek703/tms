@@ -4,6 +4,6 @@ import { Router } from 'express'
 const router = Router()
 
 router.route('/').get(getOperDays)
-router.route('/last_update').get(getLastUpdateTime)
+router.route('/lastUpdate').get(getLastUpdateTime)
 
 export default router

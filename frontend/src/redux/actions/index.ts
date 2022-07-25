@@ -203,7 +203,7 @@ export function getOperDays() {
     return async function(dispatch: Dispatch) {
         try {
             dispatch({type: OPERATIONAL_DAYS_START})
-            const {data: {dates}} = await axiosInstance.get(`/api/oper_days`)
+            const {data: {dates}} = await axiosInstance.get(`/api/operDays`)
             dispatch({type: OPERATIONAL_DAYS_SUCCESS, payload: dates})
         } catch (e: any) {
             const error = e.toString()
@@ -216,8 +216,8 @@ export function getLastUpdateTime() {
     return async function(dispatch: Dispatch) {
         try {
             dispatch({type: LAST_UPDATE_START})
-            const {data: {last_update}} = await axiosInstance.get(`/api/oper_days/last_update`)
-            dispatch({type: LAST_UPDATE_SUCCESS, payload: last_update})
+            const {data: {lastUpdate}} = await axiosInstance.get(`/api/operDays/lastUpdate`)
+            dispatch({type: LAST_UPDATE_SUCCESS, payload: lastUpdate})
         } catch (e: any) {
             const error = e.toString()
             dispatch({type: LAST_UPDATE_FAIL, payload: error})

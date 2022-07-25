@@ -1,5 +1,5 @@
 import 'date-fns'
-import * as React from 'react'
+import React from 'react'
 import {Fragment, memo, useCallback} from 'react'
 import DateFnsUtils from '@date-io/date-fns'
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers'

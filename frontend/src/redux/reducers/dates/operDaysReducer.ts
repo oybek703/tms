@@ -3,7 +3,7 @@ import {OPERATIONAL_DAYS_FAIL, OPERATIONAL_DAYS_START, OPERATIONAL_DAYS_SUCCESS}
 const initialState = {
     loading: false,
     error: null,
-    operDays: JSON.parse(localStorage.getItem('oper_days') || '[]')
+    operDays: []
 }
 
 function operDays(state = initialState, action: any) {

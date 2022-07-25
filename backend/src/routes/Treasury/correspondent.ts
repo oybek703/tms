@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { auth, checkPagePermission } from '../../middleware/auth'
-import { getCorrespondent, getCorrespondentCurrentState } from '../../controllers/Treasury/correspondent'
+import { getCorrespondent,
+  getCorrespondentCurrentState } from '../../controllers/Treasury/correspondent'
 
 const router = Router()
 

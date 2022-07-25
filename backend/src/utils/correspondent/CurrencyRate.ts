@@ -1,17 +1,18 @@
 import CorrespondentMainClass from './CorrespondentMainClass'
 
+/* eslint-disable camelcase */
 class CurrencyRate extends CorrespondentMainClass {
     currencyRate: boolean
     isExactDay: string
 
     constructor(date: string, currencyRate: boolean = false) {
-        super(date)
-        this.currencyRate = currencyRate
-        this.isExactDay = currencyRate ? '=' : ''
+      super(date)
+      this.currencyRate = currencyRate
+      this.isExactDay = currencyRate ? '=' : ''
     }
 
-    currencyRateQuery = () => {
-        return `SELECT (SELECT equival
+    currencyRateQuery() {
+      return `SELECT (SELECT equival
         FROM   ibs.s_rate_cur@iabs
         WHERE  date_cross = (SELECT MAX(date_cross)
                              FROM   ibs.s_rate_cur@iabs
@@ -86,8 +87,8 @@ class CurrencyRate extends CorrespondentMainClass {
                 FROM   dual`
     }
 
-    rateChangeQuery = () => {
-        return `SELECT (SELECT equival
+    rateChangeQuery() {
+      return `SELECT (SELECT equival
                 FROM   ibs.s_rate_cur@iabs
                 WHERE  date_cross = (SELECT
                                          MAX(date_cross)
@@ -101,7 +102,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                           WHERE date_cross < (SELECT
                                                                                   MAX(date_cross)
                                                                               FROM ibs.s_rate_cur@iabs
-                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                                        WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                        AND code = '156') AS CNY, 
                                (SELECT equival
                 FROM   ibs.s_rate_cur@iabs
@@ -117,7 +118,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                           WHERE date_cross < (SELECT
                                                                                   MAX(date_cross)
                                                                               FROM ibs.s_rate_cur@iabs
-                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                     WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                        AND code = '392') AS JPY,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -133,7 +134,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                     WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '398') AS KZT,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -149,7 +150,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                      WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '643') AS RUB,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -165,7 +166,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                       WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '756') AS CHF,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -181,7 +182,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                       WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '826') AS GBP,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -197,7 +198,7 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                        WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '840') AS USD,
                                (SELECT equival
                                 FROM   ibs.s_rate_cur@iabs
@@ -213,45 +214,44 @@ class CurrencyRate extends CorrespondentMainClass {
                                                                           WHERE date_cross < (SELECT
                                                                                                   MAX(date_cross)
                                                                                               FROM ibs.s_rate_cur@iabs
-                                                                                              WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
+                                        WHERE date_cross <${this.isExactDay}TO_DATE('${this.date}', 'DD-MM-YYYY')))
                                                        AND code = '978') AS EUR
                         FROM   dual`
     }
 
     async currency_rate() {
-        return await this.getOneRow(
-            '',
-            'Курс валют',
-            '',
-            this.currencyRateQuery,
-            true
-        )
+      return await this.getOneRow(
+          '',
+          'Курс валют',
+          '',
+          this.currencyRateQuery.bind(this),
+          true
+      )
     }
 
     async rate_change() {
-        return await this.getOneRow(
-            '',
-            'Изменения в течения дня',
-            '',
-            this.rateChangeQuery,
-            false,
-            true
-        )
+      return await this.getOneRow(
+          '',
+          'Изменения в течения дня',
+          '',
+          this.rateChangeQuery.bind(this),
+          false,
+          true
+      )
     }
 
     async getRows() {
-        const [
-            currencyRate,
-            rateChange
-        ] = await Promise.all([
-            this.currency_rate(),
-            this.rate_change()
-        ])
-        return [
-            currencyRate,
-            rateChange
-        ]
-        return []
+      const [
+        currencyRate,
+        rateChange
+      ] = await Promise.all([
+        this.currency_rate(),
+        this.rate_change()
+      ])
+      return [
+        currencyRate,
+        rateChange
+      ]
     }
 }
 

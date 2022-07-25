@@ -56,8 +56,8 @@ const RenderByMonth: React.FC<RenderByMonthProps> = function({months = [], row =
                         ${blueBackground ? classes.blueBackground : ''} 
                         ${(row[monthIndex] || {})['editable'] && classes.bordered}`}
                         style={{
-                            borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
-                            borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee'
+                            borderRight: index === 4 ? '1px solid #7794aa' : '1px solid #eee',
+                            borderLeft: index === 0 ? '1px solid #7794aa' : '1px solid #eee'
                         }}
                         align="center">
                         {formatNumber(((row[monthIndex] || {}) || {})[propName], true)}{withPercent && '%'}

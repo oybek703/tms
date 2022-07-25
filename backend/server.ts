@@ -34,14 +34,14 @@ const app: Express = express()
 const port: string = process.env.PORT || '4200'
 
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
+  app.use(morgan('dev'))
 }
 
 app.use(express.json())
 app.use(cors())
 
 app.use('/api/auth', userRoutes)
-app.use('/api/oper_days', operDayRoutes)
+app.use('/api/operDays', operDayRoutes)
 app.use('/api/mainindicators', mainIndicatorsRoutes)
 app.use('/api/profitandlost', profitAndLostRoutes)
 app.use('/api/capital', capitalRoutes)
@@ -65,25 +65,25 @@ app.use('/api/gapsimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 
 if (process.env.NODE_ENV === 'development') {
-    app.get('/', (req: Request, res: Response) => {
-        res.send('API is running...')
-    })
+  app.get('/', (req: Request, res: Response) => {
+    res.send('API is running...')
+  })
 } else {
-    app.use(express.static(join(__dirname, '../client')))
-    app.get('*', (req: Request, res: Response) => {
-        res.sendFile(resolve(__dirname, '../client', 'index.html'))
-    })
+  app.use(express.static(join(__dirname, '../client')))
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(resolve(__dirname, '../client', 'index.html'))
+  })
 }
 
 app.use(notFoundPage)
 app.use(errorHandler)
 
-checkConnection().then(_ => {
-    app.listen(
-        port,
-        console.log.bind(
-            null,
-            `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold
-        )
-    )
+checkConnection().then((_) => {
+  app.listen(
+      port,
+      console.log.bind(
+          null,
+          `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold,
+      ),
+  )
 })
