@@ -3,7 +3,6 @@ import { join, resolve } from 'path'
 import express, { Express, Request, Response } from 'express'
 import { checkConnection } from './src/models/db_apis'
 import morgan from 'morgan'
-import { address } from 'ip'
 import cors from 'cors'
 import notFoundPage from './src/middleware/notFound'
 import errorHandler from './src/middleware/errorHandler'
@@ -34,7 +33,7 @@ import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
 
-if (process.env.NODE_ENV === 'development' || address().startsWith('192.168.')) {
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
@@ -65,15 +64,14 @@ app.use('/api/gap', gapRoutes)
 app.use('/api/gapsimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 
-
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
+    app.get('/', (req: Request, res: Response) => {
+        res.send('API is running...')
+    })
+} else {
     app.use(express.static(join(__dirname, '../client')))
     app.get('*', (req: Request, res: Response) => {
         res.sendFile(resolve(__dirname, '../client', 'index.html'))
-    })
-} else {
-    app.get('/', (req: Request, res: Response) => {
-        res.send('API is running...')
     })
 }
 
