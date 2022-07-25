@@ -4,11 +4,11 @@ import Card from "@material-ui/core/Card"
 import {CardContent} from "@material-ui/core"
 import { chartTooltip, formatNumber } from '../../../utils'
 
-function renderOptions(values, categories) {
+function renderOptions(values: any, categories: any) {
     const options = {
         series: [{
             name: "Значение",
-            data: values.map(v => +v.toFixed(2)).map(v => v === 0 ? null: v)
+            data: values.map((v: number) => +v.toFixed(2)).map((v: number) => v === 0 ? null: v)
         }],
         chart: {
             height: 350,
@@ -46,7 +46,7 @@ function renderOptions(values, categories) {
         },
         yaxis: {
             labels: {
-                formatter: function (val) {
+                formatter: function (val: number) {
                     return formatNumber(val)
                 }
             }
@@ -58,10 +58,15 @@ function renderOptions(values, categories) {
 
 }
 
-const ExpenditureDynamics = ({series = [], categories = []}) => {
+interface ExpenditureDynamicsProps {
+    series: any
+    categories: any
+}
+
+const ExpenditureDynamics: React.FC<ExpenditureDynamicsProps> = ({series = [], categories = []}) => {
     useEffect(() => {
         if(series.length) {
-            document.querySelector('#expenditure_dynamics').innerHTML=''
+            document.querySelector('#expenditure_dynamics')!.innerHTML=''
             renderOptions(series, categories)
         }
     }, [series, categories])
