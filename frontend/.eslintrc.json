@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "google"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react", "react-hooks",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": ["error", "never"],
+        "max-len": ["error", {
+            "code": 150
+        }],
+        "object-curly-spacing": ["error", "always"],
+        "require-jsdoc": "off",
+        "react/prop-types": 0
+    }
+}

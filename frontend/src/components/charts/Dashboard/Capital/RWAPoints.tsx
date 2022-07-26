@@ -1,84 +1,84 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import Card from '@material-ui/core/Card'
 import { chartTooltip, formatNumber } from '../../../../utils'
 
 async function renderOptions(series: any = [], categories: any = [], id: string = '') {
-    const options = {
-        series: [
-            {
-                name: 'Значение',
-                data: series
-            }
-        ],
-        chart: {
-            height: 350,
-            type: 'line',
-            dropShadow: {
-                enabled: true,
-                color: '#000',
-                top: 18,
-                left: 7,
-                blur: 10,
-                opacity: 0.2
-            },
-            toolbar: {
-                show: false
-            },
-            animations: {
-                enabled: true,
-                easing: 'linear',
-                speed: 800,
-                animateGradually: {
-                    enabled: false
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 50
-                }
-            }
+  const options = {
+    series: [
+      {
+        name: 'Значение',
+        data: series,
+      },
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+      toolbar: {
+        show: false,
+      },
+      animations: {
+        enabled: true,
+        easing: 'linear',
+        speed: 800,
+        animateGradually: {
+          enabled: false,
         },
-        tooltip: {...chartTooltip()},
-        legend: {
-            horizontalAlign: 'center'
+        dynamicAnimation: {
+          enabled: true,
+          speed: 50,
         },
-        colors: [
-            '#00B050'
-        ],
-        dataLabels: {
-            enabled: true,
-            offsetX: -5,
-            offsetY: -10,
-            formatter: function (val: number) {
-                return formatNumber(val)
-            }
+      },
+    },
+    tooltip: { ...chartTooltip() },
+    legend: {
+      horizontalAlign: 'center',
+    },
+    colors: [
+      '#00B050',
+    ],
+    dataLabels: {
+      enabled: true,
+      offsetX: -5,
+      offsetY: -10,
+      formatter: function(val: number) {
+        return formatNumber(val)
+      },
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5,
+      },
+    },
+    markers: {
+      size: 1,
+    },
+    xaxis: {
+      categories: categories,
+    },
+    yaxis: {
+      labels: {
+        formatter: function(val: number) {
+          return (val || 0).toFixed(0)
         },
-        stroke: {
-            curve: 'smooth'
-        },
-        grid: {
-            borderColor: '#e7e7e7',
-            row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
-            },
-        },
-        markers: {
-            size: 1
-        },
-        xaxis: {
-            categories: categories
-        },
-        yaxis: {
-            labels: {
-                formatter: function(val: number) {
-                    return (val || 0).toFixed(0)
-                }
-            }
-        }
-    }
-    const chart = new ApexCharts(document.querySelector(`#${id}`), options)
-    await chart.render()
+      },
+    },
+  }
+  const chart = new ApexCharts(document.querySelector(`#${id}`), options)
+  await chart.render()
 }
 
 interface RWAPointsProps {
@@ -87,20 +87,20 @@ interface RWAPointsProps {
     normative?: number
 }
 
-const RWAPoints: React.FC<RWAPointsProps> = ({id = '', data = {}, normative = 100}) => {
-    useEffect(() => {
-        (async function () {
-            if (data.series && data.series.length) {
+const RWAPoints: React.FC<RWAPointsProps> = ({ id = '', data = {}, normative = 100 }) => {
+  useEffect(() => {
+    (async function() {
+      if (data.series && data.series.length) {
                 document.querySelector(`#${id}`)!.innerHTML = ''
                 await renderOptions(data.series, data.categories, id)
-            }
-        })()
-    }, [data, id, normative])
-    return (
-        <Card>
-            <div id={`${id}`} className="apex-charts"/>
-        </Card>
-    )
+      }
+    })()
+  }, [data, id, normative])
+  return (
+    <Card>
+      <div id={`${id}`} className="apex-charts"/>
+    </Card>
+  )
 }
 
 export default RWAPoints

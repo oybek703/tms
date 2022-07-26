@@ -5,17 +5,17 @@ interface FakeSuspenseProps {
     fallback?: any
 }
 
-const FakeSuspense: React.FC<PropsWithChildren<FakeSuspenseProps>> = ({children, delay = 500, fallback = <div/>}) => {
-    const [isShown, setIsShown] = useState(false)
+const FakeSuspense: React.FC<PropsWithChildren<FakeSuspenseProps>> = ({ children, delay = 500, fallback = <div/> }) => {
+  const [isShown, setIsShown] = useState(false)
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsShown(true)
-        }, delay)
-        return clearTimeout.bind(null, timeout)
-    }, [delay])
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsShown(true)
+    }, delay)
+    return clearTimeout.bind(null, timeout)
+  }, [delay])
 
-    return isShown ? children : fallback
+  return isShown ? children : fallback
 }
 
 export default FakeSuspense

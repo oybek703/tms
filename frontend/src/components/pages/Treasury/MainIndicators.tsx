@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const MainIndicators = () => {
   const { fetchMainIndicators } = useActions()
   const { mainIndicators, loading, error } = useTypedSelector(
-    state => state.mainIndicators)
-  const { reportDate } = useTypedSelector(state => state.date)
+      (state) => state.mainIndicators)
+  const { reportDate } = useTypedSelector((state) => state.date)
   useEffect(() => {
     fetchMainIndicators(reportDate)
   }, [fetchMainIndicators, reportDate])
@@ -19,10 +19,9 @@ const MainIndicators = () => {
       <PageTitle title='Основные показатели банка'/>
       {loading ?
         <Loader/> :
-        error ? <Alert message={error}/>
-          :
+        error ? <Alert message={error}/> :
           <MainIndicatorsTable pickedDate={reportDate}
-                               rows={mainIndicators}/>}
+            rows={mainIndicators}/>}
     </>
   )
 }

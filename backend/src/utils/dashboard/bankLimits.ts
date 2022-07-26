@@ -41,7 +41,7 @@ class BankLimits extends DashboardMainClass {
                                THEN 'no_limit'
                            WHEN FOREIGN_CURRENCY_22 = 0 AND FOR_CURR != 0
                                THEN 'exceeded'
-                           ELSE TO_CHAR(ROUND(FOR_CURR * 100 / FOREIGN_CURRENCY_22))
+                           ELSE TO_CHAR(ROUND(FOR_CURR * 100 / FOREIGN_CURRENCY_22, 2))
                            END                                   AS FOR_CURR_PERCENT,
                        NATIONAL_CURRENCY_24,
                        FOREIGN_CURRENCY_24
@@ -61,7 +61,7 @@ class BankLimits extends DashboardMainClass {
                                 (NAT_CURR + FOR_CURR) = 0 THEN 'no_limit'
                            WHEN (NATIONAL_CURRENCY_22 + FOREIGN_CURRENCY_22) = 0 AND
                                 (NAT_CURR + FOR_CURR) != 0 THEN 'exceeded'
-                           ELSE TO_CHAR(ROUND(NAT_CURR * 100 / NATIONAL_CURRENCY_22))
+                           ELSE TO_CHAR(ROUND(NAT_CURR * 100 / NATIONAL_CURRENCY_22, 2))
                            END                                              AS NAT_PERCENT,
                        (NATIONAL_CURRENCY_24 + FOREIGN_CURRENCY_24)         AS NATIONAL_CURRENCY_24
                 FROM LIMIT_OF_LOCAL_BANKS_VIEW

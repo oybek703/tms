@@ -13,7 +13,7 @@ const MioGm = () => {
   const [mioDate, setMioDate] = useState('')
   const [mioValue, setMioValue] = useState('')
 
-  async function handleMioSubmit (event: FormEvent) {
+  async function handleMioSubmit(event: FormEvent) {
     event.preventDefault()
     if (new Date(mioDate) > new Date()) {
       toast.error('Дата не должна быть больше, чем сегодня.')
@@ -21,9 +21,9 @@ const MioGm = () => {
     }
     try {
       const { data: { message } } = await axiosInstance.put(
-        `/api/gm/setmio`,
-        { mio: mioValue, mioDate },
-        withToken()
+          `/api/gm/setmio`,
+          { mio: mioValue, mioDate },
+          withToken(),
       )
       toast.success(message)
       setMioValue('')
@@ -74,13 +74,13 @@ const MioGm = () => {
             onChange={({ target: { value } }) => setMioDate(value)}
             type="date"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
           />
         </CardContent>
         <CardActions>
           <Button type='submit'
-                  size="small" variant='contained' color='primary'>
+            size="small" variant='contained' color='primary'>
             Добавлять
           </Button>
         </CardActions>

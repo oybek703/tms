@@ -14,34 +14,34 @@ interface MonthlyPickerProps {
 }
 
 const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
-                           reportDate,
-                           disabled = false,
-                           operDays = [],
-                           variant='inline',
-                           handleDateChange= () => {}}) => {
-    const memoizedDisableWeekends = useCallback(
+  reportDate,
+  disabled = false,
+  operDays = [],
+  variant='inline',
+  handleDateChange= () => {} }) => {
+  const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
-        [operDays]
-    )
-    return (
-        <MuiPickersUtilsProvider
-            utils={DateFnsUtils} >
-                <KeyboardDatePicker onChange={handleDateChange} onError={handleDateChange}
-                    disableToolbar
-                    shouldDisableDate={memoizedDisableWeekends}
-                    margin="dense"
-                    variant={variant}
-                    minDate={new Date('2020-01-01')}
-                    format="dd/MM/yyyy"
-                    disabled={disabled}
-                    value={reportDate}
-                    helperText=''
-                    invalidDateMessage='Please enter valid date!'
-                    maxDate={new Date(new Date() as any -86400000)}
-                    autoComplete='off'
-                />
-        </MuiPickersUtilsProvider>
-    )
+      [operDays],
+  )
+  return (
+    <MuiPickersUtilsProvider
+      utils={DateFnsUtils} >
+      <KeyboardDatePicker onChange={handleDateChange} onError={handleDateChange}
+        disableToolbar
+        shouldDisableDate={memoizedDisableWeekends}
+        margin="dense"
+        variant={variant}
+        minDate={new Date('2020-01-01')}
+        format="dd/MM/yyyy"
+        disabled={disabled}
+        value={reportDate}
+        helperText=''
+        invalidDateMessage='Please enter valid date!'
+        maxDate={new Date(new Date() as any -86400000)}
+        autoComplete='off'
+      />
+    </MuiPickersUtilsProvider>
+  )
 }
 
 export default memo(MonthlyPicker)

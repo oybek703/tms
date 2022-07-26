@@ -7,21 +7,21 @@ import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 
 const GAP = () => {
-    const { fetchGap } = useActions()
-    const { gap, loading, error } = useTypedSelector(state => state.gap)
-    useEffect(() => {
-        fetchGap()
-    }, [fetchGap])
-    return (
-      <>
-          <PageTitle title='Анализ ликвидности по источникам и потребности'/>
-          {loading
-            ? <Loader/>
-            : error
-              ? <Alert message={error}/>
-              : <GAPTable rows={gap}/>}
-      </>
-    )
+  const { fetchGap } = useActions()
+  const { gap, loading, error } = useTypedSelector((state) => state.gap)
+  useEffect(() => {
+    fetchGap()
+  }, [fetchGap])
+  return (
+    <>
+      <PageTitle title='Анализ ликвидности по источникам и потребности'/>
+      {loading ?
+            <Loader/> :
+            error ?
+              <Alert message={error}/> :
+              <GAPTable rows={gap}/>}
+    </>
+  )
 }
 
 export default GAP

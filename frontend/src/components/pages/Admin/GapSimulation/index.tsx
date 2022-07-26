@@ -16,13 +16,13 @@ import { makeStyles } from '@material-ui/core'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   buttonsRow: {
-    marginBottom: 5
+    marginBottom: 5,
   },
   actionContent: {
-    padding: '5px 10px'
-  }
+    padding: '5px 10px',
+  },
 }))
 
 interface ActionContentProps {
@@ -30,61 +30,61 @@ interface ActionContentProps {
   handleSave: () => void
 }
 
-const  ActionContent: React.FC<ActionContentProps> = function({handleReset, handleSave}) {
+const ActionContent: React.FC<ActionContentProps> = function({ handleReset, handleSave }) {
   const classes = useStyles()
   return (
-      <div className={classes.actionContent}>
-        <div className={classes.buttonsRow}>
-          <Button size='small' startIcon={<RotateLeftIcon/>}
-                  variant='contained'
-                  color="primary"
-                  onClick={handleReset}>
+    <div className={classes.actionContent}>
+      <div className={classes.buttonsRow}>
+        <Button size='small' startIcon={<RotateLeftIcon/>}
+          variant='contained'
+          color="primary"
+          onClick={handleReset}>
             Reset
-          </Button>&nbsp;
-          <Button size='small' startIcon={<SaveIcon/>}
-                  variant='contained'
-                  color="primary"
-                  onClick={handleSave}>
+        </Button>&nbsp;
+        <Button size='small' startIcon={<SaveIcon/>}
+          variant='contained'
+          color="primary"
+          onClick={handleSave}>
             Save
-          </Button>&nbsp;
-        </div>
-        <Typography color='primary' component='i'>
-          <b>Обратите внимание, что редактировать можно только
+        </Button>&nbsp;
+      </div>
+      <Typography color='primary' component='i'>
+        <b>Обратите внимание, что редактировать можно только
             ячейки с
             пунктирной
             рамкой и не забудьте сохранить ваши изменения,
             иначе они будут
             сброшены.</b>
-          <b> Для редактирования значения ячейки щелкните по
+        <b> Для редактирования значения ячейки щелкните по
             этой
             ячейке.</b>
-        </Typography>
-      </div>
+      </Typography>
+    </div>
   )
 }
 
 const GapSimulation = () => {
   const history = useHistory()
-  const {fetchGapManual, fetchGap} = useActions()
+  const { fetchGapManual, fetchGap } = useActions()
   const [newValue, setNewValue] = useState<any>('')
   const [dialog, setDialog] = useState(false)
   const [editingCell, setEditingCell] = useState<any>({})
-  const { gapManual = {}, loading, error } = useTypedSelector(state => state.gapManual)
+  const { gapManual = {}, loading, error } = useTypedSelector((state) => state.gapManual)
   const {
     months = [],
     sourceOfLiquidity = [],
     sourceOfLiquidityTotal = [],
     needsOfLiquidity = [],
     needsOfLiquidityTotal = [],
-    vlaLcrData = []
+    vlaLcrData = [],
   } = gapManual
 
-  function handleClose () {
+  function handleClose() {
     setDialog(false)
     setNewValue('')
   }
 
-  const handleEdit = useCallback(async function handleEdit () {
+  const handleEdit = useCallback(async function handleEdit() {
     try {
       await axiosInstance.post(
           '/api/gapsimulation/update',
@@ -92,9 +92,9 @@ const GapSimulation = () => {
             colName: editingCell['colName'],
             newValue, role: editingCell['role'],
             date: editingCell['monthIndex'],
-            source: editingCell['source']
+            source: editingCell['source'],
           },
-          withToken()
+          withToken(),
       )
       handleClose()
       fetchGapManual(true)
@@ -102,19 +102,19 @@ const GapSimulation = () => {
       const message = getErrorMessage(e)
       toast.error(message)
     }
-  },[fetchGapManual, editingCell, newValue])
+  }, [fetchGapManual, editingCell, newValue])
 
   const handleNewValueChange = useCallback(async function handleNewValueChange(e) {
     if (e.key === 'Enter') {
       await handleEdit()
     }
-  },[handleEdit])
+  }, [handleEdit])
 
-  const handleEditClick = useCallback( event => {
-        const cellInfo = JSON.parse(event.target.dataset.cellinfo || '{}')
-        setEditingCell(cellInfo)
-        setDialog(true)
-      },[])
+  const handleEditClick = useCallback( (event) => {
+    const cellInfo = JSON.parse(event.target.dataset.cellinfo || '{}')
+    setEditingCell(cellInfo)
+    setDialog(true)
+  }, [])
 
   useEffect(() => {
     setNewValue(+(editingCell['numValue'] || 0).toFixed(2))
@@ -134,7 +134,7 @@ const GapSimulation = () => {
         await axiosInstance.put(
             '/api/gapsimulation/saveChanges',
             {},
-            withToken()
+            withToken(),
         )
         toast.success('Изменения успешно сохранены.')
         fetchGap()
@@ -144,10 +144,10 @@ const GapSimulation = () => {
         toast.error(message)
       }
     }
-  },[fetchGap, history])
+  }, [fetchGap, history])
   useEffect(() => {
     fetchGapManual()
-    return function () {
+    return function() {
       fetchGapManual()
     }
   }, [fetchGapManual])
@@ -165,19 +165,19 @@ const GapSimulation = () => {
   return (
     <Paper>
       {
-        loading
-          ? <Loader/>
-          : error
-          ? <Alert message={error}/> : <>
+        loading ?
+          <Loader/> :
+          error ?
+          <Alert message={error}/> : <>
             <ActionContent handleReset={handleReset} handleSave={handleSave}/>
             {!dialog && <GapSimulationTable handleEditClick={handleEditClick} months={months}
-                                            needsOfLiquidity={needsOfLiquidity} vlaLcrData={vlaLcrData}
-                                            sourceOfLiquidity={sourceOfLiquidity}
-                                            needsOfLiquidityTotal={needsOfLiquidityTotal}
-                                            sourceOfLiquidityTotal={sourceOfLiquidityTotal}/>}
+              needsOfLiquidity={needsOfLiquidity} vlaLcrData={vlaLcrData}
+              sourceOfLiquidity={sourceOfLiquidity}
+              needsOfLiquidityTotal={needsOfLiquidityTotal}
+              sourceOfLiquidityTotal={sourceOfLiquidityTotal}/>}
             <GapSimulationDialog dialog={dialog} editingCell={editingCell} setNewValue={setNewValue}
-                                 handleClose={handleClose} setDialog={setDialog} handleEdit={handleEdit}
-                                 handleNewValueChange={handleNewValueChange} newValue={newValue}/>
+              handleClose={handleClose} setDialog={setDialog} handleEdit={handleEdit}
+              handleNewValueChange={handleNewValueChange} newValue={newValue}/>
           </>
       }
     </Paper>

@@ -19,9 +19,9 @@ import DashboardTabs from '../../UI/Layout/Tabs/DashboardTabs'
 import useActions from '../../../hooks/useActions'
 
 const Dashboard = () => {
-  const {fetchDashboard} = useActions()
-  const { reportDate } = useTypedSelector(state => state.date)
-  const { dashboard, loading, error } = useTypedSelector(state => state.dashboard)
+  const { fetchDashboard } = useActions()
+  const { reportDate } = useTypedSelector((state) => state.date)
+  const { dashboard, loading, error } = useTypedSelector((state) => state.dashboard)
   const {
     dashboardCorrespondent = {},
     creditPart = [],
@@ -38,7 +38,7 @@ const Dashboard = () => {
     lcr = {},
     nsfr = {},
     currencyRates,
-    bankLimits = []
+    bankLimits = [],
   } = dashboard
   useEffect(() => {
     fetchDashboard(reportDate)
@@ -47,74 +47,74 @@ const Dashboard = () => {
     window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
   }, [])
   return (
-      <Fragment>
-        {loading
-            ? <Loader/>
-            : error
-                ? <Alert message={error}/>
-                : <>
+    <Fragment>
+      {loading ?
+            <Loader/> :
+            error ?
+                <Alert message={error}/> :
+                <>
                   <DashboardTabs
-                      tabs={[
-                        {
-                          name: 'Eжедневные показатели',
-                          panel: <DailyIndicators
-                              dashboardCorrespondent={dashboardCorrespondent}
-                              lcr={lcr} nsfr={nsfr} vla={vla}
-                              dashboardCurrencyPosition={dashboardCurrencyPosition}/>
-                        },
-                        {
-                          name: 'Курсы валют',
-                          panel: <CurrencyRatesTab
-                              currencyRates={currencyRates}/>
-                        },
-                        { name: 'ЦРБ', panel: <Fcrb/> },
-                        {
-                          name: 'Лимиты',
-                          panel: <BankLimits bankLimits={bankLimits}/>
-                        },
-                        {
-                          name: 'ФОР',
-                          panel: <WithDetailsButton link={'/calcfor'}>
-                            <CalcFor forDashboard/>
-                          </WithDetailsButton>
-                        },
-                        {
-                          name: 'Активы и пассивы',
-                          panel: <WithDetailsButton link='/plat'>
-                            <PlacedAndAttracted forDashboard/>
-                          </WithDetailsButton>
-                        },
-                        {
-                          name: 'Капитал',
-                          panel: <CapitalTab vla={vla}/>
-                        },
-                        {
-                          name: 'Фондирование',
-                          panel: <FundingTab currencyMBD={currencyMBD}
-                                             currencyMfi={currencyMfi}
-                                             currencyTimeDeposits={currencyTimeDeposits}
-                                             interbankDeposits={interbankDeposits}
-                                             timeDeposits={timeDeposits}/>
-                        },
-                        {
-                          name: 'Нормативы',
-                          panel: <Normatives/>
-                        },
-                        {
-                          name: 'Ковенанты', panel: <Covenants/>
-                        },
-                        {
-                          name: 'Кредитный портфель',
-                          panel: <CreditPortfolioTab creditPart={creditPart}
-                                                     issuedCredits={issuedCredits}
-                                                     disaggregatedByTime={disaggregatedByTime}
-                                                     fundingStructure={fundingStructure}/>
-                        },
-                        { name: 'Dashboard', panel: <DashboardMonthly/> }
-                      ]}/>
+                    tabs={[
+                      {
+                        name: 'Eжедневные показатели',
+                        panel: <DailyIndicators
+                          dashboardCorrespondent={dashboardCorrespondent}
+                          lcr={lcr} nsfr={nsfr} vla={vla}
+                          dashboardCurrencyPosition={dashboardCurrencyPosition}/>,
+                      },
+                      {
+                        name: 'Курсы валют',
+                        panel: <CurrencyRatesTab
+                          currencyRates={currencyRates}/>,
+                      },
+                      { name: 'ЦРБ', panel: <Fcrb/> },
+                      {
+                        name: 'Лимиты',
+                        panel: <BankLimits bankLimits={bankLimits}/>,
+                      },
+                      {
+                        name: 'ФОР',
+                        panel: <WithDetailsButton link={'/calcfor'}>
+                          <CalcFor forDashboard/>
+                        </WithDetailsButton>,
+                      },
+                      {
+                        name: 'Активы и пассивы',
+                        panel: <WithDetailsButton link='/plat'>
+                          <PlacedAndAttracted forDashboard/>
+                        </WithDetailsButton>,
+                      },
+                      {
+                        name: 'Капитал',
+                        panel: <CapitalTab vla={vla}/>,
+                      },
+                      {
+                        name: 'Фондирование',
+                        panel: <FundingTab currencyMBD={currencyMBD}
+                          currencyMfi={currencyMfi}
+                          currencyTimeDeposits={currencyTimeDeposits}
+                          interbankDeposits={interbankDeposits}
+                          timeDeposits={timeDeposits}/>,
+                      },
+                      {
+                        name: 'Нормативы',
+                        panel: <Normatives/>,
+                      },
+                      {
+                        name: 'Ковенанты', panel: <Covenants/>,
+                      },
+                      {
+                        name: 'Кредитный портфель',
+                        panel: <CreditPortfolioTab creditPart={creditPart}
+                          issuedCredits={issuedCredits}
+                          disaggregatedByTime={disaggregatedByTime}
+                          fundingStructure={fundingStructure}/>,
+                      },
+                      { name: 'Dashboard', panel: <DashboardMonthly/> },
+                    ]}/>
                 </>
-        }
-      </Fragment>
+      }
+    </Fragment>
   )
 }
 

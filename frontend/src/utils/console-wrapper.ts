@@ -10,19 +10,19 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 
   const ignoreListError = [
     'The `fade` color utility was renamed to `alpha` to better describe its functionality.',
-    'the createMuiTheme function was renamed to createTheme'
+    'the createMuiTheme function was renamed to createTheme',
   ]
 
   const ignoreListWarn = ['The `theme.typography.round` helper is deprecated.']
 
-  global.console.error = msg => {
+  global.console.error = (msg) => {
     if (!(typeof msg === 'string' && msg.indexOf('Material-UI') !== -1 &&
       contains(msg, ignoreListError))) {
       errorFn(msg)
     }
   }
 
-  global.console.warn = msg => {
+  global.console.warn = (msg) => {
     if (!(typeof msg === 'string' && msg.indexOf('Material-UI') !== -1 &&
       contains(msg, ignoreListWarn))) {
       warnFn(msg)

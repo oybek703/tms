@@ -9,7 +9,7 @@ import {
   formatChartLegend,
 } from '../../../../../utils'
 
-function renderOptions (series: any = []) {
+function renderOptions(series: any = []) {
   const colors = [
     '#f38003',
     '#4CB9E1',
@@ -31,7 +31,7 @@ function renderOptions (series: any = []) {
     },
     labels,
     legend: {
-      formatter: function (label: string, opts: any) {
+      formatter: function(label: string, opts: any) {
         return formatChartLegend(label, opts)
       },
       horizontalAlign: 'left',

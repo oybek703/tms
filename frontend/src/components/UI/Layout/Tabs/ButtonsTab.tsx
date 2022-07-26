@@ -4,11 +4,11 @@ import Button from '@material-ui/core/Button'
 import { v4 as uuid } from 'uuid'
 import { makeStyles } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
-    marginBottom: 10
+    marginBottom: 10,
   },
-  btn: theme.mixins.tabBtn
+  btn: theme.mixins.tabBtn,
 }))
 
 interface ButtonsTabProps {
@@ -17,17 +17,17 @@ interface ButtonsTabProps {
     titles: {title: string; code: string}[]
 }
 
-const ButtonTabs: React.FC<ButtonsTabProps> =  ({ handleChange = () => {}, active = 'all', titles = [] }) => {
+const ButtonTabs: React.FC<ButtonsTabProps> = ({ handleChange = () => {}, active = 'all', titles = [] }) => {
   const classes = useStyles()
   return (
     <div className={classes.content}>
       <ButtonGroup size='small' color='primary'>
         {titles.map(({ title, code }, i) =>
           <Button classes={{ root: classes.btn }}
-                  onClick={handleChange.bind(null, code)}
-                  size='medium'
-                  key={uuid()}
-                  variant={`${active === code ? 'contained' : 'outlined'}`}>
+            onClick={handleChange.bind(null, code)}
+            size='medium'
+            key={uuid()}
+            variant={`${active === code ? 'contained' : 'outlined'}`}>
             {title}
           </Button>)}
       </ButtonGroup>

@@ -7,22 +7,21 @@ import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 
 const DepositsByDeadline = () => {
-    const { fetchDepositsByDeadline } = useActions()
-    const {depositsbydeadline, loading, error} = useTypedSelector(state => state.depositsByDeadline)
-    const {reportDate} = useTypedSelector(state => state.date)
-    useEffect(() => {
-        fetchDepositsByDeadline(reportDate)
-    }, [fetchDepositsByDeadline, reportDate])
-    return (
-        <Fragment>
-            <PageTitle title='Депозиты юридических лиц. по срокам возврата'/>
-            {loading ?
+  const { fetchDepositsByDeadline } = useActions()
+  const { depositsbydeadline, loading, error } = useTypedSelector((state) => state.depositsByDeadline)
+  const { reportDate } = useTypedSelector((state) => state.date)
+  useEffect(() => {
+    fetchDepositsByDeadline(reportDate)
+  }, [fetchDepositsByDeadline, reportDate])
+  return (
+    <Fragment>
+      <PageTitle title='Депозиты юридических лиц. по срокам возврата'/>
+      {loading ?
                 <Loader/> :
-                error ? <Alert message={error}/>
-                    :
+                error ? <Alert message={error}/> :
                     <DepositsByDeadlineTable rows={depositsbydeadline}/>}
-        </Fragment>
-    )
+    </Fragment>
+  )
 }
 
 export default DepositsByDeadline

@@ -18,48 +18,50 @@ interface GapSimulationDialogProps {
   setNewValue: (value: string) => void
 }
 
-const GapSimulationDialog: React.FC<GapSimulationDialogProps> = ({dialog = false, handleClose, editingCell, setDialog, handleEdit, newValue, handleNewValueChange, setNewValue}) => {
+const GapSimulationDialog: React.FC<GapSimulationDialogProps> = ({
+  dialog = false, handleClose, editingCell, setDialog,
+  handleEdit, newValue, handleNewValueChange, setNewValue }) => {
   return (
-      <>
-        <Dialog open={dialog} onClose={handleClose}
-                aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Обновить значение</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+    <>
+      <Dialog open={dialog} onClose={handleClose}
+        aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Обновить значение</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
               Тип: {editingCell['type']}<br/>
               Имя: {editingCell['name']}<br/>
               Месяц(год): {editingCell['month']}<br/>
               Имя ячейки: {editingCell['cellName']}<br/>
               Текущий: {editingCell['current']}<br/>
-              Источник: {editingCell['source'] === 'AUTO'
-                ? 'Авто'
-                : 'Ручной'}<br/>
-            </DialogContentText>
-            <TextField
-                autoFocus
-                value={newValue}
-                onKeyDown={handleNewValueChange}
-                onChange={({ target: { value } }) => setNewValue(value)}
-                margin="dense"
-                id="newLimit"
-                label="Новое значение"
-                type="number"
-                required
-                fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button variant='outlined'
-                    onClick={setDialog.bind(null, false)}
-                    color="primary">
+              Источник: {editingCell['source'] === 'AUTO' ?
+                'Авто' :
+                'Ручной'}<br/>
+          </DialogContentText>
+          <TextField
+            autoFocus
+            value={newValue}
+            onKeyDown={handleNewValueChange}
+            onChange={({ target: { value } }) => setNewValue(value)}
+            margin="dense"
+            id="newLimit"
+            label="Новое значение"
+            type="number"
+            required
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button variant='outlined'
+            onClick={setDialog.bind(null, false)}
+            color="primary">
               Отмена
-            </Button>
-            <Button variant='outlined' onClick={handleEdit} color="primary">
+          </Button>
+          <Button variant='outlined' onClick={handleEdit} color="primary">
               Обновить
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
