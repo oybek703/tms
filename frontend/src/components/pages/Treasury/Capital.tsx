@@ -2,18 +2,17 @@ import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import CapitalTable from '../../tables/CapitalTable'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchCapital } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const Capital = () => {
-    const dispatch = useDispatch()
+    const { fetchCapital } = useActions()
     const {capital, loading, error} = useTypedSelector(state => state.capital)
     const {reportDate} = useTypedSelector(state => state.date)
     useEffect(() => {
-        dispatch(fetchCapital(reportDate))
-    }, [reportDate, dispatch])
+        fetchCapital(reportDate)
+    }, [reportDate, fetchCapital])
     return (
         <>
             <PageTitle title='Расчет капитала банка'/>

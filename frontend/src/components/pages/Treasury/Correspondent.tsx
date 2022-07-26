@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchCorrespondent, fetchCorrespondentCurrent } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import CorrespondentTable from '../../tables/CorrespondentTable'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const Correspondent = () => {
-    const dispatch = useDispatch()
+    const { fetchCorrespondent, fetchCorrespondentCurrent } = useActions()
     const { reportDate } = useTypedSelector(state => state.date)
     const currentState = useTypedSelector(state => state.correspondentCurrentState)
     const { correspondent, loading, error } = useTypedSelector(
@@ -21,14 +20,14 @@ const Correspondent = () => {
     } = useTypedSelector(state => state.correspondentCurrent)
     useEffect(() => {
         if (currentState) {
-            dispatch(fetchCorrespondentCurrent())
+            fetchCorrespondentCurrent()
             setCorrespondentData(currentCorrespondent)
         } else {
-            dispatch(fetchCorrespondent(reportDate))
+            fetchCorrespondent(reportDate)
             setCorrespondentData(correspondent)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch, reportDate, currentState])
+    }, [fetchCorrespondent, fetchCorrespondentCurrent, reportDate, currentState])
     useEffect(() => {
         if (!currentState) {
             setCorrespondentData(correspondent)

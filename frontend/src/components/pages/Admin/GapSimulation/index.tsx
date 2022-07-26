@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 import Typography from '@material-ui/core/Typography'
@@ -8,7 +7,6 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import SaveIcon from '@material-ui/icons/Save'
 import { useHistory } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper'
-import { fetchGap, fetchGapManual } from '../../../../redux/actions'
 import { getErrorMessage } from '../../../../utils'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
@@ -16,6 +14,7 @@ import GapSimulationTable from './GapSimulationTable'
 import GapSimulationDialog from './GapSimulationDialog'
 import { makeStyles } from '@material-ui/core'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles(theme => ({
   buttonsRow: {
@@ -65,8 +64,8 @@ const  ActionContent: React.FC<ActionContentProps> = function({handleReset, hand
 }
 
 const GapSimulation = () => {
-  const dispatch = useDispatch()
   const history = useHistory()
+  const {fetchGapManual, fetchGap} = useActions()
   const [newValue, setNewValue] = useState<any>('')
   const [dialog, setDialog] = useState(false)
   const [editingCell, setEditingCell] = useState<any>({})
@@ -98,12 +97,12 @@ const GapSimulation = () => {
           withToken()
       )
       handleClose()
-      dispatch(fetchGapManual(true))
+      fetchGapManual(true)
     } catch (e) {
       const message = getErrorMessage(e)
       toast.error(message)
     }
-  },[dispatch, editingCell, newValue])
+  },[fetchGapManual, editingCell, newValue])
 
   const handleNewValueChange = useCallback(async function handleNewValueChange(e) {
     if (e.key === 'Enter') {
@@ -124,9 +123,9 @@ const GapSimulation = () => {
     const option = window.confirm(
         'Вы уверены, что хотите сбросить разрыв до исходного состояния?')
     if (option) {
-      dispatch(fetchGapManual())
+      fetchGapManual()
     }
-  }, [dispatch])
+  }, [fetchGapManual])
   const handleSave = useCallback(async () => {
     const option = window.confirm(
         'Вы уверены, что хотите сохранить изменения?')
@@ -138,20 +137,20 @@ const GapSimulation = () => {
             withToken()
         )
         toast.success('Изменения успешно сохранены.')
-        dispatch(fetchGap())
+        fetchGap()
         history.push('/gap')
       } catch (e) {
         const message = getErrorMessage(e)
         toast.error(message)
       }
     }
-  },[dispatch, history])
+  },[fetchGap, history])
   useEffect(() => {
-    dispatch(fetchGapManual())
+    fetchGapManual()
     return function () {
-      dispatch(fetchGapManual())
+      fetchGapManual()
     }
-  }, [dispatch])
+  }, [fetchGapManual])
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)

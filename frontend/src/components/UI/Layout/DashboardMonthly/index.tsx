@@ -1,6 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
 import { findRecursive, formatDate, formatDateWithDash, formatOneDate } from '../../../../utils'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
@@ -8,10 +7,10 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import { toast } from 'react-toastify'
 import Alert from '../Alert'
-import { fetchDashboardMonthly } from '../../../../redux/actions'
 import Loader from '../Loader'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import DashboardMonthlyTable from './DashboardMonthlyTable'
+import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles(theme => ({
     optionBlock: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DashboardMonthly: React.FC = () => {
-    const dispatch = useDispatch()
+    const { fetchDashboardMonthly } = useActions()
     const { reportDate } = useTypedSelector(state => state.date)
     const [dateOption, setDateOption] = useState('two')
     const { operDays, loading: operDaysLoading } = useTypedSelector(
@@ -32,10 +31,10 @@ const DashboardMonthly: React.FC = () => {
     const [secondDate, setSecondDate] = useState(dayBefore as string)
     useEffect(() => {
         if (firstDate && secondDate && firstDate !== secondDate) {
-            dispatch(fetchDashboardMonthly(new Date(firstDate).toString(),
-                new Date(secondDate).toString(), dateOption))
+            fetchDashboardMonthly(new Date(firstDate).toString(),
+                new Date(secondDate).toString(), dateOption)
         }
-    }, [dispatch, firstDate, secondDate, dateOption])
+    }, [fetchDashboardMonthly, firstDate, secondDate, dateOption])
     useEffect(() => {
         let { selectedDate: newSecondDate } = formatDate(reportDate, true)
         const isReportDateToday = formatOneDate(reportDate) ===

@@ -1,8 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
 import { CardContent, makeStyles, TableContainer } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import { fetchBankLimits } from '../../../../redux/actions'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
 import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
@@ -23,6 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles(theme => ({
     noWrap: theme.mixins.noWrap,
@@ -33,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const UpdateLimitOfBanks = () => {
-    const dispatch = useDispatch()
+    const {fetchBankLimits} = useActions()
     const classes = useStyles()
     const [dialog, setDialog] = useState(false)
     const [editingCell, setEditingCell] = useState<any>({})
@@ -46,8 +45,8 @@ const UpdateLimitOfBanks = () => {
     const currencies = Object.keys(tableData[0] || {})
         .filter(key => key !== 'CLIENT_CODE' && key !== 'NAME')
     useEffect(() => {
-        dispatch(fetchBankLimits())
-    }, [dispatch])
+        fetchBankLimits()
+    }, [fetchBankLimits])
     useEffect(() => {
         if (months['BEGIN']) setBeginDate(months['BEGIN'])
         if (months['END']) setEndDate(months['END'])
@@ -61,7 +60,7 @@ const UpdateLimitOfBanks = () => {
                 {beginDate, endDate},
                 withToken()
             )
-            dispatch(fetchBankLimits())
+            fetchBankLimits()
         } catch (e) {
             const message = getErrorMessage(e)
             toast.error(message)
@@ -81,7 +80,7 @@ const UpdateLimitOfBanks = () => {
                 withToken()
             )
             handleClose()
-            dispatch(fetchBankLimits())
+            fetchBankLimits()
         } catch (e) {
             const message = getErrorMessage(e)
             toast.error(message)

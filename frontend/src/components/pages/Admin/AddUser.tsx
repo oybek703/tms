@@ -4,10 +4,9 @@ import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDispatch } from 'react-redux'
 import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
-import { addUser } from '../../../redux/actions'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddUser() {
     const classes = useStyles()
-    const dispatch = useDispatch()
+    const {addUser} = useActions()
     const [allowedPages, setAllowedPages] = useState([])
     const {loading, error} = useTypedSelector(state => state.addUser)
     const [formData, setFormData] = useState({username: '', password: '', confirmpassword: ''})
@@ -69,7 +68,7 @@ export default function AddUser() {
     }, [])
     function handleAddUser(e: FormEvent) {
         e.preventDefault()
-        dispatch(addUser({...formData, allowedPages}))
+        addUser({...formData, allowedPages})
     }
 
     useEffect(() => {

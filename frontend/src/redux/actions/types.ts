@@ -65,7 +65,6 @@ export const LOGOUT = 'LOGOUT'
 export const CHANGE_DATE = 'CHANGE_DATE'
 export const DELETE_USER = 'DELETE_USER'
 export const UPDATE_CBN = 'UPDATE_CBN'
-export const SET_MIO = 'SET_MIO'
 
 export const USER_EXITED = 'USER_EXITED'
 

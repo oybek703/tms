@@ -28,12 +28,12 @@ const ErrorAlert = () => {
                     <ErrorOutlineIcon color='error' fontSize='large'/>
                 </IconButton>
                 <Typography variant='h4' align='center' color='secondary'>
-                    Something went wrong!
+                    Что-то пошло не так!
                 </Typography>
             </Grid>
             <Typography align='center'>
                 <Button variant='outlined' component='span' disabled color='secondary'>
-                    Please check your connection and try to refresh page!
+                    Пожалуйста, проверьте подключение и попробуйте обновить страницу!
                 </Button>
             </Typography>
         </>

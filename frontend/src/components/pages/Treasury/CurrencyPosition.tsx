@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchCurrencyPosition } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import CurrencyPositionTable from '../../tables/CurrencyPositionTable'
+import useActions from '../../../hooks/useActions'
 
 const CurrencyPosition = () => {
-    const dispatch = useDispatch()
+    const { fetchCurrencyPosition } = useActions()
     const { currencyPosition, loading, error } = useTypedSelector(
       state => state.currencyPosition)
     const { reportDate } = useTypedSelector(state => state.date)
     useEffect(() => {
-        dispatch(fetchCurrencyPosition(reportDate))
-    }, [dispatch, reportDate])
+        fetchCurrencyPosition(reportDate)
+    }, [fetchCurrencyPosition, reportDate])
     return (
       <>
           <PageTitle title='Сведения об открытых валютных позициях банка'/>

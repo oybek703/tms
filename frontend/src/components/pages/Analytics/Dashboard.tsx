@@ -1,8 +1,6 @@
 import React, { Fragment, memo, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
-import { fetchDashboard } from '../../../redux/actions'
 import DashboardMonthly from '../../UI/Layout/DashboardMonthly'
 import PlacedAndAttracted from '../Treasury/PlacedAndAttracted'
 import CalcFor from '../Treasury/CalcFor'
@@ -18,9 +16,10 @@ import FundingTab from '../../UI/Layout/Dashboard/FundingTab'
 import CreditPortfolioTab from '../../UI/Layout/Dashboard/CreditPortfolioTab'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import DashboardTabs from '../../UI/Layout/Tabs/DashboardTabs'
+import useActions from '../../../hooks/useActions'
 
 const Dashboard = () => {
-  const dispatch = useDispatch()
+  const {fetchDashboard} = useActions()
   const { reportDate } = useTypedSelector(state => state.date)
   const { dashboard, loading, error } = useTypedSelector(state => state.dashboard)
   const {
@@ -42,8 +41,8 @@ const Dashboard = () => {
     bankLimits = []
   } = dashboard
   useEffect(() => {
-    dispatch(fetchDashboard(reportDate))
-  }, [dispatch, reportDate])
+    fetchDashboard(reportDate)
+  }, [fetchDashboard, reportDate])
   useEffect(() => {
     window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
   }, [])

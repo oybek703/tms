@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect } from 'react'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchFcrb } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import FcrbTable from '../../tables/FcrbTable'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const Fcrb = () => {
-    const dispatch = useDispatch()
+    const { fetchFcrb } = useActions()
     const {
         fcrb,
         loading,
@@ -15,8 +14,8 @@ const Fcrb = () => {
     } = useTypedSelector(state => state.fcrb)
     const {reportDate} = useTypedSelector(state => state.date)
     useEffect(() => {
-        dispatch(fetchFcrb(reportDate))
-    }, [reportDate, dispatch])
+        fetchFcrb(reportDate)
+    }, [reportDate, fetchFcrb])
     return (
         <Fragment>
             {loading

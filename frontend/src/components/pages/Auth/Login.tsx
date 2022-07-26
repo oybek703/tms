@@ -6,13 +6,12 @@ import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { useDispatch } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Redirect } from 'react-router-dom'
 import { parse } from 'query-string'
-import { signInUser } from '../../../redux/actions'
 import { toast } from 'react-toastify'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const useStyles = makeStyles(theme => ({
     darkText: {
@@ -51,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 
 const LoginPage = () => {
     const classes = useStyles()
-    const dispatch = useDispatch()
+    const {signInUser} = useActions()
     const { user: { token }, loading, error } = useTypedSelector(
         state => state.auth)
     const [formData, setFormData] = useState({ username: '', password: '' })
@@ -81,7 +80,7 @@ const LoginPage = () => {
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        dispatch(signInUser(formData))
+        signInUser(formData)
     }
     useEffect(() => {
         const btnStatus = !!formData.username && !!formData.password && !loading

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchReportLiabilities } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import ReportLiabilitiesTable from '../../tables/ReportLiabilitiesTable'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const ReportLiabilities = () => {
-    const dispatch = useDispatch()
+    const { fetchReportLiabilities } = useActions()
     const {
         reportliabilities,
         loading,
@@ -16,8 +15,8 @@ const ReportLiabilities = () => {
     } = useTypedSelector(state => state.reportLiabilities)
     const {reportDate} = useTypedSelector(state => state.date)
     useEffect(() => {
-        dispatch(fetchReportLiabilities(reportDate))
-    }, [reportDate, dispatch])
+        fetchReportLiabilities(reportDate)
+    }, [reportDate, fetchReportLiabilities])
     return (
         <>
             <PageTitle title='Отчет об обязательствах'/>

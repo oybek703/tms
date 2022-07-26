@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../UI/Layout/PageTitle'
 import Loader from '../../UI/Layout/Loader'
-import { useDispatch } from 'react-redux'
-import { fetchTimeDepoClients } from '../../../redux/actions'
 import Alert from '../../UI/Layout/Alert'
 import TimeDepoClientsTable from '../../tables/TimeDepoClientsTable'
 import useTypedSelector from '../../../hooks/useTypedSelector'
+import useActions from '../../../hooks/useActions'
 
 const TimeDepoClients = () => {
-    const dispatch = useDispatch()
+    const { fetchTimeDepoClients } = useActions()
     const { timeDepoClients, loading, error } = useTypedSelector(
       state => state.timeDepoClients)
     const { reportDate } = useTypedSelector(state => state.date)
     useEffect(() => {
-        dispatch(fetchTimeDepoClients(reportDate))
-    }, [dispatch, reportDate])
+        fetchTimeDepoClients(reportDate)
+    }, [fetchTimeDepoClients, reportDate])
     return (
       <>
           <PageTitle

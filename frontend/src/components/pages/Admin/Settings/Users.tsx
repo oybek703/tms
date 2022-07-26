@@ -7,8 +7,6 @@ import TableCell from '@material-ui/core/TableCell'
 import CheckTwoToneIcon from '@material-ui/icons/CheckTwoTone'
 import ClearTwoToneIcon from '@material-ui/icons/ClearTwoTone'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import { useDispatch } from 'react-redux'
-import { deleteUserByName, fetchUsers } from '../../../../redux/actions'
 import { baseRoutes } from '../../../UI/Layout/Navigation/Header'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
@@ -16,6 +14,7 @@ import Paper from '@material-ui/core/Paper'
 import AddUser from '../AddUser'
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -48,11 +47,10 @@ const Users = () => {
     const classes = useStyles()
     const {users, loading, error} = useTypedSelector(state => state.users)
     const {state} = useTypedSelector(state => state.addUser)
-    const dispatch = useDispatch()
-
+    const {deleteUserByName, fetchUsers} = useActions()
     function handleDelete(username: string) {
         if (window.confirm(`Are you sure you want to delete user: ${username}?`)) {
-            dispatch(deleteUserByName(username))
+            deleteUserByName(username)
             window.location.reload()
         }
     }
@@ -66,8 +64,8 @@ const Users = () => {
     }, [state])
 
     useEffect(() => {
-        if(!addNewUser) dispatch(fetchUsers())
-    }, [dispatch, addNewUser])
+        if(!addNewUser) fetchUsers()
+    }, [fetchUsers, addNewUser])
     return (
         <Paper className={classes.paddingMain}>
             {
