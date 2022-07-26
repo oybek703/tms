@@ -304,7 +304,7 @@ class DashboardMonthlyMainClass extends MainClass {
     async current_profit() {/* Чистая прибыль */
       const data = await this.getDataInDates(
           '',
-          this.currentProfitQuery,
+          this.currentProfitQuery.bind(this),
           true
       )
       return this.createData('4', 'Чистая прибыль', data, true)

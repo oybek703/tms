@@ -24,7 +24,8 @@ const DashboardMonthly: React.FC = () => {
   const [dateOption, setDateOption] = useState('two')
   const { operDays, loading: operDaysLoading } = useTypedSelector(
       (state) => state.operDays)
-  const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
+  const dayBefore = formatDateWithDash(
+      findRecursive(operDays, reportDate)) as string
   const { dashboardMonthly, loading, error } = useTypedSelector(
       (state) => state.dashboardMonthly)
   const [firstDate, setFirstDate] = useState(dayBefore as string)
@@ -34,15 +35,16 @@ const DashboardMonthly: React.FC = () => {
       fetchDashboardMonthly(new Date(firstDate).toString(),
           new Date(secondDate).toString(), dateOption)
     }
-  }, [fetchDashboardMonthly, firstDate, secondDate, dateOption])
+  }, [fetchDashboardMonthly, firstDate, secondDate, dateOption, reportDate])
   useEffect(() => {
     let { selectedDate: newSecondDate } = formatDate(reportDate, true)
     const isReportDateToday = formatOneDate(reportDate) ===
-            formatOneDate(new Date().toString())
+      formatOneDate(new Date().toString())
     if (isReportDateToday) {
       newSecondDate = formatDateWithDash(
           findRecursive(operDays, reportDate)) as string
-      const newFirstDate = formatDateWithDash(findRecursive(operDays, new Date(newSecondDate))) as string
+      const newFirstDate = formatDateWithDash(
+          findRecursive(operDays, new Date(newSecondDate))) as string
       setSecondDate(newSecondDate)
       setFirstDate(newFirstDate)
     } else {
@@ -53,7 +55,7 @@ const DashboardMonthly: React.FC = () => {
   }, [dayBefore, reportDate, operDays])
   const handleDateChange = useCallback((id) => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
-            formatOneDate(new Date().toString()) !== formatOneDate(date)) {
+      formatOneDate(new Date().toString()) !== formatOneDate(date)) {
       const { selectedDate } = formatDate(date, true)
       if (id === 'first_date') {
         if (new Date(selectedDate) < new Date(String(secondDate))) {
@@ -92,32 +94,32 @@ const DashboardMonthly: React.FC = () => {
           >
             <option value='two'>Всего два дня</option>
             <option disabled value='all'>Два дня и информация между
-                            ними
+              ними
             </option>
             <option disabled value='month'>Данные за два дня и
-                            начало месяца между ними
+              начало месяца между ними
             </option>
           </Select>
         </FormControl>
         <FormHelperText>
-                    Важно: Сбор данных для третьего варианта требует больше
-                    времени.
-                    Пожалуйста, выберите его, если вам нужны именно эти данные.
+          Важно: Сбор данных для третьего варианта требует больше
+          времени.
+          Пожалуйста, выберите его, если вам нужны именно эти данные.
         </FormHelperText>
       </>}
       <br/>
       {loading ?
-                <Loader/> :
-                error ? <Alert message={error}/> :
-                    <>
-                      <DashboardMonthlyTable
-                        operDays={operDays}
-                        operDaysLoading={operDaysLoading}
-                        firstDate={firstDate}
-                        secondDate={secondDate}
-                        handleDateChange={handleDateChange}
-                        rows={dashboardMonthly}/>
-                    </>}
+        <Loader/> :
+        error ? <Alert message={error}/> :
+          <>
+            <DashboardMonthlyTable
+              operDays={operDays}
+              operDaysLoading={operDaysLoading}
+              firstDate={firstDate}
+              secondDate={secondDate}
+              handleDateChange={handleDateChange}
+              rows={dashboardMonthly}/>
+          </>}
     </Fragment>
   )
 }

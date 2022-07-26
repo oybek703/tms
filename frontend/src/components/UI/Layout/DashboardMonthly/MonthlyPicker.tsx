@@ -10,7 +10,7 @@ interface MonthlyPickerProps {
     disabled: boolean,
     operDays: any,
     variant?: WrapperVariant,
-    handleDateChange: (date: any) => void
+    handleDateChange: any
 }
 
 const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
@@ -18,7 +18,7 @@ const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
   disabled = false,
   operDays = [],
   variant='inline',
-  handleDateChange= () => {} }) => {
+  handleDateChange = () => {} }) => {
   const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
       [operDays],
