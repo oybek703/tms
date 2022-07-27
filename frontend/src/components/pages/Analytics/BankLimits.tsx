@@ -65,7 +65,7 @@ function BankLimitsTableHead({ localBanks = false }) {
                     2 :
                     0}><BoldWithColor>Остаток</BoldWithColor></TableCell>
         <TableCell align='center'
-          colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимить -
+          colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимит -
                     22%</BoldWithColor></TableCell>
         <TableCell
           align='center' colSpan={localBanks ?
@@ -75,7 +75,7 @@ function BankLimitsTableHead({ localBanks = false }) {
           colSpan={localBanks ? 2 : 0}><BoldWithColor>(%)
                     лимита</BoldWithColor></TableCell>
         <TableCell align='center'
-          colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимить -
+          colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимит -
                     24%</BoldWithColor></TableCell>
       </TableRow>
       {localBanks && <TableRow>

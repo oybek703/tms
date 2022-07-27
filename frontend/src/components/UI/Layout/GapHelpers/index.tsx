@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     transform: 'rotate(180deg)',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    fontSize: '1.3em',
+    fontSize: '1.8em',
   },
   darkBackground: {
     backgroundColor: '#eeeeee',
@@ -37,56 +37,68 @@ const useStyles = makeStyles({
 })
 
 interface RenderByMonthProps {
-    months: string[]
-    row: any
-    total?: boolean
-    blueBackground?: boolean
-    withPercent?: boolean
+  months: string[]
+  row: any
+  total?: boolean
+  blueBackground?: boolean
+  withPercent?: boolean
 }
 
-const RenderByMonth: React.FC<RenderByMonthProps> = function({ months = [], row = {}, total = false,
-  blueBackground = false, withPercent = false }) {
+const RenderByMonth: React.FC<RenderByMonthProps> = function({
+  months = [], row = {}, total = false,
+  blueBackground = false, withPercent = false,
+}) {
   const classes = useStyles()
   return <Fragment>
     {months.map((_, monthIndex) => <Fragment key={uuid()}>
-      {['TOTAL', 'NATIONAL_CURRENCY', 'FOREIGN_CURRENCY', 'USD', 'EUR'].map((propName, index) =>
-        <Fragment key={uuid()}>
-          <TableCell
-            className={`${classes.noWrap} ${total && classes.darkBackground} 
+      {['TOTAL', 'NATIONAL_CURRENCY', 'FOREIGN_CURRENCY', 'USD', 'EUR'].map(
+          (propName, index) =>
+            <Fragment key={uuid()}>
+              <TableCell
+                className={`${classes.noWrap} ${total && classes.darkBackground} 
                         ${blueBackground ? classes.blueBackground : ''} 
-                        ${(row[monthIndex] || {})['editable'] && classes.bordered}`}
-            style={{
-              borderRight: index === 4 ? '1px solid #7794aa' : '1px solid #eee',
-              borderLeft: index === 0 ? '1px solid #7794aa' : '1px solid #eee',
-            }}
-            align="center">
-            {formatNumber(((row[monthIndex] || {}) || {})[propName], true)}{withPercent && '%'}
-          </TableCell>
-        </Fragment>)}
+                        ${(row[monthIndex] || {})['editable'] &&
+              classes.bordered}`}
+                style={{
+                  borderRight: index === 4 ? total ? !blueBackground ? '1px solid #7794aa':
+                  '1px solid #eee' :
+                  '1px solid #7794aa' : '1px solid #eee',
+                  borderLeft: index === 0 ? total ? !blueBackground ? '1px solid #7794aa':
+                  '1px solid #eee' :
+                  '1px solid #7794aa' : '1px solid #eee',
+                }}
+                align="center">
+                {formatNumber(((row[monthIndex] || {}) || {})[propName],
+                    true)}{withPercent && '%'}
+              </TableCell>
+            </Fragment>)}
     </Fragment>)}
   </Fragment>
 }
 
 interface TotalOrBoldRowProps {
-    months: string[]
-    total: any
-    align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
-    blueBackground: boolean
-    withPercent?: boolean
+  months: string[]
+  total: any
+  align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
+  blueBackground: boolean
+  withPercent?: boolean
 }
 
 const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function({ months, total, align = 'center', blueBackground = false, withPercent = false }) {
   const classes = useStyles()
   return <TableRow key={uuid()}>
     <TableCell align={align}
-      className={`${classes.noWrap} ${classes.darkBackground} ${blueBackground ? classes.blueBackground : ''}`} colSpan={2}>
+      className={`${classes.noWrap} ${classes.darkBackground} ${blueBackground ?
+                 classes.blueBackground :
+                 ''}`} colSpan={2}>
       {(total[0] || {})['INDICATOR_NAME']}
     </TableCell>
-    <RenderByMonth blueBackground={blueBackground} withPercent={withPercent} total months={months} row={total}/>
+    <RenderByMonth blueBackground={blueBackground} withPercent={withPercent}
+      total months={months} row={total}/>
   </TableRow>
 }
 
-const VerticalColumn: React.FC<{data: [], text: string}> = function({ data = [], text = 'приток' }) {
+const VerticalColumn: React.FC<{ data: [], text: string }> = function({ data = [], text = 'приток' }) {
   const classes = useStyles()
   return <TableRow>
     <TableCell align='center' rowSpan={data.length + 1}>
@@ -95,7 +107,7 @@ const VerticalColumn: React.FC<{data: [], text: string}> = function({ data = [],
   </TableRow>
 }
 
-const InnerDataRows: React.FC<{data: any; months: string[]}> = function({ data = [], months }) {
+const InnerDataRows: React.FC<{ data: any; months: string[] }> = function({ data = [], months }) {
   const classes = useStyles()
   if (data.length === 0) return <tr/>
   return <>
@@ -112,7 +124,7 @@ const InnerDataRows: React.FC<{data: any; months: string[]}> = function({ data =
 }
 
 interface GapTableHeadProps {
-    months: string[]
+  months: string[]
 }
 
 const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
@@ -134,56 +146,73 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
     </TableRow>
     <TableRow>
       {months.map((_) => <Fragment key={uuid()}>
-        {['Итого (UZS екв.)', 'Нац.вал. (UZS)', 'Ин.вал. (USD екв.)', 'USD', 'EUR']
-            .map((propName, index) => <WhiteCell
-              key={uuid()}
-              style={{
-                borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
-                borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee',
-              }}
-              align='center'>
-              <b>{propName}</b>
-            </WhiteCell>)}
+        {[
+          'Итого (UZS екв.)',
+          'Нац.вал. (UZS)',
+          'Ин.вал. (USD екв.)',
+          'USD',
+          'EUR'].map((propName, index) => <WhiteCell
+          key={uuid()}
+          style={{
+            borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
+            borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee',
+          }}
+          align='center'>
+          <b>{propName}</b>
+        </WhiteCell>)}
       </Fragment>)}
     </TableRow>
   </TableHead>
 }
 
-const RedRow: React.FC<{row: any}> = function({ row = {} }) {
+const RedRow: React.FC<{ row: any }> = function({ row = {} }) {
   const classes = useStyles()
   return <TableRow>
     <TableCell className={classes.redRow}>{row['INDICATOR_NAME']}</TableCell>
     <TableCell align='center'
-      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(row['TOTAL'])}%</TableCell>
+      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(
+          row['TOTAL'])}%</TableCell>
     <TableCell align='center'
-      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(row['NATIONAL_CURRENCY'])}%</TableCell>
+      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(
+          row['NATIONAL_CURRENCY'])}%</TableCell>
     <TableCell align='center'
-      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(row['FOREIGN_CURRENCY'])}%</TableCell>
+      className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(
+          row['FOREIGN_CURRENCY'])}%</TableCell>
   </TableRow>
 }
 
 function LcrAndNsfrTable({ data = [], month = '', halfWidth = false }) {
   const classes = useStyles()
-  return <TableContainer component={Paper} style={{ maxWidth: halfWidth ? '50%' : '100%' }}>
+  return <TableContainer component={Paper}
+    style={{ maxWidth: halfWidth ? '50%' : '100%' }}>
     <Table size='small'>
       <TableHead className={classes.stickTableHead}>
         <TableRow>
           <TableCell><BoldWithColor>{month}</BoldWithColor></TableCell>
-          <TableCell align='center'><BoldWithColor>Итого</BoldWithColor></TableCell>
-          <TableCell align='center'><BoldWithColor>Нац. вал.</BoldWithColor></TableCell>
-          <TableCell align='center' className={classes.noWrap}><BoldWithColor>Ин. вал.</BoldWithColor></TableCell>
+          <TableCell
+            align='center'><BoldWithColor>Итого</BoldWithColor></TableCell>
+          <TableCell align='center'><BoldWithColor>Нац.
+            вал.</BoldWithColor></TableCell>
+          <TableCell align='center' className={classes.noWrap}><BoldWithColor>Ин.
+            вал.</BoldWithColor></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {data.map((row, index) =>
-                    index === 0 ?
-                        <RedRow key={uuid()} row={row}/> :
-                        <TableRow key={uuid()}>
-                          <TableCell>{row['INDICATOR_NAME']}</TableCell>
-                          <TableCell align='center' className={classes.noWrap}>{formatNumber(row['TOTAL'])}</TableCell>
-                          <TableCell align='center' className={classes.noWrap}>{formatNumber(row['NATIONAL_CURRENCY'])}</TableCell>
-                          <TableCell align='center' className={classes.noWrap}>{formatNumber(row['FOREIGN_CURRENCY'])}</TableCell>
-                        </TableRow>)}
+          index === 0 ?
+            <RedRow key={uuid()} row={row}/> :
+            <TableRow key={uuid()}>
+              <TableCell>{row['INDICATOR_NAME']}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    row['TOTAL'])}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    row['NATIONAL_CURRENCY'])}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    row['FOREIGN_CURRENCY'])}</TableCell>
+            </TableRow>)}
       </TableBody>
     </Table>
   </TableContainer>

@@ -194,9 +194,9 @@ class FcrbMainClass extends MainClass {
     // )
     return Promise.resolve(
         [
-          { CURRENCY_NAME: 'UZS', PERCENT: 18.75 },
-          { CURRENCY_NAME: 'USD', PERCENT: 4.73 },
-          { CURRENCY_NAME: 'EUR', PERCENT: 3.74 }
+          { CURRENCY_NAME: 'UZS', PERCENT: 18.70 },
+          { CURRENCY_NAME: 'USD', PERCENT: 5.69 },
+          { CURRENCY_NAME: 'EUR', PERCENT: 4.91 }
         ]
     )
   } /* МФИ Проценты */
