@@ -43,10 +43,8 @@ class MainClass {
         const { rows: [result = {}] } = await getData(query)
         return result
       } catch (e: any) {
-        console.log(e)
         const error = new Error(e)
-        const errorMessage = error.message
-        console.log('Error on server side: ', errorMessage)
+        console.log('Stack: '.underline.yellow.bold, error.stack)
         return {}
       }
     }

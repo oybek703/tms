@@ -11,15 +11,14 @@ class LiquidityMainClass extends MainClass {
     }
 
     formatQuery(date: string, whereQuery = `code_coa like '101%'`) {
-      const dateCrossQuery = `SELECT MAX(DATE_CROSS)
-                              FROM IBS.S_RATE_CUR@IABS
-                              WHERE CODE = '840' AND DATE_CROSS < TO_DATE('${date}', 'DD.MM.YYYY')`
       return `
       SELECT TOTAL,
            NAT_CURR,
            ROUND((TOTAL - NAT_CURR) / (SELECT EQUIVAL
                                        FROM IBS.S_RATE_CUR@IABS
-                                       WHERE DATE_CROSS = ${dateCrossQuery}
+                                       WHERE DATE_CROSS = (SELECT MAX(DATE_CROSS)
+                                                           FROM IBS.S_RATE_CUR@IABS
+                                                           WHERE CODE = '840' AND DATE_CROSS < TO_DATE('${date}', 'DD.MM.YYYY'))
                                          AND CODE = '840'), 2) AS FOR_CURR,
            USA_DOLLAR,
            EVRO
@@ -73,8 +72,7 @@ class LiquidityMainClass extends MainClass {
       }
     }
 
-    async getOneRow(count?: string, state?: string, codeCoa: string = '',
-        ownQuery: OwnQuery = null, isTableHead: boolean = false) {
+    async getOneRow(count?: string, state?: string, codeCoa: string = '', ownQuery: OwnQuery = null, isTableHead: boolean = false) {
       if (!Boolean(codeCoa)) {
         const { TOTAL, NAT_CURR, FOR_CURR, USA_DOLLAR, EVRO } = await this.getDataInDates(
             '',
