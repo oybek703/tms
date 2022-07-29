@@ -101,7 +101,7 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function({ months, total, 
 const VerticalColumn: React.FC<{ data: [], text: string }> = function({ data = [], text = 'приток' }) {
   const classes = useStyles()
   return <TableRow>
-    <TableCell align='center' rowSpan={data.length + 1}>
+    <TableCell align='center' style={{ borderRight: '2px solid #7794aa' }} rowSpan={data.length + 1}>
       <div className={classes.verticalText}>{text}</div>
     </TableCell>
   </TableRow>

@@ -29,6 +29,7 @@ import fcrbRoutes from './src/routes/Analytics/fcrb'
 import gapRoutes from './src/routes/Analytics/gap'
 import gapManualRoutes from './src/routes/Admin/Manual/gapManual'
 import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
+import nostroMatrixRoutes from './src/routes/Analytics/nostroMatrix'
 
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
@@ -63,6 +64,7 @@ app.use('/api/fcrb', fcrbRoutes)
 app.use('/api/gap', gapRoutes)
 app.use('/api/gapsimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
+app.use('/api/nostroMatrix', nostroMatrixRoutes)
 
 if (process.env.NODE_ENV === 'development') {
   app.get('/', (req: Request, res: Response) => {

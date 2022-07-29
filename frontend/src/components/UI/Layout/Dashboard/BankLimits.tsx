@@ -4,29 +4,29 @@ import {
   Paper,
   TableBody,
   TableContainer,
-  TableRow,
+  TableRow
 } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
-import BoldWithColor from '../../UI/helpers/BoldWithColor'
+import BoldWithColor from '../../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
-import { formatNumber } from '../../../utils'
-import ProgressBar from '../../UI/Layout/ProgressBar'
-import ButtonTabs from '../../UI/Layout/Tabs/ButtonsTab'
+import { formatNumber } from '../../../../utils'
+import ProgressBar from '../ProgressBar'
+import ButtonTabs from '../Tabs/ButtonsTab'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead,
   exceeded: {
-    color: 'red',
+    color: 'red'
   },
-  blueBackground: theme.mixins.blueBackground,
+  blueBackground: theme.mixins.blueBackground
 }))
 
 interface NoWrapCellProps {
-    cellData: any
-    colSpan?: number
+  cellData: any
+  colSpan?: number
 }
 
 const NoWrapCell: React.FC<NoWrapCellProps> = ({ cellData = 0, colSpan = 0 }) => {
@@ -40,11 +40,11 @@ const NoWrapCell: React.FC<NoWrapCellProps> = ({ cellData = 0, colSpan = 0 }) =>
 function ProgressOrText({ cellData = '0' }) {
   const classes = useStyles()
   return (
-        cellData === 'no_limit' ?
-            <i>Лимит не установлен.</i> :
-            cellData === 'exceeded' ?
-            <b className={classes.exceeded}><i>Лимит нарушен.</i></b> :
-            <ProgressBar value={+Number(cellData).toFixed(2)}/>
+    cellData === 'no_limit' ?
+      <i>Лимит не установлен.</i> :
+      cellData === 'exceeded' ?
+        <b className={classes.exceeded}><i>Лимит нарушен.</i></b> :
+        <ProgressBar value={+Number(cellData).toFixed(2)}/>
   )
 }
 
@@ -54,36 +54,30 @@ function BankLimitsTableHead({ localBanks = false }) {
     <TableHead className={classes.stickyTableHead}>
       <TableRow>
         <TableCell
-          align='center' rowSpan={localBanks ?
-                    2 :
-                    0}><BoldWithColor>№</BoldWithColor></TableCell>
+          align='center' rowSpan={localBanks ? 2 : 0}><BoldWithColor>№</BoldWithColor></TableCell>
         <TableCell align='center' rowSpan={localBanks ? 2 : 0}>
           <BoldWithColor>Наименование</BoldWithColor>
         </TableCell>
         <TableCell
-          align='center' colSpan={localBanks ?
-                    2 :
-                    0}><BoldWithColor>Остаток</BoldWithColor></TableCell>
+          align='center' colSpan={localBanks ? 2 : 0}><BoldWithColor>Остаток корр. счетов</BoldWithColor></TableCell>
         <TableCell align='center'
           colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимит -
-                    22%</BoldWithColor></TableCell>
+          22%</BoldWithColor></TableCell>
         <TableCell
-          align='center' colSpan={localBanks ?
-                    2 :
-                    0}><BoldWithColor>Разница</BoldWithColor></TableCell>
+          align='center' colSpan={localBanks ? 2 : 0}><BoldWithColor>Разница</BoldWithColor></TableCell>
         <TableCell align='center'
           colSpan={localBanks ? 2 : 0}><BoldWithColor>(%)
-                    лимита</BoldWithColor></TableCell>
+          лимита</BoldWithColor></TableCell>
         <TableCell align='center'
           colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимит -
-                    24%</BoldWithColor></TableCell>
+          24%</BoldWithColor></TableCell>
       </TableRow>
       {localBanks && <TableRow>
         {Array(5).fill('').map((_) => <Fragment key={uuid()}>
           <TableCell align='center'><BoldWithColor>Нац.
-                        валюта</BoldWithColor></TableCell>
+            валюта</BoldWithColor></TableCell>
           <TableCell align='center'><BoldWithColor>Иност.
-                        валюта</BoldWithColor></TableCell>
+            валюта</BoldWithColor></TableCell>
         </Fragment>)}
       </TableRow>}
     </TableHead>
@@ -153,11 +147,11 @@ function LocalBanksTable({ rows = [], nationalBank = [] }) {
 
 const titles = [
   { title: 'Локальные банки', code: 'local' },
-  { title: 'Иностранные банки', code: 'foreign' },
+  { title: 'Иностранные банки', code: 'foreign' }
 ]
 
 interface BankLimitsProps {
-    bankLimits: any
+  bankLimits: any
 }
 
 const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits = {} }) => {
@@ -169,10 +163,10 @@ const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits = {} }) => {
       <ButtonTabs handleChange={handleChange} active={expanded}
         titles={titles}/>
       {
-                expanded === 'local' ?
-                    <LocalBanksTable rows={localBanks}
-                      nationalBank={nationalBank}/> :
-                    <ForeignBankTable rows={foreignBanks}/>
+        expanded === 'local' ?
+          <LocalBanksTable rows={localBanks}
+            nationalBank={nationalBank}/> :
+          <ForeignBankTable rows={foreignBanks}/>
       }
     </Fragment>
   )

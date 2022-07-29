@@ -172,6 +172,12 @@ export function fetchFcrb(date: string) {
   }
 }
 
+export function fetchNostroMatrix(date: string) {
+  return async function(dispatch: Dispatch) {
+    await checkCashOrSave(date, 'nostroMatrix', dispatch)
+  }
+}
+
 export function fetchCurrencyPosition(date: string) {
   return async function(dispatch: Dispatch) {
     await checkCashOrSave(date, 'currencyposition', dispatch)

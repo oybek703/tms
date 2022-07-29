@@ -61,6 +61,9 @@ const EditableCell: React.FC<EditableCellProps> = function({
       className={classes.noWrap}>{cellData}</TableCell>
   }
   return (<TableCell
+    style={{
+      borderRight: propName === 'EUR' ? '3px solid #7794aa' : 'default'
+    }}
     className={`${classes.noWrap} ${classes.bordered}`}
     data-cellinfo={dataCellInfo}
     onClick={handleEditClick}
@@ -84,8 +87,9 @@ const SimulationTableOneRow: React.FC<SimulationTableRowProps> = function({
   const classes = useStyles()
   return (
     <TableRow key={uuid()}>
-      <TableCell align="left" className={`${classes.noWrap}`}>{(row[0] ||
-                {})['INDICATOR_NAME']}</TableCell>
+      <TableCell align="left" className={`${classes.noWrap}`}
+        style={{ borderRight: '3px solid #7794aa' }}>{
+          (row[0] || {})['INDICATOR_NAME']}</TableCell>
       {months.map((month, monthIndex) => <Fragment key={uuid()}>
         {colNames.map(({ propName, eqv, canEdit }) =>
           <EditableCell key={uuid()} row={row} propName={propName}

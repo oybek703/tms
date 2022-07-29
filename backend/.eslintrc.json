@@ -24,6 +24,7 @@
         "object-curly-spacing": ["error", "always"],
         "require-jsdoc": "off",
         "prefer-const": "warn",
+        "arrow-parens": "off",
         "no-extra-semi": "off",
         "no-trailing-spaces": "error",
         "comma-dangle": "off",

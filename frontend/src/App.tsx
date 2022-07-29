@@ -34,6 +34,7 @@ import InProcess from './components/pages/InProcess'
 import Forbidden from './components/pages/Admin/Forbidden'
 import AdminRoute from './components/UI/Layout/Admin/AdminRoute'
 import Settings from './components/pages/Admin/Settings'
+import NostroMatrix from './components/pages/Analytics/NostroMatrix'
 
 function App() {
   const { user: { token } } = useTypedSelector((state) => state.auth)
@@ -60,6 +61,7 @@ function App() {
               <PrivateRoute component={TimeDeposits} path='/timedeposits'/>
               <PrivateRoute component={DepositsByDeadline} path='/depositsbydeadline'/>
               <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
+              <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
               <PrivateRoute component={GM} path='/gm'/>
               <PrivateRoute component={GAP} path='/gap'/>
               <PrivateRoute component={GapSimulation} path='/gapsimulation'/>

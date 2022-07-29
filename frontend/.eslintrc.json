@@ -26,6 +26,8 @@
         }],
         "object-curly-spacing": ["error", "always"],
         "require-jsdoc": "off",
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "arrow-parens": "off",
+        "comma-dangle": "off"
     }
 }

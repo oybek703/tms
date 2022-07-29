@@ -26,6 +26,7 @@ import fcrb from './Anayltics/fcrbReducer'
 import gap from './Anayltics/gapReducer'
 import bankLimits from './Admin/bankLimits'
 import gapManual from './Admin/gapManual'
+import nostroMatrix from './Anayltics/nostroMatrixReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   gm,
   reportLiabilities,
   fcrb,
+  nostroMatrix,
   gap,
   bankLimits,
   gapManual,
