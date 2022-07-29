@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   stickyTableHead: theme.mixins.stickyTableHead,
 }))
 
-const NostroMatrixTable: React.FC<{ rows: RowData[] }> = function({ rows }) {
+const NostroMatrixTable: React.FC<{ rows: RowData[] | undefined }> = function({ rows }) {
   const classes = useStyles()
   const { reportDate } = useTypedSelector((state) => state.date)
   return (
@@ -94,7 +94,7 @@ const NostroMatrixTable: React.FC<{ rows: RowData[] }> = function({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, _index) => <Fragment key={uuid()}>
+          {rows && rows.map((row, _index) => <Fragment key={uuid()}>
             <TableRow>
               <TableCell colSpan={18} style={{ fontSize: '1.05em', paddingLeft: 200 }}><b>{row.title}</b></TableCell>
             </TableRow>
