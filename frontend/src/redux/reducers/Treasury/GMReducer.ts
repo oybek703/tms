@@ -4,10 +4,10 @@ const initialState = {
   gm: {
     tableData: [],
     accredetiv: {},
-    currRates: [],
+    currRates: []
   },
   loading: false,
-  error: null,
+  error: null
 }
 
 function gm(state = initialState, action: any) {

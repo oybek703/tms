@@ -8,22 +8,22 @@ function renderOptions(series: any) {
   const colors = [
     '#4CB9E1',
     '#f38003',
-    '#00B050',
+    '#00B050'
   ]
   const labels = ['UZS', 'USD', 'EUR']
   const options = {
     title: {
-      ...chartTitle('МБД по валютам'),
+      ...chartTitle('МБД по валютам')
     },
     subtitle: {
-      ...chartSubtitle(),
+      ...chartSubtitle()
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
     colors,
     chart: {
       type: 'pie',
-      height: 350,
+      height: 350
     },
     labels,
     legend: {
@@ -37,26 +37,26 @@ function renderOptions(series: any) {
       fontSize: 17,
       customLegendItems: labels,
       markers: {
-        fillColors: colors,
-      },
+        fillColors: colors
+      }
     },
     fill: {
-      colors,
+      colors
     },
     dataLabels: {
-      enabled: true,
+      enabled: true
     },
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
-    }],
+          position: 'bottom'
+        }
+      }
+    }]
   }
 
   const chart = new ApexCharts(document.querySelector('#currency_mbd'), options)

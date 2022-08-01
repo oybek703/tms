@@ -1,12 +1,12 @@
 import {
   FCRB_FAIL,
-  FCRB_START, FCRB_SUCCESS,
+  FCRB_START, FCRB_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   fcrb: {},
   loading: false,
-  error: null,
+  error: null
 }
 
 function fcrb(state = initialState, action: any) {

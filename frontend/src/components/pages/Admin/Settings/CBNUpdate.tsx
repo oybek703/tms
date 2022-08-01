@@ -27,7 +27,7 @@ const CbnUpdate = () => {
         const { data: { message } } = await axiosInstance.put(
             `/api/calcfor/updatecbn`,
             { fromDate, toDate, cbNorm },
-            withToken(),
+            withToken()
         )
         localStorage.removeItem('calcfor')
         setUpdateMsg(message)
@@ -89,7 +89,7 @@ const CbnUpdate = () => {
                       value)}
                   type="date"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                 />
               </Grid>
@@ -103,7 +103,7 @@ const CbnUpdate = () => {
                       value)}
                   type="date"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   error={!!dateError}
                   helperText={dateError}

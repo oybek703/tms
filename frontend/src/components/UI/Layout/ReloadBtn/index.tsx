@@ -8,8 +8,8 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 const useStyles = makeStyles((theme) => ({
   btn: {
     marginTop: 3,
-    height: 38,
-  },
+    height: 38
+  }
 }))
 
 const ReloadBtn = () => {

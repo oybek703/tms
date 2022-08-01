@@ -5,7 +5,7 @@ import { LOGOUT } from '../redux/actions/types'
 const productionMode = process.env.NODE_ENV === 'production'
 
 const axiosInstance = axios.create({
-  baseURL: `http://${productionMode ? process.env.REACT_APP_SERVER_IP : 'localhost'}:4200`,
+  baseURL: `http://${productionMode ? process.env.REACT_APP_SERVER_IP : 'localhost'}:4200`
 })
 
 axiosInstance.interceptors.request.use(
@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
     },
     function(error) {
       return Promise.reject(error)
-    },
+    }
 )
 
 axiosInstance.interceptors.response.use(
@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
         store.dispatch({ type: LOGOUT })
       }
       return Promise.reject(error)
-    },
+    }
 )
 
 export function withToken() {
@@ -43,8 +43,8 @@ export function withToken() {
   return {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token || ''}`,
-    },
+      'Authorization': `Bearer ${token || ''}`
+    }
   }
 }
 

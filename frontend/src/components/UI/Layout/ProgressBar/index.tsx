@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     position: 'relative',
     backgroundColor: '#ccc',
-    minWidth: 100,
+    minWidth: 100
   },
   bar: {
     borderRadius: 0,
-    backgroundColor: ({ value }: {value: number}) => chooseProgressColor(value),
+    backgroundColor: ({ value }: {value: number}) => chooseProgressColor(value)
   },
   percent: {
     position: 'absolute',
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     fontSize: '0.8rem',
     textAlign: 'center',
-    color: ({ value }: {value: number}) => (value >= 0 && value < 50) ? '#000': '#fff',
-  },
+    color: ({ value }: {value: number}) => (value >= 0 && value < 50) ? '#000': '#fff'
+  }
 }))
 
 interface ProgressBarProps {
@@ -46,7 +46,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ value = 0 }) => {
       <LinearProgress
         classes={{
           root: classes.root,
-          bar: classes.bar,
+          bar: classes.bar
         }}
         variant="determinate" value={value > 100 ? 100 : +value}/>
       <span className={classes.percent} title={String(value)}> &nbsp; {value > 100 ?

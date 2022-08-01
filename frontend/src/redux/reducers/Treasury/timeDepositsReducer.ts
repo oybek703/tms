@@ -5,9 +5,9 @@ const initialState = {
   timeDeposits: {
     tableData: [],
     currentBalance: [],
-    balanceInMonthBegin: [],
+    balanceInMonthBegin: []
   },
-  error: null,
+  error: null
 }
 
 function timeDeposits(state = initialState, action: any) {

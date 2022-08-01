@@ -10,8 +10,8 @@ import excelImage from '../../../images/excel.png'
 const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: 'none',
-    borderRadius: 0,
-  },
+    borderRadius: 0
+  }
 }))
 
 
@@ -37,8 +37,8 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
               formats: ['xlsx'],
               position: 'top',
               exportButtons: false,
-              trimWhitespace: true,
-            },
+              trimWhitespace: true
+            }
     )
     const exportData: any = table.getExportData()
     /* convert export data to a file for download */
@@ -47,7 +47,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
         xlsxData.data,
         xlsxData.mimeType,
         xlsxData.filename,
-        xlsxData.fileExtension,
+        xlsxData.fileExtension
     )
     table.remove()
     table.reset()
@@ -70,15 +70,15 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'center'
         }}
         transitionDuration={{
           appear: 100,
-          exit: 100,
+          exit: 100
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'right'
         }}
       >
         <Button

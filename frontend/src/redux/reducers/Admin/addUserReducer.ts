@@ -1,13 +1,13 @@
 import {
   ADDUSER_START,
   ADDUSER_SUCCESS,
-  ADDUSER_FAIL, ADDUSER_REFRESH,
+  ADDUSER_FAIL, ADDUSER_REFRESH
 } from '../../actions/types'
 
 const initialState = {
   loading: false,
   state: 'ended',
-  error: null,
+  error: null
 }
 
 function addUser(state = initialState, action: any) {

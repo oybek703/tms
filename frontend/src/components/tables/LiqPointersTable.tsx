@@ -21,18 +21,18 @@ const useStyles = makeStyles((theme) =>({
     padding: '2px 10px',
     whiteSpace: 'nowrap',
     width: 300,
-    fontSize: '.9em',
+    fontSize: '.9em'
   },
   divider: {
-    marginTop: 20,
+    marginTop: 20
   },
   smallCaption: {
     padding: 10,
-    fontSize: 14,
+    fontSize: 14
   },
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead,
-  blueBackground: theme.mixins.blueBackground,
+  blueBackground: theme.mixins.blueBackground
 }))
 
 interface LiqPointersTableProps {

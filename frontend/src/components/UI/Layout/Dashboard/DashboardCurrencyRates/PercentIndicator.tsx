@@ -9,14 +9,14 @@ const useStyles = makeStyles((theme) => ({
   grow: theme.mixins.grow,
   noWrap: {
     ...theme.mixins.noWrap,
-    flexWrap: 'nowrap',
+    flexWrap: 'nowrap'
   },
   blackText: {
-    color: '#000',
+    color: '#000'
   },
   yellowText: {
-    color: '#ecd100',
-  },
+    color: '#ecd100'
+  }
 }))
 
 interface PercentIndicatorProps {

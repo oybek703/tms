@@ -7,23 +7,23 @@ function renderOptions(values) {
     '#f38003',
     '#00B050',
     '#ff6363',
-    '#4CB9E1',
+    '#4CB9E1'
   ]
 
   const options = {
     title: {
       text: 'ОБЯЗАТЕЛЬСТВА АО "UZAUTO MOTORS" ПЕРЕД БАНКОМ',
-      align: 'left',
+      align: 'left'
     },
     subtitle: {
-      ...chartSubtitle('в номинале'),
+      ...chartSubtitle('в номинале')
     },
     tooltip: { ...chartTooltip() },
     series: values,
     chart: {
       width: 600,
       type: 'pie',
-      height: 280,
+      height: 280
     },
     colors,
     labels: [
@@ -31,21 +31,21 @@ function renderOptions(values) {
       'Аккредетив (EUR)',
       'Аккредетив (RUB)',
       'Непокрытый тек.(USD)',
-      'Торговое финансирование',
+      'Торговое финансирование'
     ],
     fill: {
-      colors,
+      colors
     },
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
+          position: 'bottom'
+        }
+      }
     }],
     legend: {
       show: true,
@@ -55,8 +55,8 @@ function renderOptions(values) {
       position: 'left',
       fontSize: 15,
       maxWidth: 120,
-      whiteSpace: 'wrap',
-    },
+      whiteSpace: 'wrap'
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#gm_liablities'), options)

@@ -6,7 +6,7 @@ class ErrorBoundary extends Component {
     // @ts-ignore
     super()
     this.state = {
-      hasError: false,
+      hasError: false
     }
   }
 

@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
   down: theme.mixins.down,
   noWrap: {
     ...theme.mixins.noWrap,
-    flexWrap: 'nowrap',
-  },
+    flexWrap: 'nowrap'
+  }
 }))
 
 interface FormattedCellProps {

@@ -6,28 +6,28 @@ import {
   chartSubtitle,
   chartTitle,
   chartTooltip,
-  formatChartLegend,
+  formatChartLegend
 } from '../../../../../utils'
 
 function renderOptions(series: any = []) {
   const colors = [
     '#f38003',
-    '#4CB9E1',
+    '#4CB9E1'
   ]
   const labels = ['Краткосрочный', 'Долгосрочный']
   const options = {
     title: {
-      ...chartTitle('Разбивка КП по срокам'),
+      ...chartTitle('Разбивка КП по срокам')
     },
     subtitle: {
-      ...chartSubtitle('млн. сум'),
+      ...chartSubtitle('млн. сум')
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
     colors,
     chart: {
       type: 'pie',
-      height: 530,
+      height: 530
     },
     labels,
     legend: {
@@ -41,34 +41,34 @@ function renderOptions(series: any = []) {
       position: 'bottom',
       customLegendItems: labels,
       markers: {
-        fillColors: colors,
+        fillColors: colors
       },
       itemMargin: {
         horizontal: 20,
-        vertical: 15,
-      },
+        vertical: 15
+      }
     },
     fill: {
-      colors,
+      colors
     },
     dataLabels: {
       enabled: true,
       style: {
-        fontSize: 14,
-      },
+        fontSize: 14
+      }
     },
     responsive: [
       {
         breakpoint: 480,
         options: {
           chart: {
-            width: 200,
+            width: 200
           },
           legend: {
-            position: 'bottom',
-          },
-        },
-      }],
+            position: 'bottom'
+          }
+        }
+      }]
   }
 
   const chart = new ApexCharts(document.querySelector('#cp_breakdown'), options)

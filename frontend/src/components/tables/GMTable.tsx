@@ -38,7 +38,7 @@ function sumByCode(array = [], code = '') {
 const useStyles = makeStyles((theme) => ({
   paddingBottom0: theme.mixins.paddingBottom0,
   stickyTableHead: theme.mixins.stickyTableHead,
-  blueBackground: theme.mixins.blueBackground,
+  blueBackground: theme.mixins.blueBackground
 }))
 
 const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
@@ -71,7 +71,7 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
     ...accountCodes.reduce((acc: any, val: any) => {
       acc[val] = sumByCode(tableData, val)
       return acc
-    }, {}),
+    }, {})
   }
   let classificationSumRow = [0, 0, 0, 0]
   for (const code in sumByCodes) {
@@ -92,7 +92,7 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
       }).map((v) => +v.toFixed(1))
   const gmLiabilities = [
     ...(accredetiv.acs || []).map(Number),
-    ...(accredetiv.others || []).map((v: any) => ((+v['par_value']))),
+    ...(accredetiv.others || []).map((v: any) => ((+v['par_value'])))
   ].map((v) => Math.round(Math.abs(v)))
   return (
     <Fragment>

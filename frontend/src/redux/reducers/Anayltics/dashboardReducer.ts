@@ -1,7 +1,7 @@
 import {
   DASHBOARD_ACTIVE_TAB_CHANGE,
   DASHBOARD_FAIL,
-  DASHBOARD_START, DASHBOARD_SUCCESS,
+  DASHBOARD_START, DASHBOARD_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
@@ -19,9 +19,9 @@ const initialState = {
     fundingStructure: [],
     currencyMBD: [],
     vla: {},
-    currencyRates: [],
+    currencyRates: []
   },
-  error: null,
+  error: null
 }
 
 function dashboard(state = initialState, action: any) {

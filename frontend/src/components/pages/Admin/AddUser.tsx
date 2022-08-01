@@ -11,7 +11,7 @@ import useActions from '../../../hooks/useActions'
 const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: 'crimson',
+    backgroundColor: 'crimson'
   },
   form: {
     display: 'flex',
@@ -19,20 +19,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginTop: theme.spacing(3),
     backgroundColor: '#fff',
-    padding: 40,
+    padding: 40
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
     padding: '10px 20px',
-    minWidth: 250,
+    minWidth: 250
   },
   chips: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   chip: {
-    margin: 2,
-  },
+    margin: 2
+  }
 }))
 
 export default function AddUser() {

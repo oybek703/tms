@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   cbNorm: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   editIcon: {
     'padding': '1px 3px',
@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#000',
       color: 'white',
-      transform: 'scale(1.1)',
-    },
+      transform: 'scale(1.1)'
+    }
   },
   grow: theme.mixins.grow,
   paddingBottom0: {
     ...theme.mixins.paddingBottom0,
-    ...theme.mixins.marginBottom10,
+    ...theme.mixins.marginBottom10
   },
   mainTable: theme.mixins.marginTop10,
   down: theme.mixins.down,
@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
   formattedCell: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 }))
 
 interface FormattedDataProps {

@@ -67,46 +67,46 @@ const theme = createTheme({
       'Segoe UI',
       'Helvetica Neue',
       'Arial',
-      'sans-serif',
-    ].join(','),
+      'sans-serif'
+    ].join(',')
   },
   palette: {
     secondary: {
-      main: blueGrey['50'],
+      main: blueGrey['50']
     },
     success: {
-      main: blueGrey['400'],
+      main: blueGrey['400']
     },
     warning: {
-      main: blueGrey['500'],
+      main: blueGrey['500']
     },
     info: {
-      main: blueGrey['700'],
+      main: blueGrey['700']
     },
     error: {
       main: '#cd0707',
-      light: blueGrey['300'],
+      light: blueGrey['300']
     },
     primary: {
-      main: blueGrey['600'],
-    },
+      main: blueGrey['600']
+    }
   },
   mixins: {
     dottedBorder: {
-      border: '1px dotted #000',
+      border: '1px dotted #000'
     },
     noBorder: {
-      border: 'none !important',
+      border: 'none !important'
     },
     stickyCol: {
       position: 'sticky',
       left: 0,
-      backgroundColor: '#7794aa',
+      backgroundColor: '#7794aa'
     },
     stickyHead: {
       position: 'sticky',
       top: 0,
-      zIndex: 1000,
+      zIndex: 1000
     },
     tabBtn: {
       marginRight: 20,
@@ -117,114 +117,114 @@ const theme = createTheme({
       fontSize: 15,
       lineHeight: 1,
       textTransform: 'none',
-      fontWeight: 560,
+      fontWeight: 560
     },
     grow: {
-      color: '#009c34',
+      color: '#009c34'
     },
     down: {
-      color: '#d32f2f',
+      color: '#d32f2f'
     },
     active: {
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     },
     marginBottom10: {
-      marginBottom: 10,
+      marginBottom: 10
     },
     marginTop10: {
-      marginTop: 10,
+      marginTop: 10
     },
     paddingBottom0: {
-      paddingBottom: 0,
+      paddingBottom: 0
     },
     muted: {
-      cursor: 'not-allowed',
+      cursor: 'not-allowed'
     },
     noWrap: {
-      whiteSpace: 'nowrap',
+      whiteSpace: 'nowrap'
     },
     italic: {
-      fontStyle: 'italic',
+      fontStyle: 'italic'
     },
     displayNone: {
-      display: 'none',
+      display: 'none'
     },
     pointer: {
-      cursor: 'pointer',
+      cursor: 'pointer'
     },
     logo: {
       'minHeight': 100,
       'minWidth': 220,
       'transform': 'scale(1)',
       '&:hover': {
-        transform: 'scale(1.05)',
-      },
+        transform: 'scale(1.05)'
+      }
     },
     smallCard: {
       padding: '5px 10px',
       flexBasis: '32.8%',
-      textAlign: 'center',
+      textAlign: 'center'
     },
     smallCardContainer: {
       display: 'flex',
       margin: '2px auto',
       padding: '8px 0',
-      justifyContent: 'space-between',
+      justifyContent: 'space-between'
     },
     oneRowTitle: {
       fontSize: 20,
-      padding: '10px 15px',
+      padding: '10px 15px'
     },
     blueBackground: {
       backgroundColor: '#7794aa',
-      color: '#fff',
+      color: '#fff'
     },
     stickyTableHead: {
       backgroundColor: '#7794aa',
       color: '#fff',
       position: 'sticky',
       top: 0,
-      zIndex: 1000,
-    },
+      zIndex: 1000
+    }
 
   },
   overrides: {
     MuiTableContainer: {
       root: {
         maxHeight: '74vh',
-        paddingBottom: 10,
-      },
+        paddingBottom: 10
+      }
     },
     MuiTableCell: {
       root: {
         fontSize: '14px',
-        border: '1px solid rgba(224, 224, 224, 1)',
-      },
+        border: '1px solid rgba(224, 224, 224, 1)'
+      }
     },
     MuiButtonBase: {
       root: {
         '&$disabled': {
           'cursor': 'not-allowed',
-          'pointerEvents': 'auto',
-        },
-      },
+          'pointerEvents': 'auto'
+        }
+      }
     },
     MuiTypography: {
       caption: {
-        fontSize: '13.5px',
-      },
+        fontSize: '13.5px'
+      }
     },
     MuiTable: {
       root: {
-        borderCollapse: 'unset',
-      },
+        borderCollapse: 'unset'
+      }
     },
     MuiTab: {
       wrapper: {
-        fontWeight: 'bold',
-      },
-    },
-  },
+        fontWeight: 'bold'
+      }
+    }
+  }
 })
 
 export default theme

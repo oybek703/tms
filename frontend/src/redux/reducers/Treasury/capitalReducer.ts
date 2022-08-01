@@ -3,7 +3,7 @@ import { CAPITAL_FAIL, CAPITAL_START, CAPITAL_SUCCESS } from '../../actions/type
 const initialState = {
   capital: [],
   loading: false,
-  error: null,
+  error: null
 }
 
 function capital(state = initialState, action: any) {

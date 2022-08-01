@@ -9,42 +9,42 @@ import theme from '../../theme'
 const useStyles = makeStyles({
   greens: {
     color: '#00B050',
-    fontSize: '1.2em',
+    fontSize: '1.2em'
   },
   liquidityCard: {
     ...theme.mixins.smallCard,
     padding: 0,
     paddingLeft: 2,
     marginBottom: -5,
-    paddingBottom: 5,
+    paddingBottom: 5
   },
   totalText: {
     fontSize: '1.5em',
     fontWeight: 550,
     textAlign: 'left',
-    padding: 0,
+    padding: 0
   },
   totalSecondaryText: {
     fontSize: '1.5em',
     textAlign: 'left',
-    padding: 0,
+    padding: 0
   },
   totalValue: {
     fontWeight: 400,
-    fontSize: '1.4em',
+    fontSize: '1.4em'
   },
   secondaryText: {
     lineHeight: 0,
     color: '#000',
-    fontSize: '0.7em',
+    fontSize: '0.7em'
   },
   natValue: {
     fontSize: '1.3em',
-    fontWeight: 300,
+    fontWeight: 300
   },
   labelPart: {
-    borderRight: '2px dashed #ddd',
-  },
+    borderRight: '2px dashed #ddd'
+  }
 })
 
 interface LiquidityCardProps {

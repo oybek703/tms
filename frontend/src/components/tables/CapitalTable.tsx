@@ -17,7 +17,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 const useStyles = makeStyles((theme) =>({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const CapitalTable: React.FC<{rows: any}> = function({ rows }) {

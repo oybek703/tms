@@ -7,7 +7,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey'
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   btn: {
     marginRight: 20,
@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15,
     lineHeight: 1,
     textTransform: 'lowercase',
-    fontWeight: 560,
-  },
+    fontWeight: 560
+  }
 }))
 
 interface TopDepositsTabProps {
@@ -35,9 +35,9 @@ const TopDepositsTab: React.FC<TopDepositsTabProps> = ({ active = 1, handleChang
     { title: 'ДЕПОЗИТЫ КЛИЕНТОВ ПО АККРЕДИТИВАМ', code: '22602' },
     {
       title: 'ЗАРЕЗЕРВИРОВАННЫЕ СРЕДСТВА КЛИЕНТОВ ДЛЯ КОНВЕРТАЦИИ',
-      code: '22613',
+      code: '22613'
     },
-    { title: 'СРЕДСТВА КЛИЕНТОВ, СКОНВЕРТИРОВАННЫЕ', code: '22614' },
+    { title: 'СРЕДСТВА КЛИЕНТОВ, СКОНВЕРТИРОВАННЫЕ', code: '22614' }
   ]
   const classes = useStyles()
   return (

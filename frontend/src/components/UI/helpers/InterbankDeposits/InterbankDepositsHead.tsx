@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import BoldWithColor from '../BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const InterbankDepositsHead = () => {

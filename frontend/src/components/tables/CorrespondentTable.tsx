@@ -17,7 +17,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const RenderedCorrespondentTable = function({ currentState = false, currencyRate = [],
@@ -128,7 +128,7 @@ const RenderedCorrespondentTable = function({ currentState = false, currencyRate
                 align="center">{row['isTableHead'] ?
                                     <b>{formatNumber(row.EUR, true)}</b> : formatNumber(row.EUR, true)}</TableCell>
             </StyledTableRow>
-          )),
+          ))
           )}
         </TableBody>
       </Table>

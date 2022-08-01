@@ -8,21 +8,21 @@ function renderOptions(series: any) {
   const colors = [
     '#4CB9E1',
     '#00B050',
-    '#f38003',
+    '#f38003'
   ]
   const labels = ['NPL', 'Просрочка', 'Стандарт.']
   const options = {
     title: {
-      ...chartTitle('Качество КП'),
+      ...chartTitle('Качество КП')
     },
     subtitle: {
-      ...chartSubtitle('млн. сум'),
+      ...chartSubtitle('млн. сум')
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
     chart: {
       type: 'pie',
-      height: 530,
+      height: 530
     },
     labels,
     legend: {
@@ -36,32 +36,32 @@ function renderOptions(series: any) {
       fontSize: 14,
       customLegendItems: labels,
       markers: {
-        fillColors: colors,
+        fillColors: colors
       },
       itemMargin: {
-        vertical: 15,
-      },
+        vertical: 15
+      }
     },
     fill: {
-      colors,
+      colors
     },
     dataLabels: {
       enabled: true,
       style: {
-        fontSize: 15,
-      },
+        fontSize: 15
+      }
     },
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
-    }],
+          position: 'bottom'
+        }
+      }
+    }]
   }
 
   const chart = new ApexCharts(document.querySelector('#credit_portfolio'), options)

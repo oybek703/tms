@@ -3,7 +3,7 @@ import { DEPOSITSBYDEADLINE_FAIL, DEPOSITSBYDEADLINE_START, DEPOSITSBYDEADLINE_S
 const initialState = {
   loading: false,
   depositsbydeadline: [],
-  error: null,
+  error: null
 }
 
 function depositsByDeadline(state = initialState, action: any) {

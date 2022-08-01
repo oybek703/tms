@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    margin: '20px auto',
+    margin: '20px auto'
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
   horizontalTitle: theme.mixins.oneRowTitle,
 
   noWrap: theme.mixins.noWrap,
-  marginBottom10: theme.mixins.marginBottom10,
+  marginBottom10: theme.mixins.marginBottom10
 }))
 
 interface DailyIndicatorsProps {
@@ -61,7 +61,7 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({ dashboardCorresponden
         {[
           { label: 'ЮЛА (HQLA)', data: vlaCurrent },
           { label: 'ЛКМК (LCR)', data: lcrLastPointers },
-          { label: 'СБМК (NSFR)', data: nsfrLastPointers },
+          { label: 'СБМК (NSFR)', data: nsfrLastPointers }
         ].map(({ data, label }) => (
           <LiquidityCard key={uuid()} data={data} label={label}/>
         ))}

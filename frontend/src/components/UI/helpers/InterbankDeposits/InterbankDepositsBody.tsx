@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
   weighted_percent: {
     background: 'red',
     color: 'white',
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 }))
 
 interface InterbankDepositsBodyProps {

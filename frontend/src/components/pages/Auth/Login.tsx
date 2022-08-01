@@ -15,37 +15,37 @@ import useActions from '../../../hooks/useActions'
 
 const useStyles = makeStyles((theme) => ({
   darkText: {
-    color: '#000',
+    color: '#000'
   },
   boldText: {
     textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   formFields: {
     minWidth: '40em',
     margin: '1em auto 2.5em',
     textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
-      minWidth: '25em',
-    },
+      minWidth: '25em'
+    }
   },
   form: {
     backgroundColor: 'white',
-    padding: '30px 20px',
+    padding: '30px 20px'
   },
   root: {
-    margin: '50px auto',
+    margin: '50px auto'
   },
   submit_btn: {
-    backgroundColor: theme.palette.success['main'],
+    backgroundColor: theme.palette.success['main']
   },
   submit_end_icon: {
-    color: theme.palette.error['main'],
+    color: theme.palette.error['main']
   },
   logo: {
     marginTop: -80,
-    marginBottom: -60,
-  },
+    marginBottom: -60
+  }
 }))
 
 const LoginPage = () => {
@@ -154,7 +154,7 @@ const LoginPage = () => {
                           !showPassword)}>{showPassword ?
                                             <Visibility fontSize='small'/> :
                                             <VisibilityOff
-                                              fontSize='small'/>}</IconButton>,
+                                              fontSize='small'/>}</IconButton>
                   }}/>
               </Grid>
               <Grid container justifyContent='center'>

@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
     minHeight: 550,
     width: '60%',
-    background: '#ffffff',
-  },
+    background: '#ffffff'
+  }
 }))
 
 const Loader = () => {

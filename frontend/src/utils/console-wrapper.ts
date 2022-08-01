@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 
   const ignoreListError = [
     'The `fade` color utility was renamed to `alpha` to better describe its functionality.',
-    'the createMuiTheme function was renamed to createTheme',
+    'the createMuiTheme function was renamed to createTheme'
   ]
 
   const ignoreListWarn = ['The `theme.typography.round` helper is deprecated.']

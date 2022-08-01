@@ -42,7 +42,7 @@ interface RowData {
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const NostroMatrixTable: React.FC<{ rows: RowData[] | undefined }> = function({ rows }) {
@@ -88,7 +88,7 @@ const NostroMatrixTable: React.FC<{ rows: RowData[] | undefined }> = function({ 
               'МБД',
               'FX',
               'Кредитная линия',
-              'Востро',
+              'Востро'
             ].map((title) => <TableCell key={uuid()}
               align='center' className={classes.noWrap}><BoldWithColor>{title}</BoldWithColor></TableCell>)}
           </TableRow>

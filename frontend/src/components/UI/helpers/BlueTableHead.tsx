@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import { makeStyles, TableHead } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  blueBackground: theme.mixins.blueBackground,
+  blueBackground: theme.mixins.blueBackground
 }))
 
 const BlueTableHead: React.FC<PropsWithChildren<{}>> = ({ children }) => {

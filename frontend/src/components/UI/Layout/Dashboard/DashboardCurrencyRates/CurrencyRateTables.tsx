@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../../utils'
 
 const useStyles = makeStyles((theme) => ({
-  noWrap: theme.mixins.noWrap,
+  noWrap: theme.mixins.noWrap
 }))
 
 const currencyOrder = ['USD', 'EUR', 'RUB', 'GBP', 'CHF', 'JPY', 'KZT', 'CNY']

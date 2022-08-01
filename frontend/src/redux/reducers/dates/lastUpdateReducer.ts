@@ -1,12 +1,12 @@
 import {
   LAST_UPDATE_FAIL,
-  LAST_UPDATE_START, LAST_UPDATE_SUCCESS,
+  LAST_UPDATE_START, LAST_UPDATE_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   loading: false,
   error: null,
-  lastUpdate: null,
+  lastUpdate: null
 }
 
 function lastUpdate(state = initialState, action: any) {

@@ -11,8 +11,8 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: '90vh',
-  },
+    maxHeight: '90vh'
+  }
 }))
 
 const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
@@ -24,7 +24,7 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     needsOfLiquidityTotal = [],
     vlaLcrData = [],
     lcrData = [],
-    nsfrData = [],
+    nsfrData = []
   } = rows
   const classes = useStyles()
   return (

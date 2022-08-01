@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   mainBtn: {
-    maxWidth: 220,
-  },
+    maxWidth: 220
+  }
 }))
 
 const Forbidden = () => {

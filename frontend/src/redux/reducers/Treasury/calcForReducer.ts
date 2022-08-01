@@ -3,7 +3,7 @@ import { CALCFOR_FAIL, CALCFOR_START, CALCFOR_SUCCESS } from '../../actions/type
 const initialState = {
   calcfor: [],
   loading: false,
-  error: null,
+  error: null
 }
 
 function calcFor(state = initialState, action: any) {

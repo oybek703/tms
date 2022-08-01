@@ -1,13 +1,13 @@
 import {
   DASHBOARDMONTHLY_FAIL,
   DASHBOARDMONTHLY_START,
-  DASHBOARDMONTHLY_SUCCESS,
+  DASHBOARDMONTHLY_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   loading: false,
   dashboardMonthly: [],
-  error: null,
+  error: null
 }
 
 function dashboardMonthly(state = initialState, action: any) {

@@ -3,7 +3,7 @@ import { TIMEDEPOCLIENTS_FAIL, TIMEDEPOCLIENTS_START, TIMEDEPOCLIENTS_SUCCESS } 
 const initialState = {
   loading: false,
   timeDepoClients: [],
-  error: null,
+  error: null
 }
 
 function timeDepoClients(state = initialState, action: any) {

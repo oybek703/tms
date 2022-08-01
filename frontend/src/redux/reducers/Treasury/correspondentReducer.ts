@@ -3,7 +3,7 @@ import {
   CORRESPONDENT_CURRENT_START, CORRESPONDENT_CURRENT_SUCCESS,
   CORRESPONDENT_CURRENT_UPDATE,
   CORRESPONDENT_FAIL,
-  CORRESPONDENT_START, CORRESPONDENT_SUCCESS,
+  CORRESPONDENT_START, CORRESPONDENT_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
@@ -11,9 +11,9 @@ const initialState = {
   correspondent: {
     currencyRate: [],
     totalCash: [],
-    interbankDeposits: [],
+    interbankDeposits: []
   },
-  error: null,
+  error: null
 }
 
 function correspondent(state = initialState, action: any) {

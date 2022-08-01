@@ -18,11 +18,11 @@ import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles((theme) => ({
   buttonsRow: {
-    marginBottom: 5,
+    marginBottom: 5
   },
   actionContent: {
-    padding: '5px 10px',
-  },
+    padding: '5px 10px'
+  }
 }))
 
 interface ActionContentProps {
@@ -76,7 +76,7 @@ const GapSimulation = () => {
     sourceOfLiquidityTotal = [],
     needsOfLiquidity = [],
     needsOfLiquidityTotal = [],
-    vlaLcrData = [],
+    vlaLcrData = []
   } = gapManual
 
   function handleClose() {
@@ -92,9 +92,9 @@ const GapSimulation = () => {
             colName: editingCell['colName'],
             newValue, role: editingCell['role'],
             date: editingCell['monthIndex'],
-            source: editingCell['source'],
+            source: editingCell['source']
           },
-          withToken(),
+          withToken()
       )
       handleClose()
       fetchGapManual(true)
@@ -134,7 +134,7 @@ const GapSimulation = () => {
         await axiosInstance.put(
             '/api/gapsimulation/saveChanges',
             {},
-            withToken(),
+            withToken()
         )
         toast.success('Изменения успешно сохранены.')
         fetchGap()

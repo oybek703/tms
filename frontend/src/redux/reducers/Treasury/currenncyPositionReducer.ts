@@ -1,15 +1,15 @@
 import {
   CURRENCYPOSITION_FAIL,
-  CURRENCYPOSITION_START, CURRENCYPOSITION_SUCCESS,
+  CURRENCYPOSITION_START, CURRENCYPOSITION_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   loading: false,
   currencyPosition: {
     allRows: [],
-    tableSumData: [],
+    tableSumData: []
   },
-  error: null,
+  error: null
 }
 
 function currencyPosition(state = initialState, action: any) {

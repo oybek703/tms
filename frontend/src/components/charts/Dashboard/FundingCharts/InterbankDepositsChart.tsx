@@ -7,16 +7,16 @@ import { chartSubtitle, chartTitle, chartTooltip, formatChartLegend } from '../.
 function renderOptions(series: any) {
   const colors = [
     '#4CB9E1',
-    '#f38003',
+    '#f38003'
   ]
   const labels = ['прив.', 'разм.']
 
   const options = {
     title: {
-      ...chartTitle('Межбанковские депозиты'),
+      ...chartTitle('Межбанковские депозиты')
     },
     subtitle: {
-      ...chartSubtitle('млрд.сум'),
+      ...chartSubtitle('млрд.сум')
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
@@ -24,7 +24,7 @@ function renderOptions(series: any) {
     colors,
     chart: {
       type: 'pie',
-      height: 390,
+      height: 390
     },
     legend: {
       show: true,
@@ -37,19 +37,19 @@ function renderOptions(series: any) {
       customLegendItems: labels,
       fontSize: 18,
       markers: {
-        fillColors: colors,
-      },
+        fillColors: colors
+      }
     },
     fill: {
-      colors,
+      colors
     },
     dataLabels: {
       show: true,
       style: {
         colors: ['#fff'],
-        fontSize: 14,
-      },
-    },
+        fontSize: 14
+      }
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#interbank_deposits'), options)

@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   editCell: {
     cursor: 'pointer',
-    ...theme.mixins.dottedBorder,
-  },
+    ...theme.mixins.dottedBorder
+  }
 }))
 
 const UpdateLimitOfBanks = () => {
@@ -58,7 +58,7 @@ const UpdateLimitOfBanks = () => {
       await axiosInstance.post(
           '/api/banklimits/updateDates',
           { beginDate, endDate },
-          withToken(),
+          withToken()
       )
       fetchBankLimits()
     } catch (e) {
@@ -77,7 +77,7 @@ const UpdateLimitOfBanks = () => {
       await axiosInstance.post(
           '/api/banklimits/updateLimit',
           { ...editingCell, newLimit },
-          withToken(),
+          withToken()
       )
       handleClose()
       fetchBankLimits()

@@ -10,7 +10,7 @@ function renderOptions(values: any, categories: any) {
   const options = {
     series: [{
       name: 'Значение',
-      data: values.map((v: number) => v === 0 ? null: v),
+      data: values.map((v: number) => v === 0 ? null: v)
     }],
     colors,
     legend: {
@@ -21,56 +21,56 @@ function renderOptions(values: any, categories: any) {
       customLegendItems: labels,
       fontSize: 15,
       markers: {
-        fillColors: colors,
-      },
+        fillColors: colors
+      }
     },
     chart: {
       height: 350,
       type: 'bar',
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
     plotOptions: {
       bar: {
         columnWidth: '30%',
         distributed: true,
         dataLabels: {
-          position: 'top', // top, center, bottom
+          position: 'top' // top, center, bottom
         },
-        height: 20,
-      },
+        height: 20
+      }
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     stroke: {
-      curve: 'straight',
+      curve: 'straight'
     },
     xaxis: {
       labels: {
         rotate: -45,
-        rotateAlways: true,
+        rotateAlways: true
       },
       categories,
-      tickPlacement: 'on',
+      tickPlacement: 'on'
     },
     title: {
       text: 'Динамика корсчета по дням',
       align: 'center',
       style: {
         fontWeight: 100,
-        fontSize: 19,
-      },
+        fontSize: 19
+      }
     },
     tooltip: { ...chartTooltip() },
     yaxis: {
       labels: {
         formatter: function(val: number) {
           return formatNumber(val)
-        },
-      },
-    },
+        }
+      }
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#correspondent_dynamics'), options)

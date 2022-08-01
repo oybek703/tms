@@ -7,8 +7,8 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
     series: [
       {
         name: 'Значение',
-        data: series.map((value: number) => +value.toFixed(2)),
-      },
+        data: series.map((value: number) => +value.toFixed(2))
+      }
     ],
     chart: {
       height: 350,
@@ -19,30 +19,30 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
         top: 18,
         left: 7,
         blur: 10,
-        opacity: 0.2,
+        opacity: 0.2
       },
       toolbar: {
-        show: false,
+        show: false
       },
       animations: {
         enabled: true,
         easing: 'linear',
         speed: 800,
         animateGradually: {
-          enabled: false,
+          enabled: false
         },
         dynamicAnimation: {
           enabled: true,
-          speed: 50,
-        },
-      },
+          speed: 50
+        }
+      }
     },
     tooltip: { ...chartTooltip() },
     legend: {
-      horizontalAlign: 'center',
+      horizontalAlign: 'center'
     },
     colors: [
-      '#00B050',
+      '#00B050'
     ],
     dataLabels: {
       enabled: true,
@@ -50,31 +50,31 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
       offsetY: -10,
       formatter: function(value: number, { seriesIndex, dataPointIndex, w }: any) {
         return formatNumber(value)
-      },
+      }
     },
     stroke: {
-      curve: 'smooth',
+      curve: 'smooth'
     },
     grid: {
       borderColor: '#e7e7e7',
       row: {
         colors: ['#f3f3f3', 'transparent'],
-        opacity: 0.5,
-      },
+        opacity: 0.5
+      }
     },
     markers: {
-      size: 2,
+      size: 2
     },
     xaxis: {
-      categories: categories,
+      categories: categories
     },
     yaxis: {
       labels: {
         formatter: function(val: number) {
           return (val || 0).toFixed(0)
-        },
-      },
-    },
+        }
+      }
+    }
   }
   const chart = new ApexCharts(document.querySelector(`#${id}`), options)
   await chart.render()

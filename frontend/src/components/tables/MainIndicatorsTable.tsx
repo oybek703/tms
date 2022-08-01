@@ -15,7 +15,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({
   down: theme.mixins.down,
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 interface MainIndicatorsTableProps {

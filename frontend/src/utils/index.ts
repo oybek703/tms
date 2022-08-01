@@ -63,8 +63,8 @@ export function chartTooltip(currency = '') {
     y: {
       formatter: function(value: number) {
         return `${formatNumber(value)} ${currency}`
-      },
-    },
+      }
+    }
   }
 }
 
@@ -75,8 +75,8 @@ export function chartTitle(text = '') {
     style: {
       fontSize: 17,
       fontWeight: '400',
-      fontFamily: 'Poppins',
-    },
+      fontFamily: 'Poppins'
+    }
   }
 }
 
@@ -86,8 +86,8 @@ export function chartSubtitle(text = 'млрд.сум') {
     align: 'right',
     style: {
       fontSize: 13,
-      color: '#8b8989',
-    },
+      color: '#8b8989'
+    }
   }
 }
 

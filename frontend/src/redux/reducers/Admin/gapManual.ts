@@ -3,7 +3,7 @@ import { GAPMANUAL_FAIL, GAPMANUAL_START, GAPMANUAL_SUCCESS } from '../../action
 const initialState = {
   gapManual: {},
   loading: false,
-  error: null,
+  error: null
 }
 
 function gapManual(state = initialState, action: any) {

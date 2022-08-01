@@ -7,37 +7,37 @@ function renderOptions(values, data) {
     '#00B050',
     '#f38003',
     '#ff6363',
-    '#4CB9E1',
+    '#4CB9E1'
   ]
   const options = {
     title: {
       text: 'КЛАССИФИКАЦИЯ ДЕНЕЖНЫХ СРЕДСТВ ПО AO "UZAUTO MOTORS" ',
-      align: 'left',
+      align: 'left'
     },
     subtitle: {
-      ...chartSubtitle('в экв. сум'),
+      ...chartSubtitle('в экв. сум')
     },
     tooltip: { ...chartTooltip() },
     colors,
     series: values,
     chart: {
       width: 500,
-      type: 'pie',
+      type: 'pie'
     },
     fill: {
-      colors,
+      colors
     },
     labels: ['USD', 'EUR', 'RUB', 'UZS'],
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
+          position: 'bottom'
+        }
+      }
     }],
     legend: {
       show: true,
@@ -45,8 +45,8 @@ function renderOptions(values, data) {
         return label + ' - ' + formatNumber(data[opts.seriesIndex]*Math.pow(10, 6))
       },
       position: 'left',
-      fontSize: 15,
-    },
+      fontSize: 15
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#gm_classification'), options)

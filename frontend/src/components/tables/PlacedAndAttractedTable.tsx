@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead,
   wrappedRow: {
-    maxWidth: 200,
-  },
+    maxWidth: 200
+  }
 }))
 
 interface PlacedAndAttractedTableProps {

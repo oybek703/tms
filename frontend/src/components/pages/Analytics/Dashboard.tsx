@@ -38,7 +38,7 @@ const Dashboard = () => {
     lcr = {},
     nsfr = {},
     currencyRates,
-    bankLimits = [],
+    bankLimits = []
   } = dashboard
   useEffect(() => {
     fetchDashboard(reportDate)
@@ -60,33 +60,33 @@ const Dashboard = () => {
                         panel: <DailyIndicators
                           dashboardCorrespondent={dashboardCorrespondent}
                           lcr={lcr} nsfr={nsfr} vla={vla}
-                          dashboardCurrencyPosition={dashboardCurrencyPosition}/>,
+                          dashboardCurrencyPosition={dashboardCurrencyPosition}/>
                       },
                       {
                         name: 'Курсы валют',
                         panel: <CurrencyRatesTab
-                          currencyRates={currencyRates}/>,
+                          currencyRates={currencyRates}/>
                       },
                       { name: 'ЦРБ', panel: <Fcrb/> },
                       {
                         name: 'Лимиты',
-                        panel: <BankLimits bankLimits={bankLimits}/>,
+                        panel: <BankLimits bankLimits={bankLimits}/>
                       },
                       {
                         name: 'ФОР',
                         panel: <WithDetailsButton link={'/calcfor'}>
                           <CalcFor forDashboard/>
-                        </WithDetailsButton>,
+                        </WithDetailsButton>
                       },
                       {
                         name: 'Активы и пассивы',
                         panel: <WithDetailsButton link='/plat'>
                           <PlacedAndAttracted forDashboard/>
-                        </WithDetailsButton>,
+                        </WithDetailsButton>
                       },
                       {
                         name: 'Капитал',
-                        panel: <CapitalTab vla={vla}/>,
+                        panel: <CapitalTab vla={vla}/>
                       },
                       {
                         name: 'Фондирование',
@@ -94,23 +94,23 @@ const Dashboard = () => {
                           currencyMfi={currencyMfi}
                           currencyTimeDeposits={currencyTimeDeposits}
                           interbankDeposits={interbankDeposits}
-                          timeDeposits={timeDeposits}/>,
+                          timeDeposits={timeDeposits}/>
                       },
                       {
                         name: 'Нормативы',
-                        panel: <Normatives/>,
+                        panel: <Normatives/>
                       },
                       {
-                        name: 'Ковенанты', panel: <Covenants/>,
+                        name: 'Ковенанты', panel: <Covenants/>
                       },
                       {
                         name: 'Кредитный портфель',
                         panel: <CreditPortfolioTab creditPart={creditPart}
                           issuedCredits={issuedCredits}
                           disaggregatedByTime={disaggregatedByTime}
-                          fundingStructure={fundingStructure}/>,
+                          fundingStructure={fundingStructure}/>
                       },
-                      { name: 'Dashboard', panel: <DashboardMonthly/> },
+                      { name: 'Dashboard', panel: <DashboardMonthly/> }
                     ]}/>
                 </>
       }

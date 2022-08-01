@@ -16,7 +16,7 @@ const Correspondent = () => {
   const {
     correspondent: currentCorrespondent,
     loading: currentLoading,
-    error: currentError,
+    error: currentError
   } = useTypedSelector((state) => state.correspondentCurrent)
   useEffect(() => {
     if (currentState) {

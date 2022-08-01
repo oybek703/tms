@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     color: '#767676',
     fontSize: 18,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 }))
 
 interface AllowedPagesProps {

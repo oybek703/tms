@@ -10,7 +10,7 @@ import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
 const useStyles = makeStyles((theme) => ({
   greens: {
     color: '#00B050',
-    fontSize: '12pt',
+    fontSize: '12pt'
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     fontSize: '1.2em',
     fontWeight: 600,
-    color: '#555',
+    color: '#555'
   },
   capitalNumber: {
-    fontSize: '1.05em',
-  },
+    fontSize: '1.05em'
+  }
 }))
 
 interface CapitalTabProps {
@@ -35,7 +35,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
     rc: 6183.7,
     car: 14.24,
     rwa: 43432.64,
-    forecast: 14.05,
+    forecast: 14.05
   }
   const forecastCategories = Object.assign([], vla.categories)
   const now = new Date()
@@ -55,8 +55,8 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
           { title: 'Регулативний капитал', shortKey: 'rc' },
           {
             title: 'Коэффициент адекватности капитала',
-            shortKey: 'car',
-          },
+            shortKey: 'car'
+          }
         ].map(
             ({ title, shortKey }, i) => <Grid key={uuid()} item sm={6}>
               <Card>
@@ -84,14 +84,14 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
                 5902.41,
                 6221.8,
                 6177.2,
-                6183.7],
+                6183.7]
             }} id='rc'/>
         </Grid>
         <Grid item sm={6}>
           <CapitalPoints
             data={{
               ...vla,
-              series: [14.23, 13.51, 13.10, 13.83, 13.68, 14.24],
+              series: [14.23, 13.51, 13.10, 13.83, 13.68, 14.24]
             }} id='car' label='Коеф. адек. капитала'
             normative={13}/>
         </Grid>
@@ -101,12 +101,12 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
         {[
           {
             title: 'Активы взвешенные с учетом риска',
-            shortKey: 'rwa',
+            shortKey: 'rwa'
           },
           {
             title: 'Прогноз коэффициента адекватности капитала',
-            shortKey: 'forecast',
-          },
+            shortKey: 'forecast'
+          }
         ].map(
             ({ title, shortKey }, i) => <Grid key={uuid()} item sm={6}>
               <Card>
@@ -134,7 +134,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
               45056.56,
               44976.20,
               45162.35,
-              43432.64],
+              43432.64]
           }} id='rwa'/>
         </Grid>
         <Grid item sm={6}>
@@ -142,7 +142,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
             data={{
               ...vla,
               categories: forecastCategories,
-              series: [14.30, 13.80, 13.90, 13.95, 14.10, 14.05],
+              series: [14.30, 13.80, 13.90, 13.95, 14.10, 14.05]
             }} id='forecast' label='Прогноз' normative={13}/>
         </Grid>
       </Grid>

@@ -3,7 +3,7 @@ import { PROFITANDLOST_FAIL, PROFITANDLOST_START, PROFITANDLOST_SUCCESS } from '
 const initialState = {
   loading: false,
   profitandlost: [],
-  error: null,
+  error: null
 }
 
 function profitAndLost(state = initialState, action: any) {

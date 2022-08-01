@@ -10,11 +10,11 @@ const useStyles = makeStyles((theme) => ({
   currency: {
     padding: '8px 0',
     fontSize: '12pt',
-    color: '#636363',
+    color: '#636363'
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
-  horizontalTitle: theme.mixins.oneRowTitle,
+  horizontalTitle: theme.mixins.oneRowTitle
 }))
 
 interface CurrencyRatesTabProps {

@@ -14,7 +14,7 @@ import BoldWithColor from '../../helpers/BoldWithColor'
 const useStyles = makeStyles((theme) => ({
   paddingBottom0: theme.mixins.paddingBottom0,
   stickyTableHead: theme.mixins.stickyTableHead,
-  sumRow: theme.mixins.blueBackground,
+  sumRow: theme.mixins.blueBackground
 }))
 
 interface TimeDepositsCardProps {

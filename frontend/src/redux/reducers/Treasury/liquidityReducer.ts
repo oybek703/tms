@@ -5,16 +5,16 @@ import {
   LIQUIDITY_CURRENT_UPDATE,
   LIQUIDITY_FAIL,
   LIQUIDITY_START,
-  LIQUIDITY_SUCCESS,
+  LIQUIDITY_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   liquidity: {
     liquidityAssets: [],
-    obligations: [],
+    obligations: []
   },
   error: null,
-  loading: false,
+  loading: false
 }
 
 function liquidity(state = initialState, action: any) {

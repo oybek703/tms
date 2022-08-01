@@ -10,8 +10,8 @@ import { formatNumber } from '../../../../utils'
 const useStyles = makeStyles((theme) => ({
   box: {
     flexBasis: '24.6%',
-    margin: '-10px 0',
-  },
+    margin: '-10px 0'
+  }
 }))
 
 interface ValuteProps {

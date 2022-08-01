@@ -9,23 +9,23 @@ function renderOptions(series: any) {
     '#4CB9E1',
     '#f38003',
     '#00B050',
-    '#ff6363',
+    '#ff6363'
   ]
   const labels = ['МБД', 'Сроч.депо', 'МФИ: Крат.', 'МФИ: Долг.']
 
   const options = {
     title: {
-      ...chartTitle('Структура фондирования'),
+      ...chartTitle('Структура фондирования')
     },
     subtitle: {
-      ...chartSubtitle('млрд.сум'),
+      ...chartSubtitle('млрд.сум')
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
     colors,
     chart: {
       type: 'pie',
-      height: 530,
+      height: 530
     },
     legend: {
       formatter: function(label: string, opts: any) {
@@ -37,31 +37,31 @@ function renderOptions(series: any) {
       fontSize: 14,
       customLegendItems: labels,
       markers: {
-        fillColors: colors,
+        fillColors: colors
       },
       itemMargin: {
         horizontal: 10,
-        vertical: 6,
-      },
+        vertical: 6
+      }
     },
     dataLabels: {
       enabled: true,
       style: {
-        fontSize: 15,
-      },
+        fontSize: 15
+      }
     },
     labels,
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
-    }],
+          position: 'bottom'
+        }
+      }
+    }]
   }
 
   const chart = new ApexCharts(document.querySelector('#funding_structure'), options)

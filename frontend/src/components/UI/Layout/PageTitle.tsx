@@ -7,20 +7,20 @@ const useStyles = makeStyles((theme) => ({
   main: {
     marginBottom: 20,
     backgroundColor: '#eee',
-    borderRadius: 5,
+    borderRadius: 5
   },
   cardContent: {
     padding: '10px',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   title: {
     textTransform: 'uppercase',
     backgroundColor: 'rgb(248 63 55)',
     padding: '5px 10px',
     borderRadius: 5,
-    color: 'white',
-  },
+    color: 'white'
+  }
 }))
 
 interface PageTitleProps {

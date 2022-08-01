@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
   italic: theme.mixins.italic,
   stickyTableHead: theme.mixins.stickyTableHead,
   tableContainer: {
-    maxHeight: '70vh',
-  },
+    maxHeight: '70vh'
+  }
 }))
 
 const columns = [
   'До 7 дней',
   ...new Array(12).fill('').map((v, i) => `${i + 1} месяц`),
-  '1-2 года', 'свыше 2 лет',
+  '1-2 года', 'свыше 2 лет'
 ]
 
 const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {

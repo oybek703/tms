@@ -13,20 +13,20 @@ const Settings = () => {
         [
           {
             tabName: 'ФОР',
-            tabData: <CbnUpdate/>,
+            tabData: <CbnUpdate/>
           },
           {
             tabName: 'GM, UZ AUTO',
-            tabData: <MioGm/>,
+            tabData: <MioGm/>
           },
           {
             tabName: 'Correspondent',
-            tabData: <UpdateLimitOfBanks/>,
+            tabData: <UpdateLimitOfBanks/>
           },
           {
             tabName: 'Accounts',
-            tabData: <Users/>,
-          },
+            tabData: <Users/>
+          }
         ]
       }/>
     </Fragment>

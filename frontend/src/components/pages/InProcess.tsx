@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     border: '3px solid #333',
     borderRadius: 10,
-    padding: 40,
-  },
+    padding: 40
+  }
 }))
 
 const InProcess = () => {

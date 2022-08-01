@@ -20,20 +20,20 @@ const useStyles = makeStyles({
     transform: 'rotate(180deg)',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    fontSize: '1.8em',
+    fontSize: '1.8em'
   },
   darkBackground: {
     backgroundColor: '#eeeeee',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   stickyCol: theme.mixins.stickyCol,
   blueBackground: theme.mixins.blueBackground,
   stickTableHead: theme.mixins.stickyTableHead,
   redRow: {
     fontWeight: 600,
-    color: 'rgb(255, 51, 0)',
+    color: 'rgb(255, 51, 0)'
   },
-  bordered: theme.mixins.dottedBorder,
+  bordered: theme.mixins.dottedBorder
 })
 
 interface RenderByMonthProps {
@@ -46,7 +46,7 @@ interface RenderByMonthProps {
 
 const RenderByMonth: React.FC<RenderByMonthProps> = function({
   months = [], row = {}, total = false,
-  blueBackground = false, withPercent = false,
+  blueBackground = false, withPercent = false
 }) {
   const classes = useStyles()
   return <Fragment>
@@ -65,7 +65,7 @@ const RenderByMonth: React.FC<RenderByMonthProps> = function({
                   '1px solid #7794aa' : '1px solid #eee',
                   borderLeft: index === 0 ? total ? !blueBackground ? '1px solid #7794aa':
                   '1px solid #eee' :
-                  '1px solid #7794aa' : '1px solid #eee',
+                  '1px solid #7794aa' : '1px solid #eee'
                 }}
                 align="center">
                 {formatNumber(((row[monthIndex] || {}) || {})[propName],
@@ -138,7 +138,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
         colSpan={5}
         style={{
           borderRight: '1px solid #ddd',
-          borderLeft: '1px solid #ddd',
+          borderLeft: '1px solid #ddd'
         }}
         align='center'>
         <b>{month}</b>
@@ -155,7 +155,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
           key={uuid()}
           style={{
             borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
-            borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee',
+            borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee'
           }}
           align='center'>
           <b>{propName}</b>
@@ -221,5 +221,5 @@ function LcrAndNsfrTable({ data = [], month = '', halfWidth = false }) {
 export {
   TotalOrBoldRow, VerticalColumn,
   InnerDataRows, RenderByMonth,
-  GapTableHead, LcrAndNsfrTable,
+  GapTableHead, LcrAndNsfrTable
 }

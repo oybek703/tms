@@ -28,7 +28,7 @@ async function checkCashOrSave(
         dispatch({ type: `${action}START` })
         const { data: { rows } } = await axiosInstance.get(
             `/api/${property}?date=${date}`,
-            withToken(),
+            withToken()
         )
         const newCashData = { date: queryDate, data: rows }
         localStorage.setItem(property, JSON.stringify(newCashData))
@@ -38,7 +38,7 @@ async function checkCashOrSave(
       dispatch({ type: `${action}START` })
       const { data: { rows } } = await axiosInstance.get(
           `/api/${property}?date=${date}`,
-          withToken(),
+          withToken()
       )
       const newCashData = { date: queryDate, data: rows }
       localStorage.setItem(property, JSON.stringify(newCashData))
@@ -144,7 +144,7 @@ export function fetchDashboardMonthly(
       dispatch({ type: DASHBOARDMONTHLY_START })
       const { data: { rows } } = await axiosInstance.get(
           `/api/dashboardmonthly?firstDate=${firstDate}&secondDate=${secondDate}&dateOption=${dateOption}`,
-          withToken(),
+          withToken()
       )
       dispatch({ type: DASHBOARDMONTHLY_SUCCESS, payload: rows })
     } catch (e: any) {
@@ -217,13 +217,13 @@ export function signInUser({ username, password }: { username: string, password:
       dispatch({ type: LOGIN_START })
       const { data } = await axiosInstance.post(
           `/api/auth/login`,
-          { username, password },
+          { username, password }
       )
       const userData = {
         username,
         token: data.token,
         role: data.ROLE,
-        pages: data.pages,
+        pages: data.pages
       }
       localStorage.setItem('user', JSON.stringify(userData))
       dispatch({ type: LOGIN_SUCCESS, payload: userData })
@@ -241,7 +241,7 @@ export function addUser(formData: any) {
       await axiosInstance.post(
           `/api/auth/adduser`,
           formData,
-          withToken(),
+          withToken()
       )
       dispatch({ type: ADDUSER_SUCCESS, payload: 'added' })
       setTimeout(function() {
@@ -318,7 +318,7 @@ export function fetchCorrespondentCurrent() {
       dispatch({ type: CORRESPONDENT_CURRENT_START })
       const { data: { rows } } = await axiosInstance.get(
           '/api/correspondent/current_state',
-          withToken(),
+          withToken()
       )
       dispatch({ type: CORRESPONDENT_CURRENT_SUCCESS, payload: rows })
     } catch (e: any) {
@@ -331,7 +331,7 @@ export function fetchCorrespondentCurrent() {
 export function correspondentCurrentUpdate(state: any) {
   return {
     type: CORRESPONDENT_CURRENT_UPDATE,
-    payload: state,
+    payload: state
   }
 }
 
@@ -341,7 +341,7 @@ export function fetchLiquidityCurrent() {
       dispatch({ type: LIQUIDITY_CURRENT_START })
       const { data: { rows } } = await axiosInstance.get(
           '/api/liquidity/current_state',
-          withToken(),
+          withToken()
       )
       dispatch({ type: LIQUIDITY_CURRENT_SUCCESS, payload: rows })
     } catch (e: any) {
@@ -354,7 +354,7 @@ export function fetchLiquidityCurrent() {
 export function liquidityCurrentUpdate(state: any) {
   return {
     type: LIQUIDITY_CURRENT_UPDATE,
-    payload: state,
+    payload: state
   }
 }
 
@@ -364,7 +364,7 @@ export function fetchGap() {
       dispatch({ type: GAP_START })
       const { data: { rows } } = await axiosInstance.get(
           '/api/gap',
-          withToken(),
+          withToken()
       )
       dispatch({ type: GAP_SUCCESS, payload: rows })
     } catch (e: any) {
@@ -380,7 +380,7 @@ export function updateCBN(data: any) {
       await axiosInstance.put(
           `/api/calcfor/updatecbn`,
           data,
-          withToken(),
+          withToken()
       )
       dispatch({ type: UPDATE_CBN })
     } catch (e: any) {

@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '40em',
     width: '90%',
     [theme.breakpoints.down('sm')]: {
-      maxWidth: '20em',
-    },
-  },
+      maxWidth: '20em'
+    }
+  }
 }))
 
 interface AlertProps {

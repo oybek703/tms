@@ -6,7 +6,7 @@ import {
   makeStyles,
   TableBody,
   TableContainer,
-  TableRow,
+  TableRow
 } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import BoldWithColor from '../../helpers/BoldWithColor'
@@ -14,8 +14,8 @@ import { v4 as uuid } from 'uuid'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: '77vh',
-  },
+    maxHeight: '77vh'
+  }
 }))
 
 const Normatives = () => {
@@ -38,26 +38,26 @@ const Normatives = () => {
               count: '1.1',
               title: 'Коэф. достат. Капитала',
               min: 'мин 13%',
-              min_percent: '13.7%',
+              min_percent: '13.7%'
             },
             {
               count: '1.2',
               title: 'Коэф. достат. капитала – 1',
               min: 'мин 10%',
-              min_percent: '12.5%',
+              min_percent: '12.5%'
             },
             {
               count: '1.3',
               title: 'Коэффициент достат. основ. капитала – 1',
               min: 'мин 8%',
-              min_percent: '12.5%',
+              min_percent: '12.5%'
             },
             {
               count: '1.4',
               title: 'Левераж',
               min: 'мин 6%',
-              min_percent: '9.4%',
-            },
+              min_percent: '9.4%'
+            }
           ].map((row) => <TableRow key={uuid()}>
             <TableCell align='center'>{row.count}</TableCell>
             <TableCell colSpan={2} align='center'>{row.title}</TableCell>

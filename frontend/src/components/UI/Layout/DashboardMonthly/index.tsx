@@ -14,8 +14,8 @@ import useActions from '../../../../hooks/useActions'
 
 const useStyles = makeStyles((theme) => ({
   optionBlock: {
-    maxWidth: 600,
-  },
+    maxWidth: 600
+  }
 }))
 
 const DashboardMonthly: React.FC = () => {
@@ -86,7 +86,7 @@ const DashboardMonthly: React.FC = () => {
             value={dateOption}
             inputProps={{
               name: 'date_option',
-              id: 'dates_option',
+              id: 'dates_option'
             }}
             variant='outlined'
             margin='dense'

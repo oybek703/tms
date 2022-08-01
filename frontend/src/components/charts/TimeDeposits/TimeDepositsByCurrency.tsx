@@ -8,20 +8,20 @@ async function renderOptions(series: any = []) {
   const labels = [
     'UZS',
     'USD',
-    'EUR',
+    'EUR'
   ]
   const colors = [
     '#4CB9E1',
     '#f38003',
-    '#00B050',
+    '#00B050'
   ]
   const options = {
     title: {
-      ...chartTitle('Срочные депозиты по валютам (экв. млн. сум)'),
+      ...chartTitle('Срочные депозиты по валютам (экв. млн. сум)')
     },
     series: [{
       name: 'Значение',
-      data: series.map((v: number) => +(+v/Math.pow(10, 6)).toFixed()),
+      data: series.map((v: number) => +(+v/Math.pow(10, 6)).toFixed())
     }],
     colors,
     labels,
@@ -30,17 +30,17 @@ async function renderOptions(series: any = []) {
       height: 340,
       type: 'bar',
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
     fill: {
-      colors,
+      colors
     },
     plotOptions: {
       bar: {
         columnWidth: '70%',
-        distributed: true,
-      },
+        distributed: true
+      }
     },
     dataLabels: {
       enabled: true,
@@ -50,26 +50,26 @@ async function renderOptions(series: any = []) {
       textAnchor: 'middle',
       style: {
         fontSize: '14px',
-        colors: ['#000'],
-      },
+        colors: ['#000']
+      }
     },
     legend: {
-      show: false,
+      show: false
     },
     xaxis: {
       categories: labels,
       labels: {
         style: {
           colors: ['#000'],
-          fontSize: '15px',
-        },
-      },
-    },
+          fontSize: '15px'
+        }
+      }
+    }
   }
 
   const chart = new ApexCharts(
       document.querySelector('#time_deposits_by_currency'),
-      options,
+      options
   )
   await chart.render()
   return chart

@@ -18,13 +18,13 @@ import theme from '../../theme'
 const useStyles = makeStyles({
   pickerCell: {
     minWidth: 140,
-    maxWidth: 150,
+    maxWidth: 150
   },
   noWrap: theme.mixins.noWrap,
   centeredTitleRow: {
     ...theme.mixins.blueBackground,
-    fontWeight: 700,
-  },
+    fontWeight: 700
+  }
 })
 
 interface DashboardMonthlyTableProps {
@@ -38,7 +38,7 @@ interface DashboardMonthlyTableProps {
 
 const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
   rows = [], firstDate, secondDate,
-  handleDateChange, operDays, operDaysLoading,
+  handleDateChange, operDays, operDaysLoading
 }) => {
   const classes = useStyles()
   const { capital = [], liquidity = [], riskPart = [] } = rows
@@ -99,7 +99,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
             [
               { rows: capital, title: 'КАПИТАЛ' },
               { rows: liquidity, title: 'ЛИКВИДНОСТЬ' },
-              { rows: riskPart, title: 'КАЧЕСТВО АКТИВОВ' },
+              { rows: riskPart, title: 'КАЧЕСТВО АКТИВОВ' }
             ].map(({ rows, title }) => <Fragment key={uuid()}>
               <TableRow>
                 <TableCell className={classes.centeredTitleRow}

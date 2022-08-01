@@ -19,21 +19,21 @@ import useActions from '../../../../hooks/useActions'
 const useStyles = makeStyles((theme) => ({
   table: {
     marginTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   actionCol: {
     textAlign: 'center',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap'
   },
   actionBtn: {
     color: 'white',
     background: 'gray',
     padding: 3,
-    borderRadius: 5,
+    borderRadius: 5
   },
   paddingMain: {
-    padding: 30,
-  },
+    padding: 30
+  }
 }))
 
 

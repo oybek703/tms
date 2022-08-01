@@ -8,49 +8,49 @@ function renderOptions(values: any, categories: any) {
   const options = {
     series: [{
       name: 'Значение',
-      data: values.map((v: number) => +v.toFixed(2)).map((v: number) => v === 0 ? null: v),
+      data: values.map((v: number) => +v.toFixed(2)).map((v: number) => v === 0 ? null: v)
     }],
     chart: {
       height: 350,
       type: 'area',
       toolbar: {
-        show: false,
+        show: false
       },
       zoom: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     tooltip: { ...chartTooltip() },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     stroke: {
-      curve: 'straight',
+      curve: 'straight'
     },
     title: {
       text: 'Динамика перерасхода по ФОР',
-      align: 'center',
+      align: 'center'
     },
     grid: {
       row: {
         colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-        opacity: 0.5,
-      },
+        opacity: 0.5
+      }
     },
     xaxis: {
       labels: {
         rotate: -45,
-        rotateAlways: true,
+        rotateAlways: true
       },
-      categories,
+      categories
     },
     yaxis: {
       labels: {
         formatter: function(val: number) {
           return formatNumber(val)
-        },
-      },
-    },
+        }
+      }
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#expenditure_dynamics'), options)

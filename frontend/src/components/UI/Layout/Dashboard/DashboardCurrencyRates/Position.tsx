@@ -6,7 +6,7 @@ import { formatNumber } from '../../../../../utils'
 import PercentIndicator from './PercentIndicator'
 
 const useStyles = makeStyles((theme) => ({
-  noWrap: theme.mixins.noWrap,
+  noWrap: theme.mixins.noWrap
 }))
 
 const currencyOrder = ['USD', 'EUR', 'JPY', 'GBP', 'KZT', 'RUB', 'CHF', 'CNY']

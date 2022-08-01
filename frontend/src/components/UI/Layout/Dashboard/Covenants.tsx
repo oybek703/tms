@@ -5,18 +5,27 @@ import TableHead from '@material-ui/core/TableHead'
 import { makeStyles, TableBody, TableContainer, TableRow } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import { v4 as uuid } from 'uuid'
-import { covenantData } from '../../../../tempData'
-
+import { covenantData, Status } from '../../../../tempData'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   blueBackground: theme.mixins.blueBackground,
   stickyTableHead: theme.mixins.stickyTableHead,
   tableContainer: {
-    maxHeight: '77vh',
+    maxHeight: '77vh'
   },
+  greenCell: {
+    backgroundColor: '#00B050',
+    color: 'white'
+  }
 }))
 
+function getColorByStatus(status: Status) {
+  if (status === Status.safe) return '#00B050'
+  if (status === Status.warn) return '#f38003'
+  if (status === Status.danger) return '#ff6363'
+  return '#fff'
+}
 
 const Covenants = () => {
   const classes = useStyles()
@@ -43,7 +52,7 @@ const Covenants = () => {
               'Turkiye Ihracat Kredi Bankasi A.S.',
               'Europe Asia Investment Finance B.V.',
               'Европейский Банк Реконструкции и Развития',
-              'Deutsche Bank AG',
+              'Deutsche Bank AG'
             ].map((bank) => <TableCell className={classes.blueBackground} key={uuid()} align='center'>
               <b>{bank}</b>
             </TableCell>)}
@@ -54,53 +63,20 @@ const Covenants = () => {
             <TableRow key={uuid()}>
               <TableCell align='center'><b>{index + 1}</b></TableCell>
               <TableCell><b>{b.title}</b></TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{b.bank_asaka}</TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_1 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_1}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_2 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_2}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_3 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_3}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_4 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_4}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_5 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_5}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_6 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_6}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_7 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_7}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_8 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_8}</i></b></TableCell>
-              <TableCell align='center' style={{
-                background: b.bank_9 ? '#56b780' : '',
-                color: 'white',
-              }}
-              className={classes.noWrap}><b><i>{b.bank_9}</i></b></TableCell>
+              <TableCell align='center' className={classes.noWrap}>
+                {b.main_bank} {typeof b.main_bank === 'number' && '%'}
+              </TableCell>
+              {Array(9).fill('').map((_, idx) => <TableCell
+                key={uuid()}
+                className={classes.noWrap}
+                align='center'
+                style={{
+                  // @ts-ignore
+                  backgroundColor: getColorByStatus(b[`bank_${idx+1}`].status),
+                  color: '#fff'
+                // @ts-ignore
+                }}><b><i>{b[`bank_${idx+1}`].value}</i></b>
+              </TableCell> )}
             </TableRow>
           ))}
         </TableBody>

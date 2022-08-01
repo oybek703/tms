@@ -15,7 +15,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({
   stickyHead: theme.mixins.stickyTableHead,
-  blueBackground: theme.mixins.blueBackground,
+  blueBackground: theme.mixins.blueBackground
 }))
 
 interface ProfitAndLostTableProps {

@@ -21,7 +21,7 @@ const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
   handleDateChange = () => {} }) => {
   const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
-      [operDays],
+      [operDays]
   )
   return (
     <MuiPickersUtilsProvider

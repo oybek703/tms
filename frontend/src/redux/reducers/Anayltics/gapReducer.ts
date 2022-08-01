@@ -8,9 +8,9 @@ const initialState = {
     sourceOfLiquidityTotal: [],
     needsOfLiquidity: [],
     needsOfLiquidityTotal: [],
-    vlaLcrData: [],
+    vlaLcrData: []
   },
-  error: null,
+  error: null
 }
 
 function gap(state = initialState, action: any) {

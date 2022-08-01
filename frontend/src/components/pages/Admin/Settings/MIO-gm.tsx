@@ -23,7 +23,7 @@ const MioGm = () => {
       const { data: { message } } = await axiosInstance.put(
           `/api/gm/setmio`,
           { mio: mioValue, mioDate },
-          withToken(),
+          withToken()
       )
       toast.success(message)
       setMioValue('')
@@ -74,7 +74,7 @@ const MioGm = () => {
             onChange={({ target: { value } }) => setMioDate(value)}
             type="date"
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
           />
         </CardContent>

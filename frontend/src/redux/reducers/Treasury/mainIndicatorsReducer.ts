@@ -3,7 +3,7 @@ import { MAININDICATORS_FAIL, MAININDICATORS_START, MAININDICATORS_SUCCESS } fro
 const initialState = {
   loading: false,
   mainIndicators: [],
-  error: null,
+  error: null
 }
 
 function mainIndicators(state = initialState, action: any) {

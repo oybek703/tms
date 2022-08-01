@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 200,
-    backgroundColor: '#eee',
-  },
+    backgroundColor: '#eee'
+  }
 }))
 
 const ErrorAlert = () => {

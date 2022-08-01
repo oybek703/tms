@@ -5,8 +5,8 @@ import TableCell from '@material-ui/core/TableCell'
 const useStyles = makeStyles((theme) => ({
   whiteCell: {
     color: '#fff',
-    ...theme.mixins.noWrap,
-  },
+    ...theme.mixins.noWrap
+  }
 }))
 
 const WhiteCell = (props) => {

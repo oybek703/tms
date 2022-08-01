@@ -27,8 +27,8 @@ function TabPanel(props: any) {
 
 const useStyles = makeStyles((theme) => ({
   tabContainer: {
-    backgroundColor: '#7794aa',
-  },
+    backgroundColor: '#7794aa'
+  }
 }))
 
 interface DashboardTabsProps {
@@ -52,7 +52,7 @@ const DashboardTabs: React.FC<DashboardTabsProps> = function({ tabs = [] }) {
           variant='scrollable' scrollButtons='auto'>
           {tabs.map(({ name }) =>
             <Tab key={uuid()}
-              label={`${name}`} />,
+              label={`${name}`} />
           )}
         </Tabs>
       </AppBar>

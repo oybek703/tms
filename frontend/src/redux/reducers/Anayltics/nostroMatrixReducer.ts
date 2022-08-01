@@ -3,7 +3,7 @@ import { NOSTROMATRIX_FAIL, NOSTROMATRIX_START, NOSTROMATRIX_SUCCESS } from '../
 const initialState = {
   nostroMatrix: [],
   loading: false,
-  error: null,
+  error: null
 }
 
 function nostroMatrix(state = initialState, action: any) {

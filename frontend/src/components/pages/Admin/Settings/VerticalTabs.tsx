@@ -9,29 +9,29 @@ import { useLocation } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    display: 'flex',
+    display: 'flex'
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     borderRadius: 5,
     backgroundColor: '#fff',
     border: '3px solid #333',
-    width: '15%',
+    width: '15%'
   },
   tab: {
     textAlign: 'left',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    width: '100%',
+    width: '100%'
   },
   tabData: {
     width: '84%',
-    paddingLeft: '1%',
+    paddingLeft: '1%'
   },
   selectedTab: {
     backgroundColor: theme.palette.info.light,
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 }))
 
 function TabPanel(props: any) {
@@ -58,13 +58,13 @@ function TabPanel(props: any) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 }
 
 function a11yProps(index: number) {
   return {
     'id': `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`
   }
 }
 
@@ -98,7 +98,7 @@ const VerticalTabs: React.FC<VerticalTabsProps> = function({ tabs = [] }) {
         {tabNames.map((tabName, index) => <Tab classes={{
           wrapper: classes.tab,
           root: classes.tab,
-          selected: classes.selectedTab,
+          selected: classes.selectedTab
         }} key={uuid()} className={classes.tab} href={`#${index}`}
         component='a'
         label={tabName}

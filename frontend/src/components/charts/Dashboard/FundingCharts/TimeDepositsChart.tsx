@@ -7,15 +7,15 @@ import { chartSubtitle, chartTitle, chartTooltip, formatChartLegend } from '../.
 function renderOptions(series: any) {
   const colors = [
     '#4CB9E1',
-    '#f38003',
+    '#f38003'
   ]
   const labels = ['иностр.вал', 'нац.вал']
   const options = {
     title: {
-      ...chartTitle('Срочные депозиты'),
+      ...chartTitle('Срочные депозиты')
     },
     subtitle: {
-      ...chartSubtitle(),
+      ...chartSubtitle()
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
@@ -23,7 +23,7 @@ function renderOptions(series: any) {
     colors,
     chart: {
       type: 'pie',
-      height: 390,
+      height: 390
     },
     legend: {
       show: true,
@@ -36,25 +36,25 @@ function renderOptions(series: any) {
       horizontalAlign: 'left',
       fontSize: 18,
       markers: {
-        fillColors: colors,
-      },
+        fillColors: colors
+      }
     },
     fill: {
       opacity: 1,
-      colors: colors,
+      colors: colors
     },
     dataLabels: {
       show: true,
       style: {
         colors: ['#fff'],
-        fontSize: 14,
-      },
-    },
+        fontSize: 14
+      }
+    }
   }
 
   const chart = new ApexCharts(
       document.querySelector('#time_deposits'),
-      options,
+      options
   )
   chart.render()
 }

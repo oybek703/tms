@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   no_border: {
     border: 'none',
     backgroundColor: '#fff',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap'
   },
   redBack: {
     color: ({ isGrey, redBack }: StylesProps) => isGrey || redBack ?
@@ -23,8 +23,8 @@ const useStyles = makeStyles({
     backgroundColor: ({ isGrey, redBack }: StylesProps) => isGrey ?
             `#7794aa` :
             redBack ? 'red' : 'fff',
-    fontSize: 14,
-  },
+    fontSize: 14
+  }
 })
 
 interface WrapperProps {

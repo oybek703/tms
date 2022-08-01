@@ -21,22 +21,22 @@ const useStyles = makeStyles((theme) => ({
   borderRadius: {
     border: '1.5px solid rgb(65, 113, 156)',
     borderRadius: '10px',
-    backgroundColor: 'rgb(222, 235, 247)',
+    backgroundColor: 'rgb(222, 235, 247)'
   },
   fullWidthCard: {
     ...theme.mixins.smallCard,
-    width: '100%',
+    width: '100%'
   },
   redBoldText: {
     color: 'rgb(255, 0, 0)',
-    fontWeight: 600,
+    fontWeight: 600
   },
   moreRedText: {
     color: 'rgb(192, 0, 0)',
-    fontSize: '17px',
+    fontSize: '17px'
   },
   lightRed: {
-    color: 'rgb(255, 0, 0)',
+    color: 'rgb(255, 0, 0)'
   },
   resourceBase: {
     border: '3px solid rgb(255, 0, 0)',
@@ -46,25 +46,25 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '99%',
     margin: '0 auto',
     fontWeight: 600,
-    ...theme.mixins.noWrap,
+    ...theme.mixins.noWrap
   },
   balanceActive: {
     padding: '10px 10px',
-    margin: '0 auto',
+    margin: '0 auto'
   },
   fundingAvg: {
-    padding: '10px',
+    padding: '10px'
   },
   titleText: {
-    fontSize: '20px',
+    fontSize: '20px'
   },
   titleNumber: {
     fontSize: '26px',
-    fontWeight: 600,
+    fontWeight: 600
   },
   blackText: {
-    fontSize: '16px',
-  },
+    fontSize: '16px'
+  }
 }))
 
 function NoBorderCell(props: any) {
@@ -122,7 +122,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                     <b>{t} &nbsp; <RedLightText>
                       {formatNumber(
                           ((mfiData['mfiPercents'] || [])
-                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT'],
+                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
                       )}%
                     </RedLightText></b>
                   </NoBorderCell>
@@ -152,7 +152,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                     <b>{t} &nbsp; <RedLightText>
                       {formatNumber(
                           ((treasuryData['treasuryPercents'] || [])
-                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT'],
+                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
                       )}%
                     </RedLightText></b>
                   </NoBorderCell>
@@ -183,7 +183,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                     <b>{t} &nbsp; <RedLightText>
                       {formatNumber(
                           ((retailData['retailPercents'] || [])
-                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT'],
+                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
                       )}%
                     </RedLightText></b>
                   </NoBorderCell>
@@ -376,7 +376,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                     <RedLightText>
                       {formatNumber(
                           ((portfolioData['fundingAvgRatePercents'] || [])
-                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT'],
+                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
                       )}%
                     </RedLightText>
                   </NoBorderCell>

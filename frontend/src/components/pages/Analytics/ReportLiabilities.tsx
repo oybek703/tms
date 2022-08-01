@@ -11,7 +11,7 @@ const ReportLiabilities = () => {
   const {
     reportliabilities,
     loading,
-    error,
+    error
   } = useTypedSelector((state) => state.reportLiabilities)
   const { reportDate } = useTypedSelector((state) => state.date)
   useEffect(() => {

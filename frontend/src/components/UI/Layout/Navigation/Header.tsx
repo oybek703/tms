@@ -31,75 +31,75 @@ export const baseRoutes: BaseRoute[] = [
   {
     title: 'Основные показатели',
     route: '/mainindicators',
-    group: 'key_indicators',
+    group: 'key_indicators'
   },
   { title: 'Расчет капитала', route: '/capital', group: 'key_indicators' },
   {
     title: 'Прибыл и убыток банка',
     route: '/profitandlost',
-    group: 'key_indicators',
+    group: 'key_indicators'
   },
   {
     title: 'Ликвидность',
     route: '/liquidity',
-    group: 'liquidity_indicators',
+    group: 'liquidity_indicators'
   },
   {
     title: 'Корреспондентский счет',
     route: '/correspondent',
-    group: 'liquidity_indicators',
+    group: 'liquidity_indicators'
   },
   {
     title: 'Расчет ФОР',
     route: '/calcfor',
     group: 'liquidity_indicators',
-    forAll: true,
+    forAll: true
   },
   {
     title: 'Валютная позиция',
     route: '/currencyposition',
-    group: 'liquidity_indicators',
+    group: 'liquidity_indicators'
   },
   {
     title: 'Матрица вал. корр. счетов',
     route: '/nostroMatrix',
-    group: 'liquidity_indicators',
+    group: 'liquidity_indicators'
   },
   {
     title: 'Привлеченные и размещенные',
     route: '/plat',
     group: 'active_passive',
-    forAll: true,
+    forAll: true
   },
   {
     title: 'Межбанковские депозиты',
     route: '/interbankdeposits',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   {
     title: 'Топ-20 крупных депозитов',
     route: '/topdeposits',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   {
     title: 'СД юр.лиц. - по клиентам',
     route: '/timedepoclients',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   {
     title: 'Срочные депозиты юр. лиц',
     route: '/timedeposits',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   {
     title: 'Депозиты по срокам',
     route: '/depositsbydeadline',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   {
     title: 'Отчет об обязательствах',
     route: '/reportliabilities',
-    group: 'active_passive',
+    group: 'active_passive'
   },
   { title: 'АО "UzAuto Motors" ', route: '/gm', group: 'active_passive' },
   { title: 'ГЭП', route: '/gap', group: 'gap' },
@@ -107,39 +107,39 @@ export const baseRoutes: BaseRoute[] = [
   {
     title: 'Капитал',
     route: '/in_process/n1',
-    group: 'prudential_standards',
+    group: 'prudential_standards'
   },
   {
     title: 'Ликвидность',
     route: '/in_process/n2',
-    group: 'prudential_standards',
+    group: 'prudential_standards'
   },
   {
     title: 'Крупные риски',
     route: '/in_process/n3',
-    group: 'prudential_standards',
+    group: 'prudential_standards'
   },
   {
     title: 'Ценные бумаги',
     route: '/in_process/n4',
-    group: 'prudential_standards',
+    group: 'prudential_standards'
   },
   {
     title: 'Связанниые лица',
     route: '/in_process/n5',
-    group: 'prudential_standards',
+    group: 'prudential_standards'
   },
   {
     title: 'Инвестиции банка',
     route: '/in_process/n6',
-    group: 'prudential_standards',
-  },
+    group: 'prudential_standards'
+  }
 ]
 
 const useStyles = makeStyles((theme) => ({
   routes: {
     fontSize: '16px',
-    maxWidth: 210,
+    maxWidth: 210
   },
   active: {
     ...theme.mixins.active,
@@ -147,17 +147,17 @@ const useStyles = makeStyles((theme) => ({
     'color': '#fff',
     '&:hover': {
       backgroundColor: '#8b8b8b',
-      color: '#fff',
-    },
+      color: '#fff'
+    }
   },
   roundIcon: {
-    minWidth: '25px',
+    minWidth: '25px'
   },
   // @ts-ignore
   logo: theme.mixins.logo,
   nested: {
-    paddingLeft: theme.spacing(5),
-  },
+    paddingLeft: theme.spacing(5)
+  }
 }))
 
 function groupRoutes(
@@ -278,7 +278,7 @@ function Header() {
         keyIndicatorsRoutes,
         activePassivRoutes,
         liquidityIndicatorsRoutes,
-        prudentialStandardsRoutes],
+        prudentialStandardsRoutes]
   )
 
   return (

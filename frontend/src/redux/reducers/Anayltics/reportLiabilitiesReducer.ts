@@ -1,13 +1,13 @@
 import {
   REPORTLIABILITIES_FAIL,
   REPORTLIABILITIES_START,
-  REPORTLIABILITIES_SUCCESS,
+  REPORTLIABILITIES_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   reportliabilities: [],
   loading: false,
-  error: null,
+  error: null
 }
 
 function reportLiabilities(state = initialState, action: any) {

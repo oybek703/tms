@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
   marginTop10: theme.mixins.marginTop10,
   stickyTableHead: theme.mixins.stickyTableHead,
   hoverColor: {
-    backgroundColor: theme.palette.action.hover,
-  },
+    backgroundColor: theme.palette.action.hover
+  }
 }))
 
 interface TimeDepositsTableProps {

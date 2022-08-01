@@ -3,7 +3,7 @@ import { LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT } from '../../actions/ty
 const initialState = {
   loading: false,
   user: JSON.parse(localStorage.getItem('user') || '{}'),
-  error: null,
+  error: null
 }
 
 function auth(state = initialState, action: any) {

@@ -11,42 +11,42 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   margin: {
-    marginBottom: '20px',
+    marginBottom: '20px'
   },
   currency: {
     padding: '8px 0',
     fontSize: '12pt',
-    color: '#636363',
+    color: '#636363'
   },
   grow: theme.mixins.grow,
   liqRate: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    margin: '20px auto',
+    margin: '20px auto'
   },
   greens: {
     color: '#00B050',
-    fontSize: '12pt',
+    fontSize: '12pt'
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
   liquidityCard: {
     ...theme.mixins.smallCard,
     padding: 0,
-    paddingLeft: 5,
+    paddingLeft: 5
   },
   horizontalTitle: theme.mixins.oneRowTitle,
   capitalText: {
     padding: 10,
     fontSize: '1.2em',
     fontWeight: 600,
-    color: '#555',
+    color: '#555'
   },
   capitalNumber: {
-    fontSize: '1.05em',
+    fontSize: '1.05em'
   },
-  noWrap: theme.mixins.noWrap,
+  noWrap: theme.mixins.noWrap
 }))
 
 interface FundingTabProps {
@@ -59,7 +59,7 @@ interface FundingTabProps {
 
 const FundingTab: React.FC<FundingTabProps> = ({
   currencyMfi = {}, currencyMBD = {},
-  currencyTimeDeposits = {}, timeDeposits = {}, interbankDeposits = {},
+  currencyTimeDeposits = {}, timeDeposits = {}, interbankDeposits = {}
 }) => {
   const classes = useStyles()
   const mfiSum = Number(currencyMfi.reduce((a: any, b: any) => +a + (+b), 0)).toFixed(2)

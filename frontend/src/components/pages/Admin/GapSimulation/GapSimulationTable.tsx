@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import {
   GapTableHead,
   TotalOrBoldRow,
-  VerticalColumn,
+  VerticalColumn
 } from '../../../UI/Layout/GapHelpers'
 import { formatNumber } from '../../../../utils'
 
@@ -15,15 +15,15 @@ const colNames = [
   { propName: 'NATIONAL_CURRENCY', eqv: 'Нац.вал.(UZS)', canEdit: true },
   { propName: 'FOREIGN_CURRENCY', eqv: 'Ин.вал.(USD екв.)' },
   { propName: 'USD', eqv: 'USD', canEdit: true },
-  { propName: 'EUR', eqv: 'EUR', canEdit: true },
+  { propName: 'EUR', eqv: 'EUR', canEdit: true }
 ]
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: '80vh',
+    maxHeight: '80vh'
   },
   bordered: theme.mixins.dottedBorder,
-  noWrap: theme.mixins.noWrap,
+  noWrap: theme.mixins.noWrap
 }))
 
 interface EditableCellProps {
@@ -40,7 +40,7 @@ interface EditableCellProps {
 const EditableCell: React.FC<EditableCellProps> = function({
   canEdit = false, row = {}, propName = 'PROP',
   handleEditClick = () => {}, monthIndex = 0, month = 'MONTH',
-  eqv = 'EQV', type = 'приток',
+  eqv = 'EQV', type = 'приток'
 }) {
   const classes = useStyles()
   const cellData = formatNumber((row[monthIndex] || {})[propName], true)
@@ -54,7 +54,7 @@ const EditableCell: React.FC<EditableCellProps> = function({
     cellName: eqv,
     colName: propName,
     numValue: (row[monthIndex] || {})[propName],
-    current: formatNumber((row[monthIndex] || {})[propName]),
+    current: formatNumber((row[monthIndex] || {})[propName])
   })
   if (!canEdit) {
     return <TableCell align='center'
@@ -82,7 +82,7 @@ interface SimulationTableRowProps {
 const SimulationTableOneRow: React.FC<SimulationTableRowProps> = function({
   months = [], row = {},
   handleEditClick = () => {},
-  type = 'приток',
+  type = 'приток'
 }) {
   const classes = useStyles()
   return (
@@ -115,7 +115,7 @@ interface GapSimulationTableProps {
 const GapSimulationTable: React.FC<GapSimulationTableProps> = ({
   months = [], sourceOfLiquidity = [], sourceOfLiquidityTotal = [],
   needsOfLiquidity = [], needsOfLiquidityTotal = [],
-  vlaLcrData = [], handleEditClick = () => {},
+  vlaLcrData = [], handleEditClick = () => {}
 }) => {
   const classes = useStyles()
   return (

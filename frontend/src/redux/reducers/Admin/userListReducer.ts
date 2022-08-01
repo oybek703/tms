@@ -1,13 +1,13 @@
 import {
   USERS_FAIL,
   USERS_START,
-  USERS_SUCCESS,
+  USERS_SUCCESS
 } from '../../actions/types'
 
 const initialState = {
   loading: false,
   error: null,
-  users: [],
+  users: []
 }
 
 function users(state = initialState, action: any) {

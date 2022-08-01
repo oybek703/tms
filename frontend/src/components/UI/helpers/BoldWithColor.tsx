@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   whiteBold: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 }))
 
 const BoldWithColor: React.FC<PropsWithChildren<{}>> = ({ children }) => {

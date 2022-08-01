@@ -11,16 +11,16 @@ const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   clientName: {
     maxWidth: 130,
-    fontSize: 13,
+    fontSize: 13
   },
   tableHeader: {
     backgroundColor: ({ color }: {color: string}) => color,
-    color: '#fff',
+    color: '#fff'
   },
   tableCard: {
-    maxHeight: '700px',
+    maxHeight: '700px'
   },
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 interface TopDepositCardProps {

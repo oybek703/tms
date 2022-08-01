@@ -27,7 +27,7 @@ const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} })
       <Grid container direction='column' component={Paper} style={{ paddingTop: 10 }}>
         <CurrencyLineChart data={{
           categories,
-          series,
+          series
         }} id='rate'/>
         <br/>
         <FormControl component="fieldset">

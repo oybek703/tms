@@ -8,12 +8,12 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
     series: [
       {
         name: 'Мин',
-        data: new Array(categories.length).fill(normative),
+        data: new Array(categories.length).fill(normative)
       },
       {
         name: label,
-        data: series,
-      },
+        data: series
+      }
     ],
     chart: {
       height: 350,
@@ -24,30 +24,30 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
         top: 18,
         left: 7,
         blur: 10,
-        opacity: 0.2,
+        opacity: 0.2
       },
       toolbar: {
-        show: false,
+        show: false
       },
       animations: {
         enabled: true,
         easing: 'linear',
         speed: 800,
         animateGradually: {
-          enabled: false,
+          enabled: false
         },
         dynamicAnimation: {
           enabled: true,
-          speed: 50,
-        },
-      },
+          speed: 50
+        }
+      }
     },
     legend: {
-      horizontalAlign: 'center',
+      horizontalAlign: 'center'
     },
     colors: [
       '#ff6363',
-      '#00B050',
+      '#00B050'
     ],
     dataLabels: {
       enabled: true,
@@ -55,32 +55,32 @@ async function renderOptions(series: any = [], categories: any = [], id: string 
       offsetY: -10,
       formatter: function(val: number, opts: any) {
         return formatNumber(val)
-      },
+      }
     },
     stroke: {
-      curve: 'smooth',
+      curve: 'smooth'
     },
     grid: {
       borderColor: '#e7e7e7',
       row: {
         colors: ['#f3f3f3', 'transparent'],
-        opacity: 0.5,
-      },
+        opacity: 0.5
+      }
     },
     markers: {
-      size: 1,
+      size: 1
     },
     xaxis: {
-      categories: categories,
+      categories: categories
     },
     yaxis: {
       min: normative,
       labels: {
         formatter: function(val: number) {
           return (val || 0).toFixed(0)
-        },
-      },
-    },
+        }
+      }
+    }
   }
   const chart = new ApexCharts(document.querySelector(`#${id}`), options)
   await chart.render()

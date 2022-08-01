@@ -16,20 +16,20 @@ async function renderOptions(series: any, categories: any, id: string, normative
     series: [
       {
         name: normativeName,
-        data: new Array(categories.length).fill(normative),
+        data: new Array(categories.length).fill(normative)
       },
       {
         name: totalName,
-        data: total,
+        data: total
       },
       {
         name: nationalName,
-        data: nat,
+        data: nat
       },
       {
         name: foreignName,
-        data: foreign,
-      },
+        data: foreign
+      }
     ],
     chart: {
       height: 350,
@@ -40,22 +40,22 @@ async function renderOptions(series: any, categories: any, id: string, normative
         top: 18,
         left: 7,
         blur: 10,
-        opacity: 0.2,
+        opacity: 0.2
       },
       toolbar: {
-        show: false,
+        show: false
       },
       animations: {
         enabled: true,
         easing: 'linear',
         speed: 800,
         animateGradually: {
-          enabled: false,
+          enabled: false
         },
         dynamicAnimation: {
           enabled: true,
-          speed: 50,
-        },
+          speed: 50
+        }
       },
       events: {
         legendClick: function(chartContext: any, seriesIndex: any, config: any) {
@@ -64,53 +64,53 @@ async function renderOptions(series: any, categories: any, id: string, normative
           if (selectedSeriesItemName !== normativeName) {
             chartContext.toggleSeries(selectedSeriesItemName)
           }
-        },
-      },
+        }
+      }
     },
     legend: {
       horizontalAlign: 'left',
       onItemClick: {
-        toggleDataSeries: false,
+        toggleDataSeries: false
       },
       onItemHover: {
-        highlightDataSeries: true,
-      },
+        highlightDataSeries: true
+      }
     },
     colors: [
       '#ff6363',
       '#00B050',
       '#4CB9E1',
-      '#f38003',
+      '#f38003'
     ],
     dataLabels: {
       enabled: true,
       offsetX: -5,
-      offsetY: -10,
+      offsetY: -10
     },
     stroke: {
-      curve: 'smooth',
+      curve: 'smooth'
     },
     grid: {
       borderColor: '#e7e7e7',
       row: {
         colors: ['#f3f3f3', 'transparent'],
-        opacity: 0.5,
-      },
+        opacity: 0.5
+      }
     },
     markers: {
-      size: 1,
+      size: 1
     },
     xaxis: {
-      categories: categories,
+      categories: categories
     },
     yaxis: {
       min: normative,
       labels: {
         formatter: function(val: number) {
           return (val || 0).toFixed(0)
-        },
-      },
-    },
+        }
+      }
+    }
   }
   const chart = new ApexCharts(document.querySelector(`#${id}`), options)
   await chart.render()

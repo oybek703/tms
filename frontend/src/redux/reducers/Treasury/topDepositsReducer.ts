@@ -3,7 +3,7 @@ import { TOPDEPOSITS_FAIL, TOPDEPOSITS_START, TOPDEPOSITS_SUCCESS } from '../../
 const initialState = {
   loading: false,
   topDeposits: {},
-  error: null,
+  error: null
 }
 
 function topDeposits(state = initialState, action: any) {

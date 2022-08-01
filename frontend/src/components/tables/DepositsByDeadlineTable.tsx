@@ -14,7 +14,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
-  stickyTableHead: theme.mixins.stickyTableHead,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 function DepositsByDeadlineTable({ rows = [] }) {

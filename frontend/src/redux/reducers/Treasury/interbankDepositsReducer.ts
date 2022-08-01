@@ -6,9 +6,9 @@ const initialState = {
     land: [],
     borrow: [],
     fullBorrowData: [],
-    fullLandData: [],
+    fullLandData: []
   },
-  error: null,
+  error: null
 }
 
 function interbankdeposits(state = initialState, action: any) {

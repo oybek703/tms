@@ -8,26 +8,26 @@ function renderOptions(series: any) {
   const colors = [
     '#4CB9E1',
     '#f38003',
-    '#00B050',
+    '#00B050'
   ]
   const labels = ['UZS', 'USD', 'EUR']
   const options = {
     title: {
-      ...chartTitle('Срочные депозиты по валютам'),
+      ...chartTitle('Срочные депозиты по валютам')
     },
     subtitle: {
-      ...chartSubtitle(),
+      ...chartSubtitle()
     },
     tooltip: { ...chartTooltip() },
     series: series.map(Number),
     colors,
     chart: {
       type: 'pie',
-      height: 350,
+      height: 350
     },
     labels,
     fill: {
-      colors,
+      colors
     },
     legend: {
       show: true,
@@ -40,26 +40,26 @@ function renderOptions(series: any) {
       horizontalAlign: 'left',
       fontSize: 17,
       markers: {
-        fillColors: colors,
-      },
+        fillColors: colors
+      }
     },
     dataLabels: {
       enabled: true,
       style: {
-        fontSize: 14,
-      },
+        fontSize: 14
+      }
     },
     responsive: [{
       breakpoint: 480,
       options: {
         chart: {
-          width: 200,
+          width: 200
         },
         legend: {
-          position: 'bottom',
-        },
-      },
-    }],
+          position: 'bottom'
+        }
+      }
+    }]
   }
 
   const chart = new ApexCharts(document.querySelector('#currency_time_deposits'), options)

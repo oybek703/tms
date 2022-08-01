@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px 40px',
     marginTop: 10,
     borderLeft: 0,
-    borderRight: 0,
+    borderRight: 0
   },
   link: {
     'cursor': 'pointer',
     '&:hover': {
-      textDecoration: 'none',
-    },
-  },
+      textDecoration: 'none'
+    }
+  }
 }))
 
 const Footer = () => {

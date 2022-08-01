@@ -10,11 +10,11 @@ import { makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   greens: {
     color: '#00B050',
-    fontSize: '12pt',
+    fontSize: '12pt'
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
-  horizontalTitle: theme.mixins.oneRowTitle,
+  horizontalTitle: theme.mixins.oneRowTitle
 }))
 
 interface CreditPortfolioTabProps {

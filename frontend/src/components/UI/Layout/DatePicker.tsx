@@ -23,7 +23,7 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
   }, [changeReportDate, operDays])
   const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
-      [operDays],
+      [operDays]
   )
   return (
     <Fragment>
@@ -44,11 +44,11 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
             transitionDuration: {
               appear: 300,
               enter: 300,
-              exit: 300,
-            },
+              exit: 300
+            }
           }}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            'aria-label': 'change date'
           }}
           onError={handleDateChange}
           invalidDateMessage='Please enter valid date!'

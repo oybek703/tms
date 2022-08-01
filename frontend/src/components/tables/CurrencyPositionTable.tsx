@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: {
     ...theme.mixins.stickyTableHead,
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 }))
 
 const CurrencyPositionTable: React.FC<{ rows: any }> = function({ rows }) {

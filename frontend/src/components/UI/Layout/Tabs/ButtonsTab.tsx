@@ -6,9 +6,9 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    marginBottom: 10,
+    marginBottom: 10
   },
-  btn: theme.mixins.tabBtn,
+  btn: theme.mixins.tabBtn
 }))
 
 interface ButtonsTabProps {

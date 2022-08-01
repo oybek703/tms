@@ -13,14 +13,14 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: '70vh',
-  },
+    maxHeight: '70vh'
+  }
 }))
 
 const titles = [
   { title: 'Межбанковские депозиты', code: 'all' },
   { title: 'Привлеченные', code: 'borrow' },
-  { title: 'Размещенные', code: 'land' },
+  { title: 'Размещенные', code: 'land' }
 ]
 
 const InterbankDepositsTable: React.FC<{rows: any}> = function({ rows = [] }) {

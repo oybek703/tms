@@ -1,7 +1,7 @@
 import { CHANGE_DATE } from '../../actions/types'
 
 const initialState = {
-  reportDate: localStorage.getItem('reportDate') || new Date().toISOString().slice(0, 10),
+  reportDate: localStorage.getItem('reportDate') || new Date().toISOString().slice(0, 10)
 }
 
 function date(state = initialState, action: any) {

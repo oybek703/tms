@@ -15,7 +15,7 @@ const LiqPointers = () => {
   const {
     liquidity: currentLiquidity,
     loading: currentLoading,
-    error: currentError,
+    error: currentError
   } = useTypedSelector((state) => state.liquidityCurrent)
   useEffect(() => {
     if (currentState) {

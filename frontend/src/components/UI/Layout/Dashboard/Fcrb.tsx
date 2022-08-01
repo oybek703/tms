@@ -10,7 +10,7 @@ const Fcrb = () => {
   const {
     fcrb,
     loading,
-    error,
+    error
   } = useTypedSelector((state) => state.fcrb)
   const { reportDate } = useTypedSelector((state) => state.date)
   useEffect(() => {

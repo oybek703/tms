@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper'
 
 async function renderOptions(series: any = []) {
   const colors = [
-    '#4CB9E1',
+    '#4CB9E1'
   ]
   const labels = [
     'USD',
@@ -15,51 +15,51 @@ async function renderOptions(series: any = []) {
     'KZT',
     'RUB',
     'CHF',
-    'CNY',
+    'CNY'
   ]
   const options = {
     series: [{
       name: 'Value:',
-      data: series.map((v: string) => +v),
+      data: series.map((v: string) => +v)
     }],
     subtitle: {
-      ...chartSubtitle('млн'),
+      ...chartSubtitle('млн')
     },
     labels,
     chart: {
       height: 365,
       type: 'bar',
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
     colors,
     plotOptions: {
       bar: {
         columnWidth: '70%',
         distributed: true,
-        horizontal: true,
-      },
+        horizontal: true
+      }
     },
     dataLabels: {
       enabled: true,
       style: {
         fontSize: '14px',
-        colors: ['#000'],
-      },
+        colors: ['#000']
+      }
     },
     legend: {
-      show: false,
+      show: false
     },
     xaxis: {
       categories: labels,
       labels: {
         style: {
           colors: ['#000'],
-          fontSize: '15px',
-        },
-      },
-    },
+          fontSize: '15px'
+        }
+      }
+    }
   }
 
   const chart = new ApexCharts(document.querySelector('#curr_post_chart'), options)

@@ -24,20 +24,20 @@ import useActions from '../../../../hooks/useActions'
 const useStyles = makeStyles({
   appbar: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   notifications: {
-    minWidth: '250px',
+    minWidth: '250px'
   },
   ntfsBtn: {
     display: 'inline-block',
-    minWidth: '64px',
+    minWidth: '64px'
   },
   menu: {
     minWidth: 125,
     backgroundColor: '#f8f8f8',
     borderRadius: 0,
-    color: '#000',
+    color: '#000'
   },
   noWrap: {
     ...theme.mixins.noWrap,
@@ -46,26 +46,26 @@ const useStyles = makeStyles({
     'transform': 'scale(1)',
     '&:hover': {
       backgroundColor: '#5a5454',
-      transform: 'scale(1.02)',
-    },
+      transform: 'scale(1.02)'
+    }
   },
   menuItem: {
     '&:hover': {
       backgroundColor: '#827e7e',
-      color: 'white',
-    },
+      color: 'white'
+    }
   },
   logo: theme.mixins.logo,
   main_logo: {
     display: 'flex',
     alignItems: 'center',
     fontSize: 20,
-    textTransform: 'none',
+    textTransform: 'none'
   },
   fontItalic: {
     fontStyle: 'italic',
-    color: '#5c5c5c',
-  },
+    color: '#5c5c5c'
+  }
 })
 
 interface NavbarProps {
@@ -77,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
   const {
     getLastUpdateTime, getOperDays,
     logout, correspondentCurrentUpdate,
-    liquidityCurrentUpdate, updateDashboardActiveTab,
+    liquidityCurrentUpdate, updateDashboardActiveTab
   } = useActions()
   const { user = {} } = useTypedSelector((state) => state.auth)
   const correspondentCurrentState = useTypedSelector(

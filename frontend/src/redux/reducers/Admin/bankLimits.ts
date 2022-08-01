@@ -3,7 +3,7 @@ import { BANKLIMITS_FAIL, BANKLIMITS_START, BANKLIMITS_SUCCESS } from '../../act
 const initialState = {
   bankLimits: {},
   loading: false,
-  error: null,
+  error: null
 }
 
 function bankLimits(state = initialState, action: any) {

@@ -4,9 +4,9 @@ const initialState = {
   loading: false,
   plat: {
     involvedFunds: [],
-    placedFunds: [],
+    placedFunds: []
   },
-  error: null,
+  error: null
 }
 
 function plat(state = initialState, action: any) {

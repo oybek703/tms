@@ -61,7 +61,7 @@ const rootReducer = combineReducers({
   bankLimits,
   gapManual,
   users,
-  addUser,
+  addUser
 })
 
 export type RootState = ReturnType<typeof rootReducer>
