@@ -63,7 +63,8 @@ export const baseRoutes: BaseRoute[] = [
   {
     title: 'Матрица вал. корр. счетов',
     route: '/nostroMatrix',
-    group: 'liquidity_indicators'
+    group: 'liquidity_indicators',
+    forAll: true
   },
   {
     title: 'Привлеченные и размещенные',

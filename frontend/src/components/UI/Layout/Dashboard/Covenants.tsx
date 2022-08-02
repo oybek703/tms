@@ -29,6 +29,7 @@ function getColorByStatus(status: Status) {
 
 const Covenants = () => {
   const classes = useStyles()
+  throw new Error('TEST ERROR')
   return (
     <TableContainer className={classes.tableContainer} component={Paper}>
       <Table size='small'>

@@ -10,17 +10,25 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
     padding: '10px 40px',
     maxWidth: '80%',
-    margin: '10vh auto',
+    margin: '10vh auto 20px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 200,
     backgroundColor: '#eee'
+  },
+  reloadBtn: {
+    backgroundColor: '#7794aa'
   }
-}))
+}
+))
 
 const ErrorAlert = () => {
   const classes = useStyles()
+  function handleClick() {
+    localStorage.clear()
+    window.location.reload()
+  }
   return (
     <>
       <Grid className={classes.alertBox} container>
@@ -32,10 +40,17 @@ const ErrorAlert = () => {
         </Typography>
       </Grid>
       <Typography align='center'>
-        <Button variant='outlined' component='span' disabled color='secondary'>
-                    Пожалуйста, проверьте подключение и попробуйте обновить страницу!
+        <Button size='large' variant='outlined' component='span' disabled color='secondary'>
+          Пожалуйста, проверьте подключение.
         </Button>
       </Typography>
+      <hr/>
+      <Grid container justifyContent='center'>
+        <Button onClick={handleClick} className={classes.reloadBtn}
+          variant='contained'>
+          Обновить
+        </Button>
+      </Grid>
     </>
   )
 }
