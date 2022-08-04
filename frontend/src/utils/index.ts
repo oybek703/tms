@@ -91,12 +91,7 @@ export function chartSubtitle(text = 'млрд.сум') {
   }
 }
 
-export function getAverage(values = []) {
-  const vlaValues = [...(values || [])]
-  return +(vlaValues.reduce((acc, val) => acc += val, 0) / vlaValues.length).toFixed(2)
-}
-
-export function findRecursive(operDays: string[], date: Date): any {
+export function findRecursive(operDays: string[] = [], date: Date): any {
   if (operDays.length) {
     const dayBefore = new Date(new Date(date).getTime()-86400000)
     const formattedDayBefore = formatOneDate(`${dayBefore}`)

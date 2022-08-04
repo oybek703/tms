@@ -50,8 +50,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
         }
         return undefined
       }).filter(Boolean)
-  if (!(firstDate || secondDate || capital.length || liquidity.length ||
-    riskPart.length)) {
+  if (!(firstDate || secondDate || capital.length || liquidity.length || riskPart.length)) {
     return <Fragment/>
   }
   return (
