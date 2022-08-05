@@ -3,22 +3,20 @@ import React, { memo, useCallback } from 'react'
 import DateFnsUtils from '@date-io/date-fns'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { disableDays } from '../../../../utils'
-import { WrapperVariant } from '@material-ui/pickers/wrappers/Wrapper'
+import useTypedSelector from '../../../../hooks/useTypedSelector'
+import { TextFieldProps } from '@material-ui/core/TextField'
 
-interface MonthlyPickerProps {
+interface InlineDatePickerProps {
     reportDate: string,
-    disabled: boolean,
-    operDays: any,
-    variant?: WrapperVariant,
     handleDateChange: any
+    disabled?: boolean,
+    inputVariant?: TextFieldProps['variant']
 }
 
-const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
-  reportDate,
-  disabled = false,
-  operDays = [],
-  variant='inline',
+const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
+  reportDate, disabled = false, inputVariant,
   handleDateChange = () => {} }) => {
+  const { operDays, loading } = useTypedSelector(state => state.operDays)
   const memoizedDisableWeekends = useCallback(
       (date) => disableDays(date, operDays),
       [operDays]
@@ -30,18 +28,20 @@ const MonthlyPicker: React.FC<MonthlyPickerProps> = ({
         disableToolbar
         shouldDisableDate={memoizedDisableWeekends}
         margin="dense"
-        variant={variant}
+        variant='inline'
         minDate={new Date('2020-01-01')}
         format="dd/MM/yyyy"
-        disabled={disabled}
+        disabled={loading || disabled}
         value={reportDate}
+        autoOk={true}
         helperText=''
         invalidDateMessage='Please enter valid date!'
-        maxDate={new Date(new Date() as any -86400000)}
+        maxDate={new Date(new Date() as any - 86400000)}
         autoComplete='off'
+        inputVariant={inputVariant}
       />
     </MuiPickersUtilsProvider>
   )
 }
 
-export default memo(MonthlyPicker)
+export default memo(InlineDatePicker)
