@@ -48,33 +48,37 @@ interface NostroMatrixTableProps {
   noData?: boolean
 }
 
+function EmptyCell() {
+  return <TableCell style={{ background: '#fff', border: 'none' }} rowSpan={2}/>
+}
+
 const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noData }) {
   const classes = useStyles()
   const { reportDate } = useTypedSelector((state) => state.date)
-  console.log(rows)
   if (noData) return <Fragment/>
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="a dense table">
         <TableHead className={classes.stickyTableHead}>
           <TableRow>
-            <TableCell className={classes.noWrap} colSpan={2} align='center'>
+            <TableCell className={classes.noWrap} colSpan={2} rowSpan={2} align='center'>
               <BoldWithColor>Наименование</BoldWithColor>
             </TableCell>
+            <EmptyCell/>
             <TableCell className={classes.noWrap} colSpan={4} align='center'>
               <BoldWithColor>Качество обслуживание</BoldWithColor>
             </TableCell>
+            <EmptyCell/>
             <TableCell className={classes.noWrap} colSpan={5} align='center'>
-              <BoldWithColor>Информатция о остатках и оборотах</BoldWithColor>
+              <BoldWithColor>Информация о остатках и оборотах</BoldWithColor>
             </TableCell>
+            <EmptyCell/>
             <TableCell className={classes.noWrap} colSpan={7} align='center'>
               <BoldWithColor>Виды операций</BoldWithColor>
             </TableCell>
           </TableRow>
           <TableRow>
             {[
-              '',
-              'Наименование банка',
               'больше операций',
               'быстрый',
               'безопасный',
@@ -91,42 +95,38 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noD
               'FX',
               'Кредитная линия',
               'Востро'
-            ].map((title) => <TableCell key={uuid()}
-              align='center'
-              className={classes.noWrap}><BoldWithColor>{title}</BoldWithColor></TableCell>)}
+            ].map(title => <TableCell align='center' key={uuid()} className={classes.noWrap}>
+              <BoldWithColor>
+                {title}
+              </BoldWithColor></TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows && rows.map((row, _index) => <Fragment key={uuid()}>
             <TableRow>
-              <TableCell colSpan={18} style={{
-                fontSize: '1.05em',
-                paddingLeft: 200
-              }}><b>{row.title}</b></TableCell>
+              <TableCell colSpan={2} align='center' style={{ fontSize: '1.1em' }}><b>{row.title}</b></TableCell>
+              <TableCell style={{ border: 'none' }}/>
+              <TableCell colSpan={4}/>
+              <TableCell style={{ border: 'none' }}/>
+              <TableCell colSpan={5}/>
+              <TableCell style={{ border: 'none' }}/>
+              <TableCell colSpan={7}/>
             </TableRow>
             {row.data.map((cell, index) => <TableRow key={uuid()}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell
-                className={classes.noWrap}><b>{cell.name}</b></TableCell>
+              <TableCell align='center'><b>{index + 1}</b></TableCell>
+              <TableCell className={classes.noWrap}><b>{cell.name}</b></TableCell>
+              <TableCell style={{ border: 'none' }}/>
               <TableCell align='center'>{cell.moreOperations}</TableCell>
               <TableCell align='center'>{cell.quick}</TableCell>
               <TableCell align='center'>{cell.safe}</TableCell>
               <TableCell align='center'>{cell.expensiveOrCheap}</TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{formatNumber(
-                    cell.saldoOut)}</TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{formatNumber(
-                    cell.turnoverDebit)}</TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{formatNumber(
-                    cell.percentDebit)}</TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{formatNumber(
-                    cell.turnoverCredit)}</TableCell>
-              <TableCell align='center'
-                className={classes.noWrap}>{formatNumber(
-                    cell.percentCredit)}</TableCell>
+              <TableCell style={{ border: 'none' }}/>
+              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.saldoOut)}</TableCell>
+              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.turnoverDebit)}</TableCell>
+              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.percentDebit)}</TableCell>
+              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.turnoverCredit)}</TableCell>
+              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.percentCredit)}</TableCell>
+              <TableCell style={{ border: 'none' }}/>
               <TableCell align='center'>{cell.import}</TableCell>
               <TableCell align='center'>{cell.export}</TableCell>
               <TableCell align='center'>{cell.accredetiv}</TableCell>
