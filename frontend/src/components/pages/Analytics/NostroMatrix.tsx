@@ -12,32 +12,23 @@ import { Grid } from '@material-ui/core'
 
 const NostroMatrix = () => {
   const { fetchNostroMatrix } = useActions()
-  const { nostroMatrix, loading, error } = useTypedSelector(
-      (state) => state.nostroMatrix)
+  const { nostroMatrix, loading, error } = useTypedSelector((state) => state.nostroMatrix)
   const { reportDate } = useTypedSelector((state) => state.date)
-  useEffect(() => {
-    fetchNostroMatrix(reportDate)
-  }, [fetchNostroMatrix, reportDate])
   const { operDays } = useTypedSelector((state) => state.operDays)
-  const dayBefore = formatDateWithDash(
-      findRecursive(operDays, reportDate)) as string
+  const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
   const [firstDate, setFirstDate] = useState(dayBefore as string)
   const [secondDate, setSecondDate] = useState(dayBefore as string)
   useEffect(() => {
     if (firstDate && secondDate && firstDate !== secondDate) {
-      fetchNostroMatrix(new Date(firstDate).toString(),
-          new Date(secondDate).toString())
+      fetchNostroMatrix(new Date(firstDate).toString(), new Date(secondDate).toString())
     }
   }, [fetchNostroMatrix, firstDate, secondDate, reportDate])
   useEffect(() => {
     let { selectedDate: newSecondDate } = formatDate(reportDate, true)
-    const isReportDateToday = formatOneDate(reportDate) ===
-      formatOneDate(new Date().toString())
+    const isReportDateToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
     if (isReportDateToday) {
-      newSecondDate = formatDateWithDash(
-          findRecursive(operDays, reportDate)) as string
-      const newFirstDate = formatDateWithDash(
-          findRecursive(operDays, new Date(newSecondDate))) as string
+      newSecondDate = formatDateWithDash(findRecursive(operDays, reportDate)) as string
+      const newFirstDate = formatDateWithDash(findRecursive(operDays, new Date(newSecondDate))) as string
       setSecondDate(newSecondDate)
       setFirstDate(newFirstDate)
     } else {
@@ -64,7 +55,6 @@ const NostroMatrix = () => {
       }
     }
   }, [firstDate, secondDate, operDays])
-  if (!(firstDate || secondDate)) return <Fragment/>
   return (
     <Fragment>
       <PageTitle title='Матрица валютных корр. счетов банка'/>
@@ -85,7 +75,7 @@ const NostroMatrix = () => {
       {loading ?
         <Loader/> :
         error ? <Alert message={error}/> :
-          <NostroMatrixTable rows={nostroMatrix}/>}
+          <NostroMatrixTable noData={Boolean(!firstDate && !secondDate)} rows={nostroMatrix}/>}
     </Fragment>
   )
 }
