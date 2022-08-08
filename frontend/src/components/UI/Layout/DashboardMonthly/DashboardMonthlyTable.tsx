@@ -9,11 +9,11 @@ import Paper from '@material-ui/core/Paper'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableCap from '../../helpers/TableCap'
 import StyledTableRow from '../../helpers/StyledTableRow'
-import MonthlyPicker from './MonthlyPicker'
 import { v4 as uuid } from 'uuid'
 import { makeStyles } from '@material-ui/core'
 import ExportButton from '../ExportButton'
 import theme from '../../theme'
+import InlineDatePicker from '../Pickers/InlineDatePicker'
 
 const useStyles = makeStyles({
   pickerCell: {
@@ -32,14 +32,9 @@ interface DashboardMonthlyTableProps {
   firstDate: string
   secondDate: string
   handleDateChange: (date: string) => void
-  operDays: string[]
-  operDaysLoading: boolean
 }
 
-const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
-  rows = [], firstDate, secondDate,
-  handleDateChange, operDays, operDaysLoading
-}) => {
+const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({ rows = [], firstDate, secondDate, handleDateChange }) => {
   const classes = useStyles()
   const { capital = [], liquidity = [], riskPart = [] } = rows
   const colCount = (([...riskPart].pop() || {})['data'] || []).length
@@ -50,8 +45,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
         }
         return undefined
       }).filter(Boolean)
-  if (!(firstDate || secondDate || capital.length || liquidity.length ||
-    riskPart.length)) {
+  if (!(firstDate || secondDate || capital.length || liquidity.length || riskPart.length)) {
     return <Fragment/>
   }
   return (
@@ -66,10 +60,8 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
             <TableCell className={classes.pickerCell} align="center"
               rowSpan={2}>
               <span hidden>{firstDate}</span>
-              <MonthlyPicker
-                disabled={operDaysLoading}
+              <InlineDatePicker
                 reportDate={firstDate}
-                operDays={operDays}
                 handleDateChange={handleDateChange('first_date')}
               />
             </TableCell>
@@ -80,10 +72,8 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
             <TableCell className={classes.pickerCell} align="center"
               rowSpan={2}>
               <span hidden>{secondDate}</span>
-              <MonthlyPicker
-                disabled={operDaysLoading}
+              <InlineDatePicker
                 reportDate={secondDate}
-                operDays={operDays}
                 handleDateChange={handleDateChange('second_date')}
               />
             </TableCell>

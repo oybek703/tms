@@ -6,8 +6,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import Paper from '@material-ui/core/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
-import TableCap from '../UI/helpers/TableCap'
-import ExportButton from '../UI/Layout/ExportButton'
 import TableRow from '@material-ui/core/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { TableCell } from '@material-ui/core'
@@ -45,15 +43,16 @@ const useStyles = makeStyles((theme) => ({
   stickyTableHead: theme.mixins.stickyTableHead
 }))
 
-const NostroMatrixTable: React.FC<{ rows: RowData[] | undefined }> = function({ rows }) {
+interface NostroMatrixTableProps {
+  rows: RowData[]
+}
+
+const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows }) {
   const classes = useStyles()
   const { reportDate } = useTypedSelector((state) => state.date)
   return (
     <TableContainer component={Paper}>
-      <ExportButton id={`nostroMatrix-${formatOneDate(reportDate)}`}/>
-      <Table id={`nostroMatrix-${formatOneDate(reportDate)}`} size="small"
-        aria-label="a dense table">
-        <TableCap rows={17} text={'тыс. сум'}/>
+      <Table size="small" aria-label="a dense table">
         <TableHead className={classes.stickyTableHead}>
           <TableRow>
             <TableCell className={classes.noWrap} colSpan={2} align='center'>
@@ -90,26 +89,41 @@ const NostroMatrixTable: React.FC<{ rows: RowData[] | undefined }> = function({ 
               'Кредитная линия',
               'Востро'
             ].map((title) => <TableCell key={uuid()}
-              align='center' className={classes.noWrap}><BoldWithColor>{title}</BoldWithColor></TableCell>)}
+              align='center'
+              className={classes.noWrap}><BoldWithColor>{title}</BoldWithColor></TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows && rows.map((row, _index) => <Fragment key={uuid()}>
             <TableRow>
-              <TableCell colSpan={18} style={{ fontSize: '1.05em', paddingLeft: 200 }}><b>{row.title}</b></TableCell>
+              <TableCell colSpan={18} style={{
+                fontSize: '1.05em',
+                paddingLeft: 200
+              }}><b>{row.title}</b></TableCell>
             </TableRow>
             {row.data.map((cell, index) => <TableRow key={uuid()}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell className={classes.noWrap}><b>{cell.name}</b></TableCell>
+              <TableCell
+                className={classes.noWrap}><b>{cell.name}</b></TableCell>
               <TableCell align='center'>{cell.moreOperations}</TableCell>
               <TableCell align='center'>{cell.quick}</TableCell>
               <TableCell align='center'>{cell.safe}</TableCell>
               <TableCell align='center'>{cell.expensiveOrCheap}</TableCell>
-              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.saldoOut)}</TableCell>
-              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.turnoverDebit)}</TableCell>
-              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.percentDebit)}</TableCell>
-              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.turnoverCredit)}</TableCell>
-              <TableCell align='center' className={classes.noWrap}>{formatNumber(cell.percentCredit)}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    cell.saldoOut)}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    cell.turnoverDebit)}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    cell.percentDebit)}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    cell.turnoverCredit)}</TableCell>
+              <TableCell align='center'
+                className={classes.noWrap}>{formatNumber(
+                    cell.percentCredit)}</TableCell>
               <TableCell align='center'>{cell.import}</TableCell>
               <TableCell align='center'>{cell.export}</TableCell>
               <TableCell align='center'>{cell.accredetiv}</TableCell>

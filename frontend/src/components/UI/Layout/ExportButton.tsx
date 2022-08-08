@@ -86,8 +86,9 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
           color="primary"
           onClick={export2Excel}
           className={classes.button}
-          startIcon={<img width={20} height={20} src={excelImage} alt="Export to Excel"/>}
-        >
+          startIcon={<img width={20}
+            height={20} src={excelImage}
+            alt="Export to Excel"/>}>
                     Экспорт в Excel
         </Button>
       </Popover>

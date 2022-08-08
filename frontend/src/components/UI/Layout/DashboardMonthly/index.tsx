@@ -19,39 +19,35 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const DashboardMonthly: React.FC = () => {
+  const classes = useStyles()
   const { fetchDashboardMonthly } = useActions()
   const { reportDate } = useTypedSelector((state) => state.date)
   const [dateOption, setDateOption] = useState('two')
-  const { operDays, loading: operDaysLoading } = useTypedSelector(
-      (state) => state.operDays)
-  const dayBefore = formatDateWithDash(
-      findRecursive(operDays, reportDate)) as string
+  const { operDays } = useTypedSelector((state) => state.operDays)
+  const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
   const { dashboardMonthly, loading, error } = useTypedSelector(
       (state) => state.dashboardMonthly)
   const [firstDate, setFirstDate] = useState(dayBefore as string)
   const [secondDate, setSecondDate] = useState(dayBefore as string)
   useEffect(() => {
     if (firstDate && secondDate && firstDate !== secondDate) {
-      fetchDashboardMonthly(new Date(firstDate).toString(),
-          new Date(secondDate).toString(), dateOption)
+      fetchDashboardMonthly(new Date(firstDate).toString(), new Date(secondDate).toString(), dateOption)
     }
   }, [fetchDashboardMonthly, firstDate, secondDate, dateOption, reportDate])
   useEffect(() => {
     let { selectedDate: newSecondDate } = formatDate(reportDate, true)
-    const isReportDateToday = formatOneDate(reportDate) ===
-      formatOneDate(new Date().toString())
+    const isReportDateToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
     if (isReportDateToday) {
       newSecondDate = formatDateWithDash(
           findRecursive(operDays, reportDate)) as string
-      const newFirstDate = formatDateWithDash(
-          findRecursive(operDays, new Date(newSecondDate))) as string
+      const newFirstDate = formatDateWithDash(findRecursive(operDays, new Date(newSecondDate))) as string
       setSecondDate(newSecondDate)
       setFirstDate(newFirstDate)
     } else {
       setFirstDate(dayBefore)
       setSecondDate(newSecondDate)
     }
-    setDateOption('two')
+    // setDateOption('two')
   }, [dayBefore, reportDate, operDays])
   const handleDateChange = useCallback((id) => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
@@ -72,7 +68,6 @@ const DashboardMonthly: React.FC = () => {
       }
     }
   }, [firstDate, secondDate, operDays])
-  const classes = useStyles()
   return (
     <Fragment>
       {<>
@@ -80,7 +75,7 @@ const DashboardMonthly: React.FC = () => {
         <br/>
         <FormControl className={classes.optionBlock}>
           {/*
-                    //@ts-ignore*/}
+              //@ts-ignore */}
           <Select onChange={({ target: { value } }) => setDateOption(value)}
             native
             value={dateOption}
@@ -112,13 +107,8 @@ const DashboardMonthly: React.FC = () => {
         <Loader/> :
         error ? <Alert message={error}/> :
           <>
-            <DashboardMonthlyTable
-              operDays={operDays}
-              operDaysLoading={operDaysLoading}
-              firstDate={firstDate}
-              secondDate={secondDate}
-              handleDateChange={handleDateChange}
-              rows={dashboardMonthly}/>
+            <DashboardMonthlyTable firstDate={firstDate} secondDate={secondDate}
+              handleDateChange={handleDateChange} rows={dashboardMonthly}/>
           </>}
     </Fragment>
   )

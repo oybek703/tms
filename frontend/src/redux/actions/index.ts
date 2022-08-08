@@ -1,4 +1,5 @@
-import { ADDUSER_FAIL, ADDUSER_REFRESH, ADDUSER_START, ADDUSER_SUCCESS,
+import {
+  ADDUSER_FAIL, ADDUSER_REFRESH, ADDUSER_START, ADDUSER_SUCCESS,
   BANKLIMITS_FAIL, BANKLIMITS_START, BANKLIMITS_SUCCESS, CHANGE_DATE,
   CORRESPONDENT_CURRENT_FAIL, CORRESPONDENT_CURRENT_START,
   CORRESPONDENT_CURRENT_SUCCESS, CORRESPONDENT_CURRENT_UPDATE,
@@ -7,9 +8,10 @@ import { ADDUSER_FAIL, ADDUSER_REFRESH, ADDUSER_START, ADDUSER_SUCCESS,
   GAP_SUCCESS, GAPMANUAL_FAIL, GAPMANUAL_START, GAPMANUAL_SUCCESS, LAST_UPDATE_FAIL,
   LAST_UPDATE_START, LAST_UPDATE_SUCCESS, LIQUIDITY_CURRENT_FAIL,
   LIQUIDITY_CURRENT_START, LIQUIDITY_CURRENT_SUCCESS, LIQUIDITY_CURRENT_UPDATE,
-  LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT, OPERATIONAL_DAYS_FAIL,
+  LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT, NOSTROMATRIX_FAIL, NOSTROMATRIX_START, NOSTROMATRIX_SUCCESS, OPERATIONAL_DAYS_FAIL,
   OPERATIONAL_DAYS_START, OPERATIONAL_DAYS_SUCCESS, UPDATE_CBN, USER_EXITED,
-  USERS_FAIL, USERS_START, USERS_SUCCESS } from './types'
+  USERS_FAIL, USERS_START, USERS_SUCCESS
+} from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
 import axiosInstance, { withToken } from '../../utils/axiosInstance'
 import { Dispatch } from 'redux'
@@ -172,9 +174,19 @@ export function fetchFcrb(date: string) {
   }
 }
 
-export function fetchNostroMatrix(date: string) {
+export function fetchNostroMatrix(firstDate: string, secondDate?: string) {
   return async function(dispatch: Dispatch) {
-    await checkCashOrSave(date, 'nostroMatrix', dispatch)
+    try {
+      dispatch({ type: NOSTROMATRIX_START })
+      const { data: { rows } } = await axiosInstance.get(
+          `/api/nostroMatrix?firstDate=${firstDate}&secondDate=${secondDate}`,
+          withToken()
+      )
+      dispatch({ type: NOSTROMATRIX_SUCCESS, payload: rows })
+    } catch (e: any) {
+      const message = getErrorMessage(e)
+      dispatch({ type: NOSTROMATRIX_FAIL, payload: message })
+    }
   }
 }
 

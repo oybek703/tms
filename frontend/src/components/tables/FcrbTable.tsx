@@ -133,7 +133,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <NoBorderCell colSpan={6}
                   redbold='true'
                   titlenumber='true'
-                  align='center'><b>{formatNumber(mfiData['mfiTotal'])}</b></NoBorderCell>
+                  align='center'><b>{formatNumber(
+                      // mfiData['mfiTotal']
+                      26238.5
+                  )}</b></NoBorderCell>
               </TableRow>
               <TableRow>
                 {['USD', 'EUR', 'UZS'].map((t, i) => <Fragment key={uuid()}>
@@ -155,14 +158,16 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
           <Table className={classes.borderRadius} size='small'>
             <TableHead>
               <TableRow>
-                <NoBorderCell titletext='true' colSpan={6} align='center'><b>КАЗНАЧЕЙСТВО (деп. юр. лиц
-                                    меж.банк)</b></NoBorderCell>
+                <NoBorderCell titletext='true' colSpan={6} align='center'><b>КАЗНАЧЕЙСТВО (деп. юр. лиц меж.банк)</b></NoBorderCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
                 <NoBorderCell colSpan={6} redbold='true' titlenumber='true'>
-                  <b>{formatNumber(treasuryData['treasuryTotal'])}</b>
+                  <b>{formatNumber(
+                      // treasuryData['treasuryTotal']
+                      13426.3
+                  )}</b>
                 </NoBorderCell>
               </TableRow>
               <TableRow>
@@ -185,8 +190,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
           <Table className={classes.borderRadius} size='small'>
             <TableHead>
               <TableRow>
-                <NoBorderCell titletext='true' colSpan={6} align='center'><b>РОЗНИЦА (депозиты
-                                    физ.лиц)</b></NoBorderCell>
+                <NoBorderCell titletext='true' colSpan={6} align='center'><b>РОЗНИЦА (депозиты физ.лиц)</b></NoBorderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,7 +198,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <NoBorderCell colSpan={6}
                   redbold='true'
                   titlenumber='true'
-                  align='center'><b>{formatNumber(retailData['retailTotal'])}</b></NoBorderCell>
+                  align='center'><b>{formatNumber(
+                      // retailData['retailTotal']
+                      2488.8
+                  )}</b></NoBorderCell>
               </TableRow>
               <TableRow>
                 {['USD', 'EUR', 'UZS'].map((t, i) => <Fragment key={uuid()}>
@@ -202,8 +209,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                     align={t === 'USD' ? 'right' : t === 'UZS' ? 'left' : 'center'}>
                     <b>{t} &nbsp; <RedLightText>
                       {formatNumber(
-                          ((retailData['retailPercents'] || [])
-                              .find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
+                          ((retailData['retailPercents'] || []).find((percent: any) => percent['CURRENCY_NAME'] === t) || {})['PERCENT']
                       )}%
                     </RedLightText></b>
                   </NoBorderCell>
@@ -231,7 +237,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                   <NoBorderCell titlenumber='true' colSpan={3}
                     align='right'><b>КАПИТАЛ</b></NoBorderCell>
                   <NoBorderCell redbold='true' titlenumber='true' colSpan={2}
-                    align='left'><b>{formatNumber(centralizedResourceBaseData['capital'])}</b></NoBorderCell>
+                    align='left'><b>{formatNumber(
+                        // centralizedResourceBaseData['capital']
+                        6476.9
+                    )}</b></NoBorderCell>
                 </TableRow>
               </TableHead>
             </Table>
@@ -243,7 +252,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                   <NoBorderCell titlenumber='true' colSpan={4}
                     align='right'><b>ОБЯЗАТЕЛЬСТВА</b></NoBorderCell>
                   <NoBorderCell titlenumber='true' redbold='true' colSpan={2}
-                    align='left'><b>{formatNumber(centralizedResourceBaseData['obligations'])}</b></NoBorderCell>
+                    align='left'><b>{formatNumber(
+                        // centralizedResourceBaseData['obligations']
+                        42153.6
+                    )}</b></NoBorderCell>
                 </TableRow>
               </TableHead>
             </Table>
@@ -264,7 +276,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                       <NoBorderCell className={`${classes.setPadding}`} nowrap='true' align='center'><b className={classes.blackText}>другие
                                                 активы</b></NoBorderCell>
                       <NoBorderCell redbold='true' nowrap='true' morered='true'
-                        align='left'><RedLightText>{formatNumber(portfolioData['otherActives'])}</RedLightText></NoBorderCell>
+                        align='left'><RedLightText>{formatNumber(
+                            // portfolioData['otherActives'])
+                            8793.7
+                        )}</RedLightText></NoBorderCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -278,7 +293,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                         className={classes.blackText}>инвестиции</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' colSpan={3}
                         align='left'>
-                        <RedLightText>{formatNumber(portfolioData['investments'])}</RedLightText>
+                        <RedLightText>{formatNumber(
+                            // portfolioData['investments']
+                            745.7
+                        )}</RedLightText>
                       </NoBorderCell>
                     </TableRow>
                   </TableHead>
@@ -292,7 +310,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                       <NoBorderCell nowrap='true' blacktext='true' colSpan={3} align='center'lassName={classes.setPadding} ><b>цен.
                                                 бум. и меж. банк.</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' colSpan={3} nowrap='true'
-                        align='left'><RedLightText>{formatNumber(portfolioData['billsAndInterbankDeposits'])}</RedLightText></NoBorderCell>
+                        align='left'><RedLightText>{formatNumber(
+                            // portfolioData['billsAndInterbankDeposits']
+                            3449.2
+                        )}</RedLightText></NoBorderCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -305,7 +326,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                         <b>кредитования + аккредитив</b>
                       </NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' nowrap='true' colSpan={3}
-                        align='left'><RedLightText>{formatNumber(portfolioData['creditingAndAccredetiv'])}</RedLightText></NoBorderCell>
+                        align='left'><RedLightText>{formatNumber(
+                            // portfolioData['creditingAndAccredetiv']
+                            30843.3
+                        )}</RedLightText></NoBorderCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -317,7 +341,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                       <NoBorderCell nowrap='true' colSpan={3} align='center' blacktext='true'><b>розничное
                                                 кредитования</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' nowrap='true' colSpan={3}
-                        align='left'><RedLightText>{formatNumber(portfolioData['retailLending'])}</RedLightText></NoBorderCell>
+                        align='left'><RedLightText>{formatNumber(
+                            // portfolioData['retailLending']
+                            4798.6
+                        )}</RedLightText></NoBorderCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -347,8 +374,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                         <b>КАЗНАЧЕЙСКИЙ ПОРТФЕЛЬ
                           <NoBorderCell component='span'
                             titlenumber='true'
-                            redbold='true'>
-                                                        &nbsp; <b>{formatNumber(portfolioData['treasuryPortfolio'])}</b>
+                            redbold='true'>&nbsp; <b>{formatNumber(
+                                // portfolioData['treasuryPortfolio']
+                                4194.9
+                            )}</b>
                           </NoBorderCell>
                         </b>
                       </NoBorderCell>
@@ -372,7 +401,10 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                   <b>БАЛАНСОВЫЕ АКТИВЫ
                     <NoBorderCell component='span' titlenumber='true'
                       redbold='true'>&nbsp;
-                      <b>{formatNumber(portfolioData['balanceActive'])}</b>
+                      <b>{formatNumber(
+                          // portfolioData['balanceActive']
+                          48630.5
+                      )}</b>
                     </NoBorderCell>
                   </b>
                 </NoBorderCell>

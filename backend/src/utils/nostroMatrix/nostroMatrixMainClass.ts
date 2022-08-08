@@ -1,10 +1,17 @@
 import MainClass from '../mainClass'
+import { formatDate } from '../dateFormatter'
 
 class NostroMatrixMainClass extends MainClass {
+  firstDate: string
+  secondDate: string
   currencyCodes: { code: string, title: string, data?: [] }[]
 
-  constructor(_date: string) {
-    super(_date)
+  constructor(firstDate: string, secondDate: string) {
+    super(firstDate)
+    const { selectedDate: formattedFirstDate } = formatDate(firstDate)
+    const { selectedDate: formattedSecondDate } = formatDate(secondDate)
+    this.firstDate = formattedFirstDate
+    this.secondDate = formattedSecondDate
     this.currencyCodes = [
       { code: '840', title: 'Доллары США' },
       { code: '978', title: 'Евро' },
@@ -18,6 +25,8 @@ class NostroMatrixMainClass extends MainClass {
   }
 
   formatQuery(_date: string, currencyCode: string = '840') {
+    console.log(this.firstDate)
+    console.log(this.secondDate)
     return `SELECT MX.NAME                                                                   AS "name",
                    BI."MORE_OPERATIONS"                                                      AS "moreOperations",
                    BI."QUICK"                                                                AS "quick",
