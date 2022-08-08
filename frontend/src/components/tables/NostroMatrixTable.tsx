@@ -79,18 +79,18 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noD
           </TableRow>
           <TableRow>
             {[
-              'больше операций',
-              'быстрый',
-              'безопасный',
-              'дорогой/дешевый',
-              `Остаток на ${formatOneDate(reportDate)}`,
+              'объем операций',
+              'оперативность',
+              'безопасность',
+              'стоимость',
+              `Остаток`,
               'Оборот Дебет',
               'Доля от д-т об-т.(%)',
               'Оборот Кредит',
               'Доля от кр-т об-т.(%)',
               'Импорт',
-              'Експорт',
-              'Аккредитив',
+              'Экспорт',
+              'Пост. фин.',
               'МБД',
               'FX',
               'Кредитная линия',
@@ -106,11 +106,11 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noD
             <TableRow>
               <TableCell colSpan={2} align='center' style={{ fontSize: '1.1em' }}><b>{row.title}</b></TableCell>
               <TableCell style={{ border: 'none' }}/>
-              <TableCell colSpan={4}/>
+              <TableCell colSpan={4} align='center' style={{ fontSize: '1.1em' }}><b>{row.title}</b></TableCell>
               <TableCell style={{ border: 'none' }}/>
-              <TableCell colSpan={5}/>
+              <TableCell colSpan={5} align='center' style={{ fontSize: '1.1em' }}><b>{row.title}</b></TableCell>
               <TableCell style={{ border: 'none' }}/>
-              <TableCell colSpan={7}/>
+              <TableCell colSpan={7} align='center' style={{ fontSize: '1.1em' }}><b>{row.title}</b></TableCell>
             </TableRow>
             {row.data.map((cell, index) => <TableRow key={uuid()}>
               <TableCell align='center'><b>{index + 1}</b></TableCell>
