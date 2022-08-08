@@ -19,16 +19,24 @@ const useStyles = makeStyles((theme) => ({
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
   borderRadius: {
-    border: '1.5px solid rgb(65, 113, 156)',
+    border: '1.5px solid #ffffff',
     borderRadius: '10px',
-    backgroundColor: 'rgb(222, 235, 247)'
+    backgroundColor: '#ffffff',
+    boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)',
+    borderTopLeftRadius: '4px',
+    borderTopRightRadius: '4px',
+    borderBottomLeftRadius: '4px',
+    borderBottomRightRadius: '4px',
+    paddingTop: '4px',
+    paddingBottom: '4px',
+    marginBottom: '10px'
   },
   fullWidthCard: {
     ...theme.mixins.smallCard,
     width: '100%'
   },
   redBoldText: {
-    color: 'rgb(255, 0, 0)',
+    color: '#009c34',
     fontWeight: 600
   },
   moreRedText: {
@@ -36,13 +44,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '17px'
   },
   lightRed: {
-    color: 'rgb(255, 0, 0)'
+    color: '#009c34'
+  },
+  black: {
+    color: 'rgb(102, 102, 102)'
   },
   resourceBase: {
-    border: '3px solid rgb(255, 0, 0)',
+    border: '3px dashed rgb(255, 0, 0)',
     borderRadius: '10px',
     color: 'rgb(192, 0, 0)',
-    padding: '20px 10px',
+    padding: '10px 10px 20px 10px',
     maxWidth: '99%',
     margin: '0 auto',
     fontWeight: 600,
@@ -63,7 +74,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600
   },
   blackText: {
-    fontSize: '16px'
+    fontSize: '18px'
+  },
+  setPadding: {
+    paddingRight: '10px',
+    border: 'none'
+  },
+  wrapper: {
+    backgroundColor: '#EBF5FF',
+    border: 'none',
+    boxShadow: 'none'
   }
 }))
 
@@ -95,7 +115,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
   const classes = useStyles()
   const { mfiData = {}, treasuryData = {}, retailData = {}, centralizedResourceBaseData = {}, portfolioData = {} } = rows
   return (
-    <Paper>
+    <Paper className={classes.wrapper}>
       <Table size='small' stickyHeader>
         <TableCap rows={20} text={'млрд.сум'}/>
       </Table>
@@ -206,9 +226,9 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
         }
       </Grid>
       {/* ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА */}
-      <Grid container justifyContent='center' className={classes.resourceBase}>
+      <Grid container justifyContent='center' className={`${classes.resourceBase}`}>
         <Grid item className={classes.smallCard}><Typography gutterBottom variant='h5'>
-          <b>ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА</b></Typography></Grid>
+          <b className={classes.black}>ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА</b></Typography></Grid>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <Table className={classes.borderRadius} size='small'>
@@ -253,7 +273,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <Table className={classes.borderRadius} size='small'>
                   <TableHead>
                     <TableRow>
-                      <NoBorderCell nowrap='true' blacktext='true' align='center'><b>другие
+                      <NoBorderCell className={`${classes.setPadding}`} nowrap='true' align='center'><b className={classes.blackText}>другие
                                                 активы</b></NoBorderCell>
                       <NoBorderCell redbold='true' nowrap='true' morered='true'
                         align='left'><RedLightText>{formatNumber(
@@ -268,8 +288,9 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
               <NoBorderCell colSpan={3} align='center'>
                 <Table className={classes.borderRadius} size='small'>
                   <TableHead>
-                    <TableRow>
-                      <NoBorderCell colSpan={2} align='center' blacktext='true' ><b>инвестиции</b></NoBorderCell>
+                    <TableRow >
+                      <NoBorderCell colSpan={2} align='center' className={classes.setPadding} ><b
+                        className={classes.blackText}>инвестиции</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' colSpan={3}
                         align='left'>
                         <RedLightText>{formatNumber(
@@ -286,7 +307,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <Table className={classes.borderRadius} size='small'>
                   <TableHead>
                     <TableRow>
-                      <NoBorderCell nowrap='true' blacktext='true' colSpan={3} align='center'><b>цен.бум. и меж. банк.</b></NoBorderCell>
+                      <NoBorderCell nowrap='true' blacktext='true' colSpan={3} align='center'lassName={classes.setPadding} ><b>цен.
+                                                бум. и меж. банк.</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' colSpan={3} nowrap='true'
                         align='left'><RedLightText>{formatNumber(
                             // portfolioData['billsAndInterbankDeposits']
@@ -300,7 +322,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <Table className={classes.borderRadius} size='small'>
                   <TableHead>
                     <TableRow>
-                      <NoBorderCell nowrap='true' colSpan={3} align='center' blacktext='true'>
+                      <NoBorderCell className={`${classes.setPadding} ${classes.blackText}`} nowrap='true' colSpan={3} align='center' >
                         <b>кредитования + аккредитив</b>
                       </NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' nowrap='true' colSpan={3}
