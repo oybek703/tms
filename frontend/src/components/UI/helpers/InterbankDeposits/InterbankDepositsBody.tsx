@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import TableCap from '../TableCap'
 import { makeStyles, TableRow } from '@material-ui/core'
-import StyledTableRow from '../StyledTableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableBody from '@material-ui/core/TableBody'
@@ -36,7 +35,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
             {(cap && j === 0) && cap}
             <TableCap textAlign='center' redBack rows={10} text={`${t}`} isHead={false}/>
             {((rows[j] || {})['allMappedBanks'] || []).map((b: any, i: number) => (
-              <TableRow key={i}>
+              <TableRow hover key={i}>
                 <TableCell>{i+1}</TableCell>
                 <TableCell align='left' title={b['NAME_BANK']}>
                   {b['NAME_BANK']}
@@ -55,7 +54,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
                 <TableCell align='center'>{b['PERCENT_SHARE']}%</TableCell>
               </TableRow>
             ))}
-            <StyledTableRow>
+            <TableRow hover>
               <TableCell colSpan={2}><b>{((rows[j] || {}).sumRow || [])[0]}</b></TableCell>
               <TableCell className={classes.noWrap} align='center'>
                 <b>{formatNumber(((rows[j] || {}).sumRow || [])[1])}</b>
@@ -70,7 +69,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
               </TableCell>
               <TableCell/>
               <TableCell align='center'><b>{((rows[j] || {}).sumRow || [])[5]}</b></TableCell>
-            </StyledTableRow>
+            </TableRow>
           </TableBody>
         </Fragment>
       ))}

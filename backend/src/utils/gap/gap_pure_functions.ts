@@ -3,7 +3,11 @@ export function getGapTotal(months: any, ...args: any) {
 }
 
 export function getGapByMonth(monthIndex: any, args: any) {
-  let TOTAL = 0; let NATIONAL_CURRENCY = 0; let FOREIGN_CURRENCY = 0; let USD = 0; let EUR = 0
+  let TOTAL = 0
+  let NATIONAL_CURRENCY = 0
+  let FOREIGN_CURRENCY = 0
+  let USD = 0
+  let EUR = 0
   return args.reduce((acc: any, value: any) => {
     if (value[monthIndex]) {
       TOTAL += value[monthIndex]['TOTAL']
@@ -20,17 +24,21 @@ export function getGapByMonth(monthIndex: any, args: any) {
   }, {})
 }
 
-export function getGapSubOrDivideByMonth(monthIndex: number, total: any, left: any,
-    INDICATOR_NAME = 'Остаток ВЛА на конец месяца', divide = false) {
+export function getGapSubOrDivideByMonth(
+    monthIndex: number, total: any,
+    left: any, INDICATOR_NAME = 'Остаток ВЛА на конец месяца',
+    divide = false
+) {
   function getSubByProp(prop: string) {
     if (divide) {
       return (left[monthIndex] || {})[prop] === 0 ?
-            0 :
-            ((total[monthIndex] || {})[prop] /
-            (left[monthIndex] || {})[prop]) * 10
+        0 :
+        ((total[monthIndex] || {})[prop] /
+          (left[monthIndex] || {})[prop]) * 10
     }
     return (total[monthIndex] || {})[prop] - (left[monthIndex] || {})[prop]
   }
+
   return {
     ...total[monthIndex],
     INDICATOR_NAME,

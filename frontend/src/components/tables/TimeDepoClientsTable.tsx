@@ -41,7 +41,7 @@ const TimeDepoClientsTable: React.FC<{rows: any}> = function({ rows = [] }) {
         </TableHead>
         <TableBody>
           {rows.map((r: any) => (
-            <TableRow key={uuid()}>
+            <TableRow hover key={uuid()}>
               <TableCell>{r['FILIAL_NAME']}</TableCell>
               <TableCell align='center'>{r['CODE_COA']}</TableCell>
               <TableCell>{r['CLIENT_NAME']}</TableCell>

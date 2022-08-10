@@ -28,17 +28,17 @@ class GapSimulation extends GapMainClass {
       if (this.forEditing) {
         return function() {
           return `SELECT
-                               INDICATOR_NAME,
-                               ROLE,
-                               TOTAL,
-                               NATIONAL_CURRENCY,
-                               FOREIGN_CURRENCY,
-                               USD,
-                               EUR,
-                               'MANUAL' AS SOURCE
-                        FROM GAP_SIMULATION_MANUAL
-                        WHERE ROLE = '${role}'
-                        ORDER BY OPER_DAY`
+                         INDICATOR_NAME,
+                         ROLE,
+                         TOTAL,
+                         NATIONAL_CURRENCY,
+                         FOREIGN_CURRENCY,
+                         USD,
+                         EUR,
+                         'MANUAL' AS SOURCE
+                  FROM GAP_SIMULATION_MANUAL
+                  WHERE ROLE = '${role}'
+                  ORDER BY OPER_DAY`
         }
       }
       return super.manualTableQuery(role)
@@ -71,13 +71,7 @@ class GapSimulation extends GapMainClass {
       const vlaBalance: any = []
       // fill vla and vla balance and update total rows
       tempArray.forEach((_, index) => {
-        vlaBalance.push(
-            getGapSubOrDivideByMonth(
-                index,
-                sourceOfLiquidityTotal,
-                needsOfLiquidityTotal
-            )
-        )
+        vlaBalance.push(getGapSubOrDivideByMonth(index, sourceOfLiquidityTotal, needsOfLiquidityTotal))
         sourceOfLiquidity[0].push(vlaBalance[index])
         sourceOfLiquidityTotal = getGapTotal(months, ...sourceOfLiquidity)
       })

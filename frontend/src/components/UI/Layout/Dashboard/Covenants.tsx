@@ -60,7 +60,7 @@ const Covenants = () => {
         </TableHead>
         <TableBody>
           {covenantData.map((b, index) => (
-            <TableRow key={uuid()}>
+            <TableRow hover key={uuid()}>
               <TableCell align='center'><b>{index + 1}</b></TableCell>
               <TableCell><b>{b.title}</b></TableCell>
               <TableCell align='center' className={classes.noWrap}>
@@ -72,7 +72,7 @@ const Covenants = () => {
                 align='center'
                 style={{
                   // @ts-ignore
-                  backgroundColor: getColorByStatus(b[`bank_${idx+1}`].status),
+                  backgroundColor: !b[`bank_${idx+1}`].value ? 'inherit' : getColorByStatus(b[`bank_${idx+1}`].status),
                   color: '#fff'
                 // @ts-ignore
                 }}><b><i>{b[`bank_${idx+1}`].value}</i></b>

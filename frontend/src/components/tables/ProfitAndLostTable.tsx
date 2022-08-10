@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { formatDate, formatNumber } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
+
 import ExportButton from '../UI/Layout/ExportButton'
 import { makeStyles } from '@material-ui/core'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
@@ -52,7 +52,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
         </TableHead>
         <TableBody>
           {rows.map((row: any, index: number) => (
-            <StyledTableRow key={index}>
+            <TableRow hover key={index}>
               <TableCell align="center"><b>{row['count']}</b></TableCell>
               <TableCell>{row['isTableHead'] ?
                 <b>{row['indicator_name']}</b> :
@@ -78,7 +78,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
                   formatNumber(row['differ'], true)}
               </TableCell>
               <TableCell align="center">{row['differ_percent']}</TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

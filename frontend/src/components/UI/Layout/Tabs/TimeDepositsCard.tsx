@@ -38,7 +38,7 @@ const TimeDepositsCard: React.FC<TimeDepositsCardProps> = ({ title = 'THERE MUST
       <TableContainer className={classes.paddingBottom0} component={Paper}>
         <Table size='small'>
           <TableHead>
-            <TableRow>
+            <TableRow hover>
               <TableCell/>
               <TableCell align='center'>
                 <b>Суммовой эквивалент</b>
@@ -49,12 +49,12 @@ const TimeDepositsCard: React.FC<TimeDepositsCardProps> = ({ title = 'THERE MUST
             </TableRow>
           </TableHead>
           <TableBody>
-            {['UZS', 'USD', 'EUR'].map((c, i) => <TableRow key={uuid()}>
+            {['UZS', 'USD', 'EUR'].map((c, i) => <TableRow hover key={uuid()}>
               <TableCell align='center'>{c}</TableCell>
               <TableCell align='center'>{formatNumber(data[i])}</TableCell>
               <TableCell align='center'>{formatNumber(data[i]/Math.pow(10, 6))}</TableCell>
             </TableRow>)}
-            <TableRow>
+            <TableRow hover>
               <TableCell colSpan={2}/>
               <TableCell className={classes.sumRow} align='center'>
                 <b>{formatNumber(data.reduce((acc: any, val: any) => acc+=val, 0)/Math.pow(10, 6))}</b>

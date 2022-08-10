@@ -49,7 +49,7 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], color = '#ee
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((d: any, i: number) => (<TableRow key={uuid()}>
+          {data.map((d: any, i: number) => (<TableRow hover key={uuid()}>
             <TableCell align='center'>{i+1}</TableCell>
             <TableCell className={classes.clientName}>{d['NAME']}</TableCell>
             <TableCell align='center' className={classes.noWrap}>{formatNumber(d['SALDO_OUT'])}</TableCell>

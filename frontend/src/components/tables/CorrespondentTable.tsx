@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
 import FormattedCell from '../UI/helpers/FormattedCell/FormattedCell'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
+
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
@@ -52,7 +52,7 @@ const RenderedCorrespondentTable = function({ currentState = false, currencyRate
         </TableHead>
         <TableBody>
           {currencyRate.map((row: any, i: number) => (
-            <StyledTableRow key={`${row.state}+${i}`}>
+            <TableRow hover key={`${row.state}+${i}`}>
               <TableCell align='center'>{row['isTableHead'] ?
                                 <b>{row.count}</b> : row.count}</TableCell>
               <TableCell align='left'>{row['isTableHead'] ?
@@ -92,10 +92,10 @@ const RenderedCorrespondentTable = function({ currentState = false, currencyRate
 
                                 </>
               }
-            </StyledTableRow>
+            </TableRow>
           ))}
           {[totalCash, interbankDeposits].map((arr: any) => arr.map((row: any, i: number) => (
-            <StyledTableRow key={`${row.state}+${i}`}>
+            <TableRow hover key={`${row.state}+${i}`}>
               <TableCell align='center'>{row['isTableHead'] ?
                                     <b>{row.count}</b> : row.count}</TableCell>
               <TableCell align='left'>{row['isTableHead'] ?
@@ -127,7 +127,7 @@ const RenderedCorrespondentTable = function({ currentState = false, currencyRate
               <TableCell className={classes.noWrap}
                 align="center">{row['isTableHead'] ?
                                     <b>{formatNumber(row.EUR, true)}</b> : formatNumber(row.EUR, true)}</TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))
           )}
         </TableBody>

@@ -86,7 +86,7 @@ const SimulationTableOneRow: React.FC<SimulationTableRowProps> = function({
 }) {
   const classes = useStyles()
   return (
-    <TableRow key={uuid()}>
+    <TableRow hover key={uuid()}>
       <TableCell align="left" className={`${classes.noWrap}`}
         style={{ borderRight: '3px solid #7794aa' }}>{
           (row[0] || {})['INDICATOR_NAME']}</TableCell>

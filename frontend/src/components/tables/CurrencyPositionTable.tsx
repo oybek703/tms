@@ -135,7 +135,7 @@ const CurrencyPositionTable: React.FC<{ rows: any }> = function({ rows }) {
         </TableHead>
         <TableBody>
           {allRows.map((row: any, i: number) => (
-            <TableRow key={`${row.currency_code}+${i}`}>
+            <TableRow hover key={`${row.currency_code}+${i}`}>
               <TableCell align='center'>{row.isTableHead ? <b>{i + 1}</b> : i +
                 1}</TableCell>
               <TableCell align='center'>{row.isTableHead ?
