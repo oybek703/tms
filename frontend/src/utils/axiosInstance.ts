@@ -5,7 +5,7 @@ import { LOGOUT } from '../redux/actions/types'
 const productionMode = process.env.NODE_ENV === 'production'
 
 const axiosInstance = axios.create({
-  baseURL: `http://${productionMode ? process.env.REACT_APP_SERVER_IP : 'localhost'}:4200`
+  baseURL: `http://172.16.50.201:4200`
 })
 
 axiosInstance.interceptors.request.use(
