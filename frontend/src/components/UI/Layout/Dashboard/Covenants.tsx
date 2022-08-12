@@ -46,7 +46,6 @@ const Covenants = () => {
             {[
               'China Development Bank',
               'Landesbank Baden-Wuerttemberg',
-              'VTB BANK (EUROPE)',
               'АБР',
               'JPMorgan Chase Bank',
               'Turkiye Ihracat Kredi Bankasi A.S.',
@@ -66,7 +65,7 @@ const Covenants = () => {
               <TableCell align='center' className={classes.noWrap}>
                 {b.main_bank} {typeof b.main_bank === 'number' && '%'}
               </TableCell>
-              {Array(9).fill('').map((_, idx) => <TableCell
+              {Array(8).fill('').map((_, idx) => <TableCell
                 key={uuid()}
                 className={classes.noWrap}
                 align='center'
