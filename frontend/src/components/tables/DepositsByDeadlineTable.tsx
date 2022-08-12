@@ -43,7 +43,7 @@ function DepositsByDeadlineTable({ rows = [] }) {
         </TableHead>
         <TableBody>
           {rows.map((row: any, index: number) => (
-            <TableRow key={index}>
+            <TableRow hover key={index}>
               <TableCell>{<b>{row['STATE']}</b>}</TableCell>
               <TableCell className={classes.noWrap} align='center'>{formatNumber(row['TD_NAT'], 'e')}</TableCell>
               <TableCell className={classes.noWrap} align='center'>{formatNumber(row['TD_FOR'], 'e')}</TableCell>

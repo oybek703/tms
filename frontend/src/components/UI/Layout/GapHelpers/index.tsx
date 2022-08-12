@@ -100,7 +100,7 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function({ months, total, 
 
 const VerticalColumn: React.FC<{ data: [], text: string }> = function({ data = [], text = 'приток' }) {
   const classes = useStyles()
-  return <TableRow>
+  return <TableRow hover>
     <TableCell align='center' style={{ borderRight: '2px solid #7794aa' }} rowSpan={data.length + 1}>
       <div className={classes.verticalText}>{text}</div>
     </TableCell>
@@ -112,7 +112,7 @@ const InnerDataRows: React.FC<{ data: any; months: string[] }> = function({ data
   if (data.length === 0) return <tr/>
   return <>
     {data.map((row: any) => (
-      <TableRow key={uuid()}>
+      <TableRow hover key={uuid()}>
         <TableCell align='left'
           className={classes.noWrap}>
           {(row[0] || {})['INDICATOR_NAME']}
@@ -167,7 +167,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
 
 const RedRow: React.FC<{ row: any }> = function({ row = {} }) {
   const classes = useStyles()
-  return <TableRow>
+  return <TableRow hover>
     <TableCell className={classes.redRow}>{row['INDICATOR_NAME']}</TableCell>
     <TableCell align='center'
       className={`${classes.redRow} ${classes.noWrap}`}>{formatNumber(
@@ -201,7 +201,7 @@ function LcrAndNsfrTable({ data = [], month = '', halfWidth = false }) {
         {data.map((row, index) =>
           index === 0 ?
             <RedRow key={uuid()} row={row}/> :
-            <TableRow key={uuid()}>
+            <TableRow hover key={uuid()}>
               <TableCell>{row['INDICATOR_NAME']}</TableCell>
               <TableCell align='center'
                 className={classes.noWrap}>{formatNumber(

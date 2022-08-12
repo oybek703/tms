@@ -132,7 +132,7 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function({ rows = {}
           </TableHead>
           <TableBody>
             {tableData.map((r: any, i: number) => (
-              <TableRow key={uuid()}>
+              <TableRow hover key={uuid()}>
                 <TableCell align='center'>{i + 1}</TableCell>
                 <TableCell align='left'>{r['FILIAL_NAME']}</TableCell>
                 <TableCell align='center'

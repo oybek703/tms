@@ -336,6 +336,6 @@ export const covenantData = [
     bank_6: getEmptyBankData(),
     bank_7: getEmptyBankData(),
     bank_8: getEmptyBankData(),
-    bank_9: getPureBankData('6.2 трлн.сум', Status.safe)
+    bank_9: getPureBankData('мин 6.2 трлн.сум', Status.safe)
   }
 ]

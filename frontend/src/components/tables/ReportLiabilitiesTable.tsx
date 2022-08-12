@@ -79,7 +79,7 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                 {rows.slice(page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage)
                     .map((row: any, i: number) => (
-                      <TableRow key={uuid()}>
+                      <TableRow hover key={uuid()}>
                         <TableCell>{i + 1}</TableCell>
                         <TableCell
                           className={classes.noWrap}>{row['NAME']}</TableCell>

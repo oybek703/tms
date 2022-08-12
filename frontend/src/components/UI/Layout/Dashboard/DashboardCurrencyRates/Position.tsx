@@ -4,9 +4,11 @@ import TableCell from '@material-ui/core/TableCell'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../../utils'
 import PercentIndicator from './PercentIndicator'
+import BoldWithColor from '../../../helpers/BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({
-  noWrap: theme.mixins.noWrap
+  noWrap: theme.mixins.noWrap,
+  stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const currencyOrder = ['USD', 'EUR', 'JPY', 'GBP', 'KZT', 'RUB', 'CHF', 'CNY']
@@ -24,14 +26,14 @@ const Position = ({ position = [] }) => {
     <Paper style={{ minHeight: 372 }}>
       <Table size='small'>
         <TableHead>
-          <TableRow>
-            <TableCell align='center'><b>Валюта</b></TableCell>
-            <TableCell align='center'><b>Позиция</b></TableCell>
-            <TableCell align='center'><b>%</b></TableCell>
+          <TableRow className={classes.stickyTableHead}>
+            <TableCell align='center'><BoldWithColor>Валюта</BoldWithColor></TableCell>
+            <TableCell align='center'><BoldWithColor>Позиция</BoldWithColor></TableCell>
+            <TableCell align='center'><BoldWithColor>%</BoldWithColor></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {reOrderedPosition.map((row: any = {}) => (<TableRow key={uuid()}>
+          {reOrderedPosition.map((row: any = {}) => (<TableRow hover key={uuid()}>
             <TableCell align='center'>{row['NAME']}</TableCell>
             <TableCell style={{ color: '#009c34' }} align='center'>
               {formatNumber(row['EQUIVAL'])}
@@ -40,7 +42,7 @@ const Position = ({ position = [] }) => {
               <PercentIndicator number={row['PERCENT']}/>
             </TableCell>
           </TableRow>))}
-          <TableRow>
+          <TableRow hover>
             <TableCell align='center'><b>Суммарная величина позиций</b></TableCell>
             <TableCell align='center' className={classes.noWrap} style={{ color: '#009c34' }}>
               <b>{formatNumber(totalSumEquivalent())}</b>

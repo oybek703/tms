@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper'
 import { formatDate, formatNumber } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
 import { makeStyles, Typography } from '@material-ui/core'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
+
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 
@@ -33,7 +33,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
         size="small" aria-label="a dense table">
         <TableCap textAlign='right' rows={7} text={'млрд.сум'}/>
         <TableHead className={classes.stickyTableHead}>
-          <TableRow >
+          <TableRow>
             <TableCell align='center'><BoldWithColor>№</BoldWithColor></TableCell>
             <TableCell><BoldWithColor>Наименование показателей</BoldWithColor></TableCell>
             <TableCell align="center"><BoldWithColor>{yearFirstDate}</BoldWithColor></TableCell>
@@ -45,7 +45,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
         </TableHead>
         <TableBody>
           {rows.map((row: any, index: number) => (
-            <StyledTableRow key={index}>
+            <TableRow hover key={index}>
               <TableCell align="center"><b>{row.count}</b></TableCell>
               <TableCell component="th" scope="row">
                 {row.isTableHead ? <b>{row.indicator_name}</b> : <>{row.indicator_name}</>}
@@ -86,7 +86,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
                 }
               </TableCell>
               <TableCell align="center">{row.differ_percent}</TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

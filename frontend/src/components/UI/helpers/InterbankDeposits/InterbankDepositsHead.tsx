@@ -1,7 +1,6 @@
 import React from 'react'
 import TableCap from '../TableCap'
 import { makeStyles, TableHead, TableRow } from '@material-ui/core'
-import StyledTableRow from '../StyledTableRow'
 import TableCell from '@material-ui/core/TableCell'
 import BoldWithColor from '../BoldWithColor'
 
@@ -15,7 +14,7 @@ const InterbankDepositsHead = () => {
     <>
       <TableCap rows={10} text={'в номинале'}/>
       <TableHead className={classes.stickyTableHead}>
-        <StyledTableRow>
+        <TableRow>
           <TableCell align='center' rowSpan={2}><BoldWithColor>№</BoldWithColor></TableCell>
           <TableCell align='center' rowSpan={2}><BoldWithColor>Наименование банка</BoldWithColor></TableCell>
           <TableCell align='center' rowSpan={2}><BoldWithColor>Сумма по договору (в номинале)</BoldWithColor></TableCell>
@@ -25,11 +24,11 @@ const InterbankDepositsHead = () => {
           <TableCell align='center' colSpan={2}><BoldWithColor>Ожидаемый расход</BoldWithColor></TableCell>
           <TableCell align='center' rowSpan={2}><BoldWithColor>Количество дней</BoldWithColor></TableCell>
           <TableCell align='center' rowSpan={2}><BoldWithColor>Доля в процентах</BoldWithColor></TableCell>
-        </StyledTableRow>
-        <StyledTableRow>
+        </TableRow>
+        <TableRow>
           <TableCell align='center'><BoldWithColor>За один день</BoldWithColor></TableCell>
           <TableCell align='center'><BoldWithColor>За вес период</BoldWithColor></TableCell>
-        </StyledTableRow>
+        </TableRow>
         <TableRow>
           <TableCell align='center'><BoldWithColor>А</BoldWithColor></TableCell>
           <TableCell align='center'><BoldWithColor>Б</BoldWithColor></TableCell>

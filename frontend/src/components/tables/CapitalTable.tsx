@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead'
 import Paper from '@material-ui/core/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
+
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import TableRow from '@material-ui/core/TableRow'
@@ -36,13 +36,13 @@ const CapitalTable: React.FC<{rows: any}> = function({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <StyledTableRow>
+          <TableRow>
             <TableCell component="th" scope="row" align='center'><b>1</b></TableCell>
             <TableCell component="th" scope="row" align='center'><b>ОСНОВНОЙ КАПИТАЛ УРОВНЯ 1</b></TableCell>
             <TableCell component="th" scope="row" align='center'>{''}</TableCell>
-          </StyledTableRow>
+          </TableRow>
           {rows.map((row: any) => (
-            <StyledTableRow key={row.name}>
+            <TableRow hover key={row.name}>
               <TableCell component="th" align='center' scope="row">{row.isTableHead ? <b>{row.first_row}</b> : row.first_row}</TableCell>
               <TableCell align="left">{row.isTableHead ? <b>{row.name}</b> : row.name}</TableCell>
               <TableCell className={classes.noWrap} align="center">{
@@ -50,7 +50,7 @@ const CapitalTable: React.FC<{rows: any}> = function({ rows }) {
                                     <b>{row.total===0 ? '0.00' : formatNumber(row.total)}</b> :
                                     row.total===0 ? '0.00' : formatNumber(row.total)
               }</TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

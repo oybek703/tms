@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableCap from '../../helpers/TableCap'
-import StyledTableRow from '../../helpers/StyledTableRow'
+
 import { v4 as uuid } from 'uuid'
 import { makeStyles } from '@material-ui/core'
 import ExportButton from '../ExportButton'
@@ -98,7 +98,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({ rows = []
                 </TableCell>
               </TableRow>
               {rows.map((row: any, index: number) => (
-                <StyledTableRow key={index}>
+                <TableRow hover key={index}>
                   <TableCell align="center"><b>{row['count']}</b></TableCell>
                   <TableCell>{row['isTableHead'] ?
                     <b>{row['state']}</b> :
@@ -124,7 +124,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({ rows = []
                   <TableCell className={classes.noWrap} align="center">
                     {row['differ_percent']} {row['withPercent'] ? '%' : ''}
                   </TableCell>
-                </StyledTableRow>
+                </TableRow>
               ))}
             </Fragment>)
           }

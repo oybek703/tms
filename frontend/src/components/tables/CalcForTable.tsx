@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import Paper from '@material-ui/core/Paper'
 import TableCap from '../UI/helpers/TableCap'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
 import { formatNumber, formatOneDate } from '../../utils'
 import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined'
 import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined'
@@ -126,7 +125,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
+            <TableRow hover>
               <TableCell align='center'>
                 <b><FormattedData number={forSum * 100 / cbStandardAverage} variant='h6'/></b>
               </TableCell>
@@ -158,7 +157,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
           </TableHead>
           <TableBody>
             {rows.map((row: any, i: number) => (
-              <StyledTableRow key={i}>
+              <TableRow hover={row.F_O_R} key={i}>
                 <TableCell align='center'>{row.DATE_VALUE}</TableCell>
                 <TableCell align='center'>{formatNumber(row.F_O_R, 'e')}</TableCell>
                 <TableCell align='center'>{formatNumber(row.CB_STANDARD, 'e')}</TableCell>
@@ -168,9 +167,9 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
                 <TableCell align='left'>
                   <FormattedData number={row.AVG_CONSUMPTION}/>
                 </TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
-            <TableRow>
+            <TableRow hover>
               <TableCell scope="row" align='center'><b>ИТОГО</b></TableCell>
               <TableCell scope="row" align='center'><b>
                 {formatNumber((forSum || 0), 'e')}</b></TableCell>

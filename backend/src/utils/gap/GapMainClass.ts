@@ -55,67 +55,67 @@ class GapMainClass extends MainClass {
 
   monthQuery() {
     return `SELECT TO_CHAR(OPER_DAY, 'Month (YY)', 'NLS_DATE_LANGUAGE=''RUSSIAN''') MONTH
-                FROM GAP_ANALYSIS_AUTO
-                WHERE ROLE = 'r_c'
-                ORDER BY OPER_DAY`
+            FROM GAP_ANALYSIS_AUTO
+            WHERE ROLE = 'r_c'
+            ORDER BY OPER_DAY`
   }
 
   outflowQuery() {
     return `SELECT ROUND((SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100)
-            + SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
-                             POWER(10, 6), 2)                                              AS
-                           TOTAL,
-                       ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS
-                           NATIONAL_CURRENCY,
-                       ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS
-                           FOREIGN_CURRENCY
-                FROM LCR_BUILDER
-                WHERE ROLE IN ('B_I', 'T_D', 'P_C', 'BORROW', 'C_L_O', 'U_P_L', 'I_C', 'O_L')`
+        + SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
+                         POWER(10, 6), 2)                                              AS
+                       TOTAL,
+                   ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS
+                       NATIONAL_CURRENCY,
+                   ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS
+                       FOREIGN_CURRENCY
+            FROM LCR_BUILDER
+            WHERE ROLE IN ('B_I', 'T_D', 'P_C', 'BORROW', 'C_L_O', 'U_P_L', 'I_C', 'O_L')`
   }
 
   inflowQuery() {
     return `SELECT (LCR.TOTAL - VLA.TOTAL)                         AS TOTAL,
-                       (LCR.NATIONAL_CURRENCY - VLA.NATIONAL_CURRENCY) AS NATIONAL_CURRENCY,
-                       (LCR.FOREIGN_CURRENCY - VLA.FOREIGN_CURRENCY)   AS FOREIGN_CURRENCY
-                FROM (SELECT ROUND((SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) +
-                                    SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
-                                   POWER(10, 6), 2)                                              AS TOTAL,
-                             ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS NATIONAL_CURRENCY,
-                             ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS FOREIGN_CURRENCY,
-                             'TEMP_COL'                                                          AS TEMP_COL
-                      FROM LCR_BUILDER
-                      WHERE ROLE IN ('C_O_D', 'R_F_CBU', 'LEND', 'P_B',
-                                     'L_C_A', 'L_C_O', 'P_C_L', 'REPO',
-                                     'RECIVE')) LCR
-                         INNER JOIN (SELECT TOTAL,
-                                            NATIONAL_CURRENCY,
-                                            FOREIGN_CURRENCY,
-                                            'TEMP_COL' AS TEMP_COL
-                                     FROM GAP_ANALYSIS_AUTO
-                                     WHERE ROLE = 'vla') VLA
-                                    ON LCR.TEMP_COL = VLA.TEMP_COL`
+                   (LCR.NATIONAL_CURRENCY - VLA.NATIONAL_CURRENCY) AS NATIONAL_CURRENCY,
+                   (LCR.FOREIGN_CURRENCY - VLA.FOREIGN_CURRENCY)   AS FOREIGN_CURRENCY
+            FROM (SELECT ROUND((SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) +
+                                SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
+                               POWER(10, 6), 2)                                              AS TOTAL,
+                         ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS NATIONAL_CURRENCY,
+                         ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS FOREIGN_CURRENCY,
+                         'TEMP_COL'                                                          AS TEMP_COL
+                  FROM LCR_BUILDER
+                  WHERE ROLE IN ('C_O_D', 'R_F_CBU', 'LEND', 'P_B',
+                                 'L_C_A', 'L_C_O', 'P_C_L', 'REPO',
+                                 'RECIVE')) LCR
+                     INNER JOIN (SELECT TOTAL,
+                                        NATIONAL_CURRENCY,
+                                        FOREIGN_CURRENCY,
+                                        'TEMP_COL' AS TEMP_COL
+                                 FROM GAP_ANALYSIS_AUTO
+                                 WHERE ROLE = 'vla') VLA
+                                ON LCR.TEMP_COL = VLA.TEMP_COL`
   }
 
   stableFinancingRequiredAmountQuery() {
     return `SELECT (NSFR.TOTAL + LCR.TOTAL)                         AS TOTAL,
-                       (NSFR.NATIONAL_CURRENCY + LCR.NATIONAL_CURRENCY) AS NATIONAL_CURRENCY,
-                       (NSFR.FOREIGN_CURRENCY + LCR.FOREIGN_CURRENCY)   AS FOREIGN_CURRENCY
-                FROM (SELECT ROUND(SUM(
-                                               (PERCENT_NAT * NATIONAL_CURRENCY + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) /
-                                               POWER(10, 10)),
-                                   2)                                                       AS TOTAL,
-                             ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2) AS NATIONAL_CURRENCY,
-                             ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2)  AS FOREIGN_CURRENCY
-                      FROM NSFR_BUILDER
-                      WHERE ROLE IN
-                            ('credits', 'i_d', 'invest', 'c_s', 'o_p_b', 'leasing', 'liquidity')) NSFR,
-                     (SELECT ROUND((SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) +
-                                    SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
-                                   POWER(10, 6), 2)                                              AS TOTAL,
-                             ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS NATIONAL_CURRENCY,
-                             ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS FOREIGN_CURRENCY
-                      FROM LCR_BUILDER
-                      WHERE ROLE = 'B_I') LCR`
+                   (NSFR.NATIONAL_CURRENCY + LCR.NATIONAL_CURRENCY) AS NATIONAL_CURRENCY,
+                   (NSFR.FOREIGN_CURRENCY + LCR.FOREIGN_CURRENCY)   AS FOREIGN_CURRENCY
+            FROM (SELECT ROUND(SUM(
+                                           (PERCENT_NAT * NATIONAL_CURRENCY + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) /
+                                           POWER(10, 10)),
+                               2)                                                       AS TOTAL,
+                         ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2) AS NATIONAL_CURRENCY,
+                         ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2)  AS FOREIGN_CURRENCY
+                  FROM NSFR_BUILDER
+                  WHERE ROLE IN
+                        ('credits', 'i_d', 'invest', 'c_s', 'o_p_b', 'leasing', 'liquidity')) NSFR,
+                 (SELECT ROUND((SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) +
+                                SUM(PERCENT_FOR * NVL(FOREIGIN_CURR_SUMM_EQ, 0) / 100)) /
+                               POWER(10, 6), 2)                                              AS TOTAL,
+                         ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS NATIONAL_CURRENCY,
+                         ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS FOREIGN_CURRENCY
+                  FROM LCR_BUILDER
+                  WHERE ROLE = 'B_I') LCR`
   }
 
   nsfrQuery(role = '1=1') {
@@ -132,12 +132,12 @@ class GapMainClass extends MainClass {
 
   fromOffBalanceSheets15Query() {
     return `SELECT ROUND(
-                                   (PERCENT_NAT * NATIONAL_CURRENCY + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) /
-                                   POWER(10, 8), 2)                             AS TOTAL,
-                       ROUND(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 8), 2) AS NATIONAL_CURRENCY,
-                       ROUND(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 8), 2)  AS FOREIGN_CURRENCY
-                FROM LCR_BUILDER
-                WHERE ROLE IN ('B_I')`
+                               (PERCENT_NAT * NATIONAL_CURRENCY + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) /
+                               POWER(10, 8), 2)                             AS TOTAL,
+                   ROUND(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 8), 2) AS NATIONAL_CURRENCY,
+                   ROUND(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 8), 2)  AS FOREIGN_CURRENCY
+            FROM LCR_BUILDER
+            WHERE ROLE IN ('B_I')`
   }
 
   getLcrOrNsfrOneRow(INDICATOR_NAME = '__NAME__', data = {}) {
@@ -414,9 +414,7 @@ class GapMainClass extends MainClass {
     const vlaBalance: any = []
     // fill vla and vla balance and update total rows
     tempArray.forEach((_, index) => {
-      vlaBalance.push(
-          getGapSubOrDivideByMonth(index, sourceOfLiquidityTotal,
-              needsOfLiquidityTotal))
+      vlaBalance.push(getGapSubOrDivideByMonth(index, sourceOfLiquidityTotal, needsOfLiquidityTotal))
       sourceOfLiquidity[0].push(vlaBalance[index])
       sourceOfLiquidityTotal = getGapTotal(months, ...sourceOfLiquidity)
     })
@@ -429,7 +427,8 @@ class GapMainClass extends MainClass {
             vlaBalance,
             amountForVlaLcr,
             'Сумма отклонения(дефицит) на конец месяца'
-        ))
+        )
+    )
     // ПОКАЗАТЕЛЬ ВЛА
     const vlaIndicator = tempArray.map(
         (_, index) => getGapSubOrDivideByMonth(
@@ -443,14 +442,15 @@ class GapMainClass extends MainClass {
       vlaBalance,
       amountForVlaLcr,
       deficitAmount,
-      vlaIndicator]
+      vlaIndicator
+    ]
 
     // LCR START
     const outFlow: any = await this.outFlow()
     const inFlow: any = await this.inFlow()
     const rowKeys = Object.keys(outFlow).
         filter((key) => key !== 'INDICATOR_NAME')
-        // Чистий отток в последующие 30 дней
+    // Чистий отток в последующие 30 дней
     const cleanOutFlow: any = this.getLcrOrNsfrOneRow(
         'Чистий отток в последующие 30 дней',
         rowKeys.reduce((acc: any, val: any) => {
@@ -511,7 +511,7 @@ class GapMainClass extends MainClass {
         'ПРОГНОЗ NSFR',
         rowKeys.reduce((acc: any, val: any) => {
           acc[val] = Math.trunc(stableFundingAvailableAmount[val] * 100 /
-                    stableFundingRequiredAmount[val])
+          stableFundingRequiredAmount[val])
           return acc
         }, {})
     )

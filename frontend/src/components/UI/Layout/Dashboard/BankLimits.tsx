@@ -91,7 +91,7 @@ function ForeignBankTable({ rows = [] }) {
     <Table size='small'>
       <BankLimitsTableHead/>
       <TableBody>
-        {rows.map((row, index) => <TableRow key={uuid()}>
+        {rows.map((row, index) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>{index + 1}</b></TableCell>
           <TableCell
             className={classes.noWrap}><b>{row['NAME']}</b></TableCell>
@@ -114,7 +114,7 @@ function LocalBanksTable({ rows = [], nationalBank = [] }) {
     <Table size='small'>
       <BankLimitsTableHead localBanks/>
       <TableBody>
-        {nationalBank.map((row) => <TableRow key={uuid()}>
+        {nationalBank.map((row) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>1</b></TableCell>
           <TableCell><b>{row['NAME']}</b></TableCell>
           <NoWrapCell colSpan={2} cellData={row['SALDO_EQUIVAL_OUT']}/>
@@ -124,7 +124,7 @@ function LocalBanksTable({ rows = [], nationalBank = [] }) {
             cellData={row['NAT_PERCENT']}/>}/>
           <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_24']}/>
         </TableRow>)}
-        {rows.map((row, index) => <TableRow key={uuid()}>
+        {rows.map((row, index) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>{index + 2}</b></TableCell>
           <TableCell><b>{row['NAME']}</b></TableCell>
           <NoWrapCell cellData={row['NAT_CURR']}/>

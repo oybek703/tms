@@ -219,6 +219,13 @@ const theme = createTheme({
         borderCollapse: 'unset'
       }
     },
+    MuiTableRow: {
+      hover: {
+        '&:hover': {
+          backgroundColor: '#ddd !important'
+        }
+      }
+    },
     MuiTab: {
       wrapper: {
         fontWeight: 'bold'

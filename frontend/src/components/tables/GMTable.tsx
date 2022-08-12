@@ -6,7 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import StyledTableRow from '../UI/helpers/StyledTableRow'
+
 import { formatNumber, formatOneDate } from '../../utils'
 import Grid from '@material-ui/core/Grid'
 import GMLiabilities from '../charts/GM/GMLiabilities'
@@ -38,7 +38,10 @@ function sumByCode(array = [], code = '') {
 const useStyles = makeStyles((theme) => ({
   paddingBottom0: theme.mixins.paddingBottom0,
   stickyTableHead: theme.mixins.stickyTableHead,
-  blueBackground: theme.mixins.blueBackground
+  blueBackground: {
+    ...theme.mixins.blueBackground,
+    backgroundColor: '#b4c6cf'
+  }
 }))
 
 const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
@@ -129,7 +132,7 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
                     <TableCell rowSpan={4}>Аккредетив</TableCell>
                   </TableRow>
                   {['USD', 'EUR', 'RUB'].map((c, i) => (
-                    <TableRow key={i}>
+                    <TableRow hover key={i}>
                       <TableCell align='center'>{c}</TableCell>
                       <TableCell align='center'>{formatNumber(Math.abs((accredetiv['acs'] || [])[i]), true)}</TableCell>
                     </TableRow>
@@ -137,9 +140,9 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
                   {(accredetiv['others'] || []).map((v: any, i: number) => (
                     <TableRow key={i} className={i === 0 ? classes.blueBackground : ''}>
                       {i === 0 ? <Fragment>
-                        <TableCell><BoldWithColor>{v['loan_name']}</BoldWithColor></TableCell>
-                        <TableCell align='center'><BoldWithColor>{v['currency_name']}</BoldWithColor></TableCell>
-                        <TableCell align='center'><BoldWithColor>{formatNumber(v['par_value'], true)}</BoldWithColor></TableCell>
+                        <TableCell><b>{v['loan_name']}</b></TableCell>
+                        <TableCell align='center'><b>{v['currency_name']}</b></TableCell>
+                        <TableCell align='center'><b>{formatNumber(v['par_value'], true)}</b></TableCell>
                       </Fragment> : <Fragment>
                         <TableCell>{v['loan_name']}</TableCell>
                         <TableCell align='center'>{v['currency_name']}</TableCell>
@@ -169,14 +172,14 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
               </TableHead>
               <TableBody>
                 {['20214', '20414', '20614', '22602', '22613', '22614', '22624'].map((c, i) => (
-                  <StyledTableRow key={i}>
+                  <TableRow hover key={i}>
                     <TableCell align='center'>{c}</TableCell>
                     {sumByCodes[c].map((v: any, j: number) => (
                       <TableCell align='center' key={j}>{formatNumber(v)}</TableCell>
                     ))}
-                  </StyledTableRow>
+                  </TableRow>
                 ))}
-                <TableRow>
+                <TableRow hover>
                   <TableCell align='center'><b>Итого</b></TableCell>
                   {classificationSumRow
                       .map((v, i) =>
@@ -184,7 +187,7 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
                           <b>{formatNumber(v)}</b>
                         </TableCell>)}
                 </TableRow>
-                <TableRow>
+                <TableRow hover>
                   <TableCell align='center'><b>эквива.сум</b></TableCell>
                   {classificationLastRow
                       .map((v, i) =>
@@ -214,7 +217,7 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
           </TableHead>
           <TableBody>
             {tableData.map((row: any, i: number) => (
-              <StyledTableRow key={i}>
+              <TableRow hover key={i}>
                 <TableCell align='center'>{row.CHECK_ACCOUNT}</TableCell>
                 <TableCell align='left'>{row.OPERATION_TYPE}</TableCell>
                 <TableCell align='center'>{formatNumber(row.PAR_VALUE)}</TableCell>
@@ -229,13 +232,13 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
                                                 row.CODE_CURRENCY === '643' ? 'RUB' : ''
                   }
                 </TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
             {[{ title: 'ВСЕГО сум', currency: 'UZS' },
               { title: 'ВСЕГО доллар', currency: 'USD' },
               { title: 'ВСЕГО евро', currency: 'EUR' },
               { title: 'ВСЕГО рубль', currency: 'RUB' }].map((v, i) => (
-              <TableRow key={i}>
+              <TableRow hover key={i}>
                 <TableCell>{''}</TableCell>
                 <TableCell><b>{v.title}</b></TableCell>
                 <TableCell align='center'><b>{formatNumber(sums[i], 'e')}</b></TableCell>
