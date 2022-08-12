@@ -4,85 +4,62 @@ import LiquidityMainClass from './LiquidityMainClass'
 /* eslint-disable camelcase */
 class LiquidityAssets extends LiquidityMainClass {
   governmentBillsQuery(date: Date) {
-    return `SELECT ROUND(( col1 - col5 ) / POWER(10, 8), 2)
-           AS
-              total,
-       ROUND(( col2 - col5 ) / POWER(10, 8), 2)
-           AS nat_curr,
-       ROUND(( ( col1 - col2 ) / (SELECT equival
-                                  FROM   ibs.s_rate_cur@iabs
-                                  WHERE  date_cross = (SELECT MAX(date_cross)
-                                                       FROM
-                                                           ibs.s_rate_cur@iabs
-                                                       WHERE  code = '840'
-                                                         AND
-                                                               date_cross < TO_DATE
-                                                               (
-                                                                   '${date}', 'DD-MM-YYYY'))
-                                    AND code = '840') ) / POWER(10, 8), 2)
-           AS
-              for_curr,
-       ROUND(NVL(col3, 0) / POWER(10, 8), 2)
-           AS usa_dollar,
-       ROUND(NVL(col4, 0) / POWER(10, 8), 2)
-           AS evro
-FROM   (SELECT (SELECT SUM(saldo_equival_out)
-                FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       saldo_equival_out
-                                FROM   ibs.saldo@iabs sl
-                                WHERE  sl.account_code = ac.code
-                                  AND sl.oper_day < TO_DATE('${date}',
-                                                             'DD-MM-YYYY')
-                                  AND ROWNUM = 1) AS saldo_equival_out
-                        FROM   ibs.accounts@iabs AC
-                        WHERE  code_coa LIKE'107%'))       AS col1,
-               (SELECT SUM(saldo_equival_out)
-                FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       saldo_equival_out
-                                FROM   ibs.saldo@iabs sl
-                                WHERE  sl.account_code = ac.code
-                                  AND sl.oper_day < TO_DATE('${date}',
-                                                             'DD-MM-YYYY')
-                                  AND ROWNUM = 1) AS saldo_equival_out
-                        FROM   ibs.accounts@iabs AC
-                        WHERE  code_coa LIKE '107%'
-                          AND code_currency = '000')) AS col2,
-               (SELECT SUM(saldo_out)
-                FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       saldo_out
-                                FROM   ibs.saldo@iabs sl
-                                WHERE  sl.account_code = ac.code
-                                  AND sl.oper_day < TO_DATE('${date}',
-                                                             'DD-MM-YYYY')
-                                  AND ROWNUM = 1) AS saldo_out
-                        FROM   ibs.accounts@iabs AC
-                        WHERE  code_coa LIKE'107%'
-                          AND code_currency = '840')) AS col3,
-               (SELECT SUM(saldo_out)
-                FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       saldo_out
-                                FROM   ibs.saldo@iabs sl
-                                WHERE  sl.account_code = ac.code
-                                  AND sl.oper_day < TO_DATE('${date}',
-                                                             'DD-MM-YYYY')
-                                  AND ROWNUM = 1) AS saldo_out
-                        FROM   ibs.accounts@iabs AC
-                        WHERE  code_coa LIKE'107%'
-                          AND code_currency = '978')) AS col4,
-               (SELECT SUM(saldo_out)
-                FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       saldo_out
-                                FROM   ibs.saldo@iabs sl
-                                WHERE  sl.account_code = ac.code
-                                  AND sl.oper_day < TO_DATE('${date}',
-                                                             'DD-MM-YYYY')
-                                  AND ROWNUM = 1) AS saldo_out
-                        FROM   ibs.accounts@iabs AC
-                        WHERE  code_coa = '10793'))        AS col5
-        FROM   ibs.saldo@iabs s,
-               ibs.accounts@iabs a
-        WHERE  a.code = s.account_code
-          AND ROWNUM = 1)`
+    return `SELECT ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                  SALDO_EQUIVAL_OUT / POWER(
+                                                      10, 8)
+                                          FROM IBS.SALDO@IABS S
+                                          WHERE OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                            AND S.ACCOUNT_CODE = AC.CODE
+                                            AND ROWNUM = 1)) AS SALDO_OUT
+                              FROM IBS.ACCOUNTS@IABS AC
+                              WHERE AC.CODE_COA LIKE '107%')), 2)       AS TOTAL,
+                   ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                              SALDO_EQUIVAL_OUT / POWER(10, 8)
+                                          FROM IBS.SALDO@IABS S
+                                          WHERE OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                            AND S.ACCOUNT_CODE = AC.CODE
+                                            AND ROWNUM = 1)) AS SALDO_OUT
+                              FROM IBS.ACCOUNTS@IABS AC
+                              WHERE AC.CODE_COA LIKE '107%'
+                                AND CODE_CURRENCY = '000')), 2)         AS NAT_CURR,
+                   NVL(ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                      SALDO_EQUIVAL_OUT / POWER
+                                                      (10, 8)
+                                              FROM IBS.SALDO@IABS S
+                                              WHERE OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                                AND S.ACCOUNT_CODE = AC.CODE
+                                                AND ROWNUM = 1)) AS SALDO_OUT
+                                  FROM IBS.ACCOUNTS@IABS AC
+                                  WHERE AC.CODE_COA LIKE '107%'
+                                    AND CODE_CURRENCY != '000')), 2) /
+                       (SELECT EQUIVAL
+                        FROM (SELECT EQUIVAL
+                              FROM IBS.S_RATE_CUR@IABS
+                              WHERE DATE_CROSS < TO_DATE('${date}', 'DD.MM.YYYY')
+                                AND CODE = '840'
+                              ORDER BY DATE_CROSS DESC)
+                        WHERE ROWNUM =
+                              1), 0)
+                                                                        AS FOR_CURR,
+                   NVL(ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                  SALDO_OUT / POWER(10, 8)
+                                              FROM IBS.SALDO@IABS S
+                                              WHERE OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                                AND S.ACCOUNT_CODE = AC.CODE
+                                                AND ROWNUM = 1)) AS SALDO_OUT
+                                  FROM IBS.ACCOUNTS@IABS AC
+                                  WHERE AC.CODE_COA LIKE '107%'
+                                    AND CODE_CURRENCY = '840')), 2), 0) AS USD,
+                   NVL(ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                  SALDO_OUT / POWER(10, 8)
+                                              FROM IBS.SALDO@IABS S
+                                              WHERE OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                                AND S.ACCOUNT_CODE = AC.CODE
+                                                AND ROWNUM = 1)) AS SALDO_OUT
+                                  FROM IBS.ACCOUNTS@IABS AC
+                                  WHERE AC.CODE_COA LIKE '107%'
+                                    AND CODE_CURRENCY = '978')), 2), 0) AS EUR
+            FROM DUAL`
   }
 
   localBanksQuery(date: Date) {

@@ -409,11 +409,11 @@ class Capital extends MainClass {
     )
   } /* Итого основного капитала уровня I до вычетов  */
 
-  deduction_from_tier1(investment_total: any, investment_for_other_banks: any) {/* Вычеты из суммы основного капитала уровня I */
+  deduction_from_tier1(investment_total: any, investment_for_other_banks: any, intangible_assets: any) {/* Вычеты из суммы основного капитала уровня I */
     return createCapitalData(
         '1.6.',
         'Вычеты из суммы основного капитала уровня I',
-        getCapitalTotal(investment_total, investment_for_other_banks),
+        getCapitalTotal(investment_total, investment_for_other_banks, intangible_assets),
         true
     )
   } /* Вычеты из суммы основного капитала уровня I */
@@ -563,7 +563,7 @@ class Capital extends MainClass {
     return await this.getOneRow(
         '3.2.',
         'Резервы, создаваемые на стандартные кредиты (активы), в размере не более 1.25% от общей суммы активов, взвешенных с учетом риска',
-        `code_coa='30911' or code_coa like '177%'`
+        `code_coa='30911' or code_coa like '177%' or code_coa=29807`
     )
   } /* Резервы, создаваемые на стандартные кредиты (активы), в размере не более 1.25% от общей суммы активов, взвешенных с учетом риска */
 
@@ -698,7 +698,7 @@ class Capital extends MainClass {
         subsidyMinorInterest,
         devaluation_Reserve
     )
-    const deductionFromTier1 = this.deduction_from_tier1(totalCapitalInvestment, investmentForOtherBanks)
+    const deductionFromTier1 = this.deduction_from_tier1(totalCapitalInvestment, investmentForOtherBanks, intangibleAssets)
     const totalCorrectedTotal = this.total_corrected_capital(capitalBeforeDeduction, deductionFromTier1)
     const addedCapitalLevel1 = this.added_capital_level1()
     const nonCumulativeShares = this.non_cumulative_shares(fullyPaidShares, reverseRepurchasedAssets)
