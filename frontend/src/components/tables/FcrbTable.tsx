@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
   noBorder: theme.mixins.noBorder,
   smallCardContainer: theme.mixins.smallCardContainer,
-  smallCard: theme.mixins.smallCard,
+  smallCard: {
+    ...theme.mixins.smallCard,
+    padding: '0'
+  },
   borderRadius: {
     border: '1.5px solid #ffffff',
     borderRadius: '10px',
@@ -28,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: '4px',
     borderBottomRightRadius: '4px',
     paddingTop: '4px',
+    margin: '0',
     paddingBottom: '4px',
     marginBottom: '10px'
   },
@@ -51,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
   },
   resourceBase: {
     border: '3px dashed rgb(255, 0, 0)',
+    marginLeft: '0',
+    marginRight: '0',
     borderRadius: '10px',
     color: 'rgb(192, 0, 0)',
     padding: '10px 10px 20px 10px',
@@ -84,6 +90,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#EBF5FF',
     border: 'none',
     boxShadow: 'none'
+  },
+  setMarginPadding: {
+    paddingLeft: '0',
+    paddingRight: '0',
+    marginLeft: '0',
+    marginRight: '0'
   }
 }))
 
@@ -416,7 +428,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
       <br/>
       {/** Средняя ставка всего фондирования*/}
       <Grid container className={`${classes.smallCardContainer} ${classes.fundingAvg}`} justifyContent='space-evenly'>
-        <Grid item xs={6}>
+        <Grid item xs={6} className={classes.setMarginPadding}>
           <Table className={classes.borderRadius} size='small'>
             <TableHead>
               <TableRow>
