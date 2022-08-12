@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '18px'
   },
   setPadding: {
-    paddingRight: '10px',
+    paddingLeft: 0,
     border: 'none'
   },
   wrapper: {
@@ -91,10 +91,7 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     boxShadow: 'none'
   },
-  setMarginPadding: {
-    paddingLeft: '0',
-    paddingRight: '0',
-    marginLeft: '0',
+  setMargin: {
     marginRight: '0'
   }
 }))
@@ -281,11 +278,11 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
           <TableBody>
             {/* другие активы, инвестиции, цен. бумаги и меж. банк., кредитования + аккредитив, розничное кредитования */}
             <TableRow>
-              <NoBorderCell colSpan={3} align='center'>
-                <Table className={classes.borderRadius} size='small'>
+              <NoBorderCell colSpan={3} className={classes.setPadding} align='center'>
+                <Table className={`${classes.borderRadius}`} size='small'>
                   <TableHead>
                     <TableRow>
-                      <NoBorderCell className={`${classes.setPadding}`} nowrap='true' align='center'><b className={classes.blackText}>другие
+                      <NoBorderCell nowrap='true' align='center'><b className={classes.blackText}>другие
                                                 активы</b></NoBorderCell>
                       <NoBorderCell redbold='true' nowrap='true' morered='true'
                         align='left'><RedLightText>{formatNumber(
@@ -403,7 +400,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
       </TableContainer>
       {/* БАЛАНСОВЫЕ АКТИВЫ */}
       <br/>
-      <Grid container className={`${classes.smallCardContainer} ${classes.balanceActive}`} justifyContent='center'>
+      <Grid container className={`${classes.smallCardContainer} ${classes.balanceActive} ${classes.setPadding}`} justifyContent='center'>
         <Grid item xs={12}>
           <Table className={classes.borderRadius} size='small'>
             <TableHead>
@@ -427,8 +424,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
       </Grid>
       <br/>
       {/** Средняя ставка всего фондирования*/}
-      <Grid container className={`${classes.smallCardContainer} ${classes.fundingAvg}`} justifyContent='space-evenly'>
-        <Grid item xs={6} className={classes.setMarginPadding}>
+      <Grid container className={`${classes.smallCardContainer} ${classes.fundingAvg} ${classes.setPadding}`} justifyContent='space-evenly'>
+        <Grid item xs={6} >
           <Table className={classes.borderRadius} size='small'>
             <TableHead>
               <TableRow>
