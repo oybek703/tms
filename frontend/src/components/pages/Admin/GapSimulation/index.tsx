@@ -87,7 +87,7 @@ const GapSimulation = () => {
   const handleEdit = useCallback(async function handleEdit() {
     try {
       await axiosInstance.post(
-          '/api/gapsimulation/update',
+          '/api/gapSimulation/update',
           {
             colName: editingCell['colName'],
             newValue, role: editingCell['role'],
@@ -132,13 +132,12 @@ const GapSimulation = () => {
     if (option) {
       try {
         await axiosInstance.put(
-            '/api/gapsimulation/saveChanges',
+            '/api/gapSimulation/saveChanges',
             {},
             withToken()
         )
         toast.success('Изменения успешно сохранены.')
-        fetchGap()
-        history.push('/gap')
+        fetchGapManual()
       } catch (e) {
         const message = getErrorMessage(e)
         toast.error(message)

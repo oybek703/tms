@@ -315,7 +315,9 @@ export function fetchGapManual(forEditing = false) {
     try {
       dispatch({ type: GAPMANUAL_START })
       const { data: { data } } = await axiosInstance.get(
-          `/api/gapsimulation?forEditing=${forEditing}`, withToken())
+          `/api/gapSimulation?forEditing=${forEditing}`,
+          withToken()
+      )
       dispatch({ type: GAPMANUAL_SUCCESS, payload: data })
     } catch (e: any) {
       const message = getErrorMessage(e)

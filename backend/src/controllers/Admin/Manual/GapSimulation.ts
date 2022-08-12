@@ -11,15 +11,15 @@ class GapSimulation extends GapMainClass {
     formatQuery(date: string, whereQuery: string) {
       if (this.forEditing) {
         return `SELECT ROLE,
-                           INDICATOR_NAME,
-                           TOTAL,
-                           NATIONAL_CURRENCY,
-                           FOREIGN_CURRENCY,
-                           USD,
-                           EUR,
-                           'AUTO' AS SOURCE
-                    FROM GAP_SIMULATION_AUTO
-                    WHERE ROLE = '${whereQuery}' ORDER BY OPER_DAY`
+                       INDICATOR_NAME,
+                       TOTAL,
+                       NATIONAL_CURRENCY,
+                       FOREIGN_CURRENCY,
+                       USD,
+                       EUR,
+                       'AUTO' AS SOURCE
+                FROM GAP_SIMULATION_AUTO
+                WHERE ROLE = '${whereQuery}' ORDER BY OPER_DAY`
       }
       return super.formatQuery(date, whereQuery)
     }

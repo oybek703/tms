@@ -19,9 +19,7 @@ class GapMainClass extends MainClass {
   }
 
   updateGapQuery() {
-    return `begin
-                    GAP_PROCEDURE();
-                end;`
+    return `BEGIN GAP_PROCEDURE(); END;`
   }
 
   formatQuery(date: string, whereQuery: string) {

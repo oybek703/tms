@@ -62,7 +62,7 @@ app.use('/api/gm', gmRoutes)
 app.use('/api/dashboardmonthly', dashboardMonthlyRoutes)
 app.use('/api/fcrb', fcrbRoutes)
 app.use('/api/gap', gapRoutes)
-app.use('/api/gapsimulation', gapManualRoutes)
+app.use('/api/gapSimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
 
