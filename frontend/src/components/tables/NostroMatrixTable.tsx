@@ -44,12 +44,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface NostroMatrixTableProps {
-  rows: RowData[]
+  rows: RowData[],
+  noData?: boolean
 }
 
-const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows }) {
+const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noData }) {
   const classes = useStyles()
   const { reportDate } = useTypedSelector((state) => state.date)
+  console.log(rows)
+  if (noData) return <Fragment/>
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="a dense table">
