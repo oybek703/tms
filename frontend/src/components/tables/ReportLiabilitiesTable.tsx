@@ -30,7 +30,7 @@ const columns = [
 const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
   const classes = useStyles()
   const bodyColumns = Object.keys([...rows].pop() || {})
-      .filter((v, i) => v !== 'NAME' && v !== 'CURRENCY')
+      .filter((v, i) => v !== 'NAME' && v !== 'CURRENCY' && v !== 'ACCOUNT_CODE')
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   return (
@@ -50,8 +50,7 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                     rowSpan={2}><BoldWithColor>№</BoldWithColor></TableCell>
                   <TableCell align='center'
                     className={classes.noWrap}
-                    rowSpan={2}><BoldWithColor>Наименование
-                                        линии</BoldWithColor></TableCell>
+                    rowSpan={2}><BoldWithColor>Наименование линии</BoldWithColor></TableCell>
                   <TableCell align='center'
                     className={classes.noWrap}
                     rowSpan={2}><BoldWithColor>Код счета</BoldWithColor></TableCell>
@@ -89,16 +88,12 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                         <TableCell
                           className={classes.noWrap}>{row['ACCOUNT_CODE']}</TableCell>
                         <TableCell align='center'>
-                          {row['CURRENCY'] === '0' ?
-                                                    '000' :
-                                                    row['CURRENCY']}
+                          {row['CURRENCY'] === '0' ? '000' : row['CURRENCY']}
                         </TableCell>
                         {bodyColumns.map(
-                            (col) => <TableCell key={uuid()}
-                              className={classes.noWrap}
+                            (col) => <TableCell key={uuid()} className={classes.noWrap}
                               align='center'>
-                              {formatNumber(row[`${col}`],
-                                  true)}
+                              {formatNumber(row[`${col}`], true)}
                             </TableCell>)}
                       </TableRow>
                     ))}
