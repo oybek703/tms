@@ -84,7 +84,11 @@ function BankLimitsTableHead({ localBanks = false }) {
   )
 }
 
-function ForeignBankTable({ rows = [] }) {
+interface ForeignBanksProps {
+  rows: ForeignBanks[]
+}
+
+const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
   const classes = useStyles()
   if (JSON.stringify(rows) === JSON.stringify({})) rows = []
   return (<TableContainer component={Paper}>
@@ -107,7 +111,12 @@ function ForeignBankTable({ rows = [] }) {
   </TableContainer>)
 }
 
-function LocalBanksTable({ rows = [], nationalBank = [] }) {
+interface LocalBanksProps {
+  rows: LocalBanks[];
+  nationalBank: LocalBanks[]
+}
+
+const LocalBanksTable: React.FC<LocalBanksProps> = ({ rows = [], nationalBank = [] }) => {
   if (JSON.stringify(rows) === JSON.stringify({})) rows = []
   if (JSON.stringify(nationalBank) === JSON.stringify({})) nationalBank = []
   return <TableContainer component={Paper}>
@@ -150,14 +159,58 @@ const titles = [
   { title: 'Иностранные банки', code: 'foreign' }
 ]
 
-interface BankLimitsProps {
-  bankLimits: any
+interface ForeignBanks {
+  NAME: string;
+  SALDO_EQUIVAL_OUT: number;
+  FOREIGN_CURRENCY_22: number;
+  DIFFER: number;
+  FOR_PERCENT: string;
+  FOREIGN_CURRENCY_24: number
 }
 
-const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits = {} }) => {
+interface LocalBanks {
+  NAME: string;
+  NAT_CURR: number;
+  FOR_CURR: string;
+  NATIONAL_CURRENCY_22: number;
+  FOREIGN_CURRENCY_22: number;
+  DIFFER_NAT: number;
+  DIFFER_FOR: number;
+  NAT_CURR_PERCENT: string;
+  FOR_CURR_PERCENT: string;
+  NATIONAL_CURRENCY_24: number;
+  FOREIGN_CURRENCY_24: number;
+  SALDO_EQUIVAL_OUT: number;
+  DIFFER: number;
+  NAT_PERCENT: string
+}
+
+interface BankLimitsProps {
+  bankLimits: {
+    foreignBanks: ForeignBanks[];
+    localBanks: LocalBanks[];
+    nationalBank: LocalBanks[]
+  }
+}
+
+const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const { foreignBanks = [], localBanks = [], nationalBank = [] } = bankLimits
   const [expanded, setExpanded] = useState('local')
   const handleChange = useCallback((code) => setExpanded(code), [])
+  const cForeignBanks = foreignBanks.slice()
+  cForeignBanks.forEach((e: ForeignBanks) => {
+    if (e.FOR_PERCENT == 'no_limit') {
+      foreignBanks.splice(foreignBanks.findIndex((a: object) => a==e), 1)
+      foreignBanks.push(e)
+    }
+  })
+  const cLocalBanks = localBanks.slice()
+  cLocalBanks.forEach((e: LocalBanks) => {
+    if (e.NAT_CURR_PERCENT=='no_limit' || e.FOR_CURR_PERCENT=='no_limit') {
+      localBanks.splice(localBanks.findIndex((a: object) => a==e), 1)
+      localBanks.push(e)
+    }
+  })
   return (
     <Fragment>
       <ButtonTabs handleChange={handleChange} active={expanded}
