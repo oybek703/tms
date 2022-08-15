@@ -54,6 +54,9 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                                         линии</BoldWithColor></TableCell>
                   <TableCell align='center'
                     className={classes.noWrap}
+                    rowSpan={2}><BoldWithColor>Код счета</BoldWithColor></TableCell>
+                  <TableCell align='center'
+                    className={classes.noWrap}
                     rowSpan={2}><BoldWithColor>Валюта</BoldWithColor></TableCell>
                   <TableCell align='center'
                     className={classes.noWrap}
@@ -83,6 +86,8 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                         <TableCell>{i + 1}</TableCell>
                         <TableCell
                           className={classes.noWrap}>{row['NAME']}</TableCell>
+                        <TableCell
+                          className={classes.noWrap}>{row['ACCOUNT_CODE']}</TableCell>
                         <TableCell align='center'>
                           {row['CURRENCY'] === '0' ?
                                                     '000' :
