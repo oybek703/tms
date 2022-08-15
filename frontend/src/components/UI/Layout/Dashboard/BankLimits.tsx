@@ -54,17 +54,22 @@ function BankLimitsTableHead({ localBanks = false }) {
     <TableHead className={classes.stickyTableHead}>
       <TableRow>
         <TableCell
-          align='center' rowSpan={localBanks ? 2 : 0}><BoldWithColor>№</BoldWithColor></TableCell>
+          align='center' rowSpan={localBanks ?
+          2 :
+          0}><BoldWithColor>№</BoldWithColor></TableCell>
         <TableCell align='center' rowSpan={localBanks ? 2 : 0}>
           <BoldWithColor>Наименование</BoldWithColor>
         </TableCell>
         <TableCell
-          align='center' colSpan={localBanks ? 2 : 0}><BoldWithColor>Остаток корр. счетов</BoldWithColor></TableCell>
+          align='center' colSpan={localBanks ? 2 : 0}><BoldWithColor>Остаток
+          корр. счетов</BoldWithColor></TableCell>
         <TableCell align='center'
           colSpan={localBanks ? 2 : 0}><BoldWithColor>Лимит -
           22%</BoldWithColor></TableCell>
         <TableCell
-          align='center' colSpan={localBanks ? 2 : 0}><BoldWithColor>Разница</BoldWithColor></TableCell>
+          align='center' colSpan={localBanks ?
+          2 :
+          0}><BoldWithColor>Разница</BoldWithColor></TableCell>
         <TableCell align='center'
           colSpan={localBanks ? 2 : 0}><BoldWithColor>(%)
           лимита</BoldWithColor></TableCell>
@@ -112,7 +117,7 @@ const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
 }
 
 interface LocalBanksProps {
-  rows: LocalBanks[];
+  rows: LocalBanks[]
   nationalBank: LocalBanks[]
 }
 
@@ -160,35 +165,35 @@ const titles = [
 ]
 
 interface ForeignBanks {
-  NAME: string;
-  SALDO_EQUIVAL_OUT: number;
-  FOREIGN_CURRENCY_22: number;
-  DIFFER: number;
-  FOR_PERCENT: string;
+  NAME: string
+  SALDO_EQUIVAL_OUT: number
+  FOREIGN_CURRENCY_22: number
+  DIFFER: number
+  FOR_PERCENT: string
   FOREIGN_CURRENCY_24: number
 }
 
 interface LocalBanks {
-  NAME: string;
-  NAT_CURR: number;
-  FOR_CURR: string;
-  NATIONAL_CURRENCY_22: number;
-  FOREIGN_CURRENCY_22: number;
-  DIFFER_NAT: number;
-  DIFFER_FOR: number;
-  NAT_CURR_PERCENT: string;
-  FOR_CURR_PERCENT: string;
-  NATIONAL_CURRENCY_24: number;
-  FOREIGN_CURRENCY_24: number;
-  SALDO_EQUIVAL_OUT: number;
-  DIFFER: number;
+  NAME: string
+  NAT_CURR: number
+  FOR_CURR: string
+  NATIONAL_CURRENCY_22: number
+  FOREIGN_CURRENCY_22: number
+  DIFFER_NAT: number
+  DIFFER_FOR: number
+  NAT_CURR_PERCENT: string
+  FOR_CURR_PERCENT: string
+  NATIONAL_CURRENCY_24: number
+  FOREIGN_CURRENCY_24: number
+  SALDO_EQUIVAL_OUT: number
+  DIFFER: number
   NAT_PERCENT: string
 }
 
 interface BankLimitsProps {
   bankLimits: {
-    foreignBanks: ForeignBanks[];
-    localBanks: LocalBanks[];
+    foreignBanks: ForeignBanks[]
+    localBanks: LocalBanks[]
     nationalBank: LocalBanks[]
   }
 }
@@ -200,14 +205,14 @@ const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const cForeignBanks = foreignBanks.slice()
   cForeignBanks.forEach((e: ForeignBanks) => {
     if (e.FOR_PERCENT == 'no_limit') {
-      foreignBanks.splice(foreignBanks.findIndex((a: object) => a==e), 1)
+      foreignBanks.splice(foreignBanks.findIndex((a: object) => a == e), 1)
       foreignBanks.push(e)
     }
   })
   const cLocalBanks = localBanks.slice()
   cLocalBanks.forEach((e: LocalBanks) => {
-    if (e.NAT_CURR_PERCENT=='no_limit' || e.FOR_CURR_PERCENT=='no_limit') {
-      localBanks.splice(localBanks.findIndex((a: object) => a==e), 1)
+    if (e.NAT_CURR_PERCENT == 'no_limit' || e.FOR_CURR_PERCENT == 'no_limit') {
+      localBanks.splice(localBanks.findIndex((a: object) => a == e), 1)
       localBanks.push(e)
     }
   })
