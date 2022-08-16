@@ -104,7 +104,7 @@ export const baseRoutes: BaseRoute[] = [
   },
   { title: 'АО "UzAuto Motors" ', route: '/gm', group: 'active_passive' },
   { title: 'ГЭП', route: '/gap', group: 'gap' },
-  { title: 'ГЭП симуляция', route: '/gapsimulation', group: 'gap' },
+  { title: 'ГЭП симуляция', route: '/gapSimulation', group: 'gap' },
   {
     title: 'Капитал',
     route: '/in_process/n1',
