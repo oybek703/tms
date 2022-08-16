@@ -4,26 +4,26 @@ import Card from '@material-ui/core/Card'
 import { CardContent } from '@material-ui/core'
 
 function renderOptions(values: any, categories: any) {
-  const labels = ['Динамика корсчета по дням']
-  const colors = [function({ value }: {value: any}) {
-    if (value>0) {
-      return '#4CB9E1'
-    } else {
-      return '#ff6363'
-    }
-  }]
+  const colors = [
+    function({ value }: { value: any }) {
+      if (value > 0) {
+        return '#4CB9E1'
+      } else {
+        return '#ff6363'
+      }
+    }]
   const options = {
-    series: [{
-      name: 'Значение',
-      data: values.map((v: number) => v === 0 ? null: v)
-    }],
+    series: [
+      {
+        name: 'Значение',
+        data: values.map((v: number) => v === 0 ? null : v)
+      }],
     colors,
     legend: {
       show: false,
       position: 'bottom',
       horizontalAlign: 'center',
       showForSingleSeries: true,
-      customLegendItems: labels,
       fontSize: 15,
       markers: {
         fillColors: colors
@@ -76,7 +76,8 @@ function renderOptions(values: any, categories: any) {
     }
   }
 
-  const chart = new ApexCharts(document.querySelector('#deficit_chart'), options)
+  const chart = new ApexCharts(document.querySelector('#deficit_chart'),
+      options)
   chart.render()
 }
 
@@ -88,7 +89,7 @@ interface DeficitChartProps {
 const DeficitChart: React.FC<DeficitChartProps> = ({ series = [], categories = [] }) => {
   useEffect(() => {
     if (series.length) {
-      document.querySelector('#deficit_chart')!.innerHTML=''
+      document.querySelector('#deficit_chart')!.innerHTML = ''
       renderOptions(series, categories)
     }
   }, [series, categories])
