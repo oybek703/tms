@@ -3,15 +3,21 @@ import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableContainer from '@material-ui/core/TableContainer'
 import Paper from '@material-ui/core/Paper'
-import { formatOneDate } from '../../utils'
+import { formatNumber, formatOneDate } from '../../utils'
 import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
 import { makeStyles } from '@material-ui/core'
+import DeficitChart from '../charts/GAP/DeficitChart'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
     maxHeight: '90vh'
+  },
+  chartContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: '218px'
   }
 }))
 
@@ -27,6 +33,8 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     nsfrData = []
   } = rows
   const classes = useStyles()
+  const chartSeries = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(formatNumber(e['FOREIGN_CURRENCY'], false))) : []
+  console.log(chartSeries)
   return (
     <Fragment>
       <TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
@@ -53,7 +61,10 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
         </Table>
       </TableContainer>
       <br/>
-      <LcrAndNsfrTable halfWidth month={months[1]} data={lcrData}/>
+      <div className={classes.chartContainer}>
+        <LcrAndNsfrTable halfWidth month={months[1]} data={lcrData}/>
+        <DeficitChart series={chartSeries} categories={months.slice(0, 6)}/>
+      </div>
       <br/>
       <LcrAndNsfrTable halfWidth data={nsfrData} month={months[1]}/>
     </Fragment>
