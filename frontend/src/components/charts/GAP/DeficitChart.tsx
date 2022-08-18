@@ -5,7 +5,7 @@ import { CardContent } from '@material-ui/core'
 
 function renderOptions(values: any, categories: any) {
   const colors = [
-    function({ value }: { value: any }) {
+    function({ value }: { value: number }) {
       if (value > 0) {
         return '#4CB9E1'
       } else {

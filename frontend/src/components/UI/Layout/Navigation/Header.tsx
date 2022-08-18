@@ -102,7 +102,7 @@ export const baseRoutes: BaseRoute[] = [
     route: '/reportliabilities',
     group: 'active_passive'
   },
-  { title: 'АО "UzAuto Motors" ', route: '/gm', group: 'active_passive' },
+  { title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
   { title: 'ГЭП', route: '/gap', group: 'gap' },
   { title: 'ГЭП симуляция', route: '/gapSimulation', group: 'gap' },
   {

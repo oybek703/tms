@@ -33,8 +33,7 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     nsfrData = []
   } = rows
   const classes = useStyles()
-  const chartSeries = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(formatNumber(e['FOREIGN_CURRENCY'], false))) : []
-  console.log(chartSeries)
+  const chartSeries = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
   return (
     <Fragment>
       <TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
