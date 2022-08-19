@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell'
 import CheckTwoToneIcon from '@material-ui/icons/CheckTwoTone'
 import ClearTwoToneIcon from '@material-ui/icons/ClearTwoTone'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import { baseRoutes } from '../../../UI/Layout/Navigation/Header'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
@@ -15,6 +16,7 @@ import AddUser from '../AddUser'
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
+import EditUser from '../EditUser'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -33,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paddingMain: {
     padding: 30
+  },
+  buttonWith: {
+    minWidth: '40px'
   }
 }))
 
@@ -44,6 +49,7 @@ const updatedBaseRoutes = [...baseRoutes].reduce((acc: any, val: any) => {
 
 const Users = () => {
   const [addNewUser, setAddNewUser] = useState(false)
+  const [editUser, setEditUser] = useState(false)
   const classes = useStyles()
   const { users, loading, error } = useTypedSelector((state) => state.users)
   const { state } = useTypedSelector((state) => state.addUser)
@@ -55,8 +61,15 @@ const Users = () => {
     }
   }
 
-  const handleAddSwitch = (option: boolean) => {
-    setAddNewUser(option)
+  const checkAction = () => {
+    if (editUser) {
+      setEditUser(false)
+    } else
+    if (addNewUser) {
+      setAddNewUser(false)
+    } else if (!addNewUser) {
+      setAddNewUser(true)
+    }
   }
 
   useEffect(() => {
@@ -76,17 +89,18 @@ const Users = () => {
                     <>
                       <Grid container justifyContent='space-between' alignItems='center'>
                         <Grid item>
-                          <Typography><b>ALL USERS</b></Typography>
+                          <Typography><b>{addNewUser ? 'Add User' : editUser ? 'Edit User' : 'All Users'}</b></Typography>
                         </Grid>
                         <Grid item>
-                          <Button endIcon={addNewUser ? <PeopleOutlineIcon/> : <AddTwoToneIcon/>}
-                            onClick={handleAddSwitch.bind(null, !addNewUser)}
+                          <Button
+                            endIcon={addNewUser ? <PeopleOutlineIcon/> : <AddTwoToneIcon/>}
+                            onClick={() => checkAction()}
                             disabled={loading} size='small'
-                            variant='contained' color='primary'>{addNewUser ? 'Users' : 'Add User'}</Button>
+                            variant='contained' color='primary'>{addNewUser ? 'Users' : editUser ? 'Users' : 'Add User'}</Button>
                         </Grid>
                       </Grid>
                       <hr/>
-                      {addNewUser ? <AddUser/> : <TableContainer>
+                      {addNewUser ? <AddUser/> : editUser ? <EditUser/> : <TableContainer>
                         <Table size='small' className={classes.table}>
                           <TableHead>
                             <TableRow>
@@ -120,10 +134,16 @@ const Users = () => {
                                   }
                                 </TableCell>
                                 <TableCell className={classes.actionCol}>
-                                  <Button title='Delete user'
+                                  <Button title='Delete user' className={classes.buttonWith}
                                     onClick={() => handleDelete(user['USERNAME'])} component='span'
                                     color='inherit'>
                                     <DeleteOutlineRoundedIcon style={{ color: 'red' }}/>
+                                  </Button>
+                                  <Button title='Delete user' className={classes.buttonWith}
+                                    onClick={() => setEditUser(!editUser)}
+                                    component='span'
+                                    color='inherit'>
+                                    <CreateOutlinedIcon color= 'action'/>
                                   </Button>
                                 </TableCell>
                               </TableRow>
