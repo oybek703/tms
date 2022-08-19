@@ -138,6 +138,58 @@ class LiquidityAssets extends LiquidityMainClass {
             FROM   DUAL`
   }
 
+  vostroFilteredQuery(date: string) {
+    return `SELECT FOR_CURR AS TOTAL,
+                   NAT_CURR,
+                   FOR_CURR,
+                   USD,
+                   EUR
+            FROM (SELECT 0                            AS NAT_CURR,
+                         (SELECT ROUND(NVL(SUM(ABS(
+                                 (SELECT
+                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                         SALDO_EQUIVAL_OUT
+                                     FROM IBS.SALDO@IABS S
+                                     WHERE S.ACCOUNT_CODE = AC.CODE
+                                       AND OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                       AND ROWNUM = 1))) / POWER(10, 8), 0), 2) AS SALDO_EQUIVAL_OUT
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE AC.CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY != '000'
+                            AND BR.RATING_STATUS = 1) AS FOR_CURR,
+                         (SELECT ROUND(NVL(SUM(ABS(
+                                 (SELECT
+                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                         SALDO_EQUIVAL_OUT
+                                     FROM IBS.SALDO@IABS S
+                                     WHERE S.ACCOUNT_CODE = AC.CODE
+                                       AND OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                       AND ROWNUM = 1))) / POWER(10, 8), 0), 2)
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE AC.CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY = '840'
+                            AND BR.RATING_STATUS = 1) AS USD,
+                         (SELECT ROUND(NVL(SUM(ABS(
+                                 (SELECT
+                                         /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                         SALDO_EQUIVAL_OUT
+                                     FROM IBS.SALDO@IABS S
+                                     WHERE S.ACCOUNT_CODE = AC.CODE
+                                       AND OPER_DAY <= TO_DATE('${date}', 'DD.MM.YYYY')
+                                       AND ROWNUM = 1))) / POWER(10, 8), 0), 2)
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE AC.CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY = '978'
+                            AND BR.RATING_STATUS = 1) AS EUR
+                  FROM DUAL)`
+  }
+
   async total_actives() {/* Всего активы (чистые) */
     return await this.getOneRow(
         '',
@@ -263,7 +315,16 @@ class LiquidityAssets extends LiquidityMainClass {
         '',
         this.localBanksQuery
     )
-  } /* Local banks */
+  } /* Local Banks */
+
+  async vostro_filtered() {/* Vostro Filtered */
+    return await this.getOneRow(
+        '2',
+        '__VOSTRO_FILTERED__',
+        '',
+        this.vostroFilteredQuery
+    )
+  } /* Vostro Filtered */
 
   liquidity_assets_total(...args: any) {/* ВСЕГО ликвидных активов */
     const [total, nat_curr, for_curr, usa_dollar, evro] = this.columns
