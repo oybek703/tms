@@ -269,7 +269,7 @@ export function addUser(formData: any) {
 export function deleteUserByName(username: string) {
   return async function(dispatch: Dispatch) {
     try {
-      await axiosInstance.delete(`/api/auth/${username}`, withToken())
+      await axiosInstance.delete(`/api/auth/users/${username}`, withToken())
       dispatch({ type: DELETE_USER })
     } catch (e: any) {
       console.log(e)
