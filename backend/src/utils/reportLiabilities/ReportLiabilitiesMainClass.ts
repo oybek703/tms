@@ -19,7 +19,7 @@ class ReportLiabilitiesMainClass extends MainClass {
   }
 
   reportLiabilitiesQuery() {
-    return `SELECT ACCOUNT_CODE, 
+    return `SELECT SUBSTR(ACCOUNT_CODE, 8, 20) ACCOUNT_CODE, 
                       NAME_LINE     NAME,
                       CURRENCY_TYPE CURRENCY,
                       SALDO_NOMINAL,

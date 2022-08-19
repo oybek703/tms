@@ -64,7 +64,7 @@ function App() {
               <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
               <PrivateRoute component={GM} path='/gm'/>
               <PrivateRoute component={GAP} path='/gap'/>
-              <PrivateRoute component={GapSimulation} path='/gapsimulation'/>
+              <PrivateRoute component={GapSimulation} path='/gapSimulation'/>
               <AdminRoute component={Settings} path='/settings'/>
               <PrivateRoute component={Forbidden} path='/403'/>
               <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>

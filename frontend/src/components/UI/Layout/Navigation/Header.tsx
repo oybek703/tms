@@ -102,9 +102,9 @@ export const baseRoutes: BaseRoute[] = [
     route: '/reportliabilities',
     group: 'active_passive'
   },
-  { title: 'АО "UzAuto Motors" ', route: '/gm', group: 'active_passive' },
+  { title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
   { title: 'ГЭП', route: '/gap', group: 'gap' },
-  { title: 'ГЭП симуляция', route: '/gapsimulation', group: 'gap' },
+  { title: 'ГЭП симуляция', route: '/gapSimulation', group: 'gap' },
   {
     title: 'Капитал',
     route: '/in_process/n1',
@@ -176,7 +176,7 @@ interface GroupedRoutesProps {
 const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchorClose, Icon, title }) => {
   const classes = useStyles()
   const { pathname } = useLocation()
-  const isRouteCovered = Boolean(routes.find((r) => r['route'] === pathname))
+  const isRouteCovered = Boolean(routes.find(({ route }) => route === pathname))
   const [open, setOpen] = useState(isRouteCovered)
   if (!routes.length) return <Fragment/>
   return <>
@@ -215,11 +215,9 @@ function Header() {
   const [routes, setRoutes] = useState<BaseRoute[]>(baseRoutes)
   const { user: { pages = [], role } } = useTypedSelector((state) => state.auth)
   const keyIndicatorsRoutes = groupRoutes(routes, 'key_indicators')
-  const liquidityIndicatorsRoutes = groupRoutes(routes,
-      'liquidity_indicators')
-  const activePassivRoutes = groupRoutes(routes, 'active_passive')
-  const prudentialStandardsRoutes = groupRoutes(routes,
-      'prudential_standards')
+  const liquidityIndicatorsRoutes = groupRoutes(routes, 'liquidity_indicators')
+  const activePassiveRoutes = groupRoutes(routes, 'active_passive')
+  const prudentialStandardsRoutes = groupRoutes(routes, 'prudential_standards')
   const gapRoutes = groupRoutes(routes, 'gap')
   useEffect(() => {
     if (pages !== 'ALL') {
@@ -260,7 +258,7 @@ function Header() {
             title='Ликвидность банка'/>
           <GroupedRoutes handleAnchorClose={handleAnchorClose}
             Icon={CreditCardIcon}
-            routes={activePassivRoutes}
+            routes={activePassiveRoutes}
             title='Активы и пассивы'/>
           <GroupedRoutes handleAnchorClose={handleAnchorClose}
             Icon={AssessmentIcon}
@@ -277,7 +275,7 @@ function Header() {
         handleAnchorClose,
         gapRoutes,
         keyIndicatorsRoutes,
-        activePassivRoutes,
+        activePassiveRoutes,
         liquidityIndicatorsRoutes,
         prudentialStandardsRoutes]
   )
