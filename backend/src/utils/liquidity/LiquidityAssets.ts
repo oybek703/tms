@@ -49,7 +49,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                                 AND ROWNUM = 1)) AS SALDO_OUT
                                   FROM IBS.ACCOUNTS@IABS AC
                                   WHERE AC.CODE_COA LIKE '107%'
-                                    AND CODE_CURRENCY = '840')), 2), 0) AS USD,
+                                    AND CODE_CURRENCY = '840')), 2), 0) AS USA_DOLLAR,
                    NVL(ROUND(ABS((SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
                                                   SALDO_OUT / POWER(10, 8)
                                               FROM IBS.SALDO@IABS S
@@ -58,7 +58,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                                 AND ROWNUM = 1)) AS SALDO_OUT
                                   FROM IBS.ACCOUNTS@IABS AC
                                   WHERE AC.CODE_COA LIKE '107%'
-                                    AND CODE_CURRENCY = '978')), 2), 0) AS EUR
+                                    AND CODE_CURRENCY = '978')), 2), 0) AS EVRO
             FROM DUAL`
   }
 
@@ -121,7 +121,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                    BANK_DICTIONARY B
                             WHERE  CONCAT('000', B.CLIENT_CODE) = AC.CLIENT_CODE
                               AND CODE_COA IN ( '21002' )
-                              AND CODE_CURRENCY = '840'))         AS USD,
+                              AND CODE_CURRENCY = '840'))         AS USA_DOLLAR,
                    (SELECT ROUND(SUM(SALDO_OUT) / POWER(10, 8), 2)
                     FROM   (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
                                            NVL(SALDO_OUT, 0)
@@ -134,7 +134,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                    BANK_DICTIONARY B
                             WHERE  CONCAT('000', B.CLIENT_CODE) = AC.CLIENT_CODE
                               AND CODE_COA IN ( '21002' )
-                              AND CODE_CURRENCY = '978'))         AS EUR
+                              AND CODE_CURRENCY = '978'))         AS EVRO
             FROM   DUAL`
   }
 
@@ -146,8 +146,8 @@ class LiquidityAssets extends LiquidityMainClass {
                                     ORDER BY DATE_CROSS DESC FETCH FIRST ROW ONLY ), 2) AS TOTAL,
                    NAT_CURR,
                    ROUND(FOR_CURR, 2) AS FOR_CURR,
-                   USD,
-                   EUR
+                   USA_DOLLAR,
+                   EVRO
             FROM (SELECT 0                               AS NAT_CURR,
                          (SELECT ROUND(NVL(SUM(ABS(
                                      (SELECT
@@ -181,7 +181,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                            ON BR.CLIENT_CODE = AC.CLIENT_CODE
                              WHERE AC.CODE_COA IN ('10501', '10521')
                                AND AC.CODE_CURRENCY = '840'
-                               AND BR.RATING_STATUS = 1) AS USD,
+                               AND BR.RATING_STATUS = 1) AS USA_DOLLAR,
                          (SELECT ROUND(NVL(SUM(ABS((SELECT
                                              /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
                                              SALDO_OUT
@@ -194,7 +194,7 @@ class LiquidityAssets extends LiquidityMainClass {
                                            ON BR.CLIENT_CODE = AC.CLIENT_CODE
                              WHERE AC.CODE_COA IN ('10501', '10521')
                                AND AC.CODE_CURRENCY = '978'
-                               AND BR.RATING_STATUS = 1) AS EUR
+                               AND BR.RATING_STATUS = 1) AS EVRO
                   FROM DUAL)`
   }
 
@@ -345,16 +345,14 @@ class LiquidityAssets extends LiquidityMainClass {
 
   high_liq_assets_total(total_assets: any, f_o_r: any, repo_tr: any, vostr_accounts: any, localBanks: any) {/* ИТОГО ВЫСОКО ликвидных активов */
     const [total, nat_curr, for_curr, usa_dollar, evro] = this.columns
-        .map((p) => total_assets[p] -
-      getLiquidityTotal(p, f_o_r, repo_tr, vostr_accounts) + localBanks[p])
+        .map((p) => total_assets[p] - getLiquidityTotal(p, f_o_r, repo_tr, vostr_accounts) + localBanks[p])
     return {
       count: 8, state: 'ИТОГО ВЫСОКО ликвидных активов', total, nat_curr, for_curr, usa_dollar,
       evro, isTableHead: true
     }
   } /* ИТОГО ВЫСОКО ликвидных активов */
 
-  high_liq_assets_share(high_liq_assets_total: any,
-      total_actives: any) {/* Доля высоколиквидных активов в % */
+  high_liq_assets_share(high_liq_assets_total: any, total_actives: any) {/* Доля высоколиквидных активов в % */
     const colValues = this.columns
         .map((p) => (`${(high_liq_assets_total[p] * 100 / total_actives[p]).toFixed(2)}%`))
     return {

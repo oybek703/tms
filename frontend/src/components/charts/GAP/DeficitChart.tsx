@@ -57,7 +57,7 @@ function renderOptions(values: any, categories: any) {
       tickPlacement: 'on'
     },
     title: {
-      text: 'ПРОГНОЗ LCR',
+      text: 'Прогноз суммы отклонения(дефицита) ВЛА',
       align: 'center',
       style: {
         fontWeight: 100,
