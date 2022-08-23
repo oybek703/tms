@@ -10,7 +10,8 @@ import {
   LIQUIDITY_CURRENT_START, LIQUIDITY_CURRENT_SUCCESS, LIQUIDITY_CURRENT_UPDATE,
   LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT, NOSTROMATRIX_FAIL, NOSTROMATRIX_START, NOSTROMATRIX_SUCCESS, OPERATIONAL_DAYS_FAIL,
   OPERATIONAL_DAYS_START, OPERATIONAL_DAYS_SUCCESS, UPDATE_CBN, USER_EXITED,
-  USERS_FAIL, USERS_START, USERS_SUCCESS
+  USERS_FAIL, USERS_START, USERS_SUCCESS, GETUSER_START, GETUSER_FAIL, GETUSER_SUCCESS, EDITUSER_START, EDITUSER_SUCCESS, EDITUSER_REFRESH,
+  EDITUSER_FAIL
 } from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
 import axiosInstance, { withToken } from '../../utils/axiosInstance'
@@ -266,6 +267,26 @@ export function addUser(formData: any) {
   }
 }
 
+export function editUser(ID:any, formData: any) {
+  return async function(dispatch: Dispatch) {
+    try {
+      dispatch({ type: EDITUSER_START })
+      await axiosInstance.put(
+          `/api/auth/users/${ID}`,
+          formData,
+          withToken()
+      )
+      dispatch({ type: EDITUSER_SUCCESS, payload: 'edited' })
+      setTimeout(function() {
+        dispatch({ type: EDITUSER_REFRESH })
+      }, 500)
+    } catch (e: any) {
+      const message = getErrorMessage(e)
+      dispatch({ type: EDITUSER_FAIL, payload: message })
+    }
+  }
+}
+
 export function deleteUserByName(username: string) {
   return async function(dispatch: Dispatch) {
     try {
@@ -293,6 +314,19 @@ export function fetchUsers() {
       dispatch({ type: USERS_SUCCESS, payload: users })
     } catch (e: any) {
       dispatch({ type: USERS_FAIL, payload: e })
+    }
+  }
+}
+
+export function getUser(id: number) {
+  return async function(dispatch: Dispatch) {
+    try {
+      dispatch({ type: GETUSER_START })
+      const { data: { user } } = await axiosInstance.get(
+          `/api/auth/users/${id}`, withToken())
+      dispatch({ type: GETUSER_SUCCESS, payload: user })
+    } catch (e: any) {
+      dispatch({ type: GETUSER_FAIL, payload: e })
     }
   }
 }

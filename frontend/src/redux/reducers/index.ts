@@ -27,6 +27,8 @@ import gap from './Anayltics/gapReducer'
 import bankLimits from './Admin/bankLimits'
 import gapManual from './Admin/gapManual'
 import nostroMatrix from './Anayltics/nostroMatrixReducer'
+import editUser from './Admin/editUserReducer'
+import getUser from './Admin/getUserReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -61,7 +63,9 @@ const rootReducer = combineReducers({
   bankLimits,
   gapManual,
   users,
-  addUser
+  addUser,
+  getUser,
+  editUser
 })
 
 export type RootState = ReturnType<typeof rootReducer>
