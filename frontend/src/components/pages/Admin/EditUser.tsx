@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
+import Loader from '../../UI/Layout/Loader'
+import Alert from '../../UI/Layout/Alert'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -37,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditUser() {
   const classes = useStyles()
-  const { addUser } = useActions()
+  const { editUser } = useActions()
   const [allowedPages, setAllowedPages] = useState([])
-  const { loading, error } = useTypedSelector((state) => state.addUser)
-  const [formData, setFormData] = useState({ username: '', password: '', confirmpassword: '' })
+  const { loading, error, user } = useTypedSelector((state) => state.getUser)
+  const [formData, setFormData] = useState({ newUsername: '', newPassword: '', confirmNewPassword: '' })
   const [userNameHelperText, setUsernameHelperText] = useState('')
   const [passwordHelperText, setPasswordHelperText] = useState('')
   const [confirmPasswordHelperText, setConfirmPasswordHelperText] = useState('')
@@ -49,16 +51,16 @@ export default function EditUser() {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
     switch (name) {
-      case 'username':
+      case 'newUsername':
                 /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value) ?
                   setUsernameHelperText('') :
                   setUsernameHelperText('Please enter valid username.')
         break
-      case 'password':
+      case 'newPassword':
                 value.length >= 6 ? setPasswordHelperText('') : setPasswordHelperText('Password should contain at least 6 characters.')
         break
-      case 'confirmpassword':
-                value === formData.password ? setConfirmPasswordHelperText('') : setConfirmPasswordHelperText('Password confirmation should match.')
+      case 'confirmNewPassword':
+              value === formData.newPassword ? setConfirmPasswordHelperText('') : setConfirmPasswordHelperText('Password confirmation should match.')
         break
       default:
         return
@@ -68,13 +70,13 @@ export default function EditUser() {
   const handleAddPage = useCallback((newPages) => {
     setAllowedPages(Array.from(newPages))
   }, [])
-  function handleAddUser(e: FormEvent) {
+  function handleEditUser(e: FormEvent) {
     e.preventDefault()
-    addUser({ ...formData, allowedPages })
+    editUser(user['ID'], { ...formData, allowedPages })
   }
 
   useEffect(() => {
-    const btnStatus = !!formData.username && !!formData.password && !!formData.confirmpassword &&
+    const btnStatus = !!formData.newUsername &&
             !userNameHelperText && !passwordHelperText && !confirmPasswordHelperText && !loading
     setBtnDisabled(!btnStatus)
     // eslint-disable-next-line
@@ -96,68 +98,82 @@ export default function EditUser() {
     // eslint-disable-next-line
     }, [error])
 
+  useEffect(() => {
+    if (user['ALLOWED_PAGES']) {
+      setAllowedPages(user['ALLOWED_PAGES'].split(','))
+      setFormData({ newUsername: user['USERNAME'], newPassword: '', confirmNewPassword: '' })
+    }
+  }, [user])
+
   return (
-    <>
-      <Typography align='center' component="h1" variant="h5">
-        <b>EDIT USER</b>
-      </Typography>
-      <form className={classes.form} noValidate onSubmit={handleAddUser}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              error={!!userNameHelperText}
-              helperText={userNameHelperText}
-              variant="outlined"
-              fullWidth
-              value={formData.username}
-              onChange={handleChange}
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="off"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              error={!!passwordHelperText}
-              helperText={passwordHelperText}
-              variant="outlined"
-              fullWidth
-              value={formData.password}
-              onChange={handleChange}
-              id="password"
-              type='password'
-              label="Password"
-              name="password"
-              autoComplete="off"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              error={!!confirmPasswordHelperText}
-              helperText={confirmPasswordHelperText}
-              variant="outlined"
-              fullWidth
-              value={formData.confirmpassword}
-              onChange={handleChange}
-              name="confirmpassword"
-              label="Confirm Password"
-              type="password"
-              id="confirm_password"
-              autoComplete="off"
-            />
-          </Grid>
-          <AllowedPages pages={allowedPages} setPages={handleAddPage}/>
-        </Grid>
-        <Button
-          disabled={btnDisabled}
-          type="submit"
-          variant="outlined"
-          color="primary"
-          className={classes.submit}>
-                    Add
-        </Button>
-      </form>
+    <>    {
+      loading ?
+        <Loader/> :
+          error ?
+           <Alert message={error}/> :
+              <>
+                <Typography align='center' component="h1" variant="h5">
+                  <b>EDIT USER</b>
+                </Typography>
+                <form className={classes.form} noValidate onSubmit={handleEditUser}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={!!userNameHelperText}
+                        helperText={userNameHelperText}
+                        variant="outlined"
+                        fullWidth
+                        value={formData.newUsername}
+                        onChange={handleChange}
+                        id="username"
+                        label="Username"
+                        name="newUsername"
+                        autoComplete="off"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={!!passwordHelperText}
+                        helperText={passwordHelperText}
+                        variant="outlined"
+                        fullWidth
+                        value={formData.newPassword}
+                        onChange={handleChange}
+                        id="password"
+                        type='password'
+                        label="Password"
+                        name="newPassword"
+                        autoComplete="off"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={!!confirmPasswordHelperText}
+                        helperText={confirmPasswordHelperText}
+                        variant="outlined"
+                        fullWidth
+                        value={formData.confirmNewPassword}
+                        onChange={handleChange}
+                        name="confirmNewPassword"
+                        label="Confirm Password"
+                        type="password"
+                        id="confirm_password"
+                        autoComplete="off"
+                      />
+                    </Grid>
+                    <AllowedPages pages={allowedPages} setPages={handleAddPage}/>
+                  </Grid>
+                  <Button
+                    disabled={btnDisabled}
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    className={classes.submit}>
+                              Add
+                  </Button>
+                </form>
+              </>
+    }
     </>
   )
 }

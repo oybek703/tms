@@ -52,13 +52,19 @@ const Users = () => {
   const [editUser, setEditUser] = useState(false)
   const classes = useStyles()
   const { users, loading, error } = useTypedSelector((state) => state.users)
-  const { state } = useTypedSelector((state) => state.addUser)
-  const { deleteUserByName, fetchUsers } = useActions()
+  const addUserState = useTypedSelector((state) => state.addUser)
+  const editUserState = useTypedSelector((state) => state.editUser)
+  const { deleteUserByName, fetchUsers, getUser } = useActions()
   function handleDelete(username: string) {
     if (window.confirm(`Are you sure you want to delete user: ${username}?`)) {
       deleteUserByName(username)
       window.location.reload()
     }
+  }
+
+  function handleEdit(id :number) {
+    setEditUser(!editUser)
+    getUser(id.toString())
   }
 
   const checkAction = () => {
@@ -73,12 +79,13 @@ const Users = () => {
   }
 
   useEffect(() => {
-    if (state === 'added') setAddNewUser(false)
-  }, [state])
+    if (addUserState.state === 'added') setAddNewUser(false)
+    if (editUserState.state === 'edited') setEditUser(false)
+  }, [addUserState.state, editUserState.state])
 
   useEffect(() => {
-    if (!addNewUser) fetchUsers()
-  }, [fetchUsers, addNewUser])
+    if (!addNewUser || (!addNewUser && !editUser) ) fetchUsers()
+  }, [fetchUsers, addNewUser, editUser])
   return (
     <Paper className={classes.paddingMain}>
       {
@@ -139,8 +146,8 @@ const Users = () => {
                                     color='inherit'>
                                     <DeleteOutlineRoundedIcon style={{ color: 'red' }}/>
                                   </Button>
-                                  <Button title='Delete user' className={classes.buttonWith}
-                                    onClick={() => setEditUser(!editUser)}
+                                  <Button title='Edit user' className={classes.buttonWith}
+                                    onClick={(e: any) => handleEdit(user['ID'])}
                                     component='span'
                                     color='inherit'>
                                     <CreateOutlinedIcon color= 'action'/>

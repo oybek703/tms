@@ -9,6 +9,7 @@ import profitAndLost from './Treasury/profitAndLostReducer'
 import currencyPosition from './Treasury/currenncyPositionReducer'
 import auth from './Admin/userReducer'
 import users from './Admin/userListReducer'
+import getUser from './Admin/getUserReducer'
 import { dashboard, dashboardActiveTab } from './Anayltics/dashboardReducer'
 import addUser from './Admin/addUserReducer'
 import calcFor from './Treasury/calcForReducer'
@@ -27,6 +28,7 @@ import gap from './Anayltics/gapReducer'
 import bankLimits from './Admin/bankLimits'
 import gapManual from './Admin/gapManual'
 import nostroMatrix from './Anayltics/nostroMatrixReducer'
+import editUser from './Admin/editUserReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -61,7 +63,9 @@ const rootReducer = combineReducers({
   bankLimits,
   gapManual,
   users,
-  addUser
+  addUser,
+  getUser,
+  editUser
 })
 
 export type RootState = ReturnType<typeof rootReducer>
