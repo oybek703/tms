@@ -77,8 +77,10 @@ export const editUser = asyncMiddleware(async (req: Request, res: Response) => {
     const salt = await genSalt(10)
     hashedPassword = await hash(newPassword, salt)
   }
-  const ALLOWED_PAGES = allowedPages === 'ALL' ? 'ALL' : allowedPages.join(',')
-  await getData(`UPDATE TRS_USERS SET USERNAME='${newUsername && user.USERNAME}', PASSWORD='${hashedPassword}', ALLOWED_PAGES='${ALLOWED_PAGES}'`)
+  const updatedPassword = newUsername && newUsername.length > 0 ? newUsername : user.USERNAME
+  const ALLOWED_PAGES = allowedPages === 'ALL' ? 'ALL' : allowedPages && allowedPages.length > 0 ? allowedPages.join(',') : user.ALLOWED_PAGES
+  await getData(`UPDATE TRS_USERS SET USERNAME='${updatedPassword}', 
+                     PASSWORD='${hashedPassword}', ALLOWED_PAGES='${ALLOWED_PAGES}' WHERE ID='${userId}'`)
   res.json({ success: true, message: 'User updated successfully.' })
 })
 
