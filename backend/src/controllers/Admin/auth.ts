@@ -78,7 +78,7 @@ export const editUser = asyncMiddleware(async (req: Request, res: Response) => {
     hashedPassword = await hash(newPassword, salt)
   }
   const ALLOWED_PAGES = allowedPages === 'ALL' ? 'ALL' : allowedPages.join(',')
-  await getData(`UPDATE TRS_USERS SET USERNAME='${newUsername}', PASSWORD='${hashedPassword}', ALLOWED_PAGES='${ALLOWED_PAGES}'`)
+  await getData(`UPDATE TRS_USERS SET USERNAME='${newUsername && user.USERNAME}', PASSWORD='${hashedPassword}', ALLOWED_PAGES='${ALLOWED_PAGES}'`)
   res.json({ success: true, message: 'User updated successfully.' })
 })
 
@@ -87,7 +87,7 @@ export const editUser = asyncMiddleware(async (req: Request, res: Response) => {
 // access Admin
 export const deleteUserByName = asyncMiddleware(async (req: Request, res: Response) => {
   const { username } = req.params
-  const { rows = [] } = await getData(`SELECT * FROM TRS_USERS WHERE USERNAME='${username}'`)
+  const { rows = [] } = await getData(`SELECT USERNAME, ID, ALLOWED_PAGES, ROLE FROM TRS_USERS WHERE USERNAME='${username}'`)
   const user: User = rows[0] as User
   if (!user) throw new ErrorResponse(404, 'User does not exists.')
   await getData(`DELETE FROM TRS_USERS WHERE USERNAME='${username}'`)

@@ -16,7 +16,7 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                       NVL(CHF_SE, 0) + NVL(CHN_SE, 0)) /
                      (SELECT EQUIVAL
                          FROM IBS.S_RATE_CUR@IABS
-                         WHERE CODE = '840'
+                         WHERE CODE = '840' AND DATE_CROSS<SYSDATE
                          ORDER BY DATE_CROSS DESC FETCH FIRST 1 ROWS ONLY), 2)) AS FOR_CURR,
            ABS(NVL(USD, 0))                                                     AS USA_DOLLAR,
            ABS(NVL(EUR, 0))                                                     AS EVRO
@@ -66,7 +66,7 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                                  JOIN BANK_DICTIONARY BD
                                       ON AC.CLIENT_CODE = CONCAT('000', BD.CLIENT_CODE)
                         WHERE AC.CODE_COA = '21002'
-                          AND CODE_CURRENCY = '840')            AS USD,
+                          AND CODE_CURRENCY = '840')            AS USA_DOLLAR,
                    (SELECT ROUND(SUM(SALDO_OUT) / POWER(10, 8), 2)
                         FROM IBS.ACCOUNTS@IABS AC
                                  JOIN BANK_DICTIONARY BD
@@ -74,6 +74,46 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                         WHERE AC.CODE_COA = '21002'
                           AND CODE_CURRENCY = '978')            AS EVRO
                 FROM DUAL`
+  }
+
+  vostroFilteredQuery(_date: string) {
+    return `SELECT FOR_CURR                      AS TOTAL,
+                   NAT_CURR,
+                   ROUND(FOR_CURR / USD_RATE, 2) AS FOR_CURR,
+                   USA_DOLLAR,
+                   EVRO
+            FROM (SELECT 0                            AS NAT_CURR,
+                         (SELECT ROUND(ABS(SUM(SALDO_EQUIVAL_OUT) / POWER(10, 8)), 2)
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY != '000'
+                            AND BR.RATING_STATUS = 1) AS FOR_CURR,
+                         (SELECT ROUND(ABS(SUM(SALDO_OUT) / POWER(10, 8)), 2)
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY = '840'
+                            AND BR.RATING_STATUS = 1) AS USA_DOLLAR,
+                         (SELECT ROUND(ABS(SUM(SALDO_OUT) / POWER(10, 8)), 2)
+                          FROM IBS.ACCOUNTS@IABS AC
+                                   JOIN BANK_INFO_RATING BR
+                                        ON BR.CLIENT_CODE = AC.CLIENT_CODE
+                          WHERE CODE_COA IN ('10501', '10521')
+                            AND AC.CODE_CURRENCY = '978'
+                            AND BR.RATING_STATUS = 1) AS EVRO,
+                         (SELECT EQUIVAL
+                          FROM IBS.S_RATE_CUR@IABS CURS
+                                   JOIN IBS.DAY_OPERATIONAL@IABS DAY
+                                        ON DAY.OPER_DAY = CURS.DATE_CROSS
+                          WHERE DATE_CROSS < SYSDATE
+                            AND CODE = '840'
+                            AND DAY.DAY_STATUS = 1
+                          ORDER BY DATE_CROSS DESC
+                              FETCH FIRST ROW ONLY)   AS USD_RATE
+                  FROM DUAL)`
   }
 
   async total_actives() {/* Всего активы (чистые) */
