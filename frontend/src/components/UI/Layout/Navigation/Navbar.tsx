@@ -20,6 +20,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import theme from '../../theme'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
+import LastUpdate from './LastUpdate'
 
 const useStyles = makeStyles({
   appbar: {
@@ -90,8 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
   const { pathname } = useLocation()
   const { reportDate } = useTypedSelector((state) => state.date)
   const { operDays, loading } = useTypedSelector((state) => state.operDays)
-  const { lastUpdate, loading: lastUpdateLoading } = useTypedSelector(
-      (state) => state.lastUpdate)
+  const { lastUpdate, loading: lastUpdateLoading } = useTypedSelector((state) => state.lastUpdate)
   const handleClick = useCallback(() => {
     setAnchorEl(() => anchorRef.current && anchorRef.current)
     setOpen(true)
@@ -146,13 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                   alt="Treasury Reports"/>
                   <b>&nbsp;Treasury Management System</b>
                 </Button>
-                {pathname === '/' &&
-                              <p className={classes.fontItalic}> &nbsp;
-                                {
-                                      lastUpdateLoading || !lastUpdate ?
-                                        '' :
-                                        `Последнее обновление: ${lastUpdate}`}
-                              </p>}
+                {pathname === '/' && !lastUpdateLoading && lastUpdate && <LastUpdate label={lastUpdate}/>}
               </Grid>
             </Grid>
             <Grid item>

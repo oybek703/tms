@@ -7,18 +7,26 @@ class BankLimits extends DashboardMainClass {
 
   formatQuery() {
     return `SELECT NAME,
-                       SALDO_EQUIVAL_OUT,
-                       NVL(FOREIGN_CURRENCY_22, 0)                                       AS FOREIGN_CURRENCY_22,
-                       ROUND(NVL(FOREIGN_CURRENCY_22, 0) - NVL(SALDO_EQUIVAL_OUT, 0), 2) AS DIFFER,
-                       CASE
-                           WHEN FOREIGN_CURRENCY_22 = 0 AND SALDO_EQUIVAL_OUT = 0
-                               THEN 'no_limit'
-                           WHEN FOREIGN_CURRENCY_22 = 0 AND SALDO_EQUIVAL_OUT != 0
-                               THEN 'exceeded'
-                           ELSE TO_CHAR(ROUND(SALDO_EQUIVAL_OUT * 100 / FOREIGN_CURRENCY_22, 2))
-                           END                                                           AS FOR_PERCENT,
-                       NVL(FOREIGN_CURRENCY_24, 0)                                       AS FOREIGN_CURRENCY_24
-                FROM LIMIT_OF_FOREIGN_BANKS_VIEW`
+                   SALDO_EQUIVAL_OUT,
+                   NVL(FOREIGN_CURRENCY_22, 0)                                       AS FOREIGN_CURRENCY_22,
+                   ROUND(NVL(FOREIGN_CURRENCY_22, 0) - NVL(SALDO_EQUIVAL_OUT, 0), 2) AS DIFFER_22,
+                   ROUND(NVL(FOREIGN_CURRENCY_24, 0) - NVL(SALDO_EQUIVAL_OUT, 0), 2) AS DIFFER_24,
+                   CASE
+                       WHEN FOREIGN_CURRENCY_22 = 0 AND SALDO_EQUIVAL_OUT = 0
+                           THEN 'no_limit'
+                       WHEN FOREIGN_CURRENCY_22 = 0 AND SALDO_EQUIVAL_OUT != 0
+                           THEN 'exceeded'
+                       ELSE TO_CHAR(ROUND(SALDO_EQUIVAL_OUT * 100 / FOREIGN_CURRENCY_22, 2))
+                       END                                                           AS FOR_PERCENT_22,
+                   CASE
+                       WHEN FOREIGN_CURRENCY_24 = 0 AND SALDO_EQUIVAL_OUT = 0
+                           THEN 'no_limit'
+                       WHEN FOREIGN_CURRENCY_24 = 0 AND SALDO_EQUIVAL_OUT != 0
+                           THEN 'exceeded'
+                       ELSE TO_CHAR(ROUND(SALDO_EQUIVAL_OUT * 100 / FOREIGN_CURRENCY_24, 2))
+                       END                                                           AS FOR_PERCENT_24,
+                   NVL(FOREIGN_CURRENCY_24, 0)                                       AS FOREIGN_CURRENCY_24
+            FROM LIMIT_OF_FOREIGN_BANKS_VIEW`
   }
 
   localBanksQuery() {

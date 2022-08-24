@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import { formatNumber } from '../../../../utils'
 
 function chooseProgressColor(value = 0) {
   if (value >=0 && value < 50) return '#7b7b7b'
@@ -36,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface ProgressBarProps {
   value: number
+  showNumber?: boolean
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ value = 0 }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ value = 0, showNumber = false }) => {
   const classes = useStyles({ value })
 
   return (
@@ -50,7 +52,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ value = 0 }) => {
         }}
         variant="determinate" value={value > 100 ? 100 : +value}/>
       <span className={classes.percent} title={String(value)}> &nbsp; {value > 100 ?
-        'больше 100' :
+        showNumber ? formatNumber(value) : 'больше 100' :
         `${value}%`}</span>
     </div>
   )

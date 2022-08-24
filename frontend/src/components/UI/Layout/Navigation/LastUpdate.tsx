@@ -1,0 +1,37 @@
+import React from 'react'
+import { makeStyles, Theme } from '@material-ui/core/styles'
+import Chip from '@material-ui/core/Chip'
+import Tooltip from '@material-ui/core/Tooltip'
+import Zoom from '@material-ui/core/Zoom'
+import UpdateOutlinedIcon from '@material-ui/icons/UpdateOutlined'
+import { Avatar } from '@material-ui/core'
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    'display': 'flex',
+    'justifyContent': 'center',
+    'flexWrap': 'wrap',
+    '& > *': {
+      margin: theme.spacing(1.5)
+    }
+  },
+  chip: {
+    cursor: 'help',
+    fontStyle: 'italic'
+  }
+}))
+
+
+export default function LastUpdate({ label = 'LAST UPDATE' }) {
+  const classes = useStyles()
+
+  return (
+    <Tooltip title='Последнее обновление' arrow TransitionComponent={Zoom} placement='right'>
+      <div className={classes.root}>
+        <Chip className={classes.chip} size="small" variant='outlined'
+          avatar={<Avatar><UpdateOutlinedIcon fontSize='small' color='inherit'/></Avatar>}
+          label={label} color="primary"/>
+      </div>
+    </Tooltip>
+  )
+}

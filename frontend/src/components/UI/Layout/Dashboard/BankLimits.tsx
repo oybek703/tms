@@ -14,6 +14,9 @@ import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../utils'
 import ProgressBar from '../ProgressBar'
 import ButtonTabs from '../Tabs/ButtonsTab'
+import TransitionsModal from '../TransitionsModal'
+import Chip from '@material-ui/core/Chip'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
@@ -27,24 +30,26 @@ const useStyles = makeStyles((theme) => ({
 interface NoWrapCellProps {
   cellData: any
   colSpan?: number
+  style?: any
 }
 
-const NoWrapCell: React.FC<NoWrapCellProps> = ({ cellData = 0, colSpan = 0 }) => {
+const NoWrapCell: React.FC<NoWrapCellProps> = (props) => {
   const classes = useStyles()
-  return <TableCell colSpan={colSpan} align='center'
+  const { cellData = 0, colSpan = 0 } = props
+  return <TableCell colSpan={colSpan} {...props} align='center'
     className={classes.noWrap}>
     {typeof cellData === 'number' ? formatNumber(cellData) : cellData}
   </TableCell>
 }
 
-function ProgressOrText({ cellData = '0' }) {
+function ProgressOrText({ cellData = '0', showNumber = false }) {
   const classes = useStyles()
   return (
     cellData === 'no_limit' ?
       <i>Лимит не установлен.</i> :
       cellData === 'exceeded' ?
         <b className={classes.exceeded}><i>Лимит нарушен.</i></b> :
-        <ProgressBar value={+Number(cellData).toFixed(2)}/>
+        <ProgressBar showNumber={showNumber} value={+Number(cellData).toFixed(2)}/>
   )
 }
 
@@ -106,9 +111,59 @@ const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
             className={classes.noWrap}><b>{row['NAME']}</b></TableCell>
           <NoWrapCell cellData={row['SALDO_EQUIVAL_OUT']}/>
           <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
-          <NoWrapCell cellData={row['DIFFER']}/>
-          <NoWrapCell cellData={<ProgressOrText
-            cellData={row['FOR_PERCENT']}/>}/>
+          <NoWrapCell cellData={row['DIFFER_22']}/>
+          <NoWrapCell cellData={<Fragment>
+            {+row['FOR_PERCENT_22'] >= 100 ?
+              <Grid container justifyContent='space-between' alignItems='center'>
+                <Grid style={{ width: '85%' }}>
+                  <ProgressOrText cellData={row['FOR_PERCENT_22']}/>
+                </Grid>
+                <Grid style={{ width: '15%' }}>
+                  <TransitionsModal innerData={
+                    <>
+                      <TableHead className={classes.stickyTableHead}>
+                        <TableRow>
+                          <TableCell colSpan={2} align='center'>
+                            <BoldWithColor>{row['NAME']}</BoldWithColor>
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell><b>Остаток корр. счетов</b></TableCell>
+                          <TableCell>{formatNumber(row['SALDO_EQUIVAL_OUT'])}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Лимит - 22%</b></TableCell>
+                          <TableCell>{formatNumber(row['FOREIGN_CURRENCY_22'])}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Лимит - 24%</b></TableCell>
+                          <TableCell>{formatNumber(row['FOREIGN_CURRENCY_24'])}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Разница - 22%</b></TableCell>
+                          <TableCell>{formatNumber(row['DIFFER_22'])}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Разница - 24%</b></TableCell>
+                          <TableCell>{formatNumber(row['DIFFER_24'])}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Процент лимита - 22%</b></TableCell>
+                          <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_22']}/>}/>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><b>Процент лимита - 24%</b></TableCell>
+                          <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_24']}/>}/>
+                        </TableRow>
+                      </TableBody>
+                    </>
+                  } />
+                </Grid>
+              </Grid>:
+              <ProgressOrText cellData={row['FOR_PERCENT_22']}/>}
+          </Fragment>}/>
           <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
         </TableRow>)}
       </TableBody>
@@ -168,8 +223,10 @@ interface ForeignBanks {
   NAME: string
   SALDO_EQUIVAL_OUT: number
   FOREIGN_CURRENCY_22: number
-  DIFFER: number
-  FOR_PERCENT: string
+  DIFFER_22: number
+  DIFFER_24: number
+  FOR_PERCENT_22: string
+  FOR_PERCENT_24: string
   FOREIGN_CURRENCY_24: number
 }
 
@@ -204,7 +261,7 @@ const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const handleChange = useCallback((code) => setExpanded(code), [])
   const cForeignBanks = foreignBanks.slice()
   cForeignBanks.forEach((e: ForeignBanks) => {
-    if (e.FOR_PERCENT == 'no_limit') {
+    if (e.FOR_PERCENT_22 == 'no_limit') {
       foreignBanks.splice(foreignBanks.findIndex((a: object) => a == e), 1)
       foreignBanks.push(e)
     }
