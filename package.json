@@ -9,8 +9,8 @@
     "server": "npm run dev --prefix backend",
     "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
     "build": "npm run build --prefix frontend && npm run build --prefix backend",
-    "postbuild": "./copy.sh",
-    "poststart": "npm run build --prefix frontend"
+    "deploy": "npm run build && ./copy.sh",
+    "poststart": "npm run start --prefix frontend"
   },
   "repository": {
     "type": "git",

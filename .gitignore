@@ -32,7 +32,7 @@ frontend/.pnp.js
 copy.sh
 
 # temporary files
-tr-api.tar.gz
+*.tar.gz
 
 # testing
 frontend/coverage
