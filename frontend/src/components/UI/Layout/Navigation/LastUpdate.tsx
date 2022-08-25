@@ -11,13 +11,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     'display': 'flex',
     'justifyContent': 'center',
     'flexWrap': 'wrap',
-    '& > *': {
-      margin: theme.spacing(1.5)
-    }
+    'paddingTop': '2px'
   },
   chip: {
-    cursor: 'help',
+    cursor: 'default',
     fontStyle: 'italic'
+  },
+  chipLabelSmall: {
+    paddingBottom: '3px',
+    paddingLeft: '10px',
+    paddingRight: '10px'
   }
 }))
 
@@ -28,9 +31,11 @@ export default function LastUpdate({ label = 'LAST UPDATE' }) {
   return (
     <Tooltip title='Последнее обновление' arrow TransitionComponent={Zoom} placement='right'>
       <div className={classes.root}>
-        <Chip className={classes.chip} size="small" variant='outlined'
-          avatar={<Avatar><UpdateOutlinedIcon fontSize='small' color='inherit'/></Avatar>}
-          label={label} color="primary"/>
+        <Chip classes={{
+          labelSmall: classes.chipLabelSmall
+        }} className={classes.chip} size="small" variant='outlined'
+        avatar={<Avatar><UpdateOutlinedIcon fontSize='small' color='inherit'/></Avatar>}
+        label={label} color="primary"/>
       </div>
     </Tooltip>
   )
