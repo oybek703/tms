@@ -2,6 +2,10 @@ import { getData } from './../models/db_apis'
 import asyncMiddleware from './../utils/async'
 import { Request, Response } from 'express'
 
+
+// @desc get All Banks
+// @route /auth/banks
+// access Admin
 export const getAllBanks = asyncMiddleware(async (req: Request, res: Response) => {
   const { rows } = await getData(`SELECT client_code,bank_name,
                                       case when residency = 1 then 'Локал банк'
