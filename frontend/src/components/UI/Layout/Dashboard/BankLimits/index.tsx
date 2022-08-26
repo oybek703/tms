@@ -1,22 +1,15 @@
 import React, { Fragment, useCallback, useState } from 'react'
-import {
-  makeStyles,
-  Paper,
-  TableBody,
-  TableContainer,
-  TableRow
-} from '@material-ui/core'
+import { makeStyles, Paper, TableBody, TableContainer, TableRow } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
-import BoldWithColor from '../../helpers/BoldWithColor'
+import BoldWithColor from '../../../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
-import { formatNumber } from '../../../../utils'
-import ProgressBar from '../ProgressBar'
-import ButtonTabs from '../Tabs/ButtonsTab'
-import TransitionsModal from '../TransitionsModal'
-import Chip from '@material-ui/core/Chip'
+import { formatNumber } from '../../../../../utils'
+import ProgressBar from '../../ProgressBar'
+import ButtonTabs from '../../Tabs/ButtonsTab'
 import Grid from '@material-ui/core/Grid'
+import LimitsMenu from './LimitsMenu'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
@@ -115,51 +108,26 @@ const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
           <NoWrapCell cellData={<Fragment>
             {+row['FOR_PERCENT_22'] >= 100 ?
               <Grid container justifyContent='space-between' alignItems='center'>
-                <Grid style={{ width: '85%' }}>
+                <Grid style={{ width: '99%' }}>
                   <ProgressOrText cellData={row['FOR_PERCENT_22']}/>
                 </Grid>
-                <Grid style={{ width: '15%' }}>
-                  <TransitionsModal innerData={
+                <Grid style={{ width: '1%' }}>
+                  <LimitsMenu innerData={
                     <>
-                      <TableHead className={classes.stickyTableHead}>
+                      <TableHead>
                         <TableRow>
-                          <TableCell colSpan={2} align='center'>
-                            <BoldWithColor>{row['NAME']}</BoldWithColor>
-                          </TableCell>
+                          <TableCell><b>Процент лимита - 22%</b></TableCell>
+                          <TableCell><b>Процент лимита - 24%</b></TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         <TableRow>
-                          <TableCell><b>Остаток корр. счетов</b></TableCell>
-                          <TableCell>{formatNumber(row['SALDO_EQUIVAL_OUT'])}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Лимит - 22%</b></TableCell>
-                          <TableCell>{formatNumber(row['FOREIGN_CURRENCY_22'])}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Лимит - 24%</b></TableCell>
-                          <TableCell>{formatNumber(row['FOREIGN_CURRENCY_24'])}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Разница - 22%</b></TableCell>
-                          <TableCell>{formatNumber(row['DIFFER_22'])}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Разница - 24%</b></TableCell>
-                          <TableCell>{formatNumber(row['DIFFER_24'])}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Процент лимита - 22%</b></TableCell>
                           <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_22']}/>}/>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Процент лимита - 24%</b></TableCell>
                           <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_24']}/>}/>
                         </TableRow>
                       </TableBody>
                     </>
-                  } />
+                  }/>
                 </Grid>
               </Grid>:
               <ProgressOrText cellData={row['FOR_PERCENT_22']}/>}

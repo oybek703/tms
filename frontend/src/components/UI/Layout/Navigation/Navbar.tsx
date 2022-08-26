@@ -144,7 +144,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                                   '/logo.png'}
                   width='25' height='25'
                   alt="Treasury Reports"/>
-                  <b>&nbsp;Treasury Management System</b>
+                  <b style={{ paddingBottom: 3 }}>&nbsp;Treasury Management System</b>
                 </Button>
                 {pathname === '/' && !lastUpdateLoading && lastUpdate && <LastUpdate label={lastUpdate}/>}
               </Grid>
