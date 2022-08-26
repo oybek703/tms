@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import Card from '@material-ui/core/Card'
 import { CardContent } from '@material-ui/core'
+import { formatNumber } from '../../../utils'
 
 function renderOptions(values: any, categories: any) {
   const colors = [
@@ -38,7 +39,7 @@ function renderOptions(values: any, categories: any) {
     },
     plotOptions: {
       bar: {
-        columnWidth: '20%',
+        columnWidth: '40%',
         distributed: true,
         dataLabels: {
           position: 'top' // top, center, bottom
@@ -47,7 +48,47 @@ function renderOptions(values: any, categories: any) {
       }
     },
     dataLabels: {
-      enabled: false
+      enabled: true,
+      textAnchor: 'middle',
+      //   style: {
+      //     colors: ['#fff']
+      //   },
+      formatter: function(val: number, opt: any) {
+        return formatNumber(val)
+      },
+      background: {
+        enabled: true,
+        foreColor: '#fff',
+        padding: 4,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: '#fff',
+        opacity: 0.9,
+        dropShadow: {
+          enabled: false,
+          top: 1,
+          left: 1,
+          blur: 1,
+          color: '#000',
+          opacity: 0.45
+        }
+      },
+      style: {
+        fontSize: '14px',
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        fontWeight: 'bold',
+        colors: undefined
+      },
+      offsetX: 0,
+      offsetY: -30,
+      dropShadow: {
+        enabled: false,
+        top: 1,
+        left: 1,
+        blur: 1,
+        color: '#000',
+        opacity: 0.45
+      }
     },
     stroke: {
       curve: 'straight'
@@ -57,7 +98,7 @@ function renderOptions(values: any, categories: any) {
       tickPlacement: 'on'
     },
     title: {
-      text: 'Прогноз суммы отклонения(дефицита) ВЛА',
+      text: 'Прогноз суммы отклонения(дефицита) ВЛА в национальной валюте',
       align: 'center',
       style: {
         fontWeight: 100,
@@ -76,30 +117,30 @@ function renderOptions(values: any, categories: any) {
     }
   }
 
-  const chart = new ApexCharts(document.querySelector('#deficit_chart'),
+  const chart = new ApexCharts(document.querySelector('#national_curreny_chart'),
       options)
   chart.render()
 }
 
-interface DeficitChartProps {
+interface NationalCurrencyChartProps {
   series: any
   categories: any
 }
 
-const DeficitChart: React.FC<DeficitChartProps> = ({ series = [], categories = [] }) => {
+const NationalCurrencyChart: React.FC<NationalCurrencyChartProps> = ({ series = [], categories = [] }) => {
   useEffect(() => {
     if (series.length) {
-      document.querySelector('#deficit_chart')!.innerHTML = ''
+      document.querySelector('#national_curreny_chart')!.innerHTML = ''
       renderOptions(series, categories)
     }
   }, [series, categories])
   return (
-    <Card style={{ width: '49%' }}>
+    <Card style={{ width: '49%', height: '218px' }}>
       <CardContent style={{ padding: '0' }}>
-        <div id='deficit_chart'/>
+        <div id='national_curreny_chart'/>
       </CardContent>
     </Card>
   )
 } /* Динамика корсчета по дням */
 
-export default DeficitChart
+export default NationalCurrencyChart

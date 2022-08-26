@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 
 
 // @desc get All Banks
-// @route /auth/banks
+// @route /banks
 // access Admin
 export const getAllBanks = asyncMiddleware(async (req: Request, res: Response) => {
   const { rows } = await getData(`SELECT client_code,bank_name,
