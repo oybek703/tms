@@ -36,7 +36,8 @@ const useStyles = makeStyles({
   secondaryText: {
     lineHeight: 0,
     color: '#000',
-    fontSize: '0.7em'
+    fontSize: '0.8em',
+    fontWeight: 700
   },
   natValue: {
     fontSize: '1.3em',
