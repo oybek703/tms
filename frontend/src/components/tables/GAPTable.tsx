@@ -8,7 +8,8 @@ import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
 import { makeStyles } from '@material-ui/core'
-import DeficitChart from '../charts/GAP/DeficitChart'
+import ForeignCurrencyChart from '../charts/GAP/ForeignCurrencyChart'
+import NationalCurrencyChart from '../charts/GAP/NationalCurrencyChart'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -16,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   chartContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
-    height: '218px'
+    justifyContent: 'space-between'
   }
 }))
 
@@ -33,7 +33,8 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     nsfrData = []
   } = rows
   const classes = useStyles()
-  const chartSeries = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
+  const ForeginCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
+  const NationalCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
   return (
     <Fragment>
       <TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
@@ -62,10 +63,13 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
       <br/>
       <div className={classes.chartContainer}>
         <LcrAndNsfrTable halfWidth month={months[1]} data={lcrData}/>
-        <DeficitChart series={chartSeries} categories={months.slice(0, 6)}/>
+        <ForeignCurrencyChart series={ForeginCurrency} categories={months.slice(0, 6)}/>
       </div>
       <br/>
-      <LcrAndNsfrTable halfWidth data={nsfrData} month={months[1]}/>
+      <div className={classes.chartContainer}>
+        <LcrAndNsfrTable halfWidth data={nsfrData} month={months[1]}/>
+        <NationalCurrencyChart series={NationalCurrency} categories={months.slice(0, 6)}/>
+      </div>
     </Fragment>
   )
 }

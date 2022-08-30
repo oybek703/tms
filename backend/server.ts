@@ -30,6 +30,7 @@ import gapRoutes from './src/routes/Analytics/gap'
 import gapManualRoutes from './src/routes/Admin/Manual/gapManual'
 import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
 import nostroMatrixRoutes from './src/routes/Analytics/nostroMatrix'
+import bankRatingRoutes from './src/routes/bankRating'
 
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
@@ -65,6 +66,7 @@ app.use('/api/gap', gapRoutes)
 app.use('/api/gapSimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
+app.use('/api/bankRating', bankRatingRoutes)
 
 if (process.env.NODE_ENV === 'development') {
   app.get('/', (req: Request, res: Response) => {
