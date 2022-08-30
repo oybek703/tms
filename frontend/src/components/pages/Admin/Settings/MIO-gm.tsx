@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
-import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
+import { withToken } from '../../../../utils/axiosUtils'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const MioGm = () => {
-  console.log('test')
   const [mioDate, setMioDate] = useState('')
   const [mioValue, setMioValue] = useState('')
 
@@ -20,7 +20,7 @@ const MioGm = () => {
       return
     }
     try {
-      const { data: { message } } = await axiosInstance.put(
+      const { data: { message } } = await axios.put(
           `/api/gm/setmio`,
           { mio: mioValue, mioDate },
           withToken()

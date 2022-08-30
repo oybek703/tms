@@ -14,8 +14,9 @@ import {
   EDITUSER_FAIL
 } from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
-import axiosInstance, { withToken } from '../../utils/axiosInstance'
+import { withToken } from '../../utils/axiosUtils'
 import { Dispatch } from 'redux'
+import axios from 'axios'
 
 async function checkCashOrSave(
     date: string, property = 'capital', dispatch: Dispatch) {
@@ -29,7 +30,7 @@ async function checkCashOrSave(
         dispatch({ type: `${action}SUCCESS`, payload: cacheData.data })
       } else {
         dispatch({ type: `${action}START` })
-        const { data: { rows } } = await axiosInstance.get(
+        const { data: { rows } } = await axios.get(
             `/api/${property}?date=${date}`,
             withToken()
         )
@@ -39,7 +40,7 @@ async function checkCashOrSave(
       }
     } else {
       dispatch({ type: `${action}START` })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           `/api/${property}?date=${date}`,
           withToken()
       )
@@ -145,7 +146,7 @@ export function fetchDashboardMonthly(
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: DASHBOARDMONTHLY_START })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           `/api/dashboardmonthly?firstDate=${firstDate}&secondDate=${secondDate}&dateOption=${dateOption}`,
           withToken()
       )
@@ -179,7 +180,7 @@ export function fetchNostroMatrix(firstDate: string, secondDate?: string) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: NOSTROMATRIX_START })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           `/api/nostroMatrix?firstDate=${firstDate}&secondDate=${secondDate}`,
           withToken()
       )
@@ -201,7 +202,7 @@ export function getOperDays() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: OPERATIONAL_DAYS_START })
-      const { data: { dates } } = await axiosInstance.get(`/api/operDays`)
+      const { data: { dates } } = await axios.get(`/api/operDays`)
       dispatch({ type: OPERATIONAL_DAYS_SUCCESS, payload: dates })
     } catch (e: any) {
       const error = e.toString()
@@ -214,7 +215,7 @@ export function getLastUpdateTime() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: LAST_UPDATE_START })
-      const { data: { lastUpdate } } = await axiosInstance.get(
+      const { data: { lastUpdate } } = await axios.get(
           `/api/operDays/lastUpdate`)
       dispatch({ type: LAST_UPDATE_SUCCESS, payload: lastUpdate })
     } catch (e: any) {
@@ -228,7 +229,7 @@ export function signInUser({ username, password }: { username: string, password:
   return async (dispatch: Dispatch) => {
     try {
       dispatch({ type: LOGIN_START })
-      const { data } = await axiosInstance.post(
+      const { data } = await axios.post(
           `/api/auth/login`,
           { username, password }
       )
@@ -251,7 +252,7 @@ export function addUser(formData: any) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: ADDUSER_START })
-      await axiosInstance.post(
+      await axios.post(
           `/api/auth/adduser`,
           formData,
           withToken()
@@ -271,7 +272,7 @@ export function editUser(ID:any, formData: any) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: EDITUSER_START })
-      await axiosInstance.put(
+      await axios.put(
           `/api/auth/users/${ID}`,
           formData,
           withToken()
@@ -290,7 +291,7 @@ export function editUser(ID:any, formData: any) {
 export function deleteUserByName(username: string) {
   return async function(dispatch: Dispatch) {
     try {
-      await axiosInstance.delete(`/api/auth/users/${username}`, withToken())
+      await axios.delete(`/api/auth/users/${username}`, withToken())
       dispatch({ type: DELETE_USER })
     } catch (e: any) {
       console.log(e)
@@ -309,7 +310,7 @@ export function fetchUsers() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: USERS_START })
-      const { data: { users } } = await axiosInstance.get(
+      const { data: { users } } = await axios.get(
           '/api/auth/users', withToken())
       dispatch({ type: USERS_SUCCESS, payload: users })
     } catch (e: any) {
@@ -322,7 +323,7 @@ export function getUser(id: number) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: GETUSER_START })
-      const { data: { user } } = await axiosInstance.get(
+      const { data: { user } } = await axios.get(
           `/api/auth/users/${id}`, withToken())
       dispatch({ type: GETUSER_SUCCESS, payload: user })
     } catch (e: any) {
@@ -335,7 +336,7 @@ export function fetchBankLimits() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: BANKLIMITS_START })
-      const { data: { data } } = await axiosInstance.get(
+      const { data: { data } } = await axios.get(
           '/api/banklimits', withToken())
       dispatch({ type: BANKLIMITS_SUCCESS, payload: data })
     } catch (e: any) {
@@ -348,7 +349,7 @@ export function fetchGapManual(forEditing = false) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: GAPMANUAL_START })
-      const { data: { data } } = await axiosInstance.get(
+      const { data: { data } } = await axios.get(
           `/api/gapSimulation?forEditing=${forEditing}`,
           withToken()
       )
@@ -364,7 +365,7 @@ export function fetchCorrespondentCurrent() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: CORRESPONDENT_CURRENT_START })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           '/api/correspondent/current_state',
           withToken()
       )
@@ -387,7 +388,7 @@ export function fetchLiquidityCurrent() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: LIQUIDITY_CURRENT_START })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           '/api/liquidity/current_state',
           withToken()
       )
@@ -410,7 +411,7 @@ export function fetchGap() {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: GAP_START })
-      const { data: { rows } } = await axiosInstance.get(
+      const { data: { rows } } = await axios.get(
           '/api/gap',
           withToken()
       )
@@ -425,7 +426,7 @@ export function fetchGap() {
 export function updateCBN(data: any) {
   return async function(dispatch: Dispatch) {
     try {
-      await axiosInstance.put(
+      await axios.put(
           `/api/calcfor/updatecbn`,
           data,
           withToken()

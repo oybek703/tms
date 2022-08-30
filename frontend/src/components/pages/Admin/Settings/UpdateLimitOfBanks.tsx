@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper'
 import { CardContent, makeStyles, TableContainer } from '@material-ui/core'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
-import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
+import { withToken } from '../../../../utils/axiosUtils'
 import { formatNumber, getErrorMessage } from '../../../../utils'
 import { toast } from 'react-toastify'
 import TableHead from '@material-ui/core/TableHead'
@@ -22,6 +22,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
@@ -55,7 +56,7 @@ const UpdateLimitOfBanks = () => {
   async function handleDatesChange(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     try {
-      await axiosInstance.post(
+      await axios.post(
           '/api/banklimits/updateDates',
           { beginDate, endDate },
           withToken()
@@ -74,7 +75,7 @@ const UpdateLimitOfBanks = () => {
 
   async function handleEdit() {
     try {
-      await axiosInstance.post(
+      await axios.post(
           '/api/banklimits/updateLimit',
           { ...editingCell, newLimit },
           withToken()

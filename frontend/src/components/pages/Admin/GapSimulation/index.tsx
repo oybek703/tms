@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
+import { withToken } from '../../../../utils/axiosUtils'
 import { toast } from 'react-toastify'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -15,6 +15,7 @@ import GapSimulationDialog from './GapSimulationDialog'
 import { makeStyles } from '@material-ui/core'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   buttonsRow: {
@@ -86,7 +87,7 @@ const GapSimulation = () => {
 
   const handleEdit = useCallback(async function handleEdit() {
     try {
-      await axiosInstance.post(
+      await axios.post(
           '/api/gapSimulation/update',
           {
             colName: editingCell['colName'],
@@ -131,7 +132,7 @@ const GapSimulation = () => {
         'Вы уверены, что хотите сохранить изменения?')
     if (option) {
       try {
-        await axiosInstance.put(
+        await axios.put(
             '/api/gapSimulation/saveChanges',
             {},
             withToken()

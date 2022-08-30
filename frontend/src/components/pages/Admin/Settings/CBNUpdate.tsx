@@ -10,8 +10,9 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import Dialog from '@material-ui/core/Dialog'
-import axiosInstance, { withToken } from '../../../../utils/axiosInstance'
+import { withToken } from '../../../../utils/axiosUtils'
 import Alert from '../../../UI/Layout/Alert'
+import axios from 'axios'
 
 const CbnUpdate = () => {
   const [updateMsg, setUpdateMsg] = useState('')
@@ -24,7 +25,7 @@ const CbnUpdate = () => {
     event.preventDefault()
     if (toDate > fromDate) {
       try {
-        const { data: { message } } = await axiosInstance.put(
+        const { data: { message } } = await axios.put(
             `/api/calcfor/updatecbn`,
             { fromDate, toDate, cbNorm },
             withToken()

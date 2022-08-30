@@ -2,13 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import store from '../redux/store'
 import { LOGOUT } from '../redux/actions/types'
 
-const productionMode = process.env.NODE_ENV === 'production'
-
-const axiosInstance = axios.create({
-  baseURL: `http://${productionMode ? process.env.REACT_APP_SERVER_IP : 'localhost'}:4200`
-})
-
-axiosInstance.interceptors.request.use(
+axios.interceptors.request.use(
     function(config: AxiosRequestConfig) {
       if (config && config.url && config.url.includes('dashboard')) {
         setTimeout(function() {
@@ -22,7 +16,7 @@ axiosInstance.interceptors.request.use(
     }
 )
 
-axiosInstance.interceptors.response.use(
+axios.interceptors.response.use(
     function(response) {
       return response
     },
@@ -47,5 +41,3 @@ export function withToken() {
     }
   }
 }
-
-export default axiosInstance
