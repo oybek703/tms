@@ -33,8 +33,8 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     nsfrData = []
   } = rows
   const classes = useStyles()
-  const ForeginCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
-  const NationalCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
+  const foreignCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
+  const nationalCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
   return (
     <Fragment>
       <TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
@@ -63,12 +63,12 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
       <br/>
       <div className={classes.chartContainer}>
         <LcrAndNsfrTable halfWidth month={months[1]} data={lcrData}/>
-        <ForeignCurrencyChart series={ForeginCurrency} categories={months.slice(0, 6)}/>
+        <ForeignCurrencyChart series={foreignCurrency} categories={months.slice(0, 6)}/>
       </div>
       <br/>
       <div className={classes.chartContainer}>
         <LcrAndNsfrTable halfWidth data={nsfrData} month={months[1]}/>
-        <NationalCurrencyChart series={NationalCurrency} categories={months.slice(0, 6)}/>
+        <NationalCurrencyChart series={nationalCurrency} categories={months.slice(0, 6)}/>
       </div>
     </Fragment>
   )

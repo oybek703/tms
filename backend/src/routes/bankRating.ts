@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { admin, auth } from './../middleware/auth'
+import { admin, auth } from '../middleware/auth'
 import { getAllBanks } from '../controllers/bankRating'
 
 const router = Router()

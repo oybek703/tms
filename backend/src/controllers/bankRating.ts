@@ -1,4 +1,4 @@
-import { getData } from './../models/db_apis'
+import { getData } from '../models/db_apis'
 import asyncMiddleware from './../utils/async'
 import { Request, Response } from 'express'
 

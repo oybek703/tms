@@ -50,14 +50,16 @@ function renderOptions(values: any, categories: any) {
       enabled: true,
       textAnchor: 'middle',
       style: {
-        colors: ['#fff']
+        colors: ['#666']
       },
       formatter: function(val: number, opt: any) {
         return val
       },
       offsetX: 0,
-      offsetY: -3,
       dropShadow: {
+        enabled: true
+      },
+      background: {
         enabled: true
       }
     },
@@ -112,6 +114,6 @@ const ForeignCurrencyChart: React.FC<ForeignCurrencyChartProps> = ({ series = []
       </CardContent>
     </Card>
   )
-} /* Динамика корсчета по дням */
+} /* Сумма отклонения(дефицит) на конец месяца (Ин.вал. (USD екв.)) */
 
 export default ForeignCurrencyChart

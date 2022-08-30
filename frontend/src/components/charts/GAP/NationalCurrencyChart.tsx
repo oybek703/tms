@@ -50,37 +50,16 @@ function renderOptions(values: any, categories: any) {
     dataLabels: {
       enabled: true,
       textAnchor: 'middle',
-      //   style: {
-      //     colors: ['#fff']
-      //   },
       formatter: function(val: number, opt: any) {
         return formatNumber(val)
       },
       background: {
-        enabled: true,
-        foreColor: '#fff',
-        padding: 4,
-        borderRadius: 2,
-        borderWidth: 1,
-        borderColor: '#fff',
-        opacity: 0.9,
-        dropShadow: {
-          enabled: false,
-          top: 1,
-          left: 1,
-          blur: 1,
-          color: '#000',
-          opacity: 0.45
-        }
+        enabled: true
       },
       style: {
-        fontSize: '14px',
-        fontFamily: 'Helvetica, Arial, sans-serif',
-        fontWeight: 'bold',
-        colors: undefined
+        colors: ['#666']
       },
       offsetX: 0,
-      offsetY: -30,
       dropShadow: {
         enabled: false,
         top: 1,
@@ -117,8 +96,7 @@ function renderOptions(values: any, categories: any) {
     }
   }
 
-  const chart = new ApexCharts(document.querySelector('#national_curreny_chart'),
-      options)
+  const chart = new ApexCharts(document.querySelector('#national_curreny_chart'), options)
   chart.render()
 }
 
@@ -141,6 +119,6 @@ const NationalCurrencyChart: React.FC<NationalCurrencyChartProps> = ({ series = 
       </CardContent>
     </Card>
   )
-} /* Динамика корсчета по дням */
+} /* Сумма отклонения(дефицит) на конец месяца (Нац.вал. (UZS)) */
 
 export default NationalCurrencyChart
