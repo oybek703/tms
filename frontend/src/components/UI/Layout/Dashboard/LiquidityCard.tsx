@@ -30,21 +30,25 @@ const useStyles = makeStyles({
     padding: 0
   },
   totalValue: {
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: '1.4em'
   },
   secondaryText: {
     lineHeight: 0,
     color: '#000',
     fontSize: '0.8em',
-    fontWeight: 700
+    fontWeight: 700,
+    marginTop: 5
   },
   natValue: {
     fontSize: '1.3em',
-    fontWeight: 300
+    fontWeight: 400
   },
   labelPart: {
     borderRight: '2px dashed #ddd'
+  },
+  mainText: {
+    transform: 'translateY(4px)'
   }
 })
 
@@ -63,7 +67,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
         <Grid item xs={6}>
           <Grid container justifyContent='space-around'
             alignItems='baseline' className={classes.labelPart}>
-            <Grid item>
+            <Grid item className={classes.mainText}>
               <span className={classes.totalText}>{splittedLabel[0]}</span> {' '}
               <span className={classes.totalSecondaryText}>{splittedLabel[1]}</span>
             </Grid>

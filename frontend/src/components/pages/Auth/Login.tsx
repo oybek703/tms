@@ -127,7 +127,7 @@ const LoginPage = () => {
         <Card classes={{ root: classes.form }} elevation={12}
           variant='elevation'>
           <CardContent>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete='on' autoSave='on'>
               <Grid container className={classes.formFields}
                 justifyContent='center'>
                 <TextField

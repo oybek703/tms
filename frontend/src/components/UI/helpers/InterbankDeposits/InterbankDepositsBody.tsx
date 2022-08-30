@@ -4,12 +4,17 @@ import { makeStyles, TableRow } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableBody from '@material-ui/core/TableBody'
+import useTypedSelector from '../../../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
-  weighted_percent: {
+  red_cell: {
     background: 'red',
     color: 'white',
+    fontWeight: 'bold'
+  },
+  red_text: {
+    color: 'red',
     fontWeight: 'bold'
   }
 }))
@@ -21,10 +26,23 @@ interface InterbankDepositsBodyProps {
     cap?: any
 }
 
+function formatReportDate(date: Date) {
+  function formatToTen(val: Number) {
+    return val < 10 ? `0${val}` : val
+  }
+  const newDate = new Date(date)
+  const dateYear = newDate.getFullYear()
+  const dateMonth = newDate.getMonth() + 1
+  const dateDay = newDate.getDate()
+  return `${formatToTen(dateDay)}.${formatToTen(dateMonth)}.${dateYear}`
+}
+
 const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
   rows = [], extraCurrency,
   isInterbank = false, cap = <></> }) => {
   const classes = useStyles()
+  const { reportDate } = useTypedSelector(state => state.date)
+  const formattedReportDate = formatReportDate(reportDate)
   const currencies = ['сум', 'доллар', 'евро']
   if (extraCurrency) currencies.push(extraCurrency)
   return (
@@ -44,7 +62,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
                 <TableCell align='center'>
                   {b['BEGIN_DATE'] === '0' || !b['BEGIN_DATE'] ? '' : (isInterbank ? formatOneDate(b['BEGIN_DATE']) : b['BEGIN_DATE'])}
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align='center' className={formattedReportDate === b['END_DATE'] ? classes.red_text : ''}>
                   {b['END_DATE'] === '0' || !b['END_DATE'] ? '' : (isInterbank ? formatOneDate(b['END_DATE']) : b['END_DATE'])}
                 </TableCell>
                 <TableCell align='center'>{formatNumber(b['PERCENT_RATE'])}%</TableCell>
@@ -59,8 +77,8 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
               <TableCell className={classes.noWrap} align='center'>
                 <b>{formatNumber(((rows[j] || {}).sumRow || [])[1])}</b>
               </TableCell>
-              <TableCell colSpan={2} className={classes.weighted_percent}>Средневзвешенные % ставка</TableCell>
-              <TableCell className={`${classes.noWrap} ${classes.weighted_percent}`} align='center'>
+              <TableCell colSpan={2} className={classes.red_cell}>Средневзвешенные % ставка</TableCell>
+              <TableCell className={`${classes.noWrap} ${classes.red_cell}`} align='center'>
                 <b>{formatNumber(((rows[j] || {}).sumRow || [])[2])}%</b>
               </TableCell>
               <TableCell className={classes.noWrap} align='center'><b>{formatNumber(((rows[j] || {}).sumRow || [])[3])}</b></TableCell>
