@@ -19,6 +19,7 @@ backend/config/data.ts
 backend/data/*
 backend/oracle/*
 backend/changed_codes.txt
+backend/benchmarking/*
 
 # build files
 backend/build/*

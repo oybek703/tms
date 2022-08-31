@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import { chartSubtitle, chartTooltip, formatNumber } from '../../../utils'
 
-function renderOptions(values, data) {
+function renderOptions(values: any, data: any) {
   const colors = [
     '#00B050',
     '#f38003',
@@ -18,6 +18,14 @@ function renderOptions(values, data) {
       ...chartSubtitle('в экв. сум')
     },
     tooltip: { ...chartTooltip() },
+    dataLabels: {
+      style: {
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
+      }
+    },
     colors,
     series: values,
     chart: {
@@ -41,7 +49,7 @@ function renderOptions(values, data) {
     }],
     legend: {
       show: true,
-      formatter: function(label, opts) {
+      formatter: function(label: string, opts: any) {
         return label + ' - ' + formatNumber(data[opts.seriesIndex]*Math.pow(10, 6))
       },
       position: 'left',
@@ -53,10 +61,15 @@ function renderOptions(values, data) {
   chart.render()
 }
 
-const GMClassification = ({ series = [], data = [] }) => {
+interface GMClassificationProps {
+  series: any
+  data: any
+}
+
+const GMClassification: React.FC<GMClassificationProps> = ({ series = [], data = [] }) => {
   useEffect(() => {
     if (series.length) {
-      document.querySelector('#gm_classification').innerHTML=''
+      document.querySelector('#gm_classification')!.innerHTML=''
       renderOptions(series, data)
     }
   }, [series, data])

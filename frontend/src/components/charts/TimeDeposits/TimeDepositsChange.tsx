@@ -47,8 +47,10 @@ async function renderOptions(series: any = []) {
       textAnchor: 'middle',
       offsetY: 20,
       style: {
-        fontSize: '14px',
-        colors: ['#000']
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
       }
     },
     fill: {

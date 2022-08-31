@@ -23,7 +23,11 @@ function renderOptions(series: any, categories: any) {
     },
     dataLabels: {
       style: {
-        fontSize: 18
+        fontSize: 15,
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
       }
     },
     tooltip: { ...chartTooltip() },

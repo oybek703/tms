@@ -44,7 +44,13 @@ function renderOptions(series: any) {
       colors
     },
     dataLabels: {
-      enabled: true
+      enabled: true,
+      style: {
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
+      }
     },
     responsive: [{
       breakpoint: 480,

@@ -46,8 +46,10 @@ function renderOptions(series: any) {
     dataLabels: {
       show: true,
       style: {
-        colors: ['#fff'],
-        fontSize: 14
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
       }
     }
   }

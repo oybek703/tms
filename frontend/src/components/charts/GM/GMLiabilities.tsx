@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import { chartSubtitle, chartTooltip, formatChartLegend } from '../../../utils'
 
-function renderOptions(values) {
+function renderOptions(values: any) {
   const colors = [
     '#f38003',
     '#00B050',
@@ -24,6 +24,14 @@ function renderOptions(values) {
       width: 600,
       type: 'pie',
       height: 280
+    },
+    dataLabels: {
+      style: {
+        colors: ['#666']
+      },
+      background: {
+        enabled: true
+      }
     },
     colors,
     labels: [
@@ -49,7 +57,7 @@ function renderOptions(values) {
     }],
     legend: {
       show: true,
-      formatter: function(label, opts) {
+      formatter: function(label: string, opts: any) {
         return formatChartLegend(label, opts)
       },
       position: 'left',
@@ -63,10 +71,14 @@ function renderOptions(values) {
   chart.render()
 }
 
-const GMLiabilities = ({ series = [] }) => {
+interface GMLiabilitiesProps {
+  series: any
+}
+
+const GMLiabilities: React.FC<GMLiabilitiesProps> = ({ series = [] }) => {
   useEffect(() => {
     if (series.length) {
-      document.querySelector('#gm_liablities').innerHTML=''
+      document.querySelector('#gm_liablities')!.innerHTML=''
       renderOptions(series)
     }
   }, [series])
