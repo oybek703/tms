@@ -1,6 +1,5 @@
 import 'colors'
-import { join, resolve } from 'path'
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
 import { checkConnection } from './src/models/db_apis'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -67,17 +66,6 @@ app.use('/api/gapSimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
 app.use('/api/bankRating', bankRatingRoutes)
-
-if (process.env.NODE_ENV === 'development') {
-  app.get('/', (req: Request, res: Response) => {
-    res.send('API is running...')
-  })
-} else {
-  app.use(express.static(join(__dirname, '../client')))
-  app.get('*', (req: Request, res: Response) => {
-    res.sendFile(resolve(__dirname, '../client', 'index.html'))
-  })
-}
 
 app.use(notFoundPage)
 app.use(errorHandler)
