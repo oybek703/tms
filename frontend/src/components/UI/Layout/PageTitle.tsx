@@ -12,32 +12,36 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     padding: '10px',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'flex-start'
   },
   title: {
     textTransform: 'uppercase',
     backgroundColor: 'rgb(248 63 55)',
     padding: '5px 10px',
     borderRadius: 5,
-    color: 'white'
+    color: 'white',
+    marginRight: 10
   }
 }))
 
 interface PageTitleProps {
     title?: string
+    additionalContent?: JSX.Element
 }
 
-const PageTitle: React.FC<PageTitleProps> = ({ title }) => {
+const PageTitle: React.FC<PageTitleProps> = ({ title, additionalContent }) => {
   const classes = useStyles()
   return (
     <>
       <Card variant='outlined' className={classes.main}>
         <Grid
           classes={{ root: classes.cardContent }}
-          component={Grid} container
-          justifyContent='space-between'>
+          component={Grid} container alignItems='center'>
           <Typography className={classes.title}
-            variant='body1'><b>{title}</b></Typography>
+            variant='body1'>
+            <b>{title}</b>
+          </Typography>
+          {additionalContent}
         </Grid>
       </Card>
     </>

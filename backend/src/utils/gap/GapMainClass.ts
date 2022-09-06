@@ -1,5 +1,4 @@
 import MainClass from '../mainClass'
-import { getData } from '../../models/db_apis'
 import { getGapSubOrDivideByMonth, getGapTotal } from './gap_pure_functions'
 
 /* eslint-disable camelcase */
@@ -16,10 +15,6 @@ class GapMainClass extends MainClass {
       NATIONAL_CURRENCY,
       FOREIGN_CURRENCY
     })
-  }
-
-  updateGapQuery() {
-    return `BEGIN GAP_PROCEDURE(); END;`
   }
 
   formatQuery(date: string, whereQuery: string) {
@@ -143,10 +138,6 @@ class GapMainClass extends MainClass {
       INDICATOR_NAME,
       ...data
     }
-  }
-
-  async updateGap() {
-    await getData(this.updateGapQuery())
   }
 
   async getOneRow(role: string, fromManual: boolean = false) {
@@ -386,7 +377,6 @@ class GapMainClass extends MainClass {
   } /* 15% из забалансовых инструментов */
 
   async getRows() {
-    await this.updateGap()
     const months = await this.getMonths()
     const sourceOfLiquidity = await Promise.all([
       this.vla(),

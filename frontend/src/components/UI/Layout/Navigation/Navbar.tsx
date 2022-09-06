@@ -140,10 +140,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                 <Button component={Link} to='/'
                   onClick={handleLogoClick}
                   className={classes.main_logo}>
-                  <img src={process.env.PUBLIC_URL +
-                                  '/logo.png'}
-                  width='25' height='25'
-                  alt="Treasury Reports"/>
+                  <img src={process.env.PUBLIC_URL + '/logo.png'}
+                    width='22' height='22'
+                    alt="Treasury Reports"/>
                   <b style={{ paddingBottom: 3 }}>&nbsp;Treasury Management System</b>
                 </Button>
                 {pathname === '/' && !lastUpdateLoading && lastUpdate && <LastUpdate label={lastUpdate}/>}

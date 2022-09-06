@@ -4,11 +4,21 @@
 import { Request, Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getGapTable from '../../utils/gap'
+import { getData } from '../../models/db_apis'
 
-const getGap = asyncMiddleware(async (req: Request, res: Response) => {
+export const getGap = asyncMiddleware(async (req: Request, res: Response) => {
   const gapTable = await getGapTable()
   res.status(200).json({ success: true, rows: gapTable })
 })
 
-export default getGap
+// @desc Get GAP Last Update time
+// @route /api/gap/lastGapUpdate
+// access Private
+export const getGapLastUpdate = asyncMiddleware(async (req: Request, res: Response) => {
+  const { rows: [{ lastGapUpdate }] } = await getData(
+      `SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') 
+              AS "lastGapUpdate" FROM   USER_SCHEDULER_JOBS WHERE  JOB_NAME = UPPER('GAP_Analysis')`
+  )
+  res.status(200).json({ success: true, lastGapUpdate })
+})
 

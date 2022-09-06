@@ -64,15 +64,14 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value })
     switch (name) {
       case 'username':
-                /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(
-                    value) ? setUsernameHelperText('') : setUsernameHelperText(
-                        'Please enter valid username.')
+                /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value) ?
+                  setUsernameHelperText('') :
+                  setUsernameHelperText('Please enter valid username.')
         break
       case 'password':
                 value.length >= 6 ?
-                    setPasswordHelperText('') :
-                    setPasswordHelperText(
-                        'Password should contain at least 6 characters.')
+                  setPasswordHelperText('') :
+                    setPasswordHelperText('Password should contain at least 6 characters.')
         break
       default:
         return

@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 
-export default function LastUpdate({ label = 'LAST UPDATE' }) {
+export default function LastUpdate({ label = 'LAST UPDATE', title = 'Последнее обновление' }) {
   const classes = useStyles()
 
   return (
-    <Tooltip title='Последнее обновление' arrow TransitionComponent={Zoom} placement='right'>
+    <Tooltip title={title} arrow TransitionComponent={Zoom} placement='right'>
       <div className={classes.root}>
         <Chip classes={{
           labelSmall: classes.chipLabelSmall

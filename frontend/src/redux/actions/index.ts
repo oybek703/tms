@@ -11,7 +11,7 @@ import {
   LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT, NOSTROMATRIX_FAIL, NOSTROMATRIX_START, NOSTROMATRIX_SUCCESS, OPERATIONAL_DAYS_FAIL,
   OPERATIONAL_DAYS_START, OPERATIONAL_DAYS_SUCCESS, UPDATE_CBN, USER_EXITED,
   USERS_FAIL, USERS_START, USERS_SUCCESS, GETUSER_START, GETUSER_FAIL, GETUSER_SUCCESS, EDITUSER_START, EDITUSER_SUCCESS, EDITUSER_REFRESH,
-  EDITUSER_FAIL
+  EDITUSER_FAIL, GAP_LAST_UPDATE_START, GAP_LAST_UPDATE_SUCCESS, GAP_LAST_UPDATE_FAIL
 } from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
 import { withToken } from '../../utils/axiosUtils'
@@ -419,6 +419,22 @@ export function fetchGap() {
     } catch (e: any) {
       const message = getErrorMessage(e)
       dispatch({ type: GAP_FAIL, payload: message })
+    }
+  }
+}
+
+export function getLastGapUpdate() {
+  return async function(dispatch: Dispatch) {
+    try {
+      dispatch({ type: GAP_LAST_UPDATE_START })
+      const { data: { lastGapUpdate } } = await axios.get(
+          `/api/gap/lastGapUpdate`,
+          withToken()
+      )
+      dispatch({ type: GAP_LAST_UPDATE_SUCCESS, payload: lastGapUpdate })
+    } catch (e: any) {
+      const error = getErrorMessage(e)
+      dispatch({ type: GAP_LAST_UPDATE_FAIL, payload: error })
     }
   }
 }

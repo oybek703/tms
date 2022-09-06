@@ -23,7 +23,7 @@ export const getOperDays = asyncMiddleware(async (req: Request, res: Response) =
 // access Public
 export const getLastUpdateTime = asyncMiddleware(async (req: Request, res: Response) => {
   const query = `
-      SELECT TO_CHAR(LOG_DATE, 'DD-month, HH24:MM:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') LAST_UPDATE_TIME
+      SELECT TO_CHAR(LOG_DATE, 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') LAST_UPDATE_TIME
       FROM (SELECT LOG_DATE FROM USER_SCHEDULER_JOB_LOG WHERE JOB_NAME = 'DASHBOARD_JOB'
             ORDER BY LOG_DATE DESC)
       WHERE ROWNUM = 1

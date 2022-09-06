@@ -1,19 +1,21 @@
-import React, { Fragment, memo } from 'react'
+import React, { Fragment, memo, useEffect } from 'react'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableContainer from '@material-ui/core/TableContainer'
 import Paper from '@material-ui/core/Paper'
-import { formatNumber, formatOneDate } from '../../utils'
+import { formatOneDate } from '../../utils'
 import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
 import { makeStyles } from '@material-ui/core'
 import ForeignCurrencyChart from '../charts/GAP/ForeignCurrencyChart'
 import NationalCurrencyChart from '../charts/GAP/NationalCurrencyChart'
+import useActions from '../../hooks/useActions'
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: '90vh'
+    maxHeight: '90vh',
+    position: 'relative'
   },
   chartContainer: {
     display: 'flex',
@@ -32,9 +34,13 @@ const GAPTable: React.FC<{rows: any}> = function({ rows = {} }) {
     lcrData = [],
     nsfrData = []
   } = rows
+  const { getLastGapUpdate } = useActions()
   const classes = useStyles()
   const foreignCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
   const nationalCurrency = vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
+  useEffect(() => {
+    getLastGapUpdate()
+  }, [getLastGapUpdate])
   return (
     <Fragment>
       <TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
