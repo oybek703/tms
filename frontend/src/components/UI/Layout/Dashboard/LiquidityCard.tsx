@@ -3,8 +3,9 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core'
-import { formatNumber } from '../../../../utils'
+import { formatDate, formatNumber, formatOneDate } from '../../../../utils'
 import theme from '../../theme'
+import useTypedSelector from '../../../../hooks/useTypedSelector'
 
 const useStyles = makeStyles({
   greens: {
@@ -49,6 +50,19 @@ const useStyles = makeStyles({
   },
   mainText: {
     transform: 'translateY(4px)'
+  },
+  wrapperCard: {
+    position: 'relative'
+  },
+  stateCard: {
+    position: 'absolute',
+    left: -2,
+    top: 0,
+    background: 'black',
+    fontSize: '0.7em',
+    color: 'white',
+    opacity: '0.4',
+    padding: 0.5
   }
 })
 
@@ -57,13 +71,23 @@ interface LiquidityCardProps {
     label: string
 }
 
+function StateCard() {
+  const classes = useStyles()
+  return <span className={classes.stateCard}>
+          Текущие состояние
+  </span>
+}
+
 const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛА' }) => {
   const [lastTotal, lastNat, lastForeign] = data
+  const { reportDate } = useTypedSelector(state => state.date)
+  const isToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
   const classes = useStyles()
   const splittedLabel = label.split(' ')
   return (
     <Grid className={classes.liquidityCard} item component={Paper} variant='outlined'>
-      <Grid container justifyContent='space-between' alignItems='center'>
+      <Grid container className={classes.wrapperCard} justifyContent='space-between' alignItems='center'>
+        {isToday && label === 'ЮЛА (HQLA)' && <StateCard/>}
         <Grid item xs={6}>
           <Grid container justifyContent='space-around'
             alignItems='baseline' className={classes.labelPart}>

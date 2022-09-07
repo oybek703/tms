@@ -34,7 +34,6 @@ export async function checkPagePermission(req: Request, res: Response, next: Nex
     if (ALLOWED_PAGES === 'ALL') return next()
     const { pathname } = parse(req.originalUrl)
     const path = `/${pathname.split('/')[2]}`
-    console.log(path)
     if (!ALLOWED_PAGES) return next(new ErrorResponse(403, 'access_denied'))
     const allowedPagesArray = ALLOWED_PAGES.split(',')
     if (!allowedPagesArray.includes(path)) return next(new ErrorResponse(403, 'access_denied'))
