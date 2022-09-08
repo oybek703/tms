@@ -24,15 +24,11 @@ const Dashboard = () => {
   const { dashboard, loading, error } = useTypedSelector((state) => state.dashboard)
   const {
     dashboardCorrespondent = {},
-    creditPart = [],
-    disaggregatedByTime = [],
     dashboardCurrencyPosition = {},
     timeDeposits = [],
     currencyMfi = [],
     currencyTimeDeposits = [],
-    issuedCredits = [],
     interbankDeposits = [],
-    fundingStructure = [],
     currencyMBD = [],
     vla = {},
     lcr = {},
@@ -105,10 +101,7 @@ const Dashboard = () => {
                       },
                       {
                         name: 'Кредитный портфель',
-                        panel: <CreditPortfolioTab creditPart={creditPart}
-                          issuedCredits={issuedCredits}
-                          disaggregatedByTime={disaggregatedByTime}
-                          fundingStructure={fundingStructure}/>
+                        panel: <CreditPortfolioTab />
                       },
                       { name: 'Dashboard', panel: <DashboardMonthly/> }
                     ]}/>

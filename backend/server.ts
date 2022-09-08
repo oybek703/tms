@@ -8,6 +8,7 @@ import errorHandler from './src/middleware/errorHandler'
 import userRoutes from './src/routes/Admin/auth'
 import operDayRoutes from './src/routes/operDays'
 import dashboardRoutes from './src/routes/Analytics/dashboard'
+import creditDataRoutes from './src/routes/Analytics/creditData'
 import mainIndicatorsRoutes from './src/routes/Treasury/mainIndicators'
 import profitAndLostRoutes from './src/routes/Treasury/profitAndLost'
 import capitalRoutes from './src/routes/Treasury/capital'
@@ -52,6 +53,7 @@ app.use('/api/calcfor', calcForRoutes)
 app.use('/api/currencyposition', currencyPositionRoutes)
 app.use('/api/plat', platRoutes)
 app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/creditData', creditDataRoutes)
 app.use('/api/interbankdeposits', interbankDepositsRoutes)
 app.use('/api/topdeposits', topDepositsRoutes)
 app.use('/api/timedepoclients', timeDepoClientsRoutes)

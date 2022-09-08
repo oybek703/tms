@@ -22,6 +22,7 @@ const ReloadBtn = () => {
     localStorage.removeItem('fcrb')
     localStorage.removeItem('calcfor')
     localStorage.removeItem('plat')
+    localStorage.removeItem('creditData')
     getLastUpdateTime()
     fetchDashboard(reportDate)
   }

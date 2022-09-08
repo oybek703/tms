@@ -9,7 +9,7 @@ import profitAndLost from './Treasury/profitAndLostReducer'
 import currencyPosition from './Treasury/currenncyPositionReducer'
 import auth from './Admin/userReducer'
 import users from './Admin/userListReducer'
-import { dashboard, dashboardActiveTab } from './Anayltics/dashboardReducer'
+import { creditData, dashboard, dashboardActiveTab } from './Anayltics/dashboardReducer'
 import addUser from './Admin/addUserReducer'
 import calcFor from './Treasury/calcForReducer'
 import gm from './Treasury/GMReducer'
@@ -38,6 +38,7 @@ const rootReducer = combineReducers({
   lastUpdate,
   dashboard,
   dashboardActiveTab,
+  creditData,
   dashboardMonthly,
   mainIndicators,
   profitAndLost,
