@@ -57,12 +57,12 @@ const useStyles = makeStyles({
   stateCard: {
     position: 'absolute',
     left: -2,
-    top: 0,
-    background: 'black',
-    fontSize: '0.7em',
+    bottom: -6,
+    background: '#7794aa',
+    fontSize: '0.65em',
+    fontWeight: 'bold',
     color: 'white',
-    opacity: '0.4',
-    padding: 0.5
+    padding: 0.1
   }
 })
 

@@ -12,9 +12,9 @@ interface CalcForProps {
 
 const CalcFor: React.FC<CalcForProps> = ({ forDashboard = false }) => {
   const { fetchCalcFor } = useActions()
-  const { calcfor = [], loading, error } = useTypedSelector(
-      (state) => state.calcFor)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { calcfor = [], loading, error } = useTypedSelector(state => state.calcFor)
+  console.log(calcfor)
+  const { reportDate } = useTypedSelector(state => state.date)
   const { DATE_VALUE: startDate } = [...calcfor].shift() || {}
   const { DATE_VALUE: endDate } = [...calcfor].pop() || {}
   useEffect(() => {
