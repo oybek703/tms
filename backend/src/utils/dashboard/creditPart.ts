@@ -15,7 +15,7 @@ class CreditPart extends DashboardMainClass {
     formatQuery(date: string, whereQuery = '') {
       return `SELECT
                     TRUNC(SUM(TOTAL_LOAN)/POWER(10, 6), 2) SUM
-                FROM CR.VIEW_CREDITS_DWH
+                FROM CR.VIEW_CREDITS_DWH@RISK
                 WHERE
                     OPER_DAY = TO_DATE('${date}', 'DD-MM-YYYY') ${whereQuery}`
     }
@@ -23,18 +23,18 @@ class CreditPart extends DashboardMainClass {
     delayedAndToxicQuery(date: string) {
       return `SELECT (DELAYED + TOXIC) SUM
                 FROM ((SELECT TRUNC(SUM(TOTAL_LOAN) / POWER(10, 6), 2) TOXIC
-                       FROM CR.VIEW_CREDITS_DWH
+                       FROM CR.VIEW_CREDITS_DWH@RISK
                        WHERE OPER_DAY = TO_DATE('${date}', 'DD-MM-YYYY')
                          AND CREDIT_STATUS = 1)),
                      (SELECT TRUNC(SUM(OVERDUE_SALDO) / POWER(10, 6), 2) DELAYED
-                      FROM CR.VIEW_CREDITS_DWH
+                      FROM CR.VIEW_CREDITS_DWH@RISK
                       WHERE OPER_DAY = TO_DATE('${date}', 'DD-MM-YYYY'))`
     }
 
     disaggregatedQuery(date: string, termType: number) {
       return `SELECT
                     TRUNC(SUM(TOTAL_LOAN)/POWER(10, 6), 2) SUM
-                FROM CR.VIEW_CREDITS_DWH
+                FROM CR.VIEW_CREDITS_DWH@RISK
                 WHERE
                     OPER_DAY = TO_DATE('${date}', 'DD-MM-YYYY') 
                   AND 
@@ -44,9 +44,9 @@ class CreditPart extends DashboardMainClass {
     issuedCreditsQuery(date: string, codeCurrency: string) {
       const power = codeCurrency === '000' ? 9 : 10
       return `SELECT ROUND(NVL(SUM(DEBIT_EQUIVAL) / POWER(10, ${power}), 0), 2) AS SUM
-                FROM CR.LOANS_ISSUED_DWH 
+                FROM CR.LOANS_ISSUED_DWH@RISK 
                 WHERE OPER_DAY = (SELECT DECODE((TO_DATE('${date}', 'DD-MM-YYYY')), TRUNC(SYSDATE, 'DD'),
-                              (SELECT MAX(OPER_DAY) FROM CR.LOANS_ISSUED_DWH), TO_DATE('${date}', 'DD-MM-YYYY'))
+                              (SELECT MAX(OPER_DAY) FROM CR.LOANS_ISSUED_DWH@RISK), TO_DATE('${date}', 'DD-MM-YYYY'))
                 FROM DUAL)
                   AND CODE_CURRENCY = ${codeCurrency}`
     }
