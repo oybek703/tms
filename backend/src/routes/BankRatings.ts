@@ -5,7 +5,7 @@ import { getAddedBanks, searchAddedBanks, searchBankIabs } from '../controllers/
 const router = Router()
 
 router.route('/addedBanks').get(auth, admin, getAddedBanks)
-router.route('/searchAllBanks').get(auth, admin, searchBankIabs)
-router.route('/searchAddedBanks').get(auth, admin, searchAddedBanks)
+router.route('/searchAllBanks').post(auth, admin, searchBankIabs)
+router.route('/searchAddedBanks').post(auth, admin, searchAddedBanks)
 
 export default router
