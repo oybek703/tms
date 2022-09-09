@@ -117,79 +117,79 @@ const Banks = () => {
       </Grid>
       <hr/>
       {
-                loading ?
-                    <Loader/> :
-                    error ?
-                        <Alert message={error}/> :
-                        <>
-                          <TableContainer>
-                            {
-                                    allBanks ?
-                                        <Table size='small' className={classes.table}>
-                                          <TableHead>
-                                            <TableRow>
-                                              <TableCell align="center"><b>CODE</b></TableCell>
-                                              <TableCell align="center"><b>NAME</b></TableCell>
-                                              <TableCell align="center"><b>RATING</b></TableCell>
-                                              <TableCell align="center"><b>RESIDENCY</b></TableCell>
-                                            </TableRow>
-                                          </TableHead>
-                                          <TableBody>
-                                            {banks.map((bank: any, i: number) => (
-                                              <TableRow key={i}>
-                                                <TableCell align='center'>{bank['CLIENT_CODE']}</TableCell>
-                                                <TableCell align='center'>{bank['BANK_NAME']}</TableCell>
-                                                <FormControl variant="outlined" className={classes.formControl}>
-                                                  <Select
-                                                    value={bank['RATING_STATUS']}
-                                                    onChange={handleChangeRating}
-                                                    id="demo-simple-select-outlined"
-                                                  >
-                                                    <MenuItem
-                                                      value={'Инвестиционный'}>Инвестиционный</MenuItem>
-                                                    <MenuItem value={'Не инвестиционный'}>Не
-                                                                    инвестиционный</MenuItem>
-                                                  </Select>
-                                                </FormControl>
-                                                <TableCell align='center'>{bank['RESIDENCY']}</TableCell>
-                                              </TableRow>
-                                            ))}
-                                          </TableBody>
-                                        </Table> :
-                                        <Table size='small' className={classes.table}>
-                                          <TableHead>
-                                            <TableRow>
-                                              <TableCell align="center"><b>CODE</b></TableCell>
-                                              <TableCell align="center"><b>NAME</b></TableCell>
-                                              <TableCell align="center"><b>RATING</b></TableCell>
-                                              <TableCell align="center"><b>RESIDENCY</b></TableCell>
-                                            </TableRow>
-                                          </TableHead>
-                                          <TableBody>
-                                            {banks.map((bank: any, i: number) => (
-                                              <TableRow key={i}>
-                                                <TableCell align='center'>{bank['CLIENT_CODE']}</TableCell>
-                                                <TableCell align='center'>{bank['BANK_NAME']}</TableCell>
-                                                <FormControl variant="outlined" className={classes.formControl}>
-                                                  <Select
-                                                    value={bank['RATING_STATUS']}
-                                                    onChange={handleChangeRating}
-                                                    id="demo-simple-select-outlined"
-                                                  >
-                                                    <MenuItem
-                                                      value={'Инвестиционный'}>Инвестиционный</MenuItem>
-                                                    <MenuItem value={'Не инвестиционный'}>Не
-                                                                    инвестиционный</MenuItem>
-                                                  </Select>
-                                                </FormControl>
-                                                <TableCell align='center'>{bank['RESIDENCY']}</TableCell>
-                                              </TableRow>
-                                            ))}
-                                          </TableBody>
-                                        </Table>
-                            }
-                          </TableContainer>
-                        </>
+          loading ?
+              <Loader/> :
+              error ?
+                  <Alert message={error}/> :
+                  <>
+                    <TableContainer>
+                      {
+                        allBanks ?
+                            <Table size='small' className={classes.table}>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell align="center"><b>CODE</b></TableCell>
+                                  <TableCell align="center"><b>NAME</b></TableCell>
+                                  <TableCell align="center"><b>RATING</b></TableCell>
+                                  <TableCell align="center"><b>RESIDENCY</b></TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {banks.map((bank: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell align='center'>{bank['CLIENT_CODE']}</TableCell>
+                                    <TableCell align='center'>{bank['BANK_NAME']}</TableCell>
+                                    <FormControl variant="outlined" className={classes.formControl}>
+                                      <Select
+                                        value={bank['RATING_STATUS']}
+                                        onChange={handleChangeRating}
+                                        id="demo-simple-select-outlined"
+                                      >
+                                        <MenuItem
+                                          value={'Инвестиционный'}>Инвестиционный</MenuItem>
+                                        <MenuItem value={'Не инвестиционный'}>Не
+                                            инвестиционный</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                    <TableCell align='center'>{bank['RESIDENCY']}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table> :
+                            <Table size='small' className={classes.table}>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell align="center"><b>CODE</b></TableCell>
+                                  <TableCell align="center"><b>NAME</b></TableCell>
+                                  <TableCell align="center"><b>RATING</b></TableCell>
+                                  <TableCell align="center"><b>RESIDENCY</b></TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {banks.map((bank: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell align='center'>{bank['CLIENT_CODE']}</TableCell>
+                                    <TableCell align='center'>{bank['BANK_NAME']}</TableCell>
+                                    <FormControl variant="outlined" className={classes.formControl}>
+                                      <Select
+                                        value={bank['RATING_STATUS']}
+                                        onChange={handleChangeRating}
+                                        id="demo-simple-select-outlined"
+                                      >
+                                        <MenuItem
+                                          value={'Инвестиционный'}>Инвестиционный</MenuItem>
+                                        <MenuItem value={'Не инвестиционный'}>Не
+                                            инвестиционный</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                    <TableCell align='center'>{bank['RESIDENCY']}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                      }
+                    </TableContainer>
+                  </>
       }
     </Paper>
   )
