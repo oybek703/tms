@@ -18,7 +18,7 @@ export const getAddedBanks = asyncMiddleware(async (req: Request, res: Response)
 
 export const searchBankIabs = asyncMiddleware(async (req: Request, res: Response) => {
   const { code } = req.body
-  const { rows } = await getData(`select * from ibs.client_current@iabs where code like'${code}%'`)
+  const { rows } = await getData(`select name, code  from ibs.client_current@iabs where code like'${code}%'`)
   res.status(200).json({ success: true, banks: rows })
 })
 
