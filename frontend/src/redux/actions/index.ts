@@ -62,8 +62,7 @@ import { withToken } from '../../utils/axiosUtils'
 import { Dispatch } from 'redux'
 import axios from 'axios'
 
-async function checkCashOrSave(
-    date: string, property = 'capital', dispatch: Dispatch) {
+async function checkCashOrSave(date: string, property = 'capital', dispatch: Dispatch) {
   const queryDate = formatOneDate(date)
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const cacheData = JSON.parse(<string>localStorage.getItem(property))
@@ -101,6 +100,16 @@ async function checkCashOrSave(
 export function fetchDashboard(date: string) {
   return async function(dispatch: Dispatch) {
     await checkCashOrSave(date, 'dashboard', dispatch)
+  }
+}
+
+export function fetchDashboardCreditData(date: string) {
+  return async function(dispatch: Dispatch) {
+    await checkCashOrSave(
+        date,
+        'creditData',
+        dispatch
+    )
   }
 }
 

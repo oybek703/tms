@@ -72,7 +72,7 @@ class CurrencyPositionMainClass extends MainClass {
                        FOR_CURR_RATE,
                        LONG_VAL,
                        SHORT_VAL,
-                       ROUND(((LONG_VAL+SHORT_VAL)*POWER(10, -1))/REG_CAP, 2) AS POS_RATIO /* TODO THIS REQUIRES TO FIX REGULAR CAPITAL */
+                       ROUND(((LONG_VAL+SHORT_VAL)*POWER(10, 2))/REG_CAP, 2) AS POS_RATIO /* TODO THIS REQUIRES TO FIX REGULAR CAPITAL */
                        /* ONE MORE TODO THIS IS CHANGED IN 10.02.2022 DUE TO REGULATORY CAPITAL */
                 FROM (SELECT
                    CURRENCY_CODE,
@@ -99,7 +99,8 @@ class CurrencyPositionMainClass extends MainClass {
                             ELSE TRUNC((REQUIREMENTS+CONTINGENCY_CLAIMS-(LIABILITIES+CONTINGENCY_LIABILITIES))*FOR_CURR_RATE, 2)
                             END
                     FROM DUAL) AS SHORT_VAL, /* короткая */
-                   (SELECT EQUIVAL FROM REGULATORYCAPITAL WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) AS REG_CAP
+                   (SELECT EQUIVAL FROM (SELECT * FROM REGULATORYCAPITAL ORDER BY OPER_DAY DESC)
+                    WHERE OPER_DAY < TO_DATE('${date}', 'DD-MM-YYYY') AND ROLE = 'R_C' AND ROWNUM = 1) AS REG_CAP
                FROM (SELECT * FROM CURRENCYPOSITION ORDER BY OPER_DAY DESC)
                WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND CURRENCY_CODE='${whereQuery}' AND ROWNUM=1)`
     }

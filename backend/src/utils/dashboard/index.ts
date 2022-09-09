@@ -1,5 +1,4 @@
 import DashboardCorrespondent from './dashboardCorrespondent'
-import CreditPart from './creditPart'
 import DashboardCurrencyPosition from './dashboardCurrencyPosition'
 import Deposits from './Deposits'
 import DashboardLiquidity from './dashboardLiquidity'
@@ -9,7 +8,6 @@ import BankLimits from './bankLimits'
 async function getDashboardData(date: string) {
   const [
     dashboardCorrespondent,
-    { creditPart1, disaggregatedByTime, issuedCredits },
     dashboardCurrencyPosition,
     { timeDeposits, currencyMfi,
       currencyTimeDeposits, interbankDeposits,
@@ -19,7 +17,6 @@ async function getDashboardData(date: string) {
     bankLimits
   ] = await Promise.all([
     new DashboardCorrespondent(date).getRows(),
-    new CreditPart(date).getRows(),
     new DashboardCurrencyPosition(date).getRows(),
     new Deposits(date).getRows(),
     new DashboardLiquidity(date).getRows(),
@@ -28,13 +25,10 @@ async function getDashboardData(date: string) {
   ])
   return {
     dashboardCorrespondent,
-    creditPart: creditPart1,
-    disaggregatedByTime,
     dashboardCurrencyPosition,
     timeDeposits,
     currencyMfi,
     currencyTimeDeposits,
-    issuedCredits,
     interbankDeposits,
     fundingStructure,
     currencyMBD,

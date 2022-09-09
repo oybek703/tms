@@ -9,14 +9,14 @@ class RiskPartClass extends DashboardMonthlyMainClass {
   creditPortfolioQuery(curr: string) {
     const onlyTwo = `SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                         FROM   CR.VIEW_CREDITS_DWH
+                         FROM   CR.VIEW_CREDITS_DWH@RISK
                          WHERE  OPER_DAY = TO_DATE('${this.firstDate}', 'dd.mm.yyyy') AND 
                               ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
                          GROUP  BY OPER_DAY
                          UNION
                          SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                         FROM   CR.VIEW_CREDITS_DWH
+                         FROM   CR.VIEW_CREDITS_DWH@RISK
                          WHERE  OPER_DAY = TO_DATE('${this.secondDate}', 'dd.mm.yyyy') AND 
                               ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
                          GROUP  BY OPER_DAY ORDER BY DAT`
@@ -24,16 +24,16 @@ class RiskPartClass extends DashboardMonthlyMainClass {
     const all = `SELECT OPER_DAY                                                       DAT,
                            TO_CHAR(OPER_DAY, 'DD.MM.YYYY') AS DATE_VALUE,
                            ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2)                    AS SUM
-                    FROM CR.VIEW_CREDITS_DWH
+                    FROM CR.VIEW_CREDITS_DWH@RISK
                     WHERE OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'dd.mm.yyyy') AND TO_DATE('${this.secondDate}', 'dd.mm.yyyy')
                       AND ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
                     GROUP BY OPER_DAY ORDER BY DAT`
     const month = `SELECT OPER_DAY DAT,
                                TO_CHAR(TRUNC(ADD_MONTHS(OPER_DAY, 1), 'MM'), 'DD.MM.YYYY')     AS MONTH_BEGIN,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                        FROM   CR.VIEW_CREDITS_DWH
+                        FROM   CR.VIEW_CREDITS_DWH@RISK
                         WHERE  OPER_DAY IN (SELECT MAX(OPER_DAY)
-                                            FROM   CR.VIEW_CREDITS_DWH --Кредитный портфель
+                                            FROM   CR.VIEW_CREDITS_DWH@RISK --Кредитный портфель
                                             WHERE  OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'dd.mm.yyyy')
                                                        AND
                                                        TO_DATE('${this.secondDate}', 'dd.mm.yyyy')
@@ -50,14 +50,14 @@ class RiskPartClass extends DashboardMonthlyMainClass {
   creditPortfolioRateQuery(curr: string) {
     const onlyTwo = `SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN * CREDIT_PERCENT) / POWER(10, 6), 2) AS SUM
-                        FROM   CR.VIEW_CREDITS_DWH
+                        FROM   CR.VIEW_CREDITS_DWH@RISK
                         WHERE  OPER_DAY = TO_DATE('${this.firstDate}', 'dd.mm.yyyy') AND 
                               ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
                         GROUP  BY OPER_DAY
                         UNION
                         SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN * CREDIT_PERCENT) / POWER(10, 6), 2) AS SUM
-                        FROM   CR.VIEW_CREDITS_DWH
+                        FROM   CR.VIEW_CREDITS_DWH@RISK
                         WHERE  OPER_DAY = TO_DATE('${this.secondDate}', 'dd.mm.yyyy') AND 
                               ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
                         GROUP  BY OPER_DAY ORDER BY DAT`
@@ -65,7 +65,7 @@ class RiskPartClass extends DashboardMonthlyMainClass {
     const all = `SELECT OPER_DAY DAT,
                            TO_CHAR(OPER_DAY, 'DD.MM.YYYY') AS DATE_VALUE,
                            ROUND(SUM(TOTAL_LOAN * CREDIT_PERCENT) / POWER(10, 6), 2) AS SUM
-                    FROM   CR.VIEW_CREDITS_DWH
+                    FROM   CR.VIEW_CREDITS_DWH@RISK
                     WHERE  OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'dd.mm.yyyy') 
                         AND TO_DATE('${this.secondDate}', 'dd.mm.yyyy') AND
                         ${curr ? curr === '000' ? `CURRENCY='000'` : `CURRENCY!='000'` : '1=1'}
@@ -73,9 +73,9 @@ class RiskPartClass extends DashboardMonthlyMainClass {
     const month = `SELECT OPER_DAY DAT,
                                TO_CHAR(TRUNC(ADD_MONTHS(OPER_DAY, 1), 'MM'), 'DD.MM.YYYY') AS MONTH_BEGIN,
                                ROUND(SUM(TOTAL_LOAN * CREDIT_PERCENT) / POWER(10, 6), 2) AS SUM
-                        FROM   CR.VIEW_CREDITS_DWH
+                        FROM   CR.VIEW_CREDITS_DWH@RISK
                         WHERE  OPER_DAY IN (SELECT MAX(OPER_DAY)
-                                            FROM   CR.VIEW_CREDITS_DWH
+                                            FROM   CR.VIEW_CREDITS_DWH@RISK
                                             WHERE  OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'dd.mm.yyyy')
                                                        AND
                                                        TO_DATE('${this.secondDate}', 'dd.mm.yyyy')
@@ -91,30 +91,30 @@ class RiskPartClass extends DashboardMonthlyMainClass {
   PARQuery(whereQuery = '1=1') {
     const onlyTwo = `SELECT OPER_DAY DAT,
                                ROUND(SUM(OVERDUE_SALDO) / POWER(10, 6), 2) AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY = TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
                           AND ${whereQuery}
                         GROUP BY OPER_DAY
                         UNION
                         SELECT OPER_DAY DAT,
                                ROUND(SUM(OVERDUE_SALDO) / POWER(10, 6), 2) AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY = TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
                           AND ${whereQuery}
                         GROUP BY OPER_DAY ORDER BY DAT`
     const all = `SELECT OPER_DAY DAT,
                            TO_CHAR(OPER_DAY, 'DD.MM.YYYY') DATE_VALUE,
                            ROUND(SUM(OVERDUE_SALDO) / POWER(10, 6), 2) AS SUM
-                    FROM CR.VIEW_CREDITS_DWH
+                    FROM CR.VIEW_CREDITS_DWH@RISK
                     WHERE OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'DD.MM.YYYY') AND TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
                       AND ${whereQuery}
                     GROUP BY OPER_DAY ORDER BY DAT`
     const month = `SELECT OPER_DAY DAT,
                            TO_CHAR(TRUNC(ADD_MONTHS(OPER_DAY, 1), 'MM'), 'DD.MM.YYYY') AS MONTH_BEGIN,
                            ROUND(SUM(OVERDUE_SALDO) / POWER(10, 6), 2)                 AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY IN (SELECT MAX(OPER_DAY)
-                                       FROM CR.VIEW_CREDITS_DWH --PAR
+                                       FROM CR.VIEW_CREDITS_DWH@RISK --PAR
                                        WHERE OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'DD.MM.YYYY') 
                                            AND 
                                            TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
@@ -129,14 +129,14 @@ class RiskPartClass extends DashboardMonthlyMainClass {
   NPLAndToxicQuery(whereQuery = `CREDIT_STATUS = 2`) {
     const onlyTwo = `SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY = TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
                           AND ${whereQuery}
                         GROUP BY OPER_DAY
                         UNION
                         SELECT OPER_DAY DAT,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY = TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
                           AND ${whereQuery}
                         GROUP BY OPER_DAY`
@@ -144,16 +144,16 @@ class RiskPartClass extends DashboardMonthlyMainClass {
     const all = `SELECT OPER_DAY DAT,
                        TO_CHAR(OPER_DAY, 'DD.MM.YYYY')             DATE_VALUE,
                        ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                    FROM CR.VIEW_CREDITS_DWH
+                    FROM CR.VIEW_CREDITS_DWH@RISK
                     WHERE OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
                           AND TO_DATE('${this.secondDate}', 'DD.MM.YYYY') AND ${whereQuery}
                     GROUP BY OPER_DAY ORDER BY DAT`
     const month = `SELECT OPER_DAY                                    DAT,
                                TO_CHAR(TRUNC(ADD_MONTHS(OPER_DAY, 1), 'MM'), 'DD.MM.YYYY') AS MONTH_BEGIN,
                                ROUND(SUM(TOTAL_LOAN) / POWER(10, 6), 2) AS SUM
-                        FROM CR.VIEW_CREDITS_DWH
+                        FROM CR.VIEW_CREDITS_DWH@RISK
                         WHERE OPER_DAY IN (SELECT MAX(OPER_DAY)
-                                           FROM CR.VIEW_CREDITS_DWH
+                                           FROM CR.VIEW_CREDITS_DWH@RISK
                                            WHERE OPER_DAY BETWEEN TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
                                                      AND
                                                      TO_DATE('${this.secondDate}', 'DD.MM.YYYY')

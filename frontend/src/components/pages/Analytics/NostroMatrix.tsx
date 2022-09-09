@@ -12,17 +12,12 @@ import { Grid } from '@material-ui/core'
 
 const NostroMatrix = () => {
   const { fetchNostroMatrix } = useActions()
-  const { nostroMatrix, loading, error } = useTypedSelector((state) => state.nostroMatrix)
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const { operDays } = useTypedSelector((state) => state.operDays)
+  const { nostroMatrix, loading, error } = useTypedSelector(state => state.nostroMatrix)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { operDays } = useTypedSelector(state => state.operDays)
   const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
   const [firstDate, setFirstDate] = useState(dayBefore as string)
   const [secondDate, setSecondDate] = useState(dayBefore as string)
-  useEffect(() => {
-    if (firstDate && secondDate && firstDate !== secondDate) {
-      fetchNostroMatrix(new Date(firstDate).toString(), new Date(secondDate).toString())
-    }
-  }, [fetchNostroMatrix, firstDate, secondDate, reportDate])
   useEffect(() => {
     let { selectedDate: newSecondDate } = formatDate(reportDate, true)
     const isReportDateToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
@@ -36,6 +31,11 @@ const NostroMatrix = () => {
       setSecondDate(newSecondDate)
     }
   }, [dayBefore, reportDate, operDays])
+  useEffect(() => {
+    if (firstDate && secondDate && firstDate !== secondDate) {
+      fetchNostroMatrix(new Date(firstDate).toString(), new Date(secondDate).toString())
+    }
+  }, [fetchNostroMatrix, firstDate, secondDate, reportDate])
   const handleDateChange = useCallback((id) => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
       formatOneDate(new Date().toString()) !== formatOneDate(date)) {

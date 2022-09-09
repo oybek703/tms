@@ -25,8 +25,7 @@ const DashboardMonthly: React.FC = () => {
   const [dateOption, setDateOption] = useState('two')
   const { operDays } = useTypedSelector((state) => state.operDays)
   const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
-  const { dashboardMonthly, loading, error } = useTypedSelector(
-      (state) => state.dashboardMonthly)
+  const { dashboardMonthly, loading, error } = useTypedSelector(state => state.dashboardMonthly)
   const [firstDate, setFirstDate] = useState(dayBefore as string)
   const [secondDate, setSecondDate] = useState(dayBefore as string)
   useEffect(() => {
@@ -38,8 +37,7 @@ const DashboardMonthly: React.FC = () => {
     let { selectedDate: newSecondDate } = formatDate(reportDate, true)
     const isReportDateToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
     if (isReportDateToday) {
-      newSecondDate = formatDateWithDash(
-          findRecursive(operDays, reportDate)) as string
+      newSecondDate = formatDateWithDash(findRecursive(operDays, reportDate)) as string
       const newFirstDate = formatDateWithDash(findRecursive(operDays, new Date(newSecondDate))) as string
       setSecondDate(newSecondDate)
       setFirstDate(newFirstDate)

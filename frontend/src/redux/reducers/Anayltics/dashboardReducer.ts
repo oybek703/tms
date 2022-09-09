@@ -1,4 +1,6 @@
 import {
+  CREDITDATA_FAIL,
+  CREDITDATA_START, CREDITDATA_SUCCESS,
   DASHBOARD_ACTIVE_TAB_CHANGE,
   DASHBOARD_FAIL,
   DASHBOARD_START, DASHBOARD_SUCCESS
@@ -8,13 +10,10 @@ const initialState = {
   loading: false,
   dashboard: {
     dashboardCorrespondent: [],
-    creditPart: [],
-    disaggregatedByTime: [],
     dashboardCurrencyPosition: [],
     timeDeposits: [],
     currencyMfi: [],
     currencyTimeDeposits: [],
-    issuedCredits: [],
     interbankDeposits: [],
     fundingStructure: [],
     currencyMBD: [],
@@ -50,4 +49,28 @@ function dashboardActiveTab(state = activeTabInitialState, action: any) {
   }
 }
 
-export { dashboard, dashboardActiveTab }
+const creditdataInitialState = {
+  loading: false,
+  creditData: {
+    creditPart: [],
+    disaggregatedByTime: [],
+    issuedCredits: []
+  },
+  error: null
+}
+
+function creditData(state = creditdataInitialState, action: any) {
+  const { type, payload } = action
+  switch (type) {
+    case CREDITDATA_START:
+      return { ...state, loading: true, error: null }
+    case CREDITDATA_SUCCESS:
+      return { loading: false, error: null, creditData: payload }
+    case CREDITDATA_FAIL:
+      return { ...state, loading: false, error: payload }
+    default:
+      return state
+  }
+}
+
+export { dashboard, dashboardActiveTab, creditData }
