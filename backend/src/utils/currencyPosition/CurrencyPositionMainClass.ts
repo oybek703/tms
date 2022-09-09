@@ -72,7 +72,7 @@ class CurrencyPositionMainClass extends MainClass {
                        FOR_CURR_RATE,
                        LONG_VAL,
                        SHORT_VAL,
-                       ROUND(((LONG_VAL+SHORT_VAL)*POWER(10, -1))/REG_CAP, 2) AS POS_RATIO /* TODO THIS REQUIRES TO FIX REGULAR CAPITAL */
+                       ROUND(((LONG_VAL+SHORT_VAL)*POWER(10, 2))/REG_CAP, 2) AS POS_RATIO /* TODO THIS REQUIRES TO FIX REGULAR CAPITAL */
                        /* ONE MORE TODO THIS IS CHANGED IN 10.02.2022 DUE TO REGULATORY CAPITAL */
                 FROM (SELECT
                    CURRENCY_CODE,
