@@ -1,17 +1,61 @@
 import {
-  ADDUSER_FAIL, ADDUSER_REFRESH, ADDUSER_START, ADDUSER_SUCCESS,
-  BANKLIMITS_FAIL, BANKLIMITS_START, BANKLIMITS_SUCCESS, CHANGE_DATE,
-  CORRESPONDENT_CURRENT_FAIL, CORRESPONDENT_CURRENT_START,
-  CORRESPONDENT_CURRENT_SUCCESS, CORRESPONDENT_CURRENT_UPDATE,
-  DASHBOARD_ACTIVE_TAB_CHANGE, DASHBOARDMONTHLY_FAIL, DASHBOARDMONTHLY_START,
-  DASHBOARDMONTHLY_SUCCESS, DELETE_USER, GAP_FAIL, GAP_START,
-  GAP_SUCCESS, GAPMANUAL_FAIL, GAPMANUAL_START, GAPMANUAL_SUCCESS, LAST_UPDATE_FAIL,
-  LAST_UPDATE_START, LAST_UPDATE_SUCCESS, LIQUIDITY_CURRENT_FAIL,
-  LIQUIDITY_CURRENT_START, LIQUIDITY_CURRENT_SUCCESS, LIQUIDITY_CURRENT_UPDATE,
-  LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT, NOSTROMATRIX_FAIL, NOSTROMATRIX_START, NOSTROMATRIX_SUCCESS, OPERATIONAL_DAYS_FAIL,
-  OPERATIONAL_DAYS_START, OPERATIONAL_DAYS_SUCCESS, UPDATE_CBN, USER_EXITED,
-  USERS_FAIL, USERS_START, USERS_SUCCESS, GETUSER_START, GETUSER_FAIL, GETUSER_SUCCESS, EDITUSER_START, EDITUSER_SUCCESS, EDITUSER_REFRESH,
-  EDITUSER_FAIL, GAP_LAST_UPDATE_START, GAP_LAST_UPDATE_SUCCESS, GAP_LAST_UPDATE_FAIL
+  ADDUSER_FAIL,
+  ADDUSER_REFRESH,
+  ADDUSER_START,
+  ADDUSER_SUCCESS,
+  BANKLIMITS_FAIL,
+  BANKLIMITS_START,
+  BANKLIMITS_SUCCESS,
+  CHANGE_DATE,
+  CORRESPONDENT_CURRENT_FAIL,
+  CORRESPONDENT_CURRENT_START,
+  CORRESPONDENT_CURRENT_SUCCESS,
+  CORRESPONDENT_CURRENT_UPDATE,
+  DASHBOARD_ACTIVE_TAB_CHANGE,
+  DASHBOARDMONTHLY_FAIL,
+  DASHBOARDMONTHLY_START,
+  DASHBOARDMONTHLY_SUCCESS,
+  DELETE_USER,
+  GAP_FAIL,
+  GAP_START,
+  GAP_SUCCESS,
+  GAPMANUAL_FAIL,
+  GAPMANUAL_START,
+  GAPMANUAL_SUCCESS,
+  LAST_UPDATE_FAIL,
+  LAST_UPDATE_START,
+  LAST_UPDATE_SUCCESS,
+  LIQUIDITY_CURRENT_FAIL,
+  LIQUIDITY_CURRENT_START,
+  LIQUIDITY_CURRENT_SUCCESS,
+  LIQUIDITY_CURRENT_UPDATE,
+  LOGIN_FAIL,
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  NOSTROMATRIX_FAIL,
+  NOSTROMATRIX_START,
+  NOSTROMATRIX_SUCCESS,
+  OPERATIONAL_DAYS_FAIL,
+  OPERATIONAL_DAYS_START,
+  OPERATIONAL_DAYS_SUCCESS,
+  UPDATE_CBN,
+  USER_EXITED,
+  USERS_FAIL,
+  USERS_START,
+  USERS_SUCCESS,
+  GETUSER_START,
+  GETUSER_FAIL,
+  GETUSER_SUCCESS,
+  EDITUSER_START,
+  EDITUSER_SUCCESS,
+  EDITUSER_REFRESH,
+  EDITUSER_FAIL,
+  GET_ADDED_BANKS_START,
+  GET_ADDED_BANKS_SUCCESS,
+  GET_ADDED_BANKS_FAIL, GAP_LAST_UPDATE_START,
+  GAP_LAST_UPDATE_SUCCESS,
+  GAP_LAST_UPDATE_FAIL, SEARCH_ALL_BANKS_SUCCESS, SEARCH_ALL_BANKS_FAIL
 } from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
 import { withToken } from '../../utils/axiosUtils'
@@ -268,7 +312,7 @@ export function addUser(formData: any) {
   }
 }
 
-export function editUser(ID:any, formData: any) {
+export function editUser(ID: any, formData: any) {
   return async function(dispatch: Dispatch) {
     try {
       dispatch({ type: EDITUSER_START })
@@ -315,6 +359,19 @@ export function fetchUsers() {
       dispatch({ type: USERS_SUCCESS, payload: users })
     } catch (e: any) {
       dispatch({ type: USERS_FAIL, payload: e })
+    }
+  }
+}
+
+export function getAddedBanks() {
+  return async function(dispatch: Dispatch) {
+    try {
+      dispatch({ type: GET_ADDED_BANKS_START })
+      const { data: { addedBanks } } = await axios.get(
+          '/api/bankRating/addedBanks', withToken())
+      dispatch({ type: GET_ADDED_BANKS_SUCCESS, payload: addedBanks })
+    } catch (e: any) {
+      dispatch({ type: GET_ADDED_BANKS_FAIL, payload: e })
     }
   }
 }
@@ -423,22 +480,6 @@ export function fetchGap() {
   }
 }
 
-export function getLastGapUpdate() {
-  return async function(dispatch: Dispatch) {
-    try {
-      dispatch({ type: GAP_LAST_UPDATE_START })
-      const { data: { lastGapUpdate } } = await axios.get(
-          `/api/gap/lastGapUpdate`,
-          withToken()
-      )
-      dispatch({ type: GAP_LAST_UPDATE_SUCCESS, payload: lastGapUpdate })
-    } catch (e: any) {
-      const error = getErrorMessage(e)
-      dispatch({ type: GAP_LAST_UPDATE_FAIL, payload: error })
-    }
-  }
-}
-
 export function updateCBN(data: any) {
   return async function(dispatch: Dispatch) {
     try {
@@ -458,5 +499,34 @@ export function updateDashboardActiveTab(newTab = 0) {
   return function(dispatch: Dispatch) {
     localStorage.setItem('dashboard_active_tab', String(newTab))
     dispatch({ type: DASHBOARD_ACTIVE_TAB_CHANGE, payload: newTab })
+  }
+}
+
+export function getLastGapUpdate() {
+  return async function(dispatch: Dispatch) {
+    try {
+      dispatch({ type: GAP_LAST_UPDATE_START })
+      const { data: { lastGapUpdate } } = await axios.get(
+          `/api/gap/lastGapUpdate`,
+          withToken()
+      )
+      dispatch({ type: GAP_LAST_UPDATE_SUCCESS, payload: lastGapUpdate })
+    } catch (e: any) {
+      const error = getErrorMessage(e)
+      dispatch({ type: GAP_LAST_UPDATE_FAIL, payload: error })
+    }
+  }
+}
+
+export function searchAllBanks(code: string) {
+  return async function(dispatch: Dispatch) {
+    try {
+      const { data: { banks } } = await axios.post('/api/bankRating/searchAllBanks', {
+        code
+      }, withToken())
+      dispatch({ type: SEARCH_ALL_BANKS_SUCCESS, payload: banks })
+    } catch (e: any) {
+      dispatch({ type: SEARCH_ALL_BANKS_FAIL, payload: e })
+    }
   }
 }

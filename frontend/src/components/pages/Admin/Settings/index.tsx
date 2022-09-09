@@ -4,6 +4,8 @@ import CbnUpdate from './CBNUpdate'
 import MioGm from './MIO-gm'
 import UpdateLimitOfBanks from './UpdateLimitOfBanks'
 import Users from './Users'
+import Banks from './Banks'
+
 
 const Settings = () => {
   return (
@@ -26,6 +28,10 @@ const Settings = () => {
           {
             tabName: 'Accounts',
             tabData: <Users/>
+          },
+          {
+            tabName: 'Banks',
+            tabData: <Banks/>
           }
         ]
       }/>

@@ -10,7 +10,7 @@ const initialState = {
   banks: []
 }
 
-function banks(state = initialState, action: any) {
+function getAddedBanks(state = initialState, action: any) {
   const { payload, type } = action
   switch (type) {
     case GET_ADDED_BANKS_START:
@@ -24,5 +24,5 @@ function banks(state = initialState, action: any) {
   }
 }
 
-export default banks
+export default getAddedBanks
 

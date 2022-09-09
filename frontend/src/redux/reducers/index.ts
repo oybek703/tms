@@ -29,7 +29,9 @@ import gapManual from './Admin/gapManual'
 import nostroMatrix from './Anayltics/nostroMatrixReducer'
 import editUser from './Admin/editUserReducer'
 import getUser from './Admin/getUserReducer'
+import getAddedBanks from './Admin/getAddedBanks'
 import lastGapUpdate from './Anayltics/lastGapUpdateReducer'
+import searchAllBanks from './Admin/searchAllBanks'
 
 const rootReducer = combineReducers({
   auth,
@@ -61,13 +63,15 @@ const rootReducer = combineReducers({
   fcrb,
   nostroMatrix,
   gap,
-  lastGapUpdate,
   bankLimits,
   gapManual,
   users,
   addUser,
   getUser,
-  editUser
+  editUser,
+  getAddedBanks,
+  lastGapUpdate,
+  searchAllBanks
 })
 
 export type RootState = ReturnType<typeof rootReducer>
