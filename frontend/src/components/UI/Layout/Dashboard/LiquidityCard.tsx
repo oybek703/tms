@@ -74,7 +74,7 @@ interface LiquidityCardProps {
 function StateCard() {
   const classes = useStyles()
   return <span className={classes.stateCard}>
-          Текущие состояние
+          Текущее состояние
   </span>
 }
 
