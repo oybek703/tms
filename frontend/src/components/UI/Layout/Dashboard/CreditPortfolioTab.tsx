@@ -56,11 +56,7 @@ const CreditPortfolioTab = () => {
                           key={i}
                           item
                           component={Paper}>{v} &nbsp;
-                          <span
-                            className={classes.greens}>{formatNumber(
-                                issuedCredits[i])} {i === 0 ?
-                          'млрд.' :
-                          'млн.'} </span>
+                          <span className={classes.greens}>{formatNumber(issuedCredits[i])} {i === 0 ? 'млрд.' : 'млн.'} </span>
                         </Grid>
                       ))}
                 </Grid>

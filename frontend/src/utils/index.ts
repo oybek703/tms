@@ -35,8 +35,8 @@ function formatForTen(number: number) {
   return number < 10 ? `0${number}` : number
 }
 
-export function formatNumber(
-    number: number, isDash: boolean | string = false) {
+export function formatNumber(number: number, isDash: boolean | string = false) {
+  if (isNaN(number)) return '-'
   if (isDash === 'e' && number === 0) return ' '
   if (isDash && number === 0) return '-'
   if (typeof number !== 'number') return number
