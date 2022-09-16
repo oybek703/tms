@@ -225,8 +225,11 @@ interface BankLimitsProps {
 
 const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const { foreignBanks = [], localBanks = [], nationalBank = [] } = bankLimits
-  const [expanded, setExpanded] = useState('local')
-  const handleChange = useCallback((code) => setExpanded(code), [])
+  const [expanded, setExpanded] = useState(localStorage.getItem('bankLimitsActiveTab') || 'local')
+  const handleChange = useCallback((code) => {
+    setExpanded(code)
+    localStorage.setItem('bankLimitsActiveTab', code)
+  }, [])
   const cForeignBanks = foreignBanks.slice()
   cForeignBanks.forEach((e: ForeignBanks) => {
     if (e.FOR_PERCENT_22 == 'no_limit') {
