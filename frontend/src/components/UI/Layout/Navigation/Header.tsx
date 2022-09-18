@@ -67,6 +67,11 @@ export const baseRoutes: BaseRoute[] = [
     forAll: true
   },
   {
+    title: 'Буфер ВЛА',
+    route: '/vlaBuffer',
+    group: 'liquidity_indicators'
+  },
+  {
     title: 'Привлеченные и размещенные',
     route: '/plat',
     group: 'active_passive',

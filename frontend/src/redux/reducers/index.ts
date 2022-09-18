@@ -30,6 +30,7 @@ import nostroMatrix from './Anayltics/nostroMatrixReducer'
 import editUser from './Admin/editUserReducer'
 import getUser from './Admin/getUserReducer'
 import lastGapUpdate from './Anayltics/lastGapUpdateReducer'
+import vlaBuffer from './Anayltics/vlaBufferReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -61,6 +62,7 @@ const rootReducer = combineReducers({
   reportLiabilities,
   fcrb,
   nostroMatrix,
+  vlaBuffer,
   gap,
   lastGapUpdate,
   bankLimits,

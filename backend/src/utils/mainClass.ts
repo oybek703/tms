@@ -22,8 +22,7 @@ class MainClass {
 
     async getBeforeDate() {
       // @ts-ignore
-      const { rows: [result = {}] } = await getData(
-          this.beforeDateQuery(this.date))
+      const { rows: [result = {}] } = await getData(this.beforeDateQuery(this.date))
       const { BEFORE_DATE } = result
       this.date = BEFORE_DATE
     }

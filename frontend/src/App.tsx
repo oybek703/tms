@@ -35,6 +35,7 @@ import Forbidden from './components/pages/Admin/Forbidden'
 import AdminRoute from './components/UI/Layout/Admin/AdminRoute'
 import Settings from './components/pages/Admin/Settings'
 import NostroMatrix from './components/pages/Analytics/NostroMatrix'
+import VlaBuffer from './components/pages/Analytics/VlaBuffer'
 
 function App() {
   const { user: { token } } = useTypedSelector((state) => state.auth)
@@ -62,6 +63,7 @@ function App() {
               <PrivateRoute component={DepositsByDeadline} path='/depositsbydeadline'/>
               <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
               <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
+              <PrivateRoute component={VlaBuffer} path='/vlaBuffer'/>
               <PrivateRoute component={GM} path='/gm'/>
               <PrivateRoute component={GAP} path='/gap'/>
               <PrivateRoute component={GapSimulation} path='/gapSimulation'/>

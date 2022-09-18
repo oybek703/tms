@@ -30,14 +30,12 @@ import gapRoutes from './src/routes/Analytics/gap'
 import gapManualRoutes from './src/routes/Admin/Manual/gapManual'
 import bankLimitsRoutes from './src/routes/Admin/Manual/bankLimits'
 import nostroMatrixRoutes from './src/routes/Analytics/nostroMatrix'
-import bankRatingRoutes from './src/routes/BankRatings'
+import vlaBufferRoutes from './src/routes/Analytics/vlaBuffer'
 
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'))
-}
+if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
 app.use(express.json())
 app.use(cors())
@@ -67,7 +65,7 @@ app.use('/api/gap', gapRoutes)
 app.use('/api/gapSimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
-app.use('/api/bankRating', bankRatingRoutes)
+app.use('/api/vlaBuffer', vlaBufferRoutes)
 
 app.use(notFoundPage)
 app.use(errorHandler)

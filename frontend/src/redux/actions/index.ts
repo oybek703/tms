@@ -201,6 +201,12 @@ export function fetchNostroMatrix(firstDate: string, secondDate?: string) {
   }
 }
 
+export function fetchVlaBuffer(date: string) {
+  return async function(dispatch: Dispatch) {
+    await checkCashOrSave(date, 'vlaBuffer', dispatch)
+  }
+}
+
 export function fetchCurrencyPosition(date: string) {
   return async function(dispatch: Dispatch) {
     await checkCashOrSave(date, 'currencyposition', dispatch)
