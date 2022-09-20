@@ -21,28 +21,28 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface NoWrapCellProps {
-  cellData: any
+  celldata: any
   colSpan?: number
   style?: any
 }
 
 const NoWrapCell: React.FC<NoWrapCellProps> = (props) => {
   const classes = useStyles()
-  const { cellData = 0, colSpan = 0 } = props
+  const { celldata = 0, colSpan = 0 } = props
   return <TableCell colSpan={colSpan} {...props} align='center'
     className={classes.noWrap}>
-    {typeof cellData === 'number' ? formatNumber(cellData) : cellData}
+    {typeof celldata === 'number' ? formatNumber(celldata) : celldata}
   </TableCell>
 }
 
-function ProgressOrText({ cellData = '0', showNumber = false }) {
+function ProgressOrText({ celldata = '0', showNumber = false }) {
   const classes = useStyles()
   return (
-    cellData === 'no_limit' ?
+    celldata === 'no_limit' ?
       <i>Лимит не установлен.</i> :
-      cellData === 'exceeded' ?
+      celldata === 'exceeded' ?
         <b className={classes.exceeded}><i>Лимит нарушен.</i></b> :
-        <ProgressBar showNumber={showNumber} value={+Number(cellData).toFixed(2)}/>
+        <ProgressBar showNumber={showNumber} value={+Number(celldata).toFixed(2)}/>
   )
 }
 
@@ -102,14 +102,14 @@ const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
           <TableCell align='center'><b>{index + 1}</b></TableCell>
           <TableCell
             className={classes.noWrap}><b>{row['NAME']}</b></TableCell>
-          <NoWrapCell cellData={row['SALDO_EQUIVAL_OUT']}/>
-          <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
-          <NoWrapCell cellData={row['DIFFER_22']}/>
-          <NoWrapCell cellData={<Fragment>
+          <NoWrapCell celldata={row['SALDO_EQUIVAL_OUT']}/>
+          <NoWrapCell celldata={row['FOREIGN_CURRENCY_22']}/>
+          <NoWrapCell celldata={row['DIFFER_22']}/>
+          <NoWrapCell celldata={<Fragment>
             {+row['FOR_PERCENT_22'] >= 100 ?
               <Grid container justifyContent='space-between' alignItems='center'>
                 <Grid style={{ width: '99%' }}>
-                  <ProgressOrText cellData={row['FOR_PERCENT_22']}/>
+                  <ProgressOrText celldata={row['FOR_PERCENT_22']}/>
                 </Grid>
                 <Grid style={{ width: '1%' }}>
                   <LimitsMenu innerData={
@@ -122,17 +122,17 @@ const ForeignBankTable: React.FC<ForeignBanksProps> = ({ rows = [] }) => {
                       </TableHead>
                       <TableBody>
                         <TableRow>
-                          <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_22']}/>}/>
-                          <NoWrapCell cellData={<ProgressOrText showNumber cellData={row['FOR_PERCENT_24']}/>}/>
+                          <NoWrapCell celldata={<ProgressOrText showNumber celldata={row['FOR_PERCENT_22']}/>}/>
+                          <NoWrapCell celldata={<ProgressOrText showNumber celldata={row['FOR_PERCENT_24']}/>}/>
                         </TableRow>
                       </TableBody>
                     </>
                   }/>
                 </Grid>
               </Grid>:
-              <ProgressOrText cellData={row['FOR_PERCENT_22']}/>}
+              <ProgressOrText celldata={row['FOR_PERCENT_22']}/>}
           </Fragment>}/>
-          <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
+          <NoWrapCell celldata={row['FOREIGN_CURRENCY_24']}/>
         </TableRow>)}
       </TableBody>
     </Table>
@@ -154,28 +154,28 @@ const LocalBanksTable: React.FC<LocalBanksProps> = ({ rows = [], nationalBank = 
         {nationalBank.map((row) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>1</b></TableCell>
           <TableCell><b>{row['NAME']}</b></TableCell>
-          <NoWrapCell colSpan={2} cellData={row['SALDO_EQUIVAL_OUT']}/>
-          <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_22']}/>
-          <NoWrapCell colSpan={2} cellData={row['DIFFER']}/>
-          <NoWrapCell colSpan={2} cellData={<ProgressOrText
-            cellData={row['NAT_PERCENT']}/>}/>
-          <NoWrapCell colSpan={2} cellData={row['NATIONAL_CURRENCY_24']}/>
+          <NoWrapCell colSpan={2} celldata={row['SALDO_EQUIVAL_OUT']}/>
+          <NoWrapCell colSpan={2} celldata={row['NATIONAL_CURRENCY_22']}/>
+          <NoWrapCell colSpan={2} celldata={row['DIFFER']}/>
+          <NoWrapCell colSpan={2} celldata={<ProgressOrText
+            celldata={row['NAT_PERCENT']}/>}/>
+          <NoWrapCell colSpan={2} celldata={row['NATIONAL_CURRENCY_24']}/>
         </TableRow>)}
         {rows.map((row, index) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>{index + 2}</b></TableCell>
           <TableCell><b>{row['NAME']}</b></TableCell>
-          <NoWrapCell cellData={row['NAT_CURR']}/>
-          <NoWrapCell cellData={row['FOR_CURR']}/>
-          <NoWrapCell cellData={row['NATIONAL_CURRENCY_22']}/>
-          <NoWrapCell cellData={row['FOREIGN_CURRENCY_22']}/>
-          <NoWrapCell cellData={row['DIFFER_NAT']}/>
-          <NoWrapCell cellData={row['DIFFER_FOR']}/>
-          <NoWrapCell cellData={<ProgressOrText
-            cellData={row['NAT_CURR_PERCENT']}/>}/>
-          <NoWrapCell cellData={<ProgressOrText
-            cellData={row['FOR_CURR_PERCENT']}/>}/>
-          <NoWrapCell cellData={row['NATIONAL_CURRENCY_24']}/>
-          <NoWrapCell cellData={row['FOREIGN_CURRENCY_24']}/>
+          <NoWrapCell celldata={row['NAT_CURR']}/>
+          <NoWrapCell celldata={row['FOR_CURR']}/>
+          <NoWrapCell celldata={row['NATIONAL_CURRENCY_22']}/>
+          <NoWrapCell celldata={row['FOREIGN_CURRENCY_22']}/>
+          <NoWrapCell celldata={row['DIFFER_NAT']}/>
+          <NoWrapCell celldata={row['DIFFER_FOR']}/>
+          <NoWrapCell celldata={<ProgressOrText
+            celldata={row['NAT_CURR_PERCENT']}/>}/>
+          <NoWrapCell celldata={<ProgressOrText
+            celldata={row['FOR_CURR_PERCENT']}/>}/>
+          <NoWrapCell celldata={row['NATIONAL_CURRENCY_24']}/>
+          <NoWrapCell celldata={row['FOREIGN_CURRENCY_24']}/>
         </TableRow>)}
       </TableBody>
     </Table>

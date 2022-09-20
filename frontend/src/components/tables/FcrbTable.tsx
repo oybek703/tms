@@ -316,7 +316,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <Table className={classes.borderRadius} size='small'>
                   <TableHead>
                     <TableRow>
-                      <NoBorderCell nowrap='true' blacktext='true' colSpan={3} align='center'lassName={classes.setPadding} ><b>цен.
+                      <NoBorderCell nowrap='true' blacktext='true' colSpan={3} align='center' className={classes.setPadding} ><b>цен.
                                                 бум. и меж. банк.</b></NoBorderCell>
                       <NoBorderCell redbold='true' morered='true' colSpan={3} nowrap='true'
                         align='left'><RedLightText>{formatNumber(
