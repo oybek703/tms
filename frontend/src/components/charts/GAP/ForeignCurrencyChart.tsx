@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import Card from '@material-ui/core/Card'
 import { CardContent } from '@material-ui/core'
+import { chartTitle } from '../../../utils'
 
 function renderOptions(values: any, categories: any) {
   const colors = [
@@ -71,12 +72,7 @@ function renderOptions(values: any, categories: any) {
       tickPlacement: 'on'
     },
     title: {
-      text: 'Прогноз суммы отклонения(дефицита) ВЛА в иностранной валюте',
-      align: 'center',
-      style: {
-        fontWeight: 100,
-        fontSize: 19
-      }
+      ...chartTitle('Прогноз суммы отклонения(дефицита) ВЛА в иностранной валюте')
     },
     yaxis: {
       labels: {

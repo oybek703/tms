@@ -328,8 +328,8 @@ class DashboardMonthlyMainClass extends MainClass {
       return this.createData('6', 'Капитал 1-го уровня', data, true)
     } /* Капитал 1-го уровня */
 
-    // TODO Коеффициент адекватности капитала
-    // TODO Коеффициент адекватности капитала(1-го уровня) STATIC DATA YET
+    // TODO Коеффициент адекватности капитала(1-го уровня)
+    // TODO Коеффициент адекватности капитала [ STATIC DATA YET ]
     async capital_adequacy_ratio() {/* Коеффициент адекватности капитала */
       const data = await this.getDataInDates(
           '',
@@ -385,9 +385,17 @@ class DashboardMonthlyMainClass extends MainClass {
       )
     } /* Депозиты до востребования юр. лиц */
 
-    async time_legals_deposits() {/* Срочные депозиты юр. лиц */
+    async saving_legals_deposits() {/* Сберегательные депозиты юр. лиц */
       return await this.getOneRow(
           '2.2',
+          'Сберегательные депозиты юр. лиц',
+          `BAL LIKE '204%' AND BAL != '20406'`
+      )
+    } /* Сберегательные депозиты юр. лиц */
+
+    async time_legals_deposits() {/* Срочные депозиты юр. лиц */
+      return await this.getOneRow(
+          '2.3',
           'Срочные депозиты юр. лиц',
           `BAL LIKE '206%' AND BAL != '20606'`
       )
@@ -404,15 +412,23 @@ class DashboardMonthlyMainClass extends MainClass {
 
     async demand_physicals_deposits() {/* депозиты до востребования физ. лиц */
       return await this.getOneRow(
-          '3.1',
+          '3.2',
           'депозиты до востребования физ. лиц',
           `BAL='20206'`
       )
     } /* депозиты до востребования физ. лиц */
 
+    async saving_physicals_deposits() {/* Сберегательные депозиты физ. лиц */
+      return await this.getOneRow(
+          '3.1',
+          'Сберегательные депозиты физ. лиц',
+          `BAL='20406'`
+      )
+    } /* Сберегательные депозиты физ. лиц */
+
     async time_physicals_deposits() {/* срочные депозиты физ. лиц */
       return await this.getOneRow(
-          '3.2',
+          '3.3',
           'срочные депозиты физ. лиц',
           `BAL='20606'`
       )
@@ -462,9 +478,11 @@ class DashboardMonthlyMainClass extends MainClass {
         totalLiabilities,
         legalsDeposits,
         demandLegalsDeposits,
+        savingLegalsDeposits,
         timeLegalsDeposits,
         physicalsDeposits,
         demandPhysicalsDeposits,
+        savingPhysicalsDeposits,
         timePhysicalsDeposits,
         externalFunding,
         nationalCurr,
@@ -481,9 +499,11 @@ class DashboardMonthlyMainClass extends MainClass {
         this.total_liabilities(),
         this.legals_deposits(),
         this.demand_legals_deposits(),
+        this.saving_legals_deposits(),
         this.time_legals_deposits(),
         this.physicals_deposits(),
         this.demand_physicals_deposits(),
+        this.saving_physicals_deposits(),
         this.time_physicals_deposits(),
         this.external_funding(),
         this.national_curr(),
@@ -503,9 +523,11 @@ class DashboardMonthlyMainClass extends MainClass {
         totalLiabilities,
         legalsDeposits,
         demandLegalsDeposits,
+        savingLegalsDeposits,
         timeLegalsDeposits,
         physicalsDeposits,
         demandPhysicalsDeposits,
+        savingPhysicalsDeposits,
         timePhysicalsDeposits,
         externalFunding,
         nationalCurr,
