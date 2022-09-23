@@ -11,8 +11,8 @@ class TimeDepositsMainClass extends MainClass {
     const eurCurrency = await this.getCurrencyRate('978', true)
     const [uzs, usd, eur] = ['000', '840', '978']
         .map((currency) => array.reduce((acc, val) => {
-          if (val['CURRENCY_CODE'] === currency) {
-            acc+=val['SALDO_OUT']
+          if (val['currencyCode'] === currency) {
+            acc+=val['saldoOut']
           }
           return acc
         }, 0))
