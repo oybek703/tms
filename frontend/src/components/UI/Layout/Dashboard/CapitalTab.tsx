@@ -1,8 +1,9 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import { v4 as uuid } from 'uuid'
-import Card from '@material-ui/core/Card'
-import { makeStyles, Typography } from '@material-ui/core'
+import Card from '@mui/material/Card'
+import { Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../utils'
 import RWAPoints from '../../../charts/Dashboard/Capital/RWAPoints'
 import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
@@ -49,8 +50,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
   forecastCategories.push(nextMonthSliced)
   return (
     <>
-      <Grid container justifyContent='space-between' alignItems='center'
-        spacing={2}>
+      <Grid container sx={{ marginBottom: 2 }} justifyContent='space-between' alignItems='center' spacing={2}>
         {[
           { title: 'Регулативний капитал', shortKey: 'rc' },
           {
@@ -73,7 +73,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
               </Card>
             </Grid>)}
       </Grid>
-      <Grid spacing={2} container justifyContent='space-between'>
+      <Grid spacing={2} sx={{ marginBottom: 2 }} container justifyContent='space-between'>
         <Grid item sm={6}>
           <RWAPoints
             data={{
@@ -96,8 +96,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
             normative={13}/>
         </Grid>
       </Grid>
-      <Grid container justifyContent='space-between' alignItems='center'
-        spacing={2}>
+      <Grid container sx={{ marginBottom: 2 }} justifyContent='space-between' alignItems='center' spacing={2}>
         {[
           {
             title: 'Активы взвешенные с учетом риска',

@@ -1,9 +1,9 @@
 import React from 'react'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
-import Button from '@material-ui/core/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
-import { makeStyles } from '@material-ui/core'
-import blueGrey from '@material-ui/core/colors/blueGrey'
+import makeStyles from '@mui/styles/makeStyles'
+import blueGrey from '@mui/material/colors/blueGrey'
 
 const useStyles = makeStyles((theme) => ({
   content: {

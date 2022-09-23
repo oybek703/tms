@@ -1,8 +1,8 @@
-import { blueGrey } from '@material-ui/core/colors'
-import createTheme from '@material-ui/core/styles/createTheme'
-import { CSSProperties } from '@material-ui/core/styles/withStyles'
+import blueGrey from '@mui/material/colors/blueGrey'
+import { createTheme, Theme } from '@mui/material/styles'
+import '@mui/styles'
 
-declare module '@material-ui/core/styles/createMixins' {
+declare module '@mui/material/styles/createMixins' {
   // eslint-disable-next-line no-unused-vars
     interface Mixins {
         dottedBorder: CSSProperties
@@ -54,6 +54,10 @@ declare module '@material-ui/core/styles/createMixins' {
         blueBackground?: CSSProperties
         stickyTableHead?: CSSProperties
     }
+}
+
+declare module '@mui/styles/defaultTheme' {
+  interface DefaultTheme extends Theme {}
 }
 
 const theme = createTheme({
@@ -188,47 +192,63 @@ const theme = createTheme({
     }
 
   },
-  overrides: {
+  components: {
     MuiTableContainer: {
-      root: {
-        maxHeight: '74vh',
-        paddingBottom: 10
+      styleOverrides: {
+        root: {
+          maxHeight: '74vh',
+          paddingBottom: 10
+        }
       }
     },
     MuiTableCell: {
-      root: {
-        fontSize: '14px',
-        border: '1px solid rgba(224, 224, 224, 1)'
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+          border: '1px solid rgba(224, 224, 224, 1)'
+        }
       }
     },
     MuiButtonBase: {
-      root: {
-        '&$disabled': {
-          'cursor': 'not-allowed',
-          'pointerEvents': 'auto'
+      styleOverrides: {
+        root: {
+          '&$disabled': {
+            'cursor': 'not-allowed',
+            'pointerEvents': 'auto'
+          }
         }
       }
     },
     MuiTypography: {
-      caption: {
-        fontSize: '13.5px'
+      styleOverrides: {
+        caption: {
+          fontSize: '13.5px'
+        }
       }
     },
     MuiTable: {
-      root: {
-        borderCollapse: 'unset'
-      }
-    },
-    MuiTableRow: {
-      hover: {
-        '&:hover': {
-          backgroundColor: '#ddd !important'
+      styleOverrides: {
+        root: {
+          borderCollapse: 'unset'
         }
       }
     },
     MuiTab: {
-      wrapper: {
-        fontWeight: 'bold'
+      styleOverrides: {
+        textColorPrimary: {
+          'fontWeight': 'bold',
+          'color': '#ddd',
+          '&.Mui-selected': {
+            color: '#fff'
+          }
+        }
+      }
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: '#fff'
+        }
       }
     }
   }

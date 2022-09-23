@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import TablePagination from '@material-ui/core/TablePagination'
-import Paper from '@material-ui/core/Paper'
+import TablePagination from '@mui/material/TablePagination'
+import Paper from '@mui/material/Paper'
 
 interface PaginatedTableProps {
     TableData: any

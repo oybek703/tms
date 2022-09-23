@@ -1,17 +1,20 @@
 import 'date-fns'
 import React, { Fragment, memo, useCallback } from 'react'
-import DateFnsUtils from '@date-io/date-fns'
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { disableDays, formatOneDate } from '../../../../utils'
-import ReloadBtn from '../ReloadBtn'
 import { useLocation } from 'react-router-dom'
 import useActions from '../../../../hooks/useActions'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import TextField from '@mui/material/TextField'
+import ReloadBtn from '../ReloadBtn'
+import { ru } from 'date-fns/locale'
 
 interface DatePickerProps {
     reportDate: string
     operDays: string[]
     disabled: boolean
 }
+
 
 const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = [], disabled = false }) {
   const { pathname } = useLocation()
@@ -27,36 +30,24 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
   )
   return (
     <Fragment>
-      <MuiPickersUtilsProvider
-        utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          showTodayButton
-          disabled={disabled}
-          shouldDisableDate={memoizedDisableWeekends}
-          margin="dense"
-          minDate={new Date('2020-01-01')}
-          id="date-picker-dialog"
-          format="dd/MM/yyyy"
+      <LocalizationProvider adapterLocale={ru} dateAdapter={AdapterDateFns}>
+        <DesktopDatePicker
           value={reportDate}
+          showToolbar
+          disabled={disabled}
+          toolbarTitle='Выберите дату'
+          closeOnSelect
+          disableFuture
+          shouldDisableDate={memoizedDisableWeekends}
+          minDate={new Date('01/01/2020')}
           onChange={handleDateChange}
-          inputVariant='outlined'
-          DialogProps={{
-            transitionDuration: {
-              appear: 300,
-              enter: 300,
-              exit: 300
-            }
-          }}
-          KeyboardButtonProps={{
-            'aria-label': 'change date'
-          }}
-          onError={handleDateChange}
-          invalidDateMessage='Please enter valid date!'
-          maxDate={new Date()}
-          autoComplete='off'
+          renderInput={
+            (params) => <TextField
+              sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
+              {...params} />}
         />
-      </MuiPickersUtilsProvider>
-      {pathname === '/' && <Fragment>&nbsp;<ReloadBtn/></Fragment>}
+      </LocalizationProvider>
+      {pathname === '/' && <Fragment>&nbsp;&nbsp;&nbsp;<ReloadBtn/></Fragment>}
     </Fragment>
   )
 }

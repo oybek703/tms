@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button, makeStyles } from '@material-ui/core'
-import AutorenewIcon from '@material-ui/icons/Autorenew'
+import { Button } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import AutorenewIcon from '@mui/icons-material/Autorenew'
 import './reloadBtn.css'
 import useActions from '../../../../hooks/useActions'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({
   btn: {
-    marginTop: 3,
     height: 38
   }
 }))

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 import { formatNumber } from '../../../../utils'
 import CurrencyMFI from '../../../charts/Dashboard/FundingCharts/CurrencyMFI'
 import CurrencyMBD from '../../../charts/Dashboard/FundingCharts/CurrencyMBD'
 import CurrencyTimeDeposits from '../../../charts/Dashboard/FundingCharts/CurrencyTimeDeposits'
 import TimeDepositsChart from '../../../charts/Dashboard/FundingCharts/TimeDepositsChart'
 import InterbankDepositsChart from '../../../charts/Dashboard/FundingCharts/InterbankDepositsChart'
-import { makeStyles } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles'
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   smallCardContainer: theme.mixins.smallCardContainer,
   smallCard: theme.mixins.smallCard,
+  marginBottom10: theme.mixins.marginBottom10,
   liquidityCard: {
     ...theme.mixins.smallCard,
     padding: 0,
@@ -85,7 +86,7 @@ const FundingTab: React.FC<FundingTabProps> = ({
                 +currencyTimeDepositsSum)} млрд.</span></Grid>
         </Grid>
         {/* CREDIT SECOND BAR ROWS */}
-        <Grid spacing={2} container justifyContent='space-between'>
+        <Grid spacing={2} sx={{ marginBottom: 2 }} container justifyContent='space-between'>
           <Grid item sm={6} md={4}>
             <CurrencyMFI series={currencyMfi}/>
           </Grid>

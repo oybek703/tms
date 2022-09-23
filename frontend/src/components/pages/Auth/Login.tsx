@@ -1,12 +1,13 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Button, CardContent, IconButton, makeStyles } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import Card from '@material-ui/core/Card'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { Button, CardContent, IconButton } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Card from '@mui/material/Card'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Redirect } from 'react-router-dom'
 import { parse } from 'query-string'
 import { toast } from 'react-toastify'
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '40em',
     margin: '1em auto 2.5em',
     textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       minWidth: '25em'
     }
   },

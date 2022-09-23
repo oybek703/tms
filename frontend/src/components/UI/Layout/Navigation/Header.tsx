@@ -1,23 +1,24 @@
 import React, { Fragment, memo, useCallback, useEffect, useState } from 'react'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Grid from '@material-ui/core/Grid'
-import Toolbar from '@material-ui/core/Toolbar'
-import { Button, makeStyles, Typography } from '@material-ui/core'
+import List from '@mui/material/List'
+import Divider from '@mui/material/Divider'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Grid from '@mui/material/Grid'
+import Toolbar from '@mui/material/Toolbar'
+import { Button, Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import Navbar from './Navbar'
-import Drawer from '@material-ui/core/Drawer'
+import Drawer from '@mui/material/Drawer'
 import { Link, useLocation } from 'react-router-dom'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
-import Collapse from '@material-ui/core/Collapse'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import CreditCardIcon from '@material-ui/icons/CreditCard'
-import AssessmentIcon from '@material-ui/icons/Assessment'
-import TimelineIcon from '@material-ui/icons/Timeline'
-import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
+import Collapse from '@mui/material/Collapse'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import TimelineIcon from '@mui/icons-material/Timeline'
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
 interface BaseRoute {
@@ -166,8 +167,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function groupRoutes(
-    routes: BaseRoute[] = [], indicatorName = 'key_indicators'): any {
+function groupRoutes(routes: BaseRoute[] = [], indicatorName = 'key_indicators'): any {
   return routes.map((route) => route['group'] === indicatorName && route).filter(Boolean)
 }
 
@@ -242,8 +242,7 @@ function Header() {
 
   const list = useCallback(
       () => (<Fragment>
-        <Toolbar component={Grid} container className={classes.logo}
-          alignItems='center' justifyContent='center'>
+        <Toolbar component={Grid} container className={classes.logo} alignItems='center' justifyContent='center'>
           <Link to='/' onClick={handleAnchorClose}>
             <Button>
               <img src={process.env.PUBLIC_URL + '/logo.svg'}

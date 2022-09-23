@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import Card from '@material-ui/core/Card'
+import Card from '@mui/material/Card'
 import { formatNumber } from '../../../../utils'
 
 async function renderOptions(series: any = [], categories: any = [], id: string = '', label: string, normative: number = 100) {

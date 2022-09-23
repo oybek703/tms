@@ -1,7 +1,8 @@
 import React from 'react'
 import TableCap from '../TableCap'
-import { makeStyles, TableHead, TableRow } from '@material-ui/core'
-import TableCell from '@material-ui/core/TableCell'
+import { TableHead, TableRow } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({

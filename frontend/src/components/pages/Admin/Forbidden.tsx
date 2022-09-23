@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core'
-import PanToolOutlinedIcon from '@material-ui/icons/PanToolOutlined'
+import { Button, Grid, Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import PanToolOutlinedIcon from '@mui/icons-material/PanToolOutlined'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({

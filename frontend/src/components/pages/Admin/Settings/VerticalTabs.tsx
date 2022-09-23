@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 import { v4 as uuid } from 'uuid'
 import { useLocation } from 'react-router-dom'
+import makeStyles from '@mui/styles/makeStyles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     display: 'flex'
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    width: '100%'
+    width: '100%',
+    color: '#000'
   },
   tabData: {
     width: '84%',
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selectedTab: {
     backgroundColor: theme.palette.info.light,
-    color: '#fff'
+    color: '#000'
   }
 }))
 
@@ -96,10 +97,10 @@ const VerticalTabs: React.FC<VerticalTabsProps> = function({ tabs = [] }) {
         className={classes.tabs}
       >
         {tabNames.map((tabName, index) => <Tab classes={{
-          wrapper: classes.tab,
+          wrapped: classes.tab,
           root: classes.tab,
           selected: classes.selectedTab
-        }} key={uuid()} className={classes.tab} href={`#${index}`}
+        }} key={uuid()} href={`#${index}`}
         component='a'
         label={tabName}
         {...a11yProps(index)} />)}

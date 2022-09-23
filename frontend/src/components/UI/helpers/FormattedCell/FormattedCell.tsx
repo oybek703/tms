@@ -1,11 +1,11 @@
 import React from 'react'
-import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined'
-import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined'
-import Typography from '@material-ui/core/Typography'
-import Grid, { GridJustification } from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core'
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
+import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../utils'
-import { Variant } from '@material-ui/core/styles/createTypography'
+import { Variant } from '@mui/material/styles/createTypography'
 
 const useStyles = makeStyles((theme) => ({
   grow: theme.mixins.grow,
@@ -20,8 +20,8 @@ interface FormattedCellProps {
     number: number
     textVar?: Variant
     curr?: string
-    alignText?: GridJustification
-    iconSize?: 'default' | 'inherit' | 'large' | 'medium' | 'small'
+    alignText?: string
+    iconSize?: 'inherit' | 'large' | 'medium' | 'small'
     dashForZero?: boolean
 }
 

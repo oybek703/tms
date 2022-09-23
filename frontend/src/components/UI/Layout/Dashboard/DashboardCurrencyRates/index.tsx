@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 import { v4 as uuid } from 'uuid'
 import CurrencyRateLine from './CurrencyRateLine'
-import { makeStyles } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles'
 import { DashboardCurrencyRates, ExternalCurrencyRates } from './CurrencyRateTables'
 
 const useStyles = makeStyles((theme) => ({

@@ -1,6 +1,7 @@
 import React from 'react'
-import { makeStyles, Typography } from '@material-ui/core'
-import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard'
+import { Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard'
 
 const useStyles = makeStyles((theme) => ({
   inner: {

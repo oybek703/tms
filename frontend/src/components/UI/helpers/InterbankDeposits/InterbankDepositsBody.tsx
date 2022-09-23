@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 import TableCap from '../TableCap'
-import { makeStyles, TableRow } from '@material-ui/core'
-import TableCell from '@material-ui/core/TableCell'
+import { TableRow } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import TableCell from '@mui/material/TableCell'
 import { formatNumber, formatOneDate } from '../../../../utils'
-import TableBody from '@material-ui/core/TableBody'
+import TableBody from '@mui/material/TableBody'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({

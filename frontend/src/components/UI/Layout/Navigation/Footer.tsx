@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link, makeStyles, Typography } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
+import { Link, Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid'
 import Spaces from '../../helpers/FormattedCell/Spaces'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     'cursor': 'pointer',
+    'textDecoration': 'none',
     '&:hover': {
       textDecoration: 'none'
     }

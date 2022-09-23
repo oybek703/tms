@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import theme from './components/UI/theme'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Header from './components/UI/Layout/Navigation/Header'
@@ -36,46 +36,49 @@ import AdminRoute from './components/UI/Layout/Admin/AdminRoute'
 import Settings from './components/pages/Admin/Settings'
 import NostroMatrix from './components/pages/Analytics/NostroMatrix'
 import VlaBuffer from './components/pages/Analytics/VlaBuffer'
+import { StyledEngineProvider } from '@mui/material'
 
 function App() {
   const { user: { token } } = useTypedSelector((state) => state.auth)
   return (
     <ErrorBoundary>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          {token && <Header/>}
-          <main>
-            <Switch>
-              <Route component={LoginPage} path='/login'/>
-              <PrivateRoute component={Dashboard} path='/' exact/>
-              <PrivateRoute component={MainIndicators} path='/mainindicators'/>
-              <PrivateRoute component={Capital} path='/capital'/>
-              <PrivateRoute component={ProfitAndLost} path='/profitandlost'/>
-              <PrivateRoute component={LiqPointers} path='/liquidity'/>
-              <PrivateRoute component={Correspondent} path='/correspondent'/>
-              <PrivateRoute component={CalcFor} path='/calcfor'/>
-              <PrivateRoute component={CurrencyPosition} path='/currencyposition'/>
-              <PrivateRoute component={PlacedAndAttracted} path='/plat'/>
-              <PrivateRoute component={InterbankDeposits} path='/interbankdeposits'/>
-              <PrivateRoute component={TopDeposits} path='/topdeposits'/>
-              <PrivateRoute component={TimeDepoClients} path='/timedepoclients'/>
-              <PrivateRoute component={TimeDeposits} path='/timedeposits'/>
-              <PrivateRoute component={DepositsByDeadline} path='/depositsbydeadline'/>
-              <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
-              <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
-              <PrivateRoute component={VlaBuffer} path='/vlaBuffer'/>
-              <PrivateRoute component={GM} path='/gm'/>
-              <PrivateRoute component={GAP} path='/gap'/>
-              <PrivateRoute component={GapSimulation} path='/gapSimulation'/>
-              <AdminRoute component={Settings} path='/settings'/>
-              <PrivateRoute component={Forbidden} path='/403'/>
-              <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>
-              <PrivateRoute component={NotFound}/>
-            </Switch>
-          </main>
-          {token && <Footer/>}
-        </BrowserRouter>
-        <ToastContainer position='bottom-right' theme='colored'/>
+        <StyledEngineProvider injectFirst>
+          <BrowserRouter>
+            {token && <Header/>}
+            <main>
+              <Switch>
+                <Route component={LoginPage} path='/login'/>
+                <PrivateRoute component={Dashboard} path='/' exact/>
+                <PrivateRoute component={MainIndicators} path='/mainindicators'/>
+                <PrivateRoute component={Capital} path='/capital'/>
+                <PrivateRoute component={ProfitAndLost} path='/profitandlost'/>
+                <PrivateRoute component={LiqPointers} path='/liquidity'/>
+                <PrivateRoute component={Correspondent} path='/correspondent'/>
+                <PrivateRoute component={CalcFor} path='/calcfor'/>
+                <PrivateRoute component={CurrencyPosition} path='/currencyposition'/>
+                <PrivateRoute component={PlacedAndAttracted} path='/plat'/>
+                <PrivateRoute component={InterbankDeposits} path='/interbankdeposits'/>
+                <PrivateRoute component={TopDeposits} path='/topdeposits'/>
+                <PrivateRoute component={TimeDepoClients} path='/timedepoclients'/>
+                <PrivateRoute component={TimeDeposits} path='/timedeposits'/>
+                <PrivateRoute component={DepositsByDeadline} path='/depositsbydeadline'/>
+                <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
+                <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
+                <PrivateRoute component={VlaBuffer} path='/vlaBuffer'/>
+                <PrivateRoute component={GM} path='/gm'/>
+                <PrivateRoute component={GAP} path='/gap'/>
+                <PrivateRoute component={GapSimulation} path='/gapSimulation'/>
+                <AdminRoute component={Settings} path='/settings'/>
+                <PrivateRoute component={Forbidden} path='/403'/>
+                <PrivateRoute component={InProcess} path={'/in_process/:slug'}/>
+                <PrivateRoute component={NotFound}/>
+              </Switch>
+            </main>
+            {token && <Footer/>}
+          </BrowserRouter>
+          <ToastContainer position='bottom-right' theme='colored'/>
+        </StyledEngineProvider>
       </ThemeProvider>
     </ErrorBoundary>
   )

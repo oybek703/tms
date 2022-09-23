@@ -8,7 +8,7 @@ import NostroMatrixTable from '../../tables/NostroMatrixTable'
 import { findRecursive, formatDate, formatDateWithDash, formatOneDate } from '../../../utils'
 import { toast } from 'react-toastify'
 import InlineDatePicker from '../../UI/Layout/Pickers/InlineDatePicker'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 const NostroMatrix = () => {
   const { fetchNostroMatrix } = useActions()

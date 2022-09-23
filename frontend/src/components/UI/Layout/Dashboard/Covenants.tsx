@@ -1,11 +1,13 @@
 import React from 'react'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import { makeStyles, TableBody, TableContainer, TableRow } from '@material-ui/core'
-import TableCell from '@material-ui/core/TableCell'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import { TableBody, TableContainer, TableRow } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import TableCell from '@mui/material/TableCell'
 import { v4 as uuid } from 'uuid'
 import { covenantData, Status } from '../../../../tempData'
+import BoldWithColor from '../../helpers/BoldWithColor'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
@@ -34,13 +36,13 @@ const Covenants = () => {
       <Table size='small'>
         <TableHead className={classes.stickyTableHead}>
           <TableRow>
-            <TableCell className={classes.blueBackground} align='center' rowSpan={2}><b>№</b></TableCell>
-            <TableCell className={classes.blueBackground} align='center' rowSpan={2}><b>Наименование
-                            ковенанти</b></TableCell>
-            <TableCell className={classes.blueBackground} align='center' rowSpan={2}><b>AO
-                            Асакабанк</b></TableCell>
-            <TableCell className={classes.blueBackground} align='center'
-              colSpan={9}><b>Контрагент</b></TableCell>
+            <TableCell align='center' rowSpan={2}><BoldWithColor>№</BoldWithColor></TableCell>
+            <TableCell align='center' rowSpan={2}><BoldWithColor>Наименование
+                            ковенанти</BoldWithColor></TableCell>
+            <TableCell align='center' rowSpan={2}><BoldWithColor>AO
+                            Асакабанк</BoldWithColor></TableCell>
+            <TableCell align='center'
+              colSpan={9}><BoldWithColor>Контрагент</BoldWithColor></TableCell>
           </TableRow>
           <TableRow>
             {[
@@ -53,7 +55,7 @@ const Covenants = () => {
               'Европейский Банк Реконструкции и Развития',
               'Deutsche Bank AG'
             ].map((bank) => <TableCell className={classes.blueBackground} key={uuid()} align='center'>
-              <b>{bank}</b>
+              <BoldWithColor>{bank}</BoldWithColor>
             </TableCell>)}
           </TableRow>
         </TableHead>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, PropsWithChildren } from 'react'
-import { LinearProgress } from '@material-ui/core'
+import { LinearProgress } from '@mui/material'
 
 function LinearFallback() {
   return <div style={{ margin: '20px 0' }}>

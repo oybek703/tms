@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 import Valute from './Valute'
 import LiquidityCard from './LiquidityCard'
 import { v4 as uuid } from 'uuid'
@@ -8,7 +8,7 @@ import FakeSuspense from '../../helpers/FakeSuspense'
 import LiquidityPoints from '../../../charts/Dashboard/DailyIndicators/LiquidityPoints'
 import Position from './DashboardCurrencyRates/Position'
 import CurrencyPositionChart from '../../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
-import { makeStyles } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles'
 import { getDashboardLiquidityIndicator } from '../../../../utils'
 
 const useStyles = makeStyles((theme) => ({

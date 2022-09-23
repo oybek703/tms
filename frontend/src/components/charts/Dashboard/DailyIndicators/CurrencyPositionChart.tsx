@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import { chartSubtitle } from '../../../../utils'
-import Paper from '@material-ui/core/Paper'
+import Paper from '@mui/material/Paper'
 
 async function renderOptions(series: any = []) {
   const colors = [

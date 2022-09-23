@@ -1,13 +1,14 @@
 import React from 'react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grow from '@material-ui/core/Grow'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
-import MenuList from '@material-ui/core/MenuList'
-import { makeStyles, Theme } from '@material-ui/core/styles'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { IconButton } from '@material-ui/core'
-import CardActionArea from '@material-ui/core/CardActionArea'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+import Grow from '@mui/material/Grow'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
+import MenuList from '@mui/material/MenuList'
+import { Theme } from '@mui/material/styles'
+import makeStyles from '@mui/styles/makeStyles'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import { IconButton } from '@mui/material'
+import CardActionArea from '@mui/material/CardActionArea'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -61,10 +62,14 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
 
   return (
     <div className={classes.root}>
-      <IconButton title='Нажмите, чтобы просмотреть подробности'
-        classes={{ root: classes.iconBtnRoot }} ref={anchorRef} onClick={handleToggle}
+      <IconButton
+        title='Нажмите, чтобы просмотреть подробности'
+        classes={{ root: classes.iconBtnRoot }}
+        ref={anchorRef}
+        onClick={handleToggle}
         aria-controls={open ? 'menu-list-grow' : undefined}
-        aria-haspopup="true">
+        aria-haspopup="true"
+        size="large">
         <ArrowDropDownIcon />
       </IconButton>
       <Popper style={{ zIndex: 100000 }} placement='bottom-end' open={open} anchorEl={anchorRef.current}
@@ -75,6 +80,8 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
             style={{ transformOrigin: 'right end' }}
           >
             <Paper style={{ background: '#ebf5ff' }}>
+              {/*
+              @ts-ignore */}
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   <CardActionArea>

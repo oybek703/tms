@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
-import { makeStyles, Table, TableBody, TableContainer } from '@material-ui/core'
-import TableRow from '@material-ui/core/TableRow'
+import { Table, TableBody, TableContainer } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import TableRow from '@mui/material/TableRow'
 import { v4 as uuid } from 'uuid'
-import TableCell from '@material-ui/core/TableCell'
+import TableCell from '@mui/material/TableCell'
 import {
   GapTableHead,
   TotalOrBoldRow,

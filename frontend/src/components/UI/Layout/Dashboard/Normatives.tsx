@@ -1,14 +1,10 @@
 import React from 'react'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import {
-  makeStyles,
-  TableBody,
-  TableContainer,
-  TableRow
-} from '@material-ui/core'
-import TableCell from '@material-ui/core/TableCell'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import { TableBody, TableContainer, TableRow } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
 

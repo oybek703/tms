@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import Card from '@material-ui/core/Card'
-import { CardContent } from '@material-ui/core'
+import Card from '@mui/material/Card'
+import { CardContent } from '@mui/material'
 import { chartTitle, formatNumber } from '../../../utils'
 
 function renderOptions(values: any, categories: any) {

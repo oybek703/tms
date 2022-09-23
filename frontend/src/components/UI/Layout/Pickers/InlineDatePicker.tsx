@@ -1,10 +1,12 @@
 import 'date-fns'
 import React, { memo, useCallback } from 'react'
-import DateFnsUtils from '@date-io/date-fns'
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { disableDays } from '../../../../utils'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import { TextFieldProps } from '@material-ui/core/TextField'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import { ru } from 'date-fns/locale'
+
 
 interface InlineDatePickerProps {
     reportDate: string,
@@ -22,25 +24,23 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
       [operDays]
   )
   return (
-    <MuiPickersUtilsProvider
-      utils={DateFnsUtils} >
-      <KeyboardDatePicker onChange={handleDateChange} onError={handleDateChange}
-        disableToolbar
-        shouldDisableDate={memoizedDisableWeekends}
-        margin="dense"
-        variant='inline'
-        minDate={new Date('2020-01-01')}
-        format="dd/MM/yyyy"
-        disabled={loading || disabled}
+    <LocalizationProvider adapterLocale={ru} dateAdapter={AdapterDateFns}>
+      <DesktopDatePicker
         value={reportDate}
-        autoOk={true}
-        helperText=''
-        invalidDateMessage='Please enter valid date!'
+        disabled={disabled || loading}
+        closeOnSelect
+        disableHighlightToday
+        disableFuture
+        shouldDisableDate={memoizedDisableWeekends}
+        minDate={new Date('01/01/2020')}
+        onChange={handleDateChange}
         maxDate={new Date(new Date() as any - 86400000)}
-        autoComplete='off'
-        inputVariant={inputVariant}
+        renderInput={
+          (params) => <TextField
+            sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
+            {...params} />}
       />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   )
 }
 

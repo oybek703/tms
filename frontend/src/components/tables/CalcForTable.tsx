@@ -1,25 +1,26 @@
 import React, { Fragment, memo } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import Paper from '@material-ui/core/Paper'
+import makeStyles from '@mui/styles/makeStyles'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import Paper from '@mui/material/Paper'
 import TableCap from '../UI/helpers/TableCap'
 import { formatNumber, formatOneDate } from '../../utils'
-import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined'
-import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined'
-import Typography from '@material-ui/core/Typography'
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
+import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined'
+import Typography from '@mui/material/Typography'
 import ExpenditureDynamics from '../charts/CalcFor/ExpenditureDynamics'
-import { TableRow } from '@material-ui/core'
+import { TableRow } from '@mui/material'
 import CorrespondentDynamics from '../charts/Dashboard/ForCharts/CorrespondentDynamic'
 import Deviation from '../charts/Dashboard/ForCharts/Deviation'
 import Alert from '../UI/Layout/Alert'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-import { Variant } from '@material-ui/core/styles/createTypography'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import { Variant } from '@mui/material/styles/createTypography'
+import Delayed from '../UI/helpers/Delayed'
 
 const useStyles = makeStyles((theme) => ({
   noWrap: theme.mixins.noWrap,
@@ -126,7 +127,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
   }
   return (
     <Fragment>
-      <WarningAlert role={role} rows={rows}/>
+      <Delayed waitBeforeShow={1000}><WarningAlert role={role} rows={rows}/></Delayed>
       <Fragment>
         <TableContainer component={Paper} className={classes.paddingBottom0}>
           <Table size='small'>

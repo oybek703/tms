@@ -1,22 +1,23 @@
 import React, { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import { IconButton, makeStyles, Toolbar } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
-import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
+import AppBar from '@mui/material/AppBar'
+import { IconButton, Toolbar } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import MenuIcon from '@mui/icons-material/Menu'
+import Grid from '@mui/material/Grid'
+import List from '@mui/material/List'
 import { Link, useLocation } from 'react-router-dom'
-import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
-import Grow from '@material-ui/core/Grow'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import MenuList from '@material-ui/core/MenuList'
-import MenuItem from '@material-ui/core/MenuItem'
-import Popper from '@material-ui/core/Popper'
-import Tab from '@material-ui/core/Tab'
-import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Grow from '@mui/material/Grow'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+import MenuList from '@mui/material/MenuList'
+import MenuItem from '@mui/material/MenuItem'
+import Popper from '@mui/material/Popper'
+import Tab from '@mui/material/Tab'
+import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone'
 import DatePicker from '../Pickers/DatePicker'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 import theme from '../../theme'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
@@ -124,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
     }, [getOperDays])
   return (
     <Fragment>
-      <AppBar color='secondary' position='fixed' elevation={0}
+      <AppBar sx={{ bgcolor: '#eee' }} position='fixed' elevation={0}
         variant='outlined'>
         <Toolbar>
           <Grid container className={classes.appbar}
@@ -143,13 +144,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                   <img src={process.env.PUBLIC_URL + '/logo.png'}
                     width='22' height='22'
                     alt="Treasury Reports"/>
-                  <b style={{ paddingBottom: 3 }}>&nbsp;Treasury Management System</b>
+                  <b style={{ paddingBottom: 3, color: '#000' }}>&nbsp;Treasury Management System</b>
                 </Button>
                 {pathname === '/' && !lastUpdateLoading && lastUpdate && <LastUpdate label={lastUpdate}/>}
               </Grid>
             </Grid>
             <Grid item>
-              <Grid container alignItems='center'
+              <Grid container alignItems='center' alignContent='center'
                 component='span'>
                 {
                                   (pathname === '/correspondent' ||
@@ -203,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                   onMouseLeave={handleClose}
                   ref={anchorRef} onMouseOver={handleClick}
                   component='span' label={
-                    <Button onClick={handleClick}
+                    <Button variant='contained' onClick={handleClick}
                       className={classes.noWrap}>
                       <PersonOutlineTwoToneIcon
                         fontSize='small'/>&nbsp;

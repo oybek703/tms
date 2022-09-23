@@ -1,9 +1,9 @@
 import React, { Fragment, memo, useCallback, useState } from 'react'
 import TopDepositCard from '../UI/Layout/TopDeposits/TopDepositCard'
 import { v4 as uuid } from 'uuid'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import TopDepositsTab from '../UI/Layout/Tabs/TopDepositsTab'
-import Card from '@material-ui/core/Card'
+import Card from '@mui/material/Card'
 
 function matchTitle(code: string) {
   switch (code) {

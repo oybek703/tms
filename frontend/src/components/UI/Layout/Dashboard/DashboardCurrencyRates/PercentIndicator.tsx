@@ -1,9 +1,9 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Grid, { GridJustification } from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../../utils'
-import StopIcon from '@material-ui/icons/Stop'
+import StopIcon from '@mui/icons-material/Stop'
 
 const useStyles = makeStyles((theme) => ({
   grow: theme.mixins.grow,
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface PercentIndicatorProps {
     number: number
-    alignText?: GridJustification
+    alignText?: string
     total?: boolean
 }
 

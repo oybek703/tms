@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
 import { TableExport } from 'tableexport'
-import { IconButton, makeStyles } from '@material-ui/core'
-import Popover from '@material-ui/core/Popover'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import { IconButton } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import Popover from '@mui/material/Popover'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import excelImage from '../../../images/excel.png'
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +61,12 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
     <Grid container justifyContent='flex-start'>
       {/*
             //@ts-ignore*/}
-      <IconButton aria-describedby={popoverId} variant="contained" color="primary" onClick={handleClick}>
+      <IconButton
+        aria-describedby={popoverId}
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+        size="large">
         <MoreHorizIcon/>
       </IconButton>
       <Popover

@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
-import TableCell from '@material-ui/core/TableCell'
+import makeStyles from '@mui/styles/makeStyles'
+import TableCell from '@mui/material/TableCell'
 
 const useStyles = makeStyles((theme) => ({
   whiteCell: {

@@ -1,14 +1,14 @@
 import React, { Fragment, memo, useCallback, useState } from 'react'
-import TableContainer from '@material-ui/core/TableContainer'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
+import TableContainer from '@mui/material/TableContainer'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
 import InterbankDepositsHead from '../UI/helpers/InterbankDeposits/InterbankDepositsHead'
 import InterbankDepositsBody from '../UI/helpers/InterbankDeposits/InterbankDepositsBody'
 import TableCap from '../UI/helpers/TableCap'
 import ButtonTabs from '../UI/Layout/Tabs/ButtonsTab'
 import ExportButton from '../UI/Layout/ExportButton'
 import { formatOneDate } from '../../utils'
-import { makeStyles } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles'
 import useTypedSelector from '../../hooks/useTypedSelector'
 
 const useStyles = makeStyles((theme) => ({

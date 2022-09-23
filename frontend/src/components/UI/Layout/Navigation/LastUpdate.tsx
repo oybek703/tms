@@ -1,10 +1,11 @@
 import React from 'react'
-import { makeStyles, Theme } from '@material-ui/core/styles'
-import Chip from '@material-ui/core/Chip'
-import Tooltip from '@material-ui/core/Tooltip'
-import Zoom from '@material-ui/core/Zoom'
-import UpdateOutlinedIcon from '@material-ui/icons/UpdateOutlined'
-import { Avatar } from '@material-ui/core'
+import { Theme } from '@mui/material/styles'
+import makeStyles from '@mui/styles/makeStyles'
+import Chip from '@mui/material/Chip'
+import Tooltip from '@mui/material/Tooltip'
+import Zoom from '@mui/material/Zoom'
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined'
+import { Avatar } from '@mui/material'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
