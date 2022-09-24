@@ -11,7 +11,7 @@ function chooseProgressColor(value = 0) {
   if (value >= 100) return 'red'
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     height: 15,
     borderRadius: 0,

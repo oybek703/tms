@@ -9,7 +9,7 @@ import VLaBufferTable from '../../tables/VlaBufferTable'
 const VlaBuffer = () => {
   const { fetchVlaBuffer } = useActions()
   const { vlaBuffer, loading, error } = useTypedSelector(state => state.vlaBuffer)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchVlaBuffer(reportDate)
   }, [fetchVlaBuffer, reportDate])

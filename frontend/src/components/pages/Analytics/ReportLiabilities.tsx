@@ -12,8 +12,8 @@ const ReportLiabilities = () => {
     reportliabilities,
     loading,
     error
-  } = useTypedSelector((state) => state.reportLiabilities)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  } = useTypedSelector(state => state.reportLiabilities)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchReportLiabilities(reportDate)
   }, [reportDate, fetchReportLiabilities])

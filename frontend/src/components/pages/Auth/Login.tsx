@@ -14,7 +14,7 @@ import { toast } from 'react-toastify'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   darkText: {
     color: '#000'
   },
@@ -53,7 +53,7 @@ const LoginPage = () => {
   const classes = useStyles()
   const { signInUser } = useActions()
   const { user: { token }, loading, error } = useTypedSelector(
-      (state) => state.auth)
+      state => state.auth)
   const [formData, setFormData] = useState({ username: '', password: '' })
   const [usernameHelperText, setUsernameHelperText] = useState('')
   const [passwordHelperText, setPasswordHelperText] = useState('')

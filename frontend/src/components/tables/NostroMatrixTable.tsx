@@ -37,7 +37,7 @@ interface RowData {
   }[]
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
   stickyTableHead: theme.mixins.stickyTableHead
@@ -62,7 +62,7 @@ function RowTitle({ title = '', colSpan = 1 }) {
 
 const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function({ rows, noData }) {
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   if (noData) return <Fragment/>
   return (
     <TableContainer component={Paper}>

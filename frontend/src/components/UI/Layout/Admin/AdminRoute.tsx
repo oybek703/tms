@@ -11,7 +11,7 @@ interface AdminRouteProps {
 }
 
 const AdminRoute: React.FC<AdminRouteProps> = ({ component, exact = false, path = '/' }) => {
-  const { user: { role } } = useTypedSelector((state) => state.auth)
+  const { user: { role } } = useTypedSelector(state => state.auth)
   if (role !== 'admin') return <Redirect to='/403'/>
   return <PrivateRoute component={component} path={path} exact={exact}/>
 }

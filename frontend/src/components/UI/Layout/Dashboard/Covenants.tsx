@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid'
 import { covenantData, Status } from '../../../../tempData'
 import BoldWithColor from '../../helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   blueBackground: theme.mixins.blueBackground,
   stickyTableHead: theme.mixins.stickyTableHead,
@@ -54,7 +54,7 @@ const Covenants = () => {
               'Europe Asia Investment Finance B.V.',
               'Европейский Банк Реконструкции и Развития',
               'Deutsche Bank AG'
-            ].map((bank) => <TableCell className={classes.blueBackground} key={uuid()} align='center'>
+            ].map(bank => <TableCell className={classes.blueBackground} key={uuid()} align='center'>
               <BoldWithColor>{bank}</BoldWithColor>
             </TableCell>)}
           </TableRow>

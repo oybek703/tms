@@ -11,7 +11,7 @@ import useActions from '../../../../hooks/useActions'
 import Loader from '../Loader'
 import Alert from '../Alert'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   greens: {
     color: '#00B050',
     fontSize: '12pt'
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const CreditPortfolioTab = () => {
   const classes = useStyles()
   const { fetchDashboardCreditData } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const { creditData, error, loading } = useTypedSelector(state => state.creditData)
   const { dashboard, error: dashboardError, loading: dashboardLoading } = useTypedSelector(state => state.dashboard)
   const { disaggregatedByTime = [], creditPart = [], issuedCredits = [] } = creditData

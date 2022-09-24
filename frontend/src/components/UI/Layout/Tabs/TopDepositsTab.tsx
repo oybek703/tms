@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 import makeStyles from '@mui/styles/makeStyles'
 import blueGrey from '@mui/material/colors/blueGrey'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   content: {
     marginBottom: 10
   },

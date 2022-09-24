@@ -8,8 +8,8 @@ import useActions from '../../../hooks/useActions'
 
 const GM = () => {
   const { fetchGM } = useActions()
-  const { gm, loading, error } = useTypedSelector((state) => state.gm)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { gm, loading, error } = useTypedSelector(state => state.gm)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchGM(reportDate)
   }, [reportDate, fetchGM])

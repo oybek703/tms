@@ -19,7 +19,7 @@ const colNames = [
   { propName: 'EUR', eqv: 'EUR', canEdit: true }
 ]
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableContainer: {
     maxHeight: '80vh'
   },

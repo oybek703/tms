@@ -55,7 +55,7 @@ export function formatNumber(number: number | string, isDash: boolean | string =
 }
 
 export function disableDays(date: string, dates: string[]) {
-  return dates.findIndex((d) => formatOneDate(date) === d) < 0
+  return dates.findIndex(d => formatOneDate(date) === d) < 0
 }
 
 export function formatChartLegend(label: string, opts: any) {

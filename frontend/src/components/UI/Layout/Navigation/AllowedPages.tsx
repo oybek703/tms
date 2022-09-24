@@ -4,7 +4,7 @@ import { baseRoutes } from './Header'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   title: {
     fontStyle: 'italic',
     color: '#767676',

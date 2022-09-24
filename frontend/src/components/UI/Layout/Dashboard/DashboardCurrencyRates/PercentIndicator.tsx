@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../../utils'
 import StopIcon from '@mui/icons-material/Stop'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   grow: theme.mixins.grow,
   noWrap: {
     ...theme.mixins.noWrap,

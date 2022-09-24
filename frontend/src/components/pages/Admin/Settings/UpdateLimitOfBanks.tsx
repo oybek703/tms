@@ -25,7 +25,7 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import axios from 'axios'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   editCell: {
     cursor: 'pointer',
@@ -41,11 +41,11 @@ const UpdateLimitOfBanks = () => {
   const [newLimit, setNewLimit] = useState<any>('')
   const [beginDate, setBeginDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const { bankLimits = {}, loading, error } = useTypedSelector((state) => state.bankLimits)
+  const { bankLimits = {}, loading, error } = useTypedSelector(state => state.bankLimits)
   const { dates, tableData = [] } = bankLimits
   const [months = {}] = dates || []
   const currencies = Object.keys(tableData[0] || {})
-      .filter((key) => key !== 'CLIENT_CODE' && key !== 'NAME')
+      .filter(key => key !== 'CLIENT_CODE' && key !== 'NAME')
   useEffect(() => {
     fetchBankLimits()
   }, [fetchBankLimits])
@@ -116,12 +116,12 @@ const UpdateLimitOfBanks = () => {
                             <form onSubmit={handleDatesChange}>
                               <label htmlFor="begin">С &nbsp;</label>
                               <input value={beginDate} required
-                                onChange={(e) => setBeginDate(e.target.value)}
+                                onChange={e => setBeginDate(e.target.value)}
                                 type="date"/> &nbsp; &nbsp; &nbsp;
                               <label htmlFor="end">До &nbsp;</label>
                               <input value={endDate}
                                 required
-                                onChange={(e) => setEndDate(e.target.value)}
+                                onChange={e => setEndDate(e.target.value)}
                                 type="date"/>
                                     &nbsp; &nbsp; &nbsp;
                               <button>Обновить срок</button>
@@ -139,7 +139,7 @@ const UpdateLimitOfBanks = () => {
                                   <TableCell>№</TableCell>
                                   <TableCell>Code</TableCell>
                                   <TableCell>Name</TableCell>
-                                  {currencies.map((c) => <TableCell key={uuid()}>{c}</TableCell>)}
+                                  {currencies.map(c => <TableCell key={uuid()}>{c}</TableCell>)}
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -147,7 +147,7 @@ const UpdateLimitOfBanks = () => {
                                   <TableCell>{index + 1}</TableCell>
                                   <TableCell>{row['CLIENT_CODE']}</TableCell>
                                   <TableCell>{row['NAME']}</TableCell>
-                                  {currencies.map((c) => <TableCell
+                                  {currencies.map(c => <TableCell
                                     className={`${classes.noWrap} ${classes.editCell}`}
                                     data-cellinfo={JSON.stringify({
                                       code: row['CLIENT_CODE'],

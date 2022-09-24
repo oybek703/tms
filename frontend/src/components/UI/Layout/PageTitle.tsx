@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import Card from '@mui/material/Card'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   main: {
     marginBottom: 20,
     backgroundColor: '#eee',

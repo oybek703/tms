@@ -12,7 +12,7 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import DashboardMonthlyTable from './DashboardMonthlyTable'
 import useActions from '../../../../hooks/useActions'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   optionBlock: {
     maxWidth: 600
   }
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const DashboardMonthly: React.FC = () => {
   const classes = useStyles()
   const { fetchDashboardMonthly } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const [dateOption, setDateOption] = useState('two')
-  const { operDays } = useTypedSelector((state) => state.operDays)
+  const { operDays } = useTypedSelector(state => state.operDays)
   const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
   const { dashboardMonthly, loading, error } = useTypedSelector(state => state.dashboardMonthly)
   const [firstDate, setFirstDate] = useState(dayBefore as string)
@@ -47,7 +47,7 @@ const DashboardMonthly: React.FC = () => {
     }
     // setDateOption('two')
   }, [dayBefore, reportDate, operDays])
-  const handleDateChange = useCallback((id) => (date: string) => {
+  const handleDateChange = useCallback(id => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
       formatOneDate(new Date().toString()) !== formatOneDate(date)) {
       const { selectedDate } = formatDate(date, true)

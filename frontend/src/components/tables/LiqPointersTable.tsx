@@ -15,7 +15,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableCaption: {
     backgroundColor: 'red',
     color: 'white',
@@ -46,8 +46,8 @@ const singleColouredRow = 'Доля высоколиквидных активо�
 const LiqPointersTable: React.FC<LiqPointersTableProps> = function({ rows = {}, currentState = false }) {
   const { liquidityAssets = [], obligations = [] } = rows
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const renderTableBody = useCallback((tableData) => (<TableBody>
+  const { reportDate } = useTypedSelector(state => state.date)
+  const renderTableBody = useCallback(tableData => (<TableBody>
     {tableData.map((row: any, i: number) => (
       <Fragment key={uuid()}>
         {row.state === singleColouredRow ?

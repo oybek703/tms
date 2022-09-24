@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import Button from '@mui/material/Button'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   alertBox: {
     border: '1px solid black',
     borderRadius: 10,

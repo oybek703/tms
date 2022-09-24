@@ -7,7 +7,7 @@ import { formatNumber, formatOneDate } from '../../../../utils'
 import TableBody from '@mui/material/TableBody'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   red_cell: {
     background: 'red',

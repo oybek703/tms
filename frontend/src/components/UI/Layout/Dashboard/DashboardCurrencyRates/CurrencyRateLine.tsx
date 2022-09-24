@@ -34,7 +34,7 @@ const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} })
           <RadioGroup row value={currency}
             onChange={handleChange}
             aria-label="position" name="position" defaultValue="USD">
-            {currencyOrder.map((v) => <FormControlLabel
+            {currencyOrder.map(v => <FormControlLabel
               key={uuid()}
               value={v}
               control={<Radio color="primary" />}

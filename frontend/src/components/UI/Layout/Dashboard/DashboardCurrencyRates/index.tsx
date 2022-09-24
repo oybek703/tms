@@ -6,7 +6,7 @@ import CurrencyRateLine from './CurrencyRateLine'
 import makeStyles from '@mui/styles/makeStyles'
 import { DashboardCurrencyRates, ExternalCurrencyRates } from './CurrencyRateTables'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   currency: {
     padding: '8px 0',
     fontSize: '12pt',
@@ -33,7 +33,7 @@ const CurrencyRatesTab: React.FC<CurrencyRatesTabProps> = ({ currencyRates = {} 
       <Grid className={classes.smallCardContainer} container
         justifyContent='space-between'>
         {['Курсы ЦБ', 'Курсы для юр. лиц', 'Курсы для физ. лиц'].map(
-            (title) => <Grid component={Paper}
+            title => <Grid component={Paper}
               item
               key={uuid()}
               xs={12} sm={6} md={4}

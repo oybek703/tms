@@ -11,8 +11,8 @@ const Fcrb = () => {
     fcrb,
     loading,
     error
-  } = useTypedSelector((state) => state.fcrb)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  } = useTypedSelector(state => state.fcrb)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchFcrb(reportDate)
   }, [reportDate, fetchFcrb])

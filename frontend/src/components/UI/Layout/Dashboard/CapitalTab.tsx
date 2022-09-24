@@ -8,7 +8,7 @@ import { formatNumber } from '../../../../utils'
 import RWAPoints from '../../../charts/Dashboard/Capital/RWAPoints'
 import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   greens: {
     color: '#00B050',
     fontSize: '12pt'

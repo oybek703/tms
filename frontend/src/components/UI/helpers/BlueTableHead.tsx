@@ -3,7 +3,7 @@ import { TableHead } from '@mui/material'
 
 import makeStyles from '@mui/styles/makeStyles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   blueBackground: theme.mixins.blueBackground
 }))
 

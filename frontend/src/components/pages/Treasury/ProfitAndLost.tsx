@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const ProfitAndLost = () => {
   const { fetchProfitAndLost } = useActions()
   const { profitandlost, loading, error } = useTypedSelector(
-      (state) => state.profitAndLost)
-  const { reportDate } = useTypedSelector((state) => state.date)
+      state => state.profitAndLost)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchProfitAndLost(reportDate)
   }, [fetchProfitAndLost, reportDate])

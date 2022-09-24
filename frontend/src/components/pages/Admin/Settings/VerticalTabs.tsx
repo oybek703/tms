@@ -80,8 +80,8 @@ const VerticalTabs: React.FC<VerticalTabsProps> = function({ tabs = [] }) {
   const classes = useStyles()
   const { hash } = useLocation()
   const [value, setValue] = React.useState(hash ? +hash[1] : 0)
-  const tabNames = tabs.map((tab) => tab['tabName'])
-  const tabDatas = tabs.map((tab) => tab['tabData'])
+  const tabNames = tabs.map(tab => tab['tabName'])
+  const tabDatas = tabs.map(tab => tab['tabData'])
   const handleChange = (event: React.ChangeEvent, newValue: any) => {
     setValue(newValue)
   }

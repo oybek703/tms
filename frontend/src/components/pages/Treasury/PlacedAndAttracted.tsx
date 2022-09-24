@@ -12,8 +12,8 @@ interface PlacedAndAttractedProps {
 
 const PlacedAndAttracted: React.FC<PlacedAndAttractedProps> = ({ forDashboard = false }) => {
   const { fetchPlat } = useActions()
-  const { plat, loading, error } = useTypedSelector((state) => state.plat)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { plat, loading, error } = useTypedSelector(state => state.plat)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchPlat(reportDate)
   }, [fetchPlat, reportDate])

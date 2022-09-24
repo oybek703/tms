@@ -11,7 +11,7 @@ import CurrencyPositionChart from '../../../charts/Dashboard/DailyIndicators/Cur
 import makeStyles from '@mui/styles/makeStyles'
 import { getDashboardLiquidityIndicator } from '../../../../utils'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   liqRate: {
     display: 'flex',
     flexWrap: 'wrap',

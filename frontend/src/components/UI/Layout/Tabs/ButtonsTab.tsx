@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
 import makeStyles from '@mui/styles/makeStyles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   content: {
     marginBottom: 10
   },

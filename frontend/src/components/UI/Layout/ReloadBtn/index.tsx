@@ -6,7 +6,7 @@ import './reloadBtn.css'
 import useActions from '../../../../hooks/useActions'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   btn: {
     height: 38
   }
@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
 const ReloadBtn = () => {
   const classes = useStyles()
   const { fetchDashboard, getLastUpdateTime } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const { loading } = useTypedSelector((state) => state.dashboard)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { loading } = useTypedSelector(state => state.dashboard)
   function handleClick() {
     localStorage.removeItem('dashboard')
     localStorage.removeItem('fcrb')

@@ -15,18 +15,18 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 
 function getFundCategoryAndSeries(fundData: any = []) {
-  let fundChartData = [...fundData].filter((f) => f['forChart'])
+  let fundChartData = [...fundData].filter(f => f['forChart'])
       .map((f: any) => ({ category: f['fund_name'], sum: f['sum'] }))
   const involvedChartLeftData = ([...fundData].pop() || {})['sum'] - fundChartData
       .reduce((acc, val) => acc += val['sum'], 0)
   fundChartData = fundChartData.concat({ category: 'Прочие', sum: involvedChartLeftData })
-      .map((f) => ({ ...f, sum: +(f['sum'] / Math.pow(10, 6)).toFixed(2) }))
-  const fundCategories = fundChartData.map((f) => f['category'])
-  const fundSeries = fundChartData.map((f) => f['sum'])
+      .map(f => ({ ...f, sum: +(f['sum'] / Math.pow(10, 6)).toFixed(2) }))
+  const fundCategories = fundChartData.map(f => f['category'])
+  const fundSeries = fundChartData.map(f => f['sum'])
   return [fundCategories, fundSeries]
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead,
   wrappedRow: {
@@ -41,7 +41,7 @@ interface PlacedAndAttractedTableProps {
 
 const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows = {}, forDashboard = false }) => {
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const { involvedFunds = [], placedFunds = [] } = rows
   const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
   const [placedCategories, placedSeries] = getFundCategoryAndSeries(placedFunds)

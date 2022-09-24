@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   stickyTableHead: theme.mixins.stickyTableHead
 }))
 

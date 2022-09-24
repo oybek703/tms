@@ -10,8 +10,8 @@ import { toast } from 'react-toastify'
 
 const GAP = () => {
   const { fetchGap, getLastGapUpdate } = useActions()
-  const { gap, loading, error } = useTypedSelector((state) => state.gap)
-  const { lastGapUpdate, loading: lastGapUpdateLoading, error: lastGapUpdateError } = useTypedSelector((state) => state.lastGapUpdate)
+  const { gap, loading, error } = useTypedSelector(state => state.gap)
+  const { lastGapUpdate, loading: lastGapUpdateLoading, error: lastGapUpdateError } = useTypedSelector(state => state.lastGapUpdate)
   useEffect(() => {
     fetchGap()
     getLastGapUpdate()

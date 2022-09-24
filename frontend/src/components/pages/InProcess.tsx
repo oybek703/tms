@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   inner: {
     display: 'flex',
     flexDirection: 'column',

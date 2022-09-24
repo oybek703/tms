@@ -14,7 +14,7 @@ import { formatNumber } from '../../utils'
 import Grid from '@mui/material/Grid'
 import LongArrowDown from '../../images/long-arrow-down.png'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   noBorder: theme.mixins.noBorder,
   smallCardContainer: theme.mixins.smallCardContainer,
@@ -232,7 +232,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
       <Grid container className={classes.smallCardContainer}>
         {Array(3)
             .fill('')
-            .map((_) => <Grid key={uuid()} className={classes.smallCard} item xs={4}><ArrowDownwardIcon/></Grid>)
+            .map(_ => <Grid key={uuid()} className={classes.smallCard} item xs={4}><ArrowDownwardIcon/></Grid>)
         }
       </Grid>
       {/* ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА */}
@@ -433,7 +433,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
                 <NoBorderCell nowrap='true' align='left'>
                   <b>*Средняя ставка всего фондирования</b>
                 </NoBorderCell>
-                {['USD', 'EUR', 'UZS'].map((t) => <Fragment key={uuid()}>
+                {['USD', 'EUR', 'UZS'].map(t => <Fragment key={uuid()}>
                   <NoBorderCell align='center' morered='true'><b>{t}</b></NoBorderCell>
                   <NoBorderCell redbold='true' morered='true' align='center'>
                     <RedLightText>

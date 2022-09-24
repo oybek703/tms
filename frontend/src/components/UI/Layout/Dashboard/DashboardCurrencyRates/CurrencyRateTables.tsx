@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../../utils'
 import BoldWithColor from '../../../helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead
 }))
@@ -34,7 +34,7 @@ export const DashboardCurrencyRates: React.FC<DashboardCurrencyRatesProps> = ({ 
     <Table size='small'>
       <CurrencyTableHead/>
       <TableBody>
-        {currencyOrder.map((currName) => {
+        {currencyOrder.map(currName => {
           const row = cbRate.find((curr: any) => curr['nominal'] === `1 ${currName}`)
           return <TableRow hover key={uuid()}>
             <TableCell align='center'>{(row || {})['nominal']}</TableCell>
@@ -61,8 +61,8 @@ export const ExternalCurrencyRates = ({ rates = [] }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {currencyOrder.map((currName) => {
-          const row: any = rates.find((curr) => curr['nominal'] === `1 ${currName}`) || {}
+        {currencyOrder.map(currName => {
+          const row: any = rates.find(curr => curr['nominal'] === `1 ${currName}`) || {}
           return <TableRow hover key={uuid()}>
             <TableCell align='center'>{(row || {})['nominal']}</TableCell>
             <TableCell className={classes.noWrap}

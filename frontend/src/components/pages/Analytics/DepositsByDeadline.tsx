@@ -8,8 +8,8 @@ import useActions from '../../../hooks/useActions'
 
 const DepositsByDeadline = () => {
   const { fetchDepositsByDeadline } = useActions()
-  const { depositsbydeadline, loading, error } = useTypedSelector((state) => state.depositsByDeadline)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { depositsbydeadline, loading, error } = useTypedSelector(state => state.depositsByDeadline)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchDepositsByDeadline(reportDate)
   }, [fetchDepositsByDeadline, reportDate])

@@ -12,7 +12,7 @@ import ButtonTabs from '../../Tabs/ButtonsTab'
 import Grid from '@mui/material/Grid'
 import LimitsMenu from './LimitsMenu'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead,
   exceeded: {
@@ -27,7 +27,7 @@ interface NoWrapCellProps {
   style?: any
 }
 
-const NoWrapCell: React.FC<NoWrapCellProps> = (props) => {
+const NoWrapCell: React.FC<NoWrapCellProps> = props => {
   const classes = useStyles()
   const { celldata = 0, colSpan = 0 } = props
   return <TableCell colSpan={colSpan} {...props} align='center'
@@ -77,7 +77,7 @@ function BankLimitsTableHead({ localBanks = false }) {
           24%</BoldWithColor></TableCell>
       </TableRow>
       {localBanks && <TableRow>
-        {Array(5).fill('').map((_) => <Fragment key={uuid()}>
+        {Array(5).fill('').map(_ => <Fragment key={uuid()}>
           <TableCell align='center'><BoldWithColor>Нац.
             валюта</BoldWithColor></TableCell>
           <TableCell align='center'><BoldWithColor>Иност.
@@ -152,7 +152,7 @@ const LocalBanksTable: React.FC<LocalBanksProps> = ({ rows = [], nationalBank = 
     <Table size='small'>
       <BankLimitsTableHead localBanks/>
       <TableBody>
-        {nationalBank.map((row) => <TableRow hover key={uuid()}>
+        {nationalBank.map(row => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>1</b></TableCell>
           <TableCell><b>{row['NAME']}</b></TableCell>
           <NoWrapCell colSpan={2} celldata={row['SALDO_EQUIVAL_OUT']}/>
@@ -227,7 +227,7 @@ interface BankLimitsProps {
 const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const { foreignBanks = [], localBanks = [], nationalBank = [] } = bankLimits
   const [expanded, setExpanded] = useState(localStorage.getItem('bankLimitsActiveTab') || 'local')
-  const handleChange = useCallback((code) => {
+  const handleChange = useCallback(code => {
     setExpanded(code)
     localStorage.setItem('bankLimitsActiveTab', code)
   }, [])

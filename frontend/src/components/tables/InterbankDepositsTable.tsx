@@ -11,7 +11,7 @@ import { formatOneDate } from '../../utils'
 import makeStyles from '@mui/styles/makeStyles'
 import useTypedSelector from '../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableContainer: {
     maxHeight: '70vh'
   }
@@ -26,9 +26,9 @@ const titles = [
 const InterbankDepositsTable: React.FC<{rows: any}> = function({ rows = [] }) {
   const classes = useStyles()
   const { land, borrow, fullBorrowData, fullLandData } = rows
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const [expanded, setExpanded] = useState('all')
-  const handleChange = useCallback((code) => setExpanded(code), [])
+  const handleChange = useCallback(code => setExpanded(code), [])
   return (
     <Fragment>
       <ButtonTabs handleChange={handleChange} active={expanded} titles={titles}/>

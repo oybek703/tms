@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const CurrencyPosition = () => {
   const { fetchCurrencyPosition } = useActions()
   const { currencyPosition, loading, error } = useTypedSelector(
-      (state) => state.currencyPosition)
-  const { reportDate } = useTypedSelector((state) => state.date)
+      state => state.currencyPosition)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchCurrencyPosition(reportDate)
   }, [fetchCurrencyPosition, reportDate])

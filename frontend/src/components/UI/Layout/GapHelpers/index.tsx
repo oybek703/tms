@@ -133,7 +133,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
     <TableRow>
       <WhiteCell rowSpan={2}/>
       <WhiteCell align='center' rowSpan={2}><b>Наименование</b></WhiteCell>
-      {months.map((month) => <WhiteCell
+      {months.map(month => <WhiteCell
         key={uuid()}
         colSpan={5}
         style={{
@@ -145,7 +145,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function({ months = [] }) {
       </WhiteCell>)}
     </TableRow>
     <TableRow>
-      {months.map((_) => <Fragment key={uuid()}>
+      {months.map(_ => <Fragment key={uuid()}>
         {[
           'Итого (UZS екв.)',
           'Нац.вал. (UZS)',

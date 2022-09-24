@@ -7,7 +7,7 @@ import { formatNumber } from '../../../../../utils'
 import PercentIndicator from './PercentIndicator'
 import BoldWithColor from '../../../helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead
 }))
@@ -16,7 +16,7 @@ const currencyOrder = ['USD', 'EUR', 'JPY', 'GBP', 'KZT', 'RUB', 'CHF', 'CNY']
 
 const Position = ({ position = [] }) => {
   const classes = useStyles()
-  const reOrderedPosition = currencyOrder.map((title) => (position.find((currency) => (currency || {})['NAME'] === title)))
+  const reOrderedPosition = currencyOrder.map(title => (position.find(currency => (currency || {})['NAME'] === title)))
   const totalPercent = useCallback(function() {
     return position.reduce((acc, val) => acc += val['PERCENT'], 0)
   }, [position])

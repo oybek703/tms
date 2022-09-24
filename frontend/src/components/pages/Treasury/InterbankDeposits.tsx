@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const InterBankDeposits = () => {
   const { fetchInterbankDeposits } = useActions()
   const { interbankdeposits, loading, error } = useTypedSelector(
-      (state) => state.interbankdeposits)
-  const { reportDate } = useTypedSelector((state) => state.date)
+      state => state.interbankdeposits)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchInterbankDeposits(reportDate)
   }, [fetchInterbankDeposits, reportDate])

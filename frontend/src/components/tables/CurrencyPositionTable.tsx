@@ -13,7 +13,7 @@ import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: {
     ...theme.mixins.stickyTableHead,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const CurrencyPositionTable: React.FC<{ rows: any }> = function({ rows }) {
   const { allRows = [], tableSumData = [] } = rows
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   return (
     <TableContainer component={Paper}>
       <ExportButton id={`currency-position-${formatOneDate(reportDate)}`}/>

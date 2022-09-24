@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import './loader.css'
 import makeStyles from '@mui/styles/makeStyles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   loaderContent: {
     margin: '0 auto',
     minHeight: 550,

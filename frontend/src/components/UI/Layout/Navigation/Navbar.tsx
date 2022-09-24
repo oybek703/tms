@@ -81,28 +81,26 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
     logout, correspondentCurrentUpdate,
     liquidityCurrentUpdate, updateDashboardActiveTab
   } = useActions()
-  const { user = {} } = useTypedSelector((state) => state.auth)
-  const correspondentCurrentState = useTypedSelector(
-      (state) => state.correspondentCurrentState)
-  const liquidityCurrentState = useTypedSelector(
-      (state) => state.liquidityCurrentState)
+  const { user = {} } = useTypedSelector(state => state.auth)
+  const correspondentCurrentState = useTypedSelector(state => state.correspondentCurrentState)
+  const liquidityCurrentState = useTypedSelector(state => state.liquidityCurrentState)
   const [anchorEl, setAnchorEl] = useState(null)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
   const { pathname } = useLocation()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const { operDays, loading } = useTypedSelector((state) => state.operDays)
-  const { lastUpdate, loading: lastUpdateLoading } = useTypedSelector((state) => state.lastUpdate)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { operDays, loading } = useTypedSelector(state => state.operDays)
+  const { lastUpdate, loading: lastUpdateLoading } = useTypedSelector(state => state.lastUpdate)
   const handleClick = useCallback(() => {
     setAnchorEl(() => anchorRef.current && anchorRef.current)
     setOpen(true)
   }, [anchorRef])
 
-  const setCorrCurrentState = useCallback((state) => {
+  const setCorrCurrentState = useCallback(state => {
     correspondentCurrentUpdate(state)
   }, [correspondentCurrentUpdate])
 
-  const setLiqCurrentState = useCallback((state) => {
+  const setLiqCurrentState = useCallback(state => {
     liquidityCurrentUpdate(state)
   }, [liquidityCurrentUpdate])
 
@@ -167,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                                                     onChange={() => setCorrCurrentState(
                                                         !correspondentCurrentState)}
                                                     name="correspondent_current_state"/>}
-                                                  label="Текущие состояние"/> {!correspondentCurrentState &&
+                                                  label={<span style={{ color: '#333' }}>Текущие состояние</span>}/> {!correspondentCurrentState &&
                                               <DatePicker
                                                 reportDate={reportDate}
                                                 operDays={operDays}
@@ -184,7 +182,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                                                     onChange={() => setLiqCurrentState(
                                                         !liquidityCurrentState)}
                                                     name="liquidity_current_state"/>}
-                                                  label="Текущие состояние"/> {!liquidityCurrentState &&
+                                                  label={<span style={{ color: '#333' }}>Текущие состояние</span>}/> {!liquidityCurrentState &&
                                               <DatePicker
                                                 reportDate={reportDate}
                                                 operDays={operDays}

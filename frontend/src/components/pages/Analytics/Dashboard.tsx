@@ -20,8 +20,8 @@ import useActions from '../../../hooks/useActions'
 
 const Dashboard = () => {
   const { fetchDashboard } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const { dashboard, loading, error } = useTypedSelector((state) => state.dashboard)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { dashboard, loading, error } = useTypedSelector(state => state.dashboard)
   const {
     dashboardCorrespondent = {},
     dashboardCurrencyPosition = {},

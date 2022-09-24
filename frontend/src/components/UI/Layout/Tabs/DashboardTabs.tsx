@@ -25,7 +25,7 @@ function TabPanel(props: any) {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tabContainer: {
     backgroundColor: '#7794aa'
   }
@@ -38,7 +38,7 @@ interface DashboardTabsProps {
 const DashboardTabs: React.FC<DashboardTabsProps> = function({ tabs = [] }) {
   const classes = useStyles()
   const { updateDashboardActiveTab } = useActions()
-  const dashboardActiveTab = useTypedSelector((state) => state.dashboardActiveTab)
+  const dashboardActiveTab = useTypedSelector(state => state.dashboardActiveTab)
   const handleChange = (event: React.ChangeEvent, newValue: any) => {
     updateDashboardActiveTab(newValue)
   }

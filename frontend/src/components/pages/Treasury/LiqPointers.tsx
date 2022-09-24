@@ -8,15 +8,15 @@ import useActions from '../../../hooks/useActions'
 
 const LiqPointers = () => {
   const { fetchLiquidity, fetchLiquidityCurrent } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const { liquidity, loading, error } = useTypedSelector((state) => state.liquidity)
-  const currentState = useTypedSelector((state) => state.liquidityCurrentState)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const { liquidity, loading, error } = useTypedSelector(state => state.liquidity)
+  const currentState = useTypedSelector(state => state.liquidityCurrentState)
   const [liquidityData, setLiquidityData] = useState(liquidity)
   const {
     liquidity: currentLiquidity,
     loading: currentLoading,
     error: currentError
-  } = useTypedSelector((state) => state.liquidityCurrent)
+  } = useTypedSelector(state => state.liquidityCurrent)
   useEffect(() => {
     if (currentState) {
       fetchLiquidityCurrent()

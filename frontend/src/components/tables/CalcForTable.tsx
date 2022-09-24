@@ -22,7 +22,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import { Variant } from '@mui/material/styles/createTypography'
 import Delayed from '../UI/helpers/Delayed'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
   cbNorm: {
@@ -103,8 +103,8 @@ interface CalcForTableProps {
 
 const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = false }) => {
   const classes = useStyles()
-  const { user: { role } } = useTypedSelector((state) => state.auth)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { user: { role } } = useTypedSelector(state => state.auth)
+  const { reportDate } = useTypedSelector(state => state.date)
   const forValues = rows.filter((r: any) => r['F_O_R'] !== 0)
   const forSum = rows.reduce((acc: any, val: any) => acc += val['F_O_R'], 0) / forValues.length
   const consumptionSum = rows.reduce((acc: any, val: any) => acc += val['AVG_CONSUMPTION'], 0)

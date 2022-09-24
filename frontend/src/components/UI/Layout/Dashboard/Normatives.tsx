@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableContainer: {
     maxHeight: '77vh'
   }
@@ -54,7 +54,7 @@ const Normatives = () => {
               min: 'мин 6%',
               min_percent: '10.25%'
             }
-          ].map((row) => <TableRow hover key={uuid()}>
+          ].map(row => <TableRow hover key={uuid()}>
             <TableCell align='center'>{row.count}</TableCell>
             <TableCell colSpan={2} align='center'>{row.title}</TableCell>
             <TableCell align='center'>{row.min}</TableCell>

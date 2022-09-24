@@ -143,7 +143,7 @@ export const baseRoutes: BaseRoute[] = [
   }
 ]
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   routes: {
     fontSize: '16px',
     maxWidth: 210
@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function groupRoutes(routes: BaseRoute[] = [], indicatorName = 'key_indicators'): any {
-  return routes.map((route) => route['group'] === indicatorName && route).filter(Boolean)
+  return routes.map(route => route['group'] === indicatorName && route).filter(Boolean)
 }
 
 interface GroupedRoutesProps {
@@ -218,7 +218,7 @@ function Header() {
   const classes = useStyles()
   const [anchor, setAnchor] = useState(false)
   const [routes, setRoutes] = useState<BaseRoute[]>(baseRoutes)
-  const { user: { pages = [], role } } = useTypedSelector((state) => state.auth)
+  const { user: { pages = [], role } } = useTypedSelector(state => state.auth)
   const keyIndicatorsRoutes = groupRoutes(routes, 'key_indicators')
   const liquidityIndicatorsRoutes = groupRoutes(routes, 'liquidity_indicators')
   const activePassiveRoutes = groupRoutes(routes, 'active_passive')
@@ -227,7 +227,7 @@ function Header() {
   useEffect(() => {
     if (pages !== 'ALL') {
       const mappedPages = (pages || '').split(',')
-      const allowedPages: any = baseRoutes.map((value) => {
+      const allowedPages: any = baseRoutes.map(value => {
         if (mappedPages.includes(value['route']) || value['forAll']) {
           return value
         } else {

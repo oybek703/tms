@@ -12,7 +12,7 @@ import { v4 as uuid } from 'uuid'
 import PaginatedTable from '../UI/helpers/PaginatedTable'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
   stickyTableHead: theme.mixins.stickyTableHead,
@@ -63,13 +63,13 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                   <TableCell align='center'
                     className={classes.noWrap}
                     rowSpan={2}><BoldWithColor>Остаток на дату(тыс. сум)</BoldWithColor></TableCell>
-                  {columns.map((c) => <TableCell
+                  {columns.map(c => <TableCell
                     className={classes.noWrap} colSpan={2}
                     align='center'
                     key={uuid()}><BoldWithColor>{c}</BoldWithColor></TableCell>)}
                 </TableRow>
                 <TableRow>
-                  {columns.map((_) => <Fragment key={uuid()}>
+                  {columns.map(_ => <Fragment key={uuid()}>
                     <TableCell className={classes.noWrap}
                       align='center'><BoldWithColor>Номинал</BoldWithColor></TableCell>
                     <TableCell className={classes.noWrap}
@@ -91,7 +91,7 @@ const ReportLiabilitiesTable: React.FC<{rows: any}> = function({ rows = [] }) {
                           {row['CURRENCY'] === '0' ? '000' : row['CURRENCY']}
                         </TableCell>
                         {bodyColumns.map(
-                            (col) => <TableCell key={uuid()} className={classes.noWrap}
+                            col => <TableCell key={uuid()} className={classes.noWrap}
                               align='center'>
                               {formatNumber(row[`${col}`], true)}
                             </TableCell>)}

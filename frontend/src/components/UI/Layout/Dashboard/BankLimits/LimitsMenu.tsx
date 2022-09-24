@@ -32,7 +32,7 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen)
+    setOpen(prevOpen => !prevOpen)
   }
 
   const handleClose = (event: React.MouseEvent<EventTarget>) => {

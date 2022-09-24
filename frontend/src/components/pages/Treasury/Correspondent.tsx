@@ -8,16 +8,16 @@ import useActions from '../../../hooks/useActions'
 
 const Correspondent = () => {
   const { fetchCorrespondent, fetchCorrespondentCurrent } = useActions()
-  const { reportDate } = useTypedSelector((state) => state.date)
-  const currentState = useTypedSelector((state) => state.correspondentCurrentState)
+  const { reportDate } = useTypedSelector(state => state.date)
+  const currentState = useTypedSelector(state => state.correspondentCurrentState)
   const { correspondent, loading, error } = useTypedSelector(
-      (state) => state.correspondent)
+      state => state.correspondent)
   let [correspondentData, setCorrespondentData] = useState(correspondent)
   const {
     correspondent: currentCorrespondent,
     loading: currentLoading,
     error: currentError
-  } = useTypedSelector((state) => state.correspondentCurrent)
+  } = useTypedSelector(state => state.correspondentCurrent)
   useEffect(() => {
     if (currentState) {
       fetchCorrespondentCurrent()

@@ -21,7 +21,7 @@ const CbnUpdate = () => {
   const [toDate, setToDate] = useState('')
   const [cbNorm, setCbNorm] = useState('')
   const [dateError, setDateError] = useState('')
-  const handleDialogClose = useCallback(async (event) => {
+  const handleDialogClose = useCallback(async event => {
     event.preventDefault()
     if (toDate > fromDate) {
       try {

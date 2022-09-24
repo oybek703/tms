@@ -19,13 +19,13 @@ interface DatePickerProps {
 const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = [], disabled = false }) {
   const { pathname } = useLocation()
   const { changeReportDate } = useActions()
-  const handleDateChange = useCallback((date) => {
-    if (operDays.findIndex((d) => formatOneDate(date) === d) >= 0) {
+  const handleDateChange = useCallback(date => {
+    if (operDays.findIndex(d => formatOneDate(date) === d) >= 0) {
       changeReportDate(date)
     }
   }, [changeReportDate, operDays])
   const memoizedDisableWeekends = useCallback(
-      (date) => disableDays(date, operDays),
+      date => disableDays(date, operDays),
       [operDays]
   )
   return (
@@ -42,7 +42,8 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
           minDate={new Date('01/01/2020')}
           onChange={handleDateChange}
           renderInput={
-            (params) => <TextField
+            params => <TextField
+              placeholder='dd.mm.yyyy'
               sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
               {...params} />}
         />

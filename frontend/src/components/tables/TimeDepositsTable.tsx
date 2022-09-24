@@ -17,7 +17,7 @@ import TimeDepositsChange from '../charts/TimeDeposits/TimeDepositsChange'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   marginTop10: theme.mixins.marginTop10,
   stickyTableHead: theme.mixins.stickyTableHead,

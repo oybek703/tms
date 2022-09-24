@@ -13,7 +13,7 @@ import ExportButton from '../UI/Layout/ExportButton'
 import makeStyles from '@mui/styles/makeStyles'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   stickyHead: theme.mixins.stickyTableHead,
   blueBackground: theme.mixins.blueBackground
 }))

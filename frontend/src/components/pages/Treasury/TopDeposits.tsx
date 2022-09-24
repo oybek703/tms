@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const TopDeposits = () => {
   const { fetchTopDeposits } = useActions()
   const { topDeposits, loading, error } = useTypedSelector(
-      (state) => state.topDeposits)
-  const { reportDate } = useTypedSelector((state) => state.date)
+      state => state.topDeposits)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchTopDeposits(reportDate)
   }, [reportDate, fetchTopDeposits])

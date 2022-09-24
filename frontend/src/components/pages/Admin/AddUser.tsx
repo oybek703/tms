@@ -8,7 +8,7 @@ import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: 'crimson'
@@ -39,7 +39,7 @@ export default function AddUser() {
   const classes = useStyles()
   const { addUser } = useActions()
   const [allowedPages, setAllowedPages] = useState([])
-  const { loading, error } = useTypedSelector((state) => state.addUser)
+  const { loading, error } = useTypedSelector(state => state.addUser)
   const [formData, setFormData] = useState({ username: '', password: '', confirmpassword: '' })
   const [userNameHelperText, setUsernameHelperText] = useState('')
   const [passwordHelperText, setPasswordHelperText] = useState('')
@@ -65,7 +65,7 @@ export default function AddUser() {
     }
   }
 
-  const handleAddPage = useCallback((newPages) => {
+  const handleAddPage = useCallback(newPages => {
     setAllowedPages(Array.from(newPages))
   }, [])
   function handleAddUser(e: FormEvent) {

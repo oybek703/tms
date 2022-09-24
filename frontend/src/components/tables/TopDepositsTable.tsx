@@ -69,7 +69,7 @@ const TopDepositsTable: React.FC<{rows: any}> = function({ rows= {} }) {
   const memoizedMatchColor = useCallback(matchColor, [])
   const memoizedMatchCurrency = useCallback(matchCurrency, [])
 
-  const handleTabChange = useCallback((activeTabIndex) => {
+  const handleTabChange = useCallback(activeTabIndex => {
     setActiveTabIndex(activeTabIndex)
     setExpanded(matchActiveTabCode(activeTabIndex))
   }, [])

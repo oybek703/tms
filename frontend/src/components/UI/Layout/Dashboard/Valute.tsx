@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import FormattedCell from '../../helpers/FormattedCell/FormattedCell'
 import { formatNumber } from '../../../../utils'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   box: {
     flexBasis: '24.6%',
     margin: '-10px 0'

@@ -7,7 +7,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../utils'
 import { Variant } from '@mui/material/styles/createTypography'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   grow: theme.mixins.grow,
   down: theme.mixins.down,
   noWrap: {

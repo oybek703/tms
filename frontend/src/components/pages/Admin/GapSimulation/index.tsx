@@ -17,7 +17,7 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import axios from 'axios'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   buttonsRow: {
     marginBottom: 5
   },
@@ -70,7 +70,7 @@ const GapSimulation = () => {
   const [newValue, setNewValue] = useState<any>('')
   const [dialog, setDialog] = useState(false)
   const [editingCell, setEditingCell] = useState<any>({})
-  const { gapManual = {}, loading, error } = useTypedSelector((state) => state.gapManual)
+  const { gapManual = {}, loading, error } = useTypedSelector(state => state.gapManual)
   const {
     months = [],
     sourceOfLiquidity = [],
@@ -111,7 +111,7 @@ const GapSimulation = () => {
     }
   }, [handleEdit])
 
-  const handleEditClick = useCallback( (event) => {
+  const handleEditClick = useCallback( event => {
     const cellInfo = JSON.parse(event.target.dataset.cellinfo || '{}')
     setEditingCell(cellInfo)
     setDialog(true)

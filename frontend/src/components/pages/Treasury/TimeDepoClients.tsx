@@ -9,8 +9,8 @@ import useActions from '../../../hooks/useActions'
 const TimeDepoClients = () => {
   const { fetchTimeDepoClients } = useActions()
   const { timeDepoClients, loading, error } = useTypedSelector(
-      (state) => state.timeDepoClients)
-  const { reportDate } = useTypedSelector((state) => state.date)
+      state => state.timeDepoClients)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchTimeDepoClients(reportDate)
   }, [fetchTimeDepoClients, reportDate])

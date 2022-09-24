@@ -9,7 +9,7 @@ import TimeDepositsChart from '../../../charts/Dashboard/FundingCharts/TimeDepos
 import InterbankDepositsChart from '../../../charts/Dashboard/FundingCharts/InterbankDepositsChart'
 import makeStyles from '@mui/styles/makeStyles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   margin: {
     marginBottom: '20px'
   },

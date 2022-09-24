@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Spaces from '../../helpers/FormattedCell/Spaces'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',

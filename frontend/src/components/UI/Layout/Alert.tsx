@@ -37,7 +37,7 @@ const getColor = (type: string) => {
   }
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   alert: {
     backgroundColor: ({ type }: {type: string}) => getBackGroundColor(type),
     color: ({ type }: {type: string}) => getColor(type),
@@ -57,7 +57,7 @@ interface AlertProps {
     icon?: boolean
 }
 
-const Alert: React.FC<AlertProps> = (props) => {
+const Alert: React.FC<AlertProps> = props => {
   // @ts-ignore
   const classes = useStyles(props)
   const { type, message = 'Unexpected internal server error!', icon = true } = props

@@ -10,7 +10,7 @@ import useActions from '../../../hooks/useActions'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: 'crimson'
@@ -41,7 +41,7 @@ export default function EditUser() {
   const classes = useStyles()
   const { editUser } = useActions()
   const [allowedPages, setAllowedPages] = useState([])
-  const { loading, user, error } = useTypedSelector((state) => state.getUser)
+  const { loading, user, error } = useTypedSelector(state => state.getUser)
   const [formData, setFormData] = useState({ newUsername: '', newPassword: '', confirmNewPassword: '' })
   const [userNameHelperText, setUsernameHelperText] = useState('')
   const [passwordHelperText, setPasswordHelperText] = useState('')
@@ -67,7 +67,7 @@ export default function EditUser() {
     }
   }
 
-  const handleAddPage = useCallback((newPages) => {
+  const handleAddPage = useCallback(newPages => {
     setAllowedPages(Array.from(newPages))
   }, [])
   function handleEditUser(e: FormEvent) {

@@ -12,7 +12,7 @@ import ForeignCurrencyChart from '../charts/GAP/ForeignCurrencyChart'
 import NationalCurrencyChart from '../charts/GAP/NationalCurrencyChart'
 import useActions from '../../hooks/useActions'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableContainer: {
     maxHeight: '90vh',
     position: 'relative'

@@ -20,7 +20,7 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
   handleDateChange = () => {} }) => {
   const { operDays, loading } = useTypedSelector(state => state.operDays)
   const memoizedDisableWeekends = useCallback(
-      (date) => disableDays(date, operDays),
+      date => disableDays(date, operDays),
       [operDays]
   )
   return (
@@ -36,7 +36,7 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
         onChange={handleDateChange}
         maxDate={new Date(new Date() as any - 86400000)}
         renderInput={
-          (params) => <TextField
+          params => <TextField
             sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
             {...params} />}
       />

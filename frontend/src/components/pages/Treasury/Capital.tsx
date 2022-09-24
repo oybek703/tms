@@ -8,8 +8,8 @@ import useActions from '../../../hooks/useActions'
 
 const Capital = () => {
   const { fetchCapital } = useActions()
-  const { capital, loading, error } = useTypedSelector((state) => state.capital)
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { capital, loading, error } = useTypedSelector(state => state.capital)
+  const { reportDate } = useTypedSelector(state => state.date)
   useEffect(() => {
     fetchCapital(reportDate)
   }, [reportDate, fetchCapital])

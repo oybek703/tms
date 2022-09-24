@@ -39,7 +39,7 @@ import VlaBuffer from './components/pages/Analytics/VlaBuffer'
 import { StyledEngineProvider } from '@mui/material'
 
 function App() {
-  const { user: { token } } = useTypedSelector((state) => state.auth)
+  const { user: { token } } = useTypedSelector(state => state.auth)
   return (
     <ErrorBoundary>
       <ThemeProvider theme={theme}>

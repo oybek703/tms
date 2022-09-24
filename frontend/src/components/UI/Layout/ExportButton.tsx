@@ -8,7 +8,7 @@ import Popover from '@mui/material/Popover'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import excelImage from '../../../images/excel.png'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     textTransform: 'none',
     borderRadius: 0
@@ -24,7 +24,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleClick = useCallback((event) => {
+  const handleClick = useCallback(event => {
     setAnchorEl(event.currentTarget)
   }, [])
 

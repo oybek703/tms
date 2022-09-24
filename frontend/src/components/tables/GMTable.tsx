@@ -18,7 +18,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 
 function sumByCode(array = [], code = '') {
   let usd = 0; let eur = 0; let rub = 0; let uzs = 0
-  array.forEach((v) => {
+  array.forEach(v => {
     if (v['CHECK_ACCOUNT'] === code && v['CODE_CURRENCY'] === '840') {
       usd+=v['PAR_VALUE']
     }
@@ -32,10 +32,10 @@ function sumByCode(array = [], code = '') {
       uzs+=v['PAR_VALUE']
     }
   })
-  return [usd, eur, rub, uzs].map((n) => +(n/Math.pow(10, 6)).toFixed(1))
+  return [usd, eur, rub, uzs].map(n => +(n/Math.pow(10, 6)).toFixed(1))
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paddingBottom0: theme.mixins.paddingBottom0,
   stickyTableHead: theme.mixins.stickyTableHead,
   blueBackground: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const { tableData = [], accredetiv = { acs: [], others: [] }, currRates = [] } = rows
   let uzsSum = 0; let usdSum = 0; let eurSum = 0; let rubSum = 0
   tableData.forEach((r: any) => {
@@ -85,18 +85,18 @@ const GMTable: React.FC<{rows: any}> = function({ rows = {} }) {
       classificationSumRow[3]+=sumByCodes[code][3]
     }
   }
-  classificationSumRow = classificationSumRow.map((v) => +v.toFixed(1))
+  classificationSumRow = classificationSumRow.map(v => +v.toFixed(1))
   const classificationLastRow = classificationSumRow
       .map((r, i) => {
         if (currRates[i]) {
           return r*currRates[i]
         }
         return r
-      }).map((v) => +v.toFixed(1))
+      }).map(v => +v.toFixed(1))
   const gmLiabilities = [
     ...(accredetiv.acs || []).map(Number),
     ...(accredetiv.others || []).map((v: any) => ((+v['par_value'])))
-  ].map((v) => Math.round(Math.abs(v)))
+  ].map(v => Math.round(Math.abs(v)))
   return (
     <Fragment>
       <Grid container spacing={2} justifyContent='space-between'>

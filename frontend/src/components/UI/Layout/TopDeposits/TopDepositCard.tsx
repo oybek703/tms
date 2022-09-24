@@ -8,7 +8,7 @@ import ExportButton from '../ExportButton'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   clientName: {
     maxWidth: 130,
@@ -36,7 +36,7 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], color = '#ee
   while (data.length < 20) {
     data.push({})
   }
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   return (
     <TableContainer component={Paper} classes={{ root: classes.tableCard }}>
       <ExportButton id={`${title}-${currency}-${formatOneDate(reportDate)}`}/>

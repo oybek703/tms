@@ -14,7 +14,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 import TableRow from '@mui/material/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles(theme =>({
   noWrap: theme.mixins.noWrap,
   italic: theme.mixins.italic,
   stickyTableHead: theme.mixins.stickyTableHead
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) =>({
 
 const CapitalTable: React.FC<{rows: any}> = function({ rows }) {
   const classes = useStyles()
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   return (
     <TableContainer component={Paper}>
       <ExportButton id={`capital-${formatOneDate(reportDate)}`}/>

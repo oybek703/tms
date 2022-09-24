@@ -19,7 +19,7 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import EditUser from '../EditUser'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   table: {
     marginTop: 20,
     backgroundColor: '#fff'
@@ -52,9 +52,9 @@ const Users = () => {
   const [addNewUser, setAddNewUser] = useState(false)
   const [editUser, setEditUser] = useState(false)
   const classes = useStyles()
-  const { users, loading, error } = useTypedSelector((state) => state.users)
-  const addUserState = useTypedSelector((state) => state.addUser)
-  const editUserState = useTypedSelector((state) => state.editUser)
+  const { users, loading, error } = useTypedSelector(state => state.users)
+  const addUserState = useTypedSelector(state => state.addUser)
+  const editUserState = useTypedSelector(state => state.editUser)
   const { deleteUserByName, fetchUsers, getUser } = useActions()
   function handleDelete(username: string) {
     if (window.confirm(`Are you sure you want to delete user: ${username}?`)) {

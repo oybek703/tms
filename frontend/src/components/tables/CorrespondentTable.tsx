@@ -15,14 +15,14 @@ import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
   stickyTableHead: theme.mixins.stickyTableHead
 }))
 
 const RenderedCorrespondentTable = function({ currentState = false, currencyRate = [],
   totalCash = [], interbankDeposits = [] }) {
-  const { reportDate } = useTypedSelector((state) => state.date)
+  const { reportDate } = useTypedSelector(state => state.date)
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>

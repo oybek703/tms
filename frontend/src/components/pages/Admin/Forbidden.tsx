@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import PanToolOutlinedIcon from '@mui/icons-material/PanToolOutlined'
 import { Link } from 'react-router-dom'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   mainBtn: {
     maxWidth: 220
   }
