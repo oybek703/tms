@@ -1,9 +1,8 @@
 import { resolve } from 'path'
 import { config } from 'dotenv'
 
-const envPath = `${process.env.NODE_ENV === 'development' ? '' : '../'}../config/.env`
 
-config({ path: resolve(__dirname, envPath) })
+config({ path: resolve(__dirname, '../../src/config/.env') })
 
 const connection = {
   user: process.env.DB_USER,

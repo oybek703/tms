@@ -2,13 +2,14 @@
   "name": "tms-api",
   "version": "1.0.0",
   "description": "Treasury Management System API",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
     "build": "npx tsc",
     "start": "node build/server.js",
+    "debug": "NODE_ENV=debug nodemon --inspect ./src/server.ts",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "dev": "NODE_ENV=development nodemon server.ts"
+    "dev": "NODE_ENV=development nodemon"
   },
   "author": "",
   "license": "ISC",

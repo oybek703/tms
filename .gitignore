@@ -12,8 +12,8 @@ node_modules/*
 backend/client/*
 
 # environment variables
-backend/config/.env
-backend/config/data.ts
+backend/src/config/.env
+backend/src/config/data.ts
 
 # data
 backend/data/*

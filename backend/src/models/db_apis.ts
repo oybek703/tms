@@ -1,6 +1,6 @@
 import 'colors'
 import oracledb from 'oracledb'
-import connection from '../../config/oracledb'
+import connection from '../config/oracledb'
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 
