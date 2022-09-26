@@ -4,9 +4,12 @@
 .idea
 .vscode
 
+#benchmarking
+.clinic
+
 # dependencies
 backend/node_modules
-node_modules/*
+node_modules
 
 # temporary client build
 backend/client/*
