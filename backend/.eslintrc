@@ -4,7 +4,10 @@
     "es2021": true
   },
   "extends": [
-    "google"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -53,6 +56,17 @@
       }
     ],
     "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "unused-imports/no-unused-vars": [
       "warn",
       {
@@ -60,6 +74,20 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "useTabs": true,
+        "semi": false,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "printWidth": 100,
+        "endOfLine": "auto"
       }
     ]
   }

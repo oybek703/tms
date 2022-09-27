@@ -6,12 +6,10 @@ import getPlatTable from '../../utils/placedAndAttracted'
 // @route /api/plat
 // access Private
 const getPlat = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const platTable = await getPlatTable(date)
-  res.status(200).json({ success: true, rows: platTable })
+	const { date } = req.query
+	// @ts-ignore
+	const platTable = await getPlatTable(date)
+	res.status(200).json({ success: true, rows: platTable })
 })
 
 export default getPlat
-
-

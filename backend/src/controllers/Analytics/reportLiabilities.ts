@@ -6,11 +6,10 @@ import getReportLiabilitiesTable from '../../utils/reportLiabilities'
 // @route /api/reportliabilities
 // access Private
 const getReportLiabilities = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const reportLiabilitiesTable = await getReportLiabilitiesTable(date)
-  res.status(200).json({ success: true, rows: reportLiabilitiesTable })
+	const { date } = req.query
+	// @ts-ignore
+	const reportLiabilitiesTable = await getReportLiabilitiesTable(date)
+	res.status(200).json({ success: true, rows: reportLiabilitiesTable })
 })
 
 export default getReportLiabilities
-

@@ -6,10 +6,10 @@ import getCurrencyPositionTable from '../../utils/currencyPosition'
 // @route /api/currencyposition
 // access Private
 const getCurrencyPosition = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const currencyPositionTable = await getCurrencyPositionTable(date)
-  res.status(200).json({ success: true, rows: currencyPositionTable })
+	const { date } = req.query
+	// @ts-ignore
+	const currencyPositionTable = await getCurrencyPositionTable(date)
+	res.status(200).json({ success: true, rows: currencyPositionTable })
 })
 
 export default getCurrencyPosition

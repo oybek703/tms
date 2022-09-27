@@ -2,24 +2,24 @@ import MainClass from '../mainClass'
 import { getData } from '../../models/db_apis'
 
 class ReportLiabilitiesMainClass extends MainClass {
-  constructor(date: string) {
-    super(date)
-  }
+	constructor(date: string) {
+		super(date)
+	}
 
-  formatQuery(date: string) {
-    return `BEGIN
+	formatQuery(date: string) {
+		return `BEGIN
                 LIABILITIES_PACKAGE.LIABILITIES_PROCEDURE(
                     TO_DATE('${date}', 'DD.MM.YYYY')
                 );
             END;`
-  }
+	}
 
-  async fillTable() {
-    await getData(this.formatQuery(this.date))
-  }
+	async fillTable() {
+		await getData(this.formatQuery(this.date))
+	}
 
-  reportLiabilitiesQuery() {
-    return `SELECT SUBSTR(ACCOUNT_CODE, 8, 20) ACCOUNT_CODE, 
+	reportLiabilitiesQuery() {
+		return `SELECT SUBSTR(ACCOUNT_CODE, 8, 20) ACCOUNT_CODE, 
                       NAME_LINE     NAME,
                       CURRENCY_TYPE CURRENCY,
                       SALDO_NOMINAL,
@@ -55,20 +55,16 @@ class ReportLiabilitiesMainClass extends MainClass {
                       GREAT_2_YEAR_NOMINAL,
                       GREAT_2_YEAR_EQUIVAL
                 FROM LIABILITIES`
-  }
+	}
 
-  async getTableData() {
-    return await this.getDataInDates(
-        '',
-        this.reportLiabilitiesQuery,
-        true
-    )
-  }
+	async getTableData() {
+		return await this.getDataInDates('', this.reportLiabilitiesQuery, true)
+	}
 
-  async getRows() {
-    await this.fillTable()
-    return await this.getTableData()
-  }
+	async getRows() {
+		await this.fillTable()
+		return await this.getTableData()
+	}
 }
 
 export default ReportLiabilitiesMainClass

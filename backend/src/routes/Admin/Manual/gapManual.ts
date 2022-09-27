@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import { auth, checkPagePermission } from '../../../middleware/auth'
 import {
-  getGapManual, saveGapChanges,
-  updateGapManual
+	getGapManual,
+	saveGapChanges,
+	updateGapManual
 } from '../../../controllers/Admin/Manual/gapManual'
 
 const router = Router()

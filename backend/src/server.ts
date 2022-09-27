@@ -71,11 +71,11 @@ app.use(notFoundPage)
 app.use(errorHandler)
 
 checkConnection().then((_) => {
-  app.listen(
-      port,
-      console.log.bind(
-          null,
-          `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold,
-      ),
-  )
+	app.listen(
+		port,
+		console.log.bind(
+			null,
+			`Server is running in ${process.env.NODE_ENV} mode on port ${port}...`.yellow.bold
+		)
+	)
 })

@@ -6,11 +6,10 @@ import getVlaBufferTable from '../../utils/vlaBuffer'
 // @route /api/vlaBuffer
 // access Private
 const getVlaBuffer = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const vlaBufferTable = await getVlaBufferTable(date)
-  res.status(200).json({ success: true, rows: vlaBufferTable })
+	const { date } = req.query
+	// @ts-ignore
+	const vlaBufferTable = await getVlaBufferTable(date)
+	res.status(200).json({ success: true, rows: vlaBufferTable })
 })
 
 export default getVlaBuffer
-

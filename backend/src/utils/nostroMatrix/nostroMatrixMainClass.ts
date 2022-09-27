@@ -2,28 +2,28 @@ import MainClass from '../mainClass'
 import { formatDate } from '../dateFormatter'
 
 class NostroMatrixMainClass extends MainClass {
-  currencyCodes: { code: string, title: string, data?: [] }[]
+	currencyCodes: { code: string; title: string; data?: [] }[]
 
-  constructor(protected firstDate: string, protected secondDate: string) {
-    super(firstDate)
-    const { selectedDate: formattedFirstDate } = formatDate(firstDate)
-    const { selectedDate: formattedSecondDate } = formatDate(secondDate)
-    this.firstDate = formattedFirstDate
-    this.secondDate = formattedSecondDate
-    this.currencyCodes = [
-      { code: '840', title: 'Доллары США' },
-      { code: '978', title: 'Евро' },
-      { code: '826', title: 'Фунт стерлингов' },
-      { code: '756', title: 'Швейсцарский франк' },
-      { code: '398', title: 'Казахский тенге' },
-      { code: '392', title: 'Японский иена' },
-      { code: '643', title: 'Российский рубль' },
-      { code: '156', title: 'Китайский юань' }
-    ]
-  }
+	constructor(protected firstDate: string, protected secondDate: string) {
+		super(firstDate)
+		const { selectedDate: formattedFirstDate } = formatDate(firstDate)
+		const { selectedDate: formattedSecondDate } = formatDate(secondDate)
+		this.firstDate = formattedFirstDate
+		this.secondDate = formattedSecondDate
+		this.currencyCodes = [
+			{ code: '840', title: 'Доллары США' },
+			{ code: '978', title: 'Евро' },
+			{ code: '826', title: 'Фунт стерлингов' },
+			{ code: '756', title: 'Швейсцарский франк' },
+			{ code: '398', title: 'Казахский тенге' },
+			{ code: '392', title: 'Японский иена' },
+			{ code: '643', title: 'Российский рубль' },
+			{ code: '156', title: 'Китайский юань' }
+		]
+	}
 
-  formatQuery(_date: string, currencyCode: string = '840') {
-    return `SELECT
+	formatQuery(_date: string, currencyCode = '840') {
+		return `SELECT
                 CC.NAME                                                                AS "name",
                 SALDO_OUT                                                              AS "saldoOut",
                 TURNOVER_ALL_DEBIT                                                     AS "turnoverDebit",
@@ -84,15 +84,16 @@ class NostroMatrixMainClass extends MainClass {
                      LEFT JOIN BANK_INFO_MATRIX BX
                                ON (BX.BANK_CODE = S.CLIENT_CODE
                                    AND S.CODE_CURRENCY = BX.CODE_CURRENCY)`
-  }
+	}
 
-  async getRows(): Promise<any> {
-    return await Promise.all(
-        this.currencyCodes.map(async ({ code, title }) => {
-          const currencyRowsData = await this.getDataInDates(code, null, true)
-          return { code, title, data: currencyRowsData }
-        }))
-  }
+	async getRows(): Promise<any> {
+		return await Promise.all(
+			this.currencyCodes.map(async ({ code, title }) => {
+				const currencyRowsData = await this.getDataInDates(code, null, true)
+				return { code, title, data: currencyRowsData }
+			})
+		)
+	}
 }
 
 export default NostroMatrixMainClass

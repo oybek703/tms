@@ -3,15 +3,15 @@ import MainClass, { OwnQuery } from '../mainClass'
 const { createLiqPointersData } = require('./liq_pure_functions')
 
 class LiquidityMainClass extends MainClass {
-    columns: string[]
+	columns: string[]
 
-    constructor(date: string) {
-      super(date)
-      this.columns = ['total', 'nat_curr', 'for_curr', 'usa_dollar', 'evro']
-    }
+	constructor(date: string) {
+		super(date)
+		this.columns = ['total', 'nat_curr', 'for_curr', 'usa_dollar', 'evro']
+	}
 
-    formatQuery(date: string, whereQuery = `code_coa like '101%'`) {
-      return `SELECT TOTAL,
+	formatQuery(date: string, whereQuery = `code_coa like '101%'`) {
+		return `SELECT TOTAL,
                      NAT_CURR,
                      ROUND((TOTAL - NAT_CURR) / (SELECT EQUIVAL
                                                  FROM IBS.S_RATE_CUR@IABS
@@ -61,32 +61,50 @@ class LiquidityMainClass extends MainClass {
                             WHERE ${whereQuery}
                               AND CODE_CURRENCY = '978') AS EVRO
                     FROM DUAL)`
-    }
+	}
 
-    liquidityQuery(role: string) {
-      return function(date: string) {
-        return `SELECT * FROM (SELECT * FROM LIQUIDITY ORDER BY OPER_DAY DESC)
+	liquidityQuery(role: string) {
+		return function (date: string) {
+			return `SELECT * FROM (SELECT * FROM LIQUIDITY ORDER BY OPER_DAY DESC)
                 WHERE OPER_DAY<TO_DATE('${date}', 'DD-MM-YYYY') AND ROLE='${role}' AND ROWNUM=1`
-      }
-    }
+		}
+	}
 
-    async getOneRow(count?: string, state?: string, codeCoa: string = '', ownQuery: OwnQuery = null, isTableHead: boolean = false) {
-      if (!Boolean(codeCoa)) {
-        const { TOTAL, NAT_CURR, FOR_CURR, USA_DOLLAR, EVRO } = await this.getDataInDates(
-            '',
-            ownQuery
-        )
-        return createLiqPointersData(
-            count, state, TOTAL, NAT_CURR,
-            FOR_CURR, USA_DOLLAR, EVRO, isTableHead
-        )
-      }
-      const { TOTAL, NAT_CURR, FOR_CURR, USA_DOLLAR, EVRO } = await this.getDataInDates(codeCoa)
-      return createLiqPointersData(
-          count, state, TOTAL, NAT_CURR,
-          FOR_CURR, USA_DOLLAR, EVRO, isTableHead
-      )
-    }
+	async getOneRow(
+		count?: string,
+		state?: string,
+		codeCoa = '',
+		ownQuery: OwnQuery = null,
+		isTableHead = false
+	) {
+		if (!codeCoa) {
+			const { TOTAL, NAT_CURR, FOR_CURR, USA_DOLLAR, EVRO } = await this.getDataInDates(
+				'',
+				ownQuery
+			)
+			return createLiqPointersData(
+				count,
+				state,
+				TOTAL,
+				NAT_CURR,
+				FOR_CURR,
+				USA_DOLLAR,
+				EVRO,
+				isTableHead
+			)
+		}
+		const { TOTAL, NAT_CURR, FOR_CURR, USA_DOLLAR, EVRO } = await this.getDataInDates(codeCoa)
+		return createLiqPointersData(
+			count,
+			state,
+			TOTAL,
+			NAT_CURR,
+			FOR_CURR,
+			USA_DOLLAR,
+			EVRO,
+			isTableHead
+		)
+	}
 }
 
 export default LiquidityMainClass

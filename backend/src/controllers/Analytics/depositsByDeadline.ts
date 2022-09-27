@@ -6,10 +6,10 @@ import getDepositsByDeadlineTable from '../../utils/depositsByDeadline'
 // @route /api/depositsbydeadline
 // access Private
 const getDepositsByDeadline = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const depositsByDeadlineTable = await getDepositsByDeadlineTable(date)
-  res.status(200).json({ success: true, rows: depositsByDeadlineTable })
+	const { date } = req.query
+	// @ts-ignore
+	const depositsByDeadlineTable = await getDepositsByDeadlineTable(date)
+	res.status(200).json({ success: true, rows: depositsByDeadlineTable })
 })
 
 export default getDepositsByDeadline

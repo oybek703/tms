@@ -2,12 +2,12 @@ import LiquidityAssets from './LiquidityAssets'
 
 /* eslint-disable camelcase */
 class LiquidityAssetsCurrent extends LiquidityAssets {
-  constructor(_date?: string) {
-    super('')
-  }
+	constructor(_date?: string) {
+		super('')
+	}
 
-  formatQuery(date: string, whereQuery = `CODE_COA LIKE '101%'`) {
-    return `SELECT ABS((NVL(UZS_SE, 0) + NVL(EUR_SE, 0) + NVL(USD_SE, 0) 
+	formatQuery(date: string, whereQuery = `CODE_COA LIKE '101%'`) {
+		return `SELECT ABS((NVL(UZS_SE, 0) + NVL(EUR_SE, 0) + NVL(USD_SE, 0) 
                 + NVL(RUB_SE, 0) + NVL(JPY_SE, 0) + NVL(KZT_SE, 0) +
                 NVL(GBP_SE, 0) + NVL(CHF_SE, 0) + NVL(CHN_SE, 0)))              AS TOTAL,
            ABS(UZS) NAT_CURR,
@@ -37,10 +37,10 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
             '826' AS GBP,
             '756' AS CHF,
             '156' AS CHN) )`
-  }
+	}
 
-  localBanksQuery() {
-    return `SELECT (SELECT ROUND(SUM(SALDO_EQUIVAL_OUT) / POWER(10, 8), 2)
+	localBanksQuery() {
+		return `SELECT (SELECT ROUND(SUM(SALDO_EQUIVAL_OUT) / POWER(10, 8), 2)
                         FROM IBS.ACCOUNTS@IABS AC
                                  JOIN BANK_DICTIONARY BD
                                       ON AC.CLIENT_CODE = CONCAT('000', BD.CLIENT_CODE)
@@ -74,10 +74,10 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                         WHERE AC.CODE_COA = '21002'
                           AND CODE_CURRENCY = '978')            AS EVRO
                 FROM DUAL`
-  }
+	}
 
-  vostroFilteredQuery(_date: string) {
-    return `SELECT FOR_CURR                      AS TOTAL,
+	vostroFilteredQuery(_date: string) {
+		return `SELECT FOR_CURR                      AS TOTAL,
                    NAT_CURR,
                    ROUND(FOR_CURR / USD_RATE, 2) AS FOR_CURR,
                    USA_DOLLAR,
@@ -114,29 +114,31 @@ class LiquidityAssetsCurrent extends LiquidityAssets {
                           ORDER BY DATE_CROSS DESC
                               FETCH FIRST ROW ONLY)   AS USD_RATE
                   FROM DUAL)`
-  }
+	}
 
-  async total_actives() {/* Всего активы (чистые) */
-    return await this.getOneRow(
-        '',
-        'Всего активы (чистые)',
-        `CODE_COA LIKE '1%'
+	async total_actives() {
+		/* Всего активы (чистые) */
+		return await this.getOneRow(
+			'',
+			'Всего активы (чистые)',
+			`CODE_COA LIKE '1%'
                      AND CODE_COA NOT LIKE '161%'
                      AND CODE_COA NOT LIKE '175%'`,
-        null,
-        true
-    )
-  } /* Всего активы (чистые) */
+			null,
+			true
+		)
+	} /* Всего активы (чистые) */
 
-  async government_bills() {/* Гос . ценные бумаги */
-    return await this.getOneRow(
-        '2',
-        'Гос . ценные бумаги',
-        `CODE_COA LIKE '107%' AND CODE_COA != '10793'`,
-        null,
-        true
-    )
-  } /* Гос . ценные бумаги */
+	async government_bills() {
+		/* Гос . ценные бумаги */
+		return await this.getOneRow(
+			'2',
+			'Гос . ценные бумаги',
+			`CODE_COA LIKE '107%' AND CODE_COA != '10793'`,
+			null,
+			true
+		)
+	} /* Гос . ценные бумаги */
 }
 
 export default LiquidityAssetsCurrent

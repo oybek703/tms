@@ -6,11 +6,10 @@ import getNostroMatrixTable from '../../utils/nostroMatrix'
 // @route /api/nostroMatrix
 // access Private
 const getNostroMatrix = asyncMiddleware(async (req: Request, res: Response) => {
-  const { firstDate, secondDate } = req.query
-  // @ts-ignore
-  const nostroMatrixTable = await getNostroMatrixTable(firstDate, secondDate)
-  res.status(200).json({ success: true, rows: nostroMatrixTable })
+	const { firstDate, secondDate } = req.query
+	// @ts-ignore
+	const nostroMatrixTable = await getNostroMatrixTable(firstDate, secondDate)
+	res.status(200).json({ success: true, rows: nostroMatrixTable })
 })
 
 export default getNostroMatrix
-

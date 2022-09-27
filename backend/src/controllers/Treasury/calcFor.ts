@@ -7,41 +7,45 @@ import { getData } from '../../models/db_apis'
 // @route /api/calc-for
 // access Private
 export const getCalcFor = asyncMiddleware(async (req: Request, res: Response) => {
-  const { date } = req.query
-  // @ts-ignore
-  const calcForTable = await getCalcForTable(date)
-  res.status(200).json({ success: true, rows: calcForTable })
+	const { date } = req.query
+	// @ts-ignore
+	const calcForTable = await getCalcForTable(date)
+	res.status(200).json({ success: true, rows: calcForTable })
 })
 
 // @desc Put Update CB Standard
 // @route /api/updatecbn
 // access Admin
 export const updateCbn = asyncMiddleware(async (req: Request, res: Response) => {
-  const { fromDate, toDate, cbNorm } = req.body
-  const { rows: [existingData] } = await getData(`SELECT
+	const { fromDate, toDate, cbNorm } = req.body
+	const {
+		// @ts-ignore
+		rows: [existingData]
+	} = await getData(`SELECT
                                            *
                                     FROM FOR_STANDARD
                                     WHERE
                                           FROM_DATE=TO_DATE('${fromDate}', 'YYYY-MM-DD')
                                       AND
                                           END_DATE=TO_DATE('${toDate}', 'YYYY-MM-DD')`)
-  if (existingData) {
-    await getData(
-        `UPDATE FOR_STANDARD SET CB_STANDARD='${cbNorm}'
+	if (existingData) {
+		await getData(
+			`UPDATE FOR_STANDARD SET CB_STANDARD='${cbNorm}'
              WHERE FROM_DATE=TO_DATE('${fromDate}', 'YYYY-MM-DD')
-             AND END_DATE=TO_DATE('${toDate}', 'YYYY-MM-DD')`)
-    return res.status(200).json({
-      success: true,
-      message: 'Existing normative successfully updated.'
-    })
-  }
-  await getData(
-      `INSERT INTO 
+             AND END_DATE=TO_DATE('${toDate}', 'YYYY-MM-DD')`
+		)
+		return res.status(200).json({
+			success: true,
+			message: 'Existing normative successfully updated.'
+		})
+	}
+	await getData(
+		`INSERT INTO 
                  FOR_STANDARD(CB_STANDARD, FROM_DATE, END_DATE) 
                  VALUES (
                          '${cbNorm}', 
                          TO_DATE('${fromDate}', 'YYYY-MM-DD'), 
-                         TO_DATE('${toDate}', 'YYYY-MM-DD'))`)
-  res.status(201).json({ success: true, message: 'Central bank normative added successfully.' })
+                         TO_DATE('${toDate}', 'YYYY-MM-DD'))`
+	)
+	res.status(201).json({ success: true, message: 'Central bank normative added successfully.' })
 })
-

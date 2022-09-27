@@ -3,23 +3,23 @@ import { getDatesBetweenDates } from './calcfor_pure_functions'
 import { formatOneDate } from '../dateFormatter'
 
 class CalcForMainClass extends MainClass {
-  constructor(date: string) {
-    super(date)
-  }
+	constructor(date: string) {
+		super(date)
+	}
 
-  startEndDateQuery() {
-    return `SELECT FROM_DATE, END_DATE FROM FOR_STANDARD
+	startEndDateQuery() {
+		return `SELECT FROM_DATE, END_DATE FROM FOR_STANDARD
                 WHERE TO_DATE('${this.date}', 'DD-MM-YYYY')>=FROM_DATE
                   AND TO_DATE('${this.date}', 'DD-MM-YYYY')<=END_DATE`
-  }
+	}
 
-  async getDates() {
-    const { FROM_DATE, END_DATE } = await this.getDataInDates('', this.startEndDateQuery.bind(this))
-    return getDatesBetweenDates(FROM_DATE, END_DATE)
-  }
+	async getDates() {
+		const { FROM_DATE, END_DATE } = await this.getDataInDates('', this.startEndDateQuery.bind(this))
+		return getDatesBetweenDates(FROM_DATE, END_DATE)
+	}
 
-  formatQuery(date: string) {
-    return `SELECT DATE_VALUE,
+	formatQuery(date: string) {
+		return `SELECT DATE_VALUE,
                    F_O_R,
                    NVL(CB_STANDARD, 0)  CB_STANDARD,
                    NVL(ST_DEVIATION, 0) ST_DEVIATION,
@@ -50,27 +50,29 @@ class CalcForMainClass extends MainClass {
                                       WHERE CODE_COA = '10301'
                                         AND CODE_CURRENCY = '000')) F_O_R
                         FROM DUAL))`
-  }
+	}
 
-  async getOneRow(date: string) {
-    return await this.getDataInDates('', this.formatQuery.bind(this, date))
-  }
+	async getOneRow(date: string) {
+		return await this.getDataInDates('', this.formatQuery.bind(this, date))
+	}
 
-  async getRows() {
-    const dates = await this.getDates()
-    return await Promise.all(dates.map((date: string) => {
-      if (new Date(date) <= new Date(Date.now() - 86400000)) {
-        return this.getOneRow(formatOneDate(date))
-      }
-      return {
-        DATE_VALUE: formatOneDate(date),
-        F_O_R: 0,
-        CB_STANDARD: 0,
-        ST_DEVIATION: 0,
-        AVG_CONSUMPTION: 0
-      }
-    }))
-  }
+	async getRows() {
+		const dates = await this.getDates()
+		return await Promise.all(
+			dates.map((date: string) => {
+				if (new Date(date) <= new Date(Date.now() - 86400000)) {
+					return this.getOneRow(formatOneDate(date))
+				}
+				return {
+					DATE_VALUE: formatOneDate(date),
+					F_O_R: 0,
+					CB_STANDARD: 0,
+					ST_DEVIATION: 0,
+					AVG_CONSUMPTION: 0
+				}
+			})
+		)
+	}
 }
 
 export default CalcForMainClass

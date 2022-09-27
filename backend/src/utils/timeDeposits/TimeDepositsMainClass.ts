@@ -2,26 +2,27 @@ import MainClass from '../mainClass'
 import TimeDepoClients from '../timeDepoClients/TimeDepoClients'
 
 class TimeDepositsMainClass extends MainClass {
-  constructor(date: string) {
-    super(date)
-  }
+	constructor(date: string) {
+		super(date)
+	}
 
-  async getSumByCurrency(array = []) {
-    const usdCurrency = await this.getCurrencyRate('840', true)
-    const eurCurrency = await this.getCurrencyRate('978', true)
-    const [uzs, usd, eur] = ['000', '840', '978']
-        .map((currency) => array.reduce((acc, val) => {
-          if (val['currencyCode'] === currency) {
-            acc+=val['saldoOut']
-          }
-          return acc
-        }, 0))
-    return [uzs, usd*usdCurrency, eur*eurCurrency]
-  }
+	async getSumByCurrency(array = []) {
+		const usdCurrency = await this.getCurrencyRate('840', true)
+		const eurCurrency = await this.getCurrencyRate('978', true)
+		const [uzs, usd, eur] = ['000', '840', '978'].map((currency) =>
+			array.reduce((acc, val) => {
+				if (val['currencyCode'] === currency) {
+					acc += val['saldoOut']
+				}
+				return acc
+			}, 0)
+		)
+		return [uzs, usd * usdCurrency, eur * eurCurrency]
+	}
 
-  formatQuery(date: string) {
-    /* eslint-disable max-len */
-    return `SELECT FILIAL_NAME,
+	formatQuery(date: string) {
+		/* eslint-disable max-len */
+		return `SELECT FILIAL_NAME,
                    NVL(YEAR_BEGIN, 0)                                        YEAR_BEGIN,
                    NVL(MONTH_BEGIN, 0)                                       MONTH_BEGIN,
                    NVL(SELECTED_DATE, 0)                                     SELECTED_DATE,
@@ -85,19 +86,19 @@ class TimeDepositsMainClass extends MainClass {
                                                         FROM TIME_DEPO_CLIENTS
                                                         WHERE OPER_DAY < TO_DATE('${date}', 'DD.MM.YYYY'))
                                       GROUP BY FILIAL_NAME) SD ON FLS.FILIAL_NAME = SD.FILIAL_NAME)`
-    /* eslint-disable max-len */
-  }
+		/* eslint-disable max-len */
+	}
 
-  // @ts-ignore
-  async getRows(date: string) {
-    const { monthFirstDate } = this.dates
-    const TdcInDate = await new TimeDepoClients(date).getRows()
-    const TdcInMonthBegin = await new TimeDepoClients(monthFirstDate).getRows()
-    const currentBalance = await this.getSumByCurrency(TdcInDate)
-    const balanceInMonthBegin = await this.getSumByCurrency(TdcInMonthBegin)
-    const tableData = await this.getDataInDates('1=1', null, true)
-    return { tableData, currentBalance, balanceInMonthBegin }
-  }
+	// @ts-ignore
+	async getRows(date: string) {
+		const { monthFirstDate } = this.dates
+		const TdcInDate = await new TimeDepoClients(date).getRows()
+		const TdcInMonthBegin = await new TimeDepoClients(monthFirstDate).getRows()
+		const currentBalance = await this.getSumByCurrency(TdcInDate)
+		const balanceInMonthBegin = await this.getSumByCurrency(TdcInMonthBegin)
+		const tableData = await this.getDataInDates('1=1', null, true)
+		return { tableData, currentBalance, balanceInMonthBegin }
+	}
 }
 
 export default TimeDepositsMainClass
