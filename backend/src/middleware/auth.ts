@@ -13,9 +13,8 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
 		const { id } = await verify(token, process.env.JWT_SECRET)
 		const { rows } = await getData(`SELECT * FROM TRS_USERS WHERE ID='${id}'`)
 		// @ts-ignore
-		const user = rows[0]
+		const user = rows[0] as req.user
 		if (!user) return next(new ErrorResponse(404, 'User not found.'))
-		// @ts-ignore
 		req.user = user
 		next()
 	} catch (e) {

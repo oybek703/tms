@@ -29,8 +29,8 @@ class MainClass {
 		this.date = BEFORE_DATE
 	}
 
-	// eslint-disable-next-line no-unused-vars,unused-imports/no-unused-vars
-	formatQuery(_date: string, _whereQuery: string) {
+	// eslint-disable-next-line no-unused-vars,unused-imports/no-unused-vars,@typescript-eslint/no-unused-vars
+	formatQuery(date: string, whereQuery: string) {
 		throw new Error('formatQuery method must be implemented in child class!')
 	}
 
@@ -44,9 +44,11 @@ class MainClass {
 			const { rows } = await getData(query)
 			// @ts-ignore
 			return rows[0] || {}
-		} catch (e: any) {
-			const error = new Error(e)
-			console.log('Stack: '.underline.yellow.bold, error.stack)
+		} catch (e) {
+			if (e instanceof Error) {
+				console.log(e.message)
+				console.log('Stack: '.underline.yellow.bold, e.stack)
+			}
 			return {}
 		}
 	}
