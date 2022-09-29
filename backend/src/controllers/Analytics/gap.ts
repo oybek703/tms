@@ -1,12 +1,13 @@
 // @desc Get GAP
 // @route /api/gap
 // access Private
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getGapTable from '../../utils/gap'
 import { getData } from '../../models/db_apis'
+import { RequestWithDateQuery } from '../controllers.interface'
 
-export const getGap = asyncMiddleware(async (req: Request, res: Response) => {
+export const getGap = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const gapTable = await getGapTable()
 	res.status(200).json({ success: true, rows: gapTable })
 })
@@ -14,12 +15,13 @@ export const getGap = asyncMiddleware(async (req: Request, res: Response) => {
 // @desc Get GAP Last Update time
 // @route /api/gap/lastGapUpdate
 // access Private
-export const getGapLastUpdate = asyncMiddleware(async (req: Request, res: Response) => {
-	const {
-		rows: [{ lastGapUpdate }]
-	} = await getData(
-		`SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') 
+export const getGapLastUpdate = asyncMiddleware(
+	async (req: RequestWithDateQuery, res: Response) => {
+		const { rows = [] } = await getData(
+			`SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') 
               AS "lastGapUpdate" FROM   USER_SCHEDULER_JOBS WHERE  JOB_NAME = UPPER('GAP_Analysis')`
-	)
-	res.status(200).json({ success: true, lastGapUpdate })
-})
+		)
+		const { lastGapUpdate } = rows[0] as { lastGapUpdate: string }
+		res.status(200).json({ success: true, lastGapUpdate })
+	}
+)

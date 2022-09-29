@@ -31,6 +31,7 @@ import editUser from './Admin/editUserReducer'
 import getUser from './Admin/getUserReducer'
 import lastGapUpdate from './Anayltics/lastGapUpdateReducer'
 import vlaBuffer from './Anayltics/vlaBufferReducer'
+import filialEffectiveness from './Anayltics/filialEffectivenessReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -63,6 +64,7 @@ const rootReducer = combineReducers({
   fcrb,
   nostroMatrix,
   vlaBuffer,
+  filialEffectiveness,
   gap,
   lastGapUpdate,
   bankLimits,

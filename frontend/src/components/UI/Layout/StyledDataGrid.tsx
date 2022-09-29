@@ -10,7 +10,7 @@ interface StyledDataGridProps extends DataGridProps {
 
 const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, columns, ...props }) => {
   return (
-    <Box component={Paper} sx={{ height: '90vh', width: '100%' }}>
+    <Box component={Paper} sx={{ height: '75vh', width: '100%' }}>
       <DataGrid
         rows={rows.map((row: any, i: number) => ({ ...row, index: i + 1 }))}
         sx={{
@@ -40,7 +40,7 @@ const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, colu
           }
         }}
         columns={columns}
-        rowsPerPageOptions={[30, 50]}
+        rowsPerPageOptions={[30, 50, 100]}
         getRowId={(row: any) => row.index}
         {...props}
       />

@@ -34,7 +34,11 @@ class MainClass {
 		throw new Error('formatQuery method must be implemented in child class!')
 	}
 
-	async getDataInDates(whereQuery: string, ownQuery?: OwnQuery, isInStream = false): Promise<any> {
+	async getDataInDates(
+		whereQuery: string | 'true',
+		ownQuery?: OwnQuery,
+		isInStream = false
+	): Promise<any> {
 		try {
 			const query = whereQuery
 				? this.formatQuery(this.date, whereQuery)

@@ -1,13 +1,13 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getCurrencyPositionTable from '../../utils/currencyPosition'
+import { RequestWithDateQuery } from '../controllers.interface'
 
 // @desc Get Currency Position
 // @route /api/currencyposition
 // access Private
-const getCurrencyPosition = asyncMiddleware(async (req: Request, res: Response) => {
+const getCurrencyPosition = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const { date } = req.query
-	// @ts-ignore
 	const currencyPositionTable = await getCurrencyPositionTable(date)
 	res.status(200).json({ success: true, rows: currencyPositionTable })
 })

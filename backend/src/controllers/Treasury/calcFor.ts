@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getCalcForTable from '../../utils/calcFor'
 import { getData } from '../../models/db_apis'
+import { RequestWithDateQuery } from '../controllers.interface'
 
 // @desc Get Calculate FOR
 // @route /api/calc-for
 // access Private
-export const getCalcFor = asyncMiddleware(async (req: Request, res: Response) => {
+export const getCalcFor = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const { date } = req.query
-	// @ts-ignore
 	const calcForTable = await getCalcForTable(date)
 	res.status(200).json({ success: true, rows: calcForTable })
 })

@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getGMTable from '../../utils/gm'
 import { getData } from '../../models/db_apis'
+import { RequestWithDateQuery } from '../controllers.interface'
 
 // @desc Get GM
 // @route /api/gm
 // access Private
-export const getGM = asyncMiddleware(async (req: Request, res: Response) => {
+export const getGM = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const { date } = req.query
-	// @ts-ignore
 	const gmTable = await getGMTable(date)
 	res.status(200).json({ success: true, rows: gmTable })
 })

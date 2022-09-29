@@ -1,13 +1,13 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import CreditPart from '../../utils/dashboard/creditPart'
+import { RequestWithDateQuery } from '../controllers.interface'
 
 // @desc Get dashboard credit part data
 // @route /api/creditData
 // access Private
-const getCreditData = asyncMiddleware(async (req: Request, res: Response) => {
+const getCreditData = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const { date } = req.query
-	// @ts-ignore
 	const creditData = await new CreditPart(date).getRows()
 	res
 		.status(200)

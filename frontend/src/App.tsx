@@ -37,6 +37,7 @@ import Settings from './components/pages/Admin/Settings'
 import NostroMatrix from './components/pages/Analytics/NostroMatrix'
 import VlaBuffer from './components/pages/Analytics/VlaBuffer'
 import { StyledEngineProvider } from '@mui/material'
+import FilialEffectiveness from './components/pages/Analytics/FilialEffectiveness'
 
 function App() {
   const { user: { token } } = useTypedSelector(state => state.auth)
@@ -66,6 +67,7 @@ function App() {
                 <PrivateRoute component={ReportLiabilities} path='/reportliabilities'/>
                 <PrivateRoute component={NostroMatrix} path='/nostroMatrix'/>
                 <PrivateRoute component={VlaBuffer} path='/vlaBuffer'/>
+                <PrivateRoute component={FilialEffectiveness} path='/filialEffectiveness'/>
                 <PrivateRoute component={GM} path='/gm'/>
                 <PrivateRoute component={GAP} path='/gap'/>
                 <PrivateRoute component={GapSimulation} path='/gapSimulation'/>

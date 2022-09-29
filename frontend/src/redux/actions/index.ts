@@ -207,6 +207,12 @@ export function fetchVlaBuffer(date: string) {
   }
 }
 
+export function fetchFilialEffectiveness(date: string) {
+  return async function(dispatch: Dispatch) {
+    await checkCashOrSave(date, 'filialEffectiveness', dispatch)
+  }
+}
+
 export function fetchCurrencyPosition(date: string) {
   return async function(dispatch: Dispatch) {
     await checkCashOrSave(date, 'currencyposition', dispatch)

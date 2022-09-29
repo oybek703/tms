@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import asyncMiddleware from '../../utils/async'
 import getLiquidityTable from '../../utils/liquidity'
+import { RequestWithDateQuery } from '../controllers.interface'
 
 // @desc Get liquidity
 // @route /api/liquidity
 // access Private
-export const getLiquidity = asyncMiddleware(async (req: Request, res: Response) => {
+export const getLiquidity = asyncMiddleware(async (req: RequestWithDateQuery, res: Response) => {
 	const { date } = req.query
-	// @ts-ignore
 	const liquidityTable = await getLiquidityTable(date)
 	res.status(200).json({ success: true, rows: liquidityTable })
 })

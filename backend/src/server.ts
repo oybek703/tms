@@ -31,6 +31,7 @@ import gapManualRoutes from './routes/Admin/Manual/gapManual'
 import bankLimitsRoutes from './routes/Admin/Manual/bankLimits'
 import nostroMatrixRoutes from './routes/Analytics/nostroMatrix'
 import vlaBufferRoutes from './routes/Analytics/vlaBuffer'
+import filialEffectivenessRoutes from './routes/Analytics/filialEffectiveness'
 
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
@@ -66,6 +67,7 @@ app.use('/api/gapSimulation', gapManualRoutes)
 app.use('/api/banklimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
 app.use('/api/vlaBuffer', vlaBufferRoutes)
+app.use('/api/filialEffectiveness', filialEffectivenessRoutes)
 
 app.use(notFoundPage)
 app.use(errorHandler)
