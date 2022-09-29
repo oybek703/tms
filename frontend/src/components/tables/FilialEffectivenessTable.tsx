@@ -8,7 +8,7 @@ function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolea
     type: 'number',
     minWidth: 120,
     flex: 1,
-    editable: true,
+    editable: false,
     align: 'center',
     headerAlign: 'center',
     valueFormatter: ({ value }) => {
@@ -29,7 +29,15 @@ const columns: GridColDef[] = [
     sortable: false
   }),
   generateCellAttrs({ field: 'mfo', headerName: 'МФО', minWidth: 80, valueFormatter: undefined }),
-  generateCellAttrs({ field: 'filialName', headerName: 'Наименование филиалов', minWidth: 220, type: 'string' }),
+  generateCellAttrs({
+    field: 'filialName',
+    headerName: 'Наименование филиалов',
+    minWidth: 220,
+    type: 'string',
+    renderCell: function({ value }) {
+      return <span style={{ fontWeight: 'bold' }}>{value}</span>
+    }
+  }),
   generateCellAttrs({ field: 'deposit202', headerName: 'Депозиты довостребования' }),
   generateCellAttrs({ field: 'deposit204', headerName: 'Сберегательные депозиты' }),
   generateCellAttrs({ field: 'deposit206', headerName: 'Срочные депозиты клиентов' }),

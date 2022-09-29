@@ -62,7 +62,7 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
     <Fragment>
       <TableContainer component={Paper}>
         <ExportButton id={`liquidity-assets-${formatOneDate(reportDate)}`} />
-        <Table id={`liquidity-assets-${formatOneDate(reportDate)}`} size='medium' aria-label='a dense table'>
+        <Table id={`liquidity-assets-${formatOneDate(reportDate)}`} size='small' aria-label='a dense table'>
           <TableCap rows={7} text={'сум. экв.'} />
           <TableHead className={classes.stickyTableHead}>
             <TableRow>
@@ -81,7 +81,7 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
       <Grid sx={{ margin: '20px 0' }} />
       <TableContainer component={Paper}>
         <ExportButton id={`liabilities-on-demand-${formatOneDate(reportDate)}`} />
-        <Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`} size='medium' aria-label='a dense table'>
+        <Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`} size='small' aria-label='a dense table'>
           <TableCap rows={7} text={'сум. экв.'} />
           <TableHead className={classes.stickyTableHead}>
             <TableRow>

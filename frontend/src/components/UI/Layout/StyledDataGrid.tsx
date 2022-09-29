@@ -20,7 +20,9 @@ const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, colu
           '.MuiDataGrid-columnHeaders': {
             backgroundColor: '#7794aa',
             color: '#fff',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            minHeight: '10px !important',
+            height: '40px'
           },
           '.MuiDataGrid-cell': {
             border: '0.1px solid #eee',
