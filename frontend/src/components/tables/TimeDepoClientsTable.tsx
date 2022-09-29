@@ -1,8 +1,7 @@
 import React, { Fragment, memo, useState } from 'react'
-import Paper from '@mui/material/Paper'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import Box from '@mui/material/Box'
+import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
+import StyledDataGrid from '../UI/Layout/StyledDataGrid'
 
 const columns: GridColDef[] = [
   {
@@ -107,48 +106,14 @@ const columns: GridColDef[] = [
   }
 ]
 
-const TimeDepoClientsTable: React.FC<{rows: any}> = function({ rows = [] }) {
+const TimeDepoClientsTable: React.FC<{rows: unknown[]}> = function({ rows = [] }) {
   const [pageSize, setPageSize] = useState(30)
   return (
     <Fragment>
-      <Box component={Paper} sx={{ height: '90vh', width: '100%' }}>
-        <DataGrid
-          rows={rows.map((row: any, i: number) => ({ ...row, index: i + 1 }))}
-          sx={{
-            '&.MuiDataGrid-columnSeparator': {
-              display: 'none'
-            },
-            '.MuiDataGrid-columnHeader': {
-              border: '0.1px solid #eee'
-            },
-            '.MuiDataGrid-columnHeaders': {
-              backgroundColor: '#7794aa',
-              color: '#fff',
-              fontWeight: 'bold'
-            },
-            '.MuiDataGrid-cell': {
-              border: '0.1px solid #eee',
-              whiteSpace: 'wrap'
-            },
-            '.MuiDataGrid-columnSeparator': {
-              display: 'none'
-            },
-            '.MuiDataGrid-sortIcon': {
-              color: '#fff'
-            },
-            '.MuiDataGrid-menuIconButton': {
-              color: '#fff'
-            }
-          }}
-          onPageSizeChange={setPageSize}
-          columns={columns}
-          pageSize={pageSize}
-          rowsPerPageOptions={[30, 50]}
-          disableSelectionOnClick
-          experimentalFeatures={{ newEditingApi: true }}
-          getRowId={(row: any) => row.index}
-        />
-      </Box>
+      <StyledDataGrid
+        onPageSizeChange={setPageSize}
+        pageSize={pageSize}
+        columns={columns} rows={rows}/>
     </Fragment>
   )
 }

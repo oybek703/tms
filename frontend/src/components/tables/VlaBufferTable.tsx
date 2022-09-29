@@ -13,6 +13,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 import Grid from '@mui/material/Grid'
+import TableCap from '../UI/helpers/TableCap'
 
 const useStyles = makeStyles(theme => ({
   noWrap: theme.mixins.noWrap,
@@ -20,23 +21,23 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface IVlaBufferRowData {
-  indicatorName: string
-  totalPercent: number
-  total: number
-  uzsPercent: number
-  uzs: number
-  foreignPercent: number
-  foreign: number
+	indicatorName: string
+	totalPercent: number
+	total: number
+	uzsPercent: number
+	uzs: number
+	foreignPercent: number
+	foreign: number
 }
 
 interface VLaBufferTableProps {
-  rows: {
-    liquidityAssets: IVlaBufferRowData[]
-    liabilitiesOnDemand: IVlaBufferRowData[]
-  }
+	rows: {
+		liquidityAssets: IVlaBufferRowData[]
+		liabilitiesOnDemand: IVlaBufferRowData[]
+	}
 }
 
-function VlaBufferTableBody({ rows = [] }: {rows: IVlaBufferRowData[]}) {
+function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
   const classes = useStyles()
   return <TableBody>
     {rows.map((row: IVlaBufferRowData) => <TableRow key={uuid()}>
@@ -60,9 +61,9 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
   return (
     <Fragment>
       <TableContainer component={Paper}>
-        <ExportButton id={`liquidity-assets-${formatOneDate(reportDate)}`}/>
-        <Table id={`liquidity-assets-${formatOneDate(reportDate)}`}
-          size="medium" aria-label="a dense table">
+        <ExportButton id={`liquidity-assets-${formatOneDate(reportDate)}`} />
+        <Table id={`liquidity-assets-${formatOneDate(reportDate)}`} size='medium' aria-label='a dense table'>
+          <TableCap rows={7} text={'сум. экв.'} />
           <TableHead className={classes.stickyTableHead}>
             <TableRow>
               <TableCell align='center'><BoldWithColor>ЛИКВИДНЫЕ АКТЫВЫ</BoldWithColor></TableCell>
@@ -71,29 +72,29 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
               <TableCell align='center'><BoldWithColor>Доля в совокупном активе в нац. валюте</BoldWithColor></TableCell>
               <TableCell align='center'><BoldWithColor>Национальная валюта</BoldWithColor></TableCell>
               <TableCell align='center'><BoldWithColor>Доля в совокупном активе в иност. валюте</BoldWithColor></TableCell>
-              <TableCell align='center'><BoldWithColor>Иностранном валюте(долл.США)</BoldWithColor></TableCell>
+              <TableCell align='center'><BoldWithColor>Иностранном валюте</BoldWithColor></TableCell>
             </TableRow>
           </TableHead>
-          <VlaBufferTableBody rows={liquidityAssets}/>
+          <VlaBufferTableBody rows={liquidityAssets} />
         </Table>
       </TableContainer>
-      <Grid sx={{ margin: '20px 0' }}/>
+      <Grid sx={{ margin: '20px 0' }} />
       <TableContainer component={Paper}>
-        <ExportButton id={`liabilities-on-demand-${formatOneDate(reportDate)}`}/>
-        <Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`}
-          size="medium" aria-label="a dense table">
+        <ExportButton id={`liabilities-on-demand-${formatOneDate(reportDate)}`} />
+        <Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`} size='medium' aria-label='a dense table'>
+          <TableCap rows={7} text={'сум. экв.'} />
           <TableHead className={classes.stickyTableHead}>
             <TableRow>
               <TableCell align='center'><BoldWithColor>ОБЯЗАТЕЛСТВА ДО ВОСТРЕБОВАНИЯ</BoldWithColor></TableCell>
               <TableCell align='center'><BoldWithColor>Доля в совокупном пассиве</BoldWithColor></TableCell>
               <TableCell align='center'><BoldWithColor>Итого</BoldWithColor></TableCell>
-              <TableCell align='center'/>
+              <TableCell align='center' />
               <TableCell align='center'><BoldWithColor>Национальная валюта</BoldWithColor></TableCell>
-              <TableCell align='center'/>
+              <TableCell align='center' />
               <TableCell align='center'><BoldWithColor>Иностранном валюте(долл.США)</BoldWithColor></TableCell>
             </TableRow>
           </TableHead>
-          <VlaBufferTableBody rows={liabilitiesOnDemand}/>
+          <VlaBufferTableBody rows={liabilitiesOnDemand} />
         </Table>
       </TableContainer>
       <Grid sx={{ margin: '20px 0', maxWidth: '40%' }}>

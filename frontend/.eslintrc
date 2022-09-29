@@ -25,6 +25,8 @@
             "code": 150
         }],
         "object-curly-spacing": ["error", "always"],
+        "no-tabs": "off",
+        "no-mixed-spaces-and-tabs": "off",
         "require-jsdoc": "off",
         "react/prop-types": 0,
         "arrow-parens": ["error","as-needed"],
