@@ -5,7 +5,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "google"
+        "google",
+        "plugin:react-hooks/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
