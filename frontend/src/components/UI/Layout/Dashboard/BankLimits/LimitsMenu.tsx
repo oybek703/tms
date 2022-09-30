@@ -84,7 +84,7 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
               @ts-ignore */}
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <CardActionArea>
+                  <CardActionArea component='div'>
                     {innerData}
                   </CardActionArea>
                 </MenuList>

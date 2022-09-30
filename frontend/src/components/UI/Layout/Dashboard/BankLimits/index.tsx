@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Paper, TableBody, TableContainer, TableRow } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
@@ -36,7 +36,7 @@ const NoWrapCell: React.FC<NoWrapCellProps> = props => {
   </TableCell>
 }
 
-function ProgressOrText({ celldata = '0', showNumber = false }) {
+function ProgressOrText({ celldata = '0', showNumber = false }: {celldata: limitPercent, showNumber?: boolean}) {
   const classes = useStyles()
   return (
 		celldata === 'no_limit' ?
@@ -70,13 +70,46 @@ interface BanksProps {
 	rows: IBankCell[]
 }
 
+function sortLimitsArray<T extends IBankCell>(array: T[]): T[] {
+  let sortedRows: T[] = []
+  const nullLimits: T[] = []
+  const noLimits: T[] = []
+  const exceededLimits: T[] = []
+  const hasLimits: T[] = []
+  if (array.length) {
+    array.forEach(row => {
+      switch (row.limitPercent22) {
+        case 'no_limit':
+          noLimits.unshift(row)
+          break
+        case 'exceeded':
+          exceededLimits.unshift(row)
+          break
+        case null:
+          nullLimits.unshift(row)
+          break
+        default:
+          hasLimits.push(row)
+      }
+    })
+    sortedRows = [
+      ...exceededLimits,
+      ...hasLimits.sort((a, b) => (+b.limitPercent22) - (+a.limitPercent22)),
+      ...noLimits,
+      ...nullLimits
+    ]
+  }
+  return sortedRows
+}
+
 const BanksTable: React.FC<BanksProps> = ({ rows = [] }) => {
   if (JSON.stringify(rows) === JSON.stringify({})) rows = []
+  const sortedRows: IBankCell[] = useMemo<IBankCell[]>(() => sortLimitsArray(rows), [rows])
   return <TableContainer component={Paper}>
     <Table size='small'>
       <BankLimitsTableHead />
       <TableBody>
-        {rows.map((row, index) => <TableRow hover key={uuid()}>
+        {sortedRows.map((row, index) => <TableRow hover key={uuid()}>
           <TableCell align='center'><b>{index + 1}</b></TableCell>
           <TableCell><b>{row['bankName']}</b></TableCell>
           <NoWrapCell celldata={row['saldo']} />
@@ -85,12 +118,12 @@ const BanksTable: React.FC<BanksProps> = ({ rows = [] }) => {
           <NoWrapCell celldata={<Fragment>
             {+row['limitPercent22'] >= 100 ?
 							<Grid container justifyContent='space-between' alignItems='center'>
-							  <Grid style={{ width: '99%' }}>
+							  <Grid style={{ width: '96%' }}>
 							    <ProgressOrText celldata={row['limitPercent22']} />
 							  </Grid>
-							  <Grid style={{ width: '1%' }}>
+							  <Grid style={{ width: '4%' }}>
 							    <LimitsMenu innerData={
-							      <>
+							      <Table>
 							        <TableHead>
 							          <TableRow>
 							            <TableCell><b>Процент лимита - 22%</b></TableCell>
@@ -103,7 +136,7 @@ const BanksTable: React.FC<BanksProps> = ({ rows = [] }) => {
 							            <NoWrapCell celldata={<ProgressOrText showNumber celldata={row['limitPercent24']} />} />
 							          </TableRow>
 							        </TableBody>
-							      </>
+							      </Table>
 							    } />
 							  </Grid>
 							</Grid> :
@@ -121,13 +154,15 @@ const titles = [
   { title: 'Иностранные банки', code: 'foreign' }
 ]
 
+type limitPercent = string | 'no_limit' | 'exceeded'
+
 interface IBankCell {
 	bankName: string
 	saldo: number
 	limit22: number
 	differ: number
-	limitPercent22: string
-	limitPercent24: string
+	limitPercent22: limitPercent
+	limitPercent24: limitPercent
 	limit24: number
 }
 
@@ -147,8 +182,7 @@ const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   }, [])
   return (
     <Fragment>
-      <ButtonTabs handleChange={handleChange} active={expanded}
-        titles={titles} />
+      <ButtonTabs handleChange={handleChange} active={expanded} titles={titles} />
       {
 				expanded === 'local' ?
 					<BanksTable rows={localBanks} /> :
