@@ -16,7 +16,7 @@ const GAP = () => {
     fetchGap()
     getLastGapUpdate()
     if (lastGapUpdateError) toast(lastGapUpdateError, { position: 'bottom-right' })
-  }, [fetchGap, getLastGapUpdate])
+  }, [lastGapUpdateError, fetchGap, getLastGapUpdate])
   return (
     <>
       <PageTitle

@@ -144,7 +144,7 @@ const GapSimulation = () => {
         toast.error(message)
       }
     }
-  }, [fetchGap, history])
+  }, [fetchGapManual])
   useEffect(() => {
     fetchGapManual()
     return function() {

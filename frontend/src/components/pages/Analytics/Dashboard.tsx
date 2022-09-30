@@ -34,7 +34,7 @@ const Dashboard = () => {
     lcr = {},
     nsfr = {},
     currencyRates,
-    bankLimits = []
+    bankLimits = { }
   } = dashboard
   useEffect(() => {
     fetchDashboard(reportDate)
