@@ -24,7 +24,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleClick = useCallback(event => {
+  const handleClick = useCallback((event: any) => {
     setAnchorEl(event.currentTarget)
   }, [])
 

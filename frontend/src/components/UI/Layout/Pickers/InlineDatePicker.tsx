@@ -20,7 +20,7 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
   handleDateChange = () => {} }) => {
   const { operDays, loading } = useTypedSelector(state => state.operDays)
   const memoizedDisableWeekends = useCallback(
-      date => disableDays(date, operDays),
+      (date: string) => disableDays(date, operDays),
       [operDays]
   )
   return (
@@ -32,9 +32,9 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
         disableHighlightToday
         disableFuture
         shouldDisableDate={memoizedDisableWeekends}
-        minDate={new Date('01/01/2020')}
+        minDate={new Date('01/01/2020').toString()}
         onChange={handleDateChange}
-        maxDate={new Date(new Date() as any - 86400000)}
+        maxDate={new Date(new Date() as any - 86400000).toString()}
         renderInput={
           params => <TextField
             sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}

@@ -105,13 +105,13 @@ const GapSimulation = () => {
     }
   }, [fetchGapManual, editingCell, newValue])
 
-  const handleNewValueChange = useCallback(async function handleNewValueChange(e) {
+  const handleNewValueChange = useCallback(async function handleNewValueChange(e: any) {
     if (e.key === 'Enter') {
       await handleEdit()
     }
   }, [handleEdit])
 
-  const handleEditClick = useCallback( event => {
+  const handleEditClick = useCallback( (event: any) => {
     const cellInfo = JSON.parse(event.target.dataset.cellinfo || '{}')
     setEditingCell(cellInfo)
     setDialog(true)

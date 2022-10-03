@@ -96,11 +96,11 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
     setOpen(true)
   }, [anchorRef])
 
-  const setCorrCurrentState = useCallback(state => {
+  const setCorrCurrentState = useCallback((state: unknown) => {
     correspondentCurrentUpdate(state)
   }, [correspondentCurrentUpdate])
 
-  const setLiqCurrentState = useCallback(state => {
+  const setLiqCurrentState = useCallback((state: unknown) => {
     liquidityCurrentUpdate(state)
   }, [liquidityCurrentUpdate])
 
@@ -162,8 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                                                     color='primary'
                                                     disabled={loading}
                                                     checked={correspondentCurrentState}
-                                                    onChange={() => setCorrCurrentState(
-                                                        !correspondentCurrentState)}
+                                                    onChange={() => setCorrCurrentState(!correspondentCurrentState)}
                                                     name="correspondent_current_state"/>}
                                                   label={<span style={{ color: '#333' }}>Текущие состояние</span>}/> {!correspondentCurrentState &&
                                               <DatePicker

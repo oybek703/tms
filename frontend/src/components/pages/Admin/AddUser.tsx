@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 export default function AddUser() {
   const classes = useStyles()
   const { addUser } = useActions()
-  const [allowedPages, setAllowedPages] = useState([])
+  const [allowedPages, setAllowedPages] = useState<string[]>([])
   const { loading, error } = useTypedSelector(state => state.addUser)
   const [formData, setFormData] = useState({ username: '', password: '', confirmpassword: '' })
   const [userNameHelperText, setUsernameHelperText] = useState('')
@@ -65,7 +65,7 @@ export default function AddUser() {
     }
   }
 
-  const handleAddPage = useCallback(newPages => {
+  const handleAddPage = useCallback((newPages: string[]) => {
     setAllowedPages(Array.from(newPages))
   }, [])
   function handleAddUser(e: FormEvent) {

@@ -47,7 +47,7 @@ const LiqPointersTable: React.FC<LiqPointersTableProps> = function({ rows = {}, 
   const { liquidityAssets = [], obligations = [] } = rows
   const classes = useStyles()
   const { reportDate } = useTypedSelector(state => state.date)
-  const renderTableBody = useCallback(tableData => (<TableBody>
+  const renderTableBody = useCallback((tableData: unknown[]) => (<TableBody>
     {tableData.map((row: any, i: number) => (
       <Fragment key={uuid()}>
         {row.state === singleColouredRow ?

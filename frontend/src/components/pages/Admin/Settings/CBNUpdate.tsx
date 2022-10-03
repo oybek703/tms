@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { FormEvent, useCallback, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { Typography } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
@@ -21,7 +21,7 @@ const CbnUpdate = () => {
   const [toDate, setToDate] = useState('')
   const [cbNorm, setCbNorm] = useState('')
   const [dateError, setDateError] = useState('')
-  const handleDialogClose = useCallback(async event => {
+  const handleDialogClose = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (toDate > fromDate) {
       try {

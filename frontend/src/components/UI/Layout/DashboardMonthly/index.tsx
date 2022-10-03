@@ -47,7 +47,7 @@ const DashboardMonthly: React.FC = () => {
     }
     // setDateOption('two')
   }, [dayBefore, reportDate, operDays])
-  const handleDateChange = useCallback(id => (date: string) => {
+  const handleDateChange = useCallback((id: string) => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
       formatOneDate(new Date().toString()) !== formatOneDate(date)) {
       const { selectedDate } = formatDate(date, true)

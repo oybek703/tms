@@ -1,4 +1,4 @@
-export function formatOneDate(date: string) {
+export function formatOneDate(date: string | Date) {
   const newDate = new Date(date)
   const dateYear = newDate.getFullYear() - 1
   const dateMonth = newDate.getMonth() + 1

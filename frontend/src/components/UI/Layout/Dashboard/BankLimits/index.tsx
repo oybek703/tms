@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useMemo, useState } from 'react'
+import React, { Fragment, ReactNode, useCallback, useMemo, useState } from 'react'
 import { Paper, TableBody, TableContainer, TableRow } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface NoWrapCellProps {
-	celldata: unknown
+	celldata: number | ReactNode
 	colSpan?: number
 	style?: any
 }
@@ -175,8 +175,8 @@ interface BankLimitsProps {
 
 const BankLimits: React.FC<BankLimitsProps> = ({ bankLimits }) => {
   const { foreignBanks = [], localBanks = [] } = bankLimits
-  const [expanded, setExpanded] = useState(localStorage.getItem('bankLimitsActiveTab') || 'local')
-  const handleChange = useCallback(code => {
+  const [expanded, setExpanded] = useState<string>(localStorage.getItem('bankLimitsActiveTab') || 'local')
+  const handleChange = useCallback((code: string) => {
     setExpanded(code)
     localStorage.setItem('bankLimitsActiveTab', code)
   }, [])

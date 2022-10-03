@@ -36,7 +36,7 @@ const NostroMatrix = () => {
       fetchNostroMatrix(new Date(firstDate).toString(), new Date(secondDate).toString())
     }
   }, [fetchNostroMatrix, firstDate, secondDate, reportDate])
-  const handleDateChange = useCallback(id => (date: string) => {
+  const handleDateChange = useCallback((id: string) => (date: string) => {
     if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
       formatOneDate(new Date().toString()) !== formatOneDate(date)) {
       const { selectedDate } = formatDate(date, true)

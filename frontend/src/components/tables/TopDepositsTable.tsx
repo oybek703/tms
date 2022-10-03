@@ -62,14 +62,14 @@ function matchActiveTabCode(activeTabIndex: number) {
 }
 
 const TopDepositsTable: React.FC<{rows: any}> = function({ rows= {} }) {
-  const [expanded, setExpanded] = useState('20200')
-  const [activeTabIndex, setActiveTabIndex] = useState(1)
+  const [expanded, setExpanded] = useState<string>('20200')
+  const [activeTabIndex, setActiveTabIndex] = useState<number>(1)
   const accountCodes = []
   const memoizedMatchTitle = useCallback(matchTitle, [])
   const memoizedMatchColor = useCallback(matchColor, [])
   const memoizedMatchCurrency = useCallback(matchCurrency, [])
 
-  const handleTabChange = useCallback(activeTabIndex => {
+  const handleTabChange = useCallback((activeTabIndex: number) => {
     setActiveTabIndex(activeTabIndex)
     setExpanded(matchActiveTabCode(activeTabIndex))
   }, [])

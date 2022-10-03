@@ -1,10 +1,13 @@
-import React, { Component, ErrorInfo } from 'react'
+import React, { Component, ErrorInfo, PropsWithChildren } from 'react'
 import ErrorAlert from './ErrorAlert'
 
-class ErrorBoundary extends Component {
-  constructor() {
-    // @ts-ignore
-    super()
+interface IErrorBoundaryState {
+  hasError: boolean
+}
+
+class ErrorBoundary extends Component<PropsWithChildren, IErrorBoundaryState> {
+  constructor(props: PropsWithChildren) {
+    super(props)
     this.state = {
       hasError: false
     }
@@ -15,9 +18,7 @@ class ErrorBoundary extends Component {
   }
 
   render() {
-    // @ts-ignore
     const { hasError } = this.state
-    // eslint-disable-next-line react/prop-types
     const { children } = this.props
     if (hasError) return <ErrorAlert/>
     return (<>{children}</>)
