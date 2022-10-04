@@ -6,7 +6,7 @@ import StyledDataGrid from '../UI/Layout/StyledDataGrid'
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
   return {
     type: 'number',
-    minWidth: 120,
+    minWidth: 140,
     flex: 1,
     editable: false,
     align: 'center',

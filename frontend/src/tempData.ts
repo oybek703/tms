@@ -261,7 +261,7 @@ export const covenantData = [
     bank_8: getEmptyBankData()
   },
   {
-    title: 'Чистый доход за последные два года',
+    title: 'Чистый доход за последние два года',
     main_bank: 'в соответствии',
     bank_1: getEmptyBankData(),
     bank_2: getEmptyBankData(),

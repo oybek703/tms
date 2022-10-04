@@ -52,7 +52,7 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
     <>
       <Grid container sx={{ marginBottom: 2 }} justifyContent='space-between' alignItems='center' spacing={2}>
         {[
-          { title: 'Регулативний капитал', shortKey: 'rc' },
+          { title: 'Регулятивний капитал', shortKey: 'rc' },
           {
             title: 'Коэффициент адекватности капитала',
             shortKey: 'car'

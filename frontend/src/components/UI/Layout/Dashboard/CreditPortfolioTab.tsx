@@ -29,6 +29,7 @@ const CreditPortfolioTab = () => {
   const { dashboard, error: dashboardError, loading: dashboardLoading } = useTypedSelector(state => state.dashboard)
   const { disaggregatedByTime = [], creditPart = [], issuedCredits = [] } = creditData
   const { fundingStructure = [] } = dashboard
+  console.log(creditData)
   useEffect(() => {
     fetchDashboardCreditData(reportDate)
   }, [fetchDashboardCreditData, reportDate])

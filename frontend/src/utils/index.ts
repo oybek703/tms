@@ -35,23 +35,12 @@ function formatForTen(number: number) {
   return number < 10 ? `0${number}` : number
 }
 
-export function formatNumber(number: number | string, isDash: boolean | string = false) {
-  if (number === 'NaN' || (typeof number === 'number' && isNaN(parseFloat(String(number))))) return '_'
+export function formatNumber(number: number | string | undefined, isDash: boolean | string = false): string {
   if (isDash === 'e' && number === 0) return ' '
   if (isDash && number === 0) return '-'
-  if (typeof number !== 'number') return number
-  if (number === 0) return '0.00'
-  const integerPart = Math.trunc(number)
-  const decimalPart = (number - integerPart).toFixed(2).slice(2)
-  // @ts-ignore
-  const formatted = [...`${integerPart}`].reverse().
-      reduce((acc, v, i) => acc.push((i + 1) % 3 === 0 ? ' ' + v : v) && acc, []).
-      reverse().
-      join('').
-      trim()
-  return `${number < 0 && formatted === '0' ?
-    '-0' :
-    formatted}${decimalPart.includes('.') ? decimalPart : `.${decimalPart}`}`
+  if (typeof number === 'string' && !number) return ''
+  if (typeof number === 'string') number = +number
+  return number?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') || ' '
 }
 
 export function disableDays(date: string, dates: string[]) {

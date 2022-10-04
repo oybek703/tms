@@ -55,19 +55,19 @@ const LiqPointersTable: React.FC<LiqPointersTableProps> = function({ rows = {}, 
             <TableCell align='center'><b>{row.count}</b></TableCell>
             <TableCell ><b>{row.state}</b></TableCell>
             <TableCell align='center' className={classes.noWrap}>
-              <b>{formatNumber(row.total)}</b>
+              <b>{formatNumber(row.total)}%</b>
             </TableCell>
             <TableCell align='center' className={classes.noWrap}>
-              <b>{formatNumber(row.nat_curr)}</b>
+              <b>{formatNumber(row.nat_curr)}%</b>
             </TableCell>
             <TableCell align='center' className={classes.noWrap}>
-              <b>{formatNumber(row.for_curr)}</b>
+              <b>{formatNumber(row.for_curr)}%</b>
             </TableCell>
             <TableCell align='center' className={classes.noWrap}>
-              <b>{formatNumber(row.usa_dollar)}</b>
+              <b>{formatNumber(row.usa_dollar)}%</b>
             </TableCell>
             <TableCell align='center' className={classes.noWrap}>
-              <b>{formatNumber(row.evro)}</b>
+              <b>{formatNumber(row.evro)}%</b>
             </TableCell>
           </TableRow> :
         <TableRow hover>

@@ -345,7 +345,7 @@ class RiskPartClass extends DashboardMonthlyMainClass {
 	async toxic() {
 		/* Реструктиризация (токсичные) */
 		const data = await this.getDataInDates('', this.NPLAndToxicQuery.bind(this, `IS_TOXIC=1`), true)
-		return this.createData('4', 'Реструктиризация (токсичные)', data, true)
+		return this.createData('4', 'Реструктуризация (токсичные)', data, true)
 	} /* Реструктиризация (токсичные) */
 
 	npl_share(NPL: any, creditPortfolio: any) {
@@ -356,7 +356,7 @@ class RiskPartClass extends DashboardMonthlyMainClass {
 			...d,
 			['SUM']: +((d['SUM'] * 100) / creditPortfolioData[i]['SUM']).toFixed(2)
 		}))
-		return this.createData('5', 'Уделный вес NPL к портфелю', updatedData, true, true)
+		return this.createData('5', 'Удельный вес NPL к портфелю', updatedData, true, true)
 	} /* Уделный вес NPL к портфелю */
 
 	async reserve() {

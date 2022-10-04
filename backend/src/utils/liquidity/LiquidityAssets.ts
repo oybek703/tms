@@ -320,14 +320,14 @@ class LiquidityAssets extends LiquidityMainClass {
 	high_liq_assets_share(high_liq_assets_total: any, total_actives: any) {
 		/* Доля высоколиквидных активов в % */
 		const colValues = this.columns.map(
-			(p) => `${((high_liq_assets_total[p] * 100) / total_actives[p]).toFixed(2)}%`
+			(p) => `${((high_liq_assets_total[p] * 100) / total_actives[p]).toFixed(2)}`
 		)
 		return {
 			count: 9,
 			state: 'Доля высоколиквидных активов в %',
 			...this.columns.reduce((acc, prop, i) => {
 				// @ts-ignore
-				acc[prop] = colValues[i] === 'Infinity%' ? ' ' : colValues[i]
+				acc[prop] = colValues[i] === 'Infinity' ? ' ' : colValues[i]
 				return acc
 			}, {}),
 			isTableHead: true

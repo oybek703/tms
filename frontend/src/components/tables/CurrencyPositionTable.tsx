@@ -141,9 +141,7 @@ const CurrencyPositionTable: React.FC<{ rows: any }> = function({ rows }) {
               <TableCell align='center'>{row.isTableHead ?
                 <b>{row.CURRENCY_CODE}</b> : row.CURRENCY_CODE}</TableCell>
               <TableCell className={classes.noWrap}
-                align="left">{row.isTableHead ? <b>{formatNumber(
-                    row.CURRENCY_NAME, true)}</b> : formatNumber(row.CURRENCY_NAME,
-                        true)}</TableCell>
+                align="left">{row.isTableHead ? <b>{row.CURRENCY_NAME}</b> : row.CURRENCY_NAME}</TableCell>
               <TableCell className={classes.noWrap}
                 align='center'>{row.isTableHead ? <b>{formatNumber(
                     row.RCC, true)}</b> : formatNumber(row.RCC, true)}</TableCell>
@@ -198,10 +196,8 @@ const CurrencyPositionTable: React.FC<{ rows: any }> = function({ rows }) {
           {tableSumData.map((val: any, index: number) => (
             <TableRow key={index}>
               {index === 0 && <TableCell colSpan={8} rowSpan={4}/>}
-              <TableCell align='left' colSpan={4}>{formatNumber(
-                  val.title)}</TableCell>
-              <TableCell align='center' colSpan={2}>{formatNumber(
-                  val.sum)}</TableCell>
+              <TableCell align='left' colSpan={4}>{val.title}</TableCell>
+              <TableCell align='center' colSpan={2}>{formatNumber(val.sum)}</TableCell>
               <TableCell align='center'>{val.percent !== 0 &&
               `${formatNumber(val.percent)}%`}</TableCell>
             </TableRow>

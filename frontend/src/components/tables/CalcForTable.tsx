@@ -180,7 +180,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
             </TableHead>
             <TableBody>
               {rows.map((row: any, i: number) => (
-                <TableRow hover={row.F_O_R} key={i}>
+                <TableRow hover key={i}>
                   <TableCell align='center'>{row.DATE_VALUE}</TableCell>
                   <TableCell align='center'>{formatNumber(row.F_O_R, 'e')}</TableCell>
                   <TableCell align='center'>{formatNumber(row.CB_STANDARD, 'e')}</TableCell>

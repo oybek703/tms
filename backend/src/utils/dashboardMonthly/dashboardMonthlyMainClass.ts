@@ -331,19 +331,19 @@ class DashboardMonthlyMainClass extends MainClass {
 			...data,
 			SUM: tempData[index]
 		}))
-		return this.createData('7', 'Коеффициент адекватности капитала', temporaryData, true)
+		return this.createData('7', 'Коэффициент адекватности капитала', temporaryData, true)
 	} /* Коеффициент адекватности капитала */
 
 	async roa() {
 		/* Рентабелность активов (ROA) */
 		const data = await this.getDataInDates('', this.ROAQuery.bind(this), true)
-		return this.createData('8', 'Рентабелность активов (ROA)', data, true)
+		return this.createData('8', 'Рентабельность активов (ROA)', data, true)
 	} /* Рентабелность активов (ROA) */
 
 	async roe() {
 		/* Рентабелность капитала (ROE) */
 		const data = await this.getDataInDates('', this.ROEQuery.bind(this), true)
-		return this.createData('9', 'Рентабелность капитала (ROE)', data, true)
+		return this.createData('9', 'Рентабельность капитала (ROE)', data, true)
 	} /* Рентабелность капитала (ROE) */
 
 	async total_liabilities() {
