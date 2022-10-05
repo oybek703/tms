@@ -71,27 +71,18 @@ class Deposits extends DashboardMainClass {
 
 	currencyMBDQuery(date: string) {
 		return `SELECT
-                    ((SELECT
+                    (SELECT
                          ROUND(UZS/POWER(10, 9), 2)
                      FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Land' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) + (SELECT
-                         ROUND(UZS/POWER(10, 9), 2)
-                     FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1)) UZS,
-                    ((SELECT
+                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) UZS,
+                    (SELECT
                          ROUND(USD/POWER(10, 9), 2)
                      FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Land' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) + (SELECT
-                         ROUND(USD/POWER(10, 9), 2)
-                     FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1)) USD,
-                    ((SELECT
+                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) USD,
+                    (SELECT
                          ROUND(EUR/POWER(10, 9), 2)
                      FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Land' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) + (SELECT
-                         ROUND(EUR/POWER(10, 9), 2)
-                     FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1)) EUR
+                     WHERE ROLE='Borrow' AND OPER_DAY<=TO_DATE('${date}', 'DD-MM-YYYY') AND ROWNUM=1) EUR
                 FROM DUAL`
 	}
 

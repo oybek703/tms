@@ -240,10 +240,11 @@ function Header() {
     }
   }, [pages, role])
   const onMenuOpen = useCallback(() => setAnchor(!anchor), [anchor])
-  function handleAnchorClose() {
+  const handleAnchorClose = useCallback(() => {
     setAnchor(false)
     if (pathname !== '/') push('/')
-  }
+  //  eslint-disable-next-line
+  }, [])
 
   const list = useCallback(
       () => (<Fragment>

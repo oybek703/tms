@@ -15,12 +15,13 @@ interface DatePickerProps {
     disabled: boolean
 }
 
+const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/
 
 const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = [], disabled = false }) {
   const { pathname } = useLocation()
   const { changeReportDate } = useActions()
-  const handleDateChange = useCallback((date: string) => {
-    if (operDays.findIndex(d => formatOneDate(date) === d) >= 0) {
+  const handleDateChange = useCallback((date: string | null) => {
+    if (date && operDays.findIndex(d => formatOneDate(date) === d) >= 0) {
       changeReportDate(date)
     }
   }, [changeReportDate, operDays])
@@ -40,11 +41,15 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
           disableFuture
           shouldDisableDate={memoizedDisableWeekends}
           minDate={new Date('01/01/2020').toString()}
-          onChange={value => handleDateChange(value!.toString())}
+          onChange={handleDateChange}
           renderInput={
             params => <TextField
               placeholder='dd.mm.yyyy'
+              autoComplete='off'
               sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
+              inputProps={{
+                readOnly: true
+              }}
               {...params} />}
         />
       </LocalizationProvider>
