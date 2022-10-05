@@ -9,7 +9,7 @@ import { Button, Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import Navbar from './Navbar'
 import Drawer from '@mui/material/Drawer'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
@@ -216,6 +216,8 @@ const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchor
 
 function Header() {
   const classes = useStyles()
+  const { pathname } = useLocation()
+  const { push } = useHistory()
   const [anchor, setAnchor] = useState(false)
   const [routes, setRoutes] = useState<BaseRoute[]>(baseRoutes)
   const { user: { pages = [], role } } = useTypedSelector(state => state.auth)
@@ -238,17 +240,18 @@ function Header() {
     }
   }, [pages, role])
   const onMenuOpen = useCallback(() => setAnchor(!anchor), [anchor])
-  const handleAnchorClose = useCallback(() => setAnchor(false), [])
+  function handleAnchorClose() {
+    setAnchor(false)
+    if (pathname !== '/') push('/')
+  }
 
   const list = useCallback(
       () => (<Fragment>
         <Toolbar component={Grid} container className={classes.logo} alignItems='center' justifyContent='center'>
-          <Link to='/' onClick={handleAnchorClose}>
-            <Button>
-              <img src={process.env.PUBLIC_URL + '/logo.svg'}
-                width='140' height='80' alt="Treasury Reports"/>
-            </Button>
-          </Link>
+          <Button onClick={handleAnchorClose}>
+            <img src={process.env.PUBLIC_URL + '/logo.svg'}
+              width='140' height='80' alt="Treasury Reports"/>
+          </Button>
         </Toolbar>
         <Divider/>
         <List component='nav'>

@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import MenuIcon from '@mui/icons-material/Menu'
 import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import Grow from '@mui/material/Grow'
@@ -76,6 +76,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
   const anchorRef = useRef(null)
+  const { push } = useHistory()
   const {
     getLastUpdateTime, getOperDays,
     logout, correspondentCurrentUpdate,
@@ -111,6 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
   }
 
   function handleLogoClick() {
+    if (pathname !== '/') push('/')
     updateDashboardActiveTab(0)
   }
 
@@ -136,9 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
                     <MenuIcon fontSize='large'/>
                   </IconButton>
                 </Grid>
-                <Button component={Link} to='/'
-                  onClick={handleLogoClick}
-                  className={classes.main_logo}>
+                <Button onClick={handleLogoClick} className={classes.main_logo}>
                   <img src={process.env.PUBLIC_URL + '/logo.png'}
                     width='22' height='22'
                     alt="Treasury Reports"/>
