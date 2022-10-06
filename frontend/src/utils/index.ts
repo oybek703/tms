@@ -1,16 +1,11 @@
+import { format } from 'date-fns'
+
 export function formatOneDate(date: string | Date) {
   const newDate = new Date(date)
   const dateYear = newDate.getFullYear() - 1
   const dateMonth = newDate.getMonth() + 1
   const dateDay = newDate.getDate()
   return `${formatForTen(dateDay)}.${formatForTen(dateMonth)}.${dateYear + 1}`
-}
-
-export function formatDateWithDash(pointedDate: string) {
-  if (pointedDate) {
-    const [day, month, year] = pointedDate.split('.')
-    return `${year}-${month}-${day}`
-  }
 }
 
 export function formatDate(date: string, isDashed = false) {
@@ -44,7 +39,7 @@ export function formatNumber(number: number | string | undefined, isDash: boolea
 }
 
 export function disableDays(date: string, dates: string[]) {
-  return dates.findIndex(d => formatOneDate(date) === d) < 0
+  return dates.findIndex(d => date === d) < 0
 }
 
 export function formatChartLegend(label: string, opts: any) {
@@ -84,10 +79,10 @@ export function chartSubtitle(text = 'млрд.сум') {
   }
 }
 
-export function findRecursive(operDays: string[] = [], date: Date): any {
+export function findRecursive(operDays: string[] = [], date: Date | string): any {
   if (operDays.length) {
     const dayBefore = new Date(new Date(date).getTime() - 86400000)
-    const formattedDayBefore = formatOneDate(`${dayBefore}`)
+    const formattedDayBefore = format(dayBefore, 'yyyy-MM-dd')
     if (operDays.indexOf(formattedDayBefore) >= 0) {
       return formattedDayBefore
     }
@@ -110,3 +105,5 @@ export function getDashboardLiquidityIndicator(data: any) {
   const lastForeign = [...foreign].pop()
   return [lastTotal, lastNat, lastForeign]
 }
+
+export const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/

@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import makeStyles from '@mui/styles/makeStyles'
-import { findRecursive, formatDate, formatDateWithDash, formatOneDate } from '../../../../utils'
+import { dateRegex, findRecursive } from '../../../../utils'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
@@ -11,6 +11,7 @@ import Loader from '../Loader'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import DashboardMonthlyTable from './DashboardMonthlyTable'
 import useActions from '../../../../hooks/useActions'
+import { format } from 'date-fns'
 
 const useStyles = makeStyles(theme => ({
   optionBlock: {
@@ -24,44 +25,54 @@ const DashboardMonthly: React.FC = () => {
   const { reportDate } = useTypedSelector(state => state.date)
   const [dateOption, setDateOption] = useState('two')
   const { operDays } = useTypedSelector(state => state.operDays)
-  const dayBefore = formatDateWithDash(findRecursive(operDays, reportDate)) as string
+  const dayBefore = findRecursive(operDays, reportDate)
   const { dashboardMonthly, loading, error } = useTypedSelector(state => state.dashboardMonthly)
   const [firstDate, setFirstDate] = useState(dayBefore as string)
   const [secondDate, setSecondDate] = useState(dayBefore as string)
   useEffect(() => {
     if (firstDate && secondDate && firstDate !== secondDate) {
-      fetchDashboardMonthly(new Date(firstDate).toString(), new Date(secondDate).toString(), dateOption)
+      fetchDashboardMonthly(firstDate, secondDate, dateOption)
     }
-  }, [fetchDashboardMonthly, firstDate, secondDate, dateOption, reportDate])
+  }, [fetchDashboardMonthly, firstDate, secondDate, dateOption])
   useEffect(() => {
-    let { selectedDate: newSecondDate } = formatDate(reportDate, true)
-    const isReportDateToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
+    let newSecondDate = format(new Date(reportDate), 'yyyy-MM-dd')
+    const isReportDateToday = newSecondDate === format(new Date(), 'yyyy-MM-dd')
     if (isReportDateToday) {
-      newSecondDate = formatDateWithDash(findRecursive(operDays, reportDate)) as string
-      const newFirstDate = formatDateWithDash(findRecursive(operDays, new Date(newSecondDate))) as string
-      setSecondDate(newSecondDate)
-      setFirstDate(newFirstDate)
+      newSecondDate = findRecursive(operDays, new Date(newSecondDate))
+      if (newSecondDate) {
+        const newFirstDate = findRecursive(operDays, new Date(newSecondDate))
+        setSecondDate(newSecondDate)
+        setFirstDate(newFirstDate)
+      }
     } else {
       setFirstDate(dayBefore)
       setSecondDate(newSecondDate)
     }
-    // setDateOption('two')
+  //   setDateOption('two')
   }, [dayBefore, reportDate, operDays])
-  const handleDateChange = useCallback((id: string) => (date: string) => {
-    if (operDays.findIndex((d: string) => formatOneDate(date) === d) >= 0 &&
-      formatOneDate(new Date().toString()) !== formatOneDate(date)) {
-      const { selectedDate } = formatDate(date, true)
-      if (id === 'first_date') {
-        if (new Date(selectedDate) < new Date(String(secondDate))) {
-          setFirstDate(selectedDate)
+  const handleDateChange = useCallback((id: string) => (date: string | null) => {
+    let formattedDate: string
+    try {
+      formattedDate = date ? format(new Date(date), 'dd.MM.yyyy') : ''
+    } catch (e: any) {
+      formattedDate = e.message
+    }
+    if (date && dateRegex.test(formattedDate)) {
+      formattedDate = format(new Date(date), 'yyyy-MM-dd')
+      const formattedTodayDate = format(new Date(), 'yyyy-MM-dd')
+      if (operDays.findIndex((d: string) => formattedDate === d) >= 0 && formattedTodayDate !== formattedDate) {
+        if (id === 'first_date') {
+          if (new Date(formattedDate) < new Date(String(secondDate))) {
+            setFirstDate(formattedDate)
+          } else {
+            toast.error('Первое дата должно быть меньше второго.')
+          }
         } else {
-          toast.error('Первое дата должно быть меньше второго.')
-        }
-      } else {
-        if (new Date(String(firstDate)) < new Date(selectedDate)) {
-          setSecondDate(selectedDate)
-        } else {
-          toast.error('Вторая дата должна быть больше первой.')
+          if (new Date(String(firstDate)) < new Date(formattedDate)) {
+            setSecondDate(formattedDate)
+          } else {
+            toast.error('Вторая дата должна быть больше первой.')
+          }
         }
       }
     }

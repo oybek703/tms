@@ -1,6 +1,6 @@
-import 'date-fns'
+import { format } from 'date-fns'
 import React, { Fragment, memo, useCallback } from 'react'
-import { disableDays, formatOneDate } from '../../../../utils'
+import { dateRegex, disableDays } from '../../../../utils'
 import { useLocation } from 'react-router-dom'
 import useActions from '../../../../hooks/useActions'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -15,18 +15,28 @@ interface DatePickerProps {
     disabled: boolean
 }
 
-const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/
-
 const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = [], disabled = false }) {
   const { pathname } = useLocation()
   const { changeReportDate } = useActions()
   const handleDateChange = useCallback((date: string | null) => {
-    if (date && operDays.findIndex(d => formatOneDate(date) === d) >= 0) {
-      changeReportDate(date)
+    let formattedDate: string
+    try {
+      formattedDate = date ? format(new Date(date), 'dd.MM.yyyy') : ''
+    } catch (e: any) {
+      formattedDate = e.message
+    }
+    if (date && dateRegex.test(formattedDate)) {
+      formattedDate = format(new Date(date), 'yyyy-MM-dd')
+      if (operDays.findIndex(d => formattedDate === d) >= 0) {
+        changeReportDate(formattedDate)
+      }
     }
   }, [changeReportDate, operDays])
   const memoizedDisableWeekends = useCallback(
-      (date: string) => disableDays(date, operDays),
+      (date: string) => {
+        const formattedDate = format(new Date(date), 'yyyy-MM-dd')
+        return disableDays(formattedDate, operDays)
+      },
       [operDays]
   )
   return (
@@ -35,16 +45,16 @@ const DatePicker: React.FC<DatePickerProps> = function({ reportDate, operDays = 
         <DesktopDatePicker
           value={reportDate}
           showToolbar
+          inputFormat='dd.MM.yyyy'
           disabled={disabled}
           toolbarTitle='Выберите дату'
           closeOnSelect
           disableFuture
           shouldDisableDate={memoizedDisableWeekends}
-          minDate={new Date('01/01/2020').toString()}
+          minDate={'2020-01-01'}
           onChange={handleDateChange}
           renderInput={
             params => <TextField
-              placeholder='dd.mm.yyyy'
               autoComplete='off'
               sx={{ '.MuiInputBase-input': { padding: '8px 14px' } }}
               inputProps={{
