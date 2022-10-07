@@ -23,6 +23,7 @@ backend/data/*
 backend/oracle/*
 backend/changed_codes.txt
 backend/benchmarking/*
+backend/ips.txt
 
 # build files
 backend/build/*

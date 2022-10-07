@@ -4,13 +4,14 @@ import { CardContent } from '@mui/material'
 import Card from '@mui/material/Card'
 import { chartSubtitle, chartTitle, chartTooltip, formatChartLegend } from '../../../../utils'
 
-function renderOptions(series: any) {
+function renderOptions(series: string[]) {
   const colors = [
     '#4CB9E1',
     '#f38003',
     '#00B050'
   ]
-  const labels = ['UZS', 'USD', 'EUR']
+  const labels = ['UZS', 'USD']
+  if (+series[2] !== 0) labels.push('EUR')
   const options = {
     title: {
       ...chartTitle('МБД по валютам')
@@ -70,7 +71,7 @@ function renderOptions(series: any) {
 }
 
 interface CurrencyMBDProps {
-    series: any
+    series: string[]
 }
 
 const CurrencyMBD: React.FC<CurrencyMBDProps> = ({ series = [] }) => {

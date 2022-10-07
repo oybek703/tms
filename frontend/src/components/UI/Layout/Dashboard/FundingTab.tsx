@@ -82,8 +82,7 @@ const FundingTab: React.FC<FundingTabProps> = ({
           <Grid className={classes.smallCard} item component={Paper}>Срочные
               депозиты &nbsp;
           <span
-            className={classes.greens}>{formatNumber(
-                +currencyTimeDepositsSum)} млрд.</span></Grid>
+            className={classes.greens}>{formatNumber(+currencyTimeDepositsSum)} млрд.</span></Grid>
         </Grid>
         {/* CREDIT SECOND BAR ROWS */}
         <Grid spacing={2} sx={{ marginBottom: 2 }} container justifyContent='space-between'>
