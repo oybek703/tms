@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#eee'
   },
   reloadBtn: {
-    backgroundColor: '#7794aa'
+    backgroundColor: '#7794aa !important'
   }
 }
 ))
@@ -37,20 +37,19 @@ const ErrorAlert = () => {
       <IconButton size="large">
         <ErrorOutlineIcon color="error" fontSize="large"/>
       </IconButton>
-      <Typography variant="h4" align="center" color="secondary">
+      <Typography variant="h4" align="center" color="red">
         Что-то пошло не так!
       </Typography>
     </Grid>
     <Typography align="center">
       <Button size="large" variant="outlined" component="span" disabled
-        color="secondary">
+        color="primary">
         Пожалуйста, проверьте подключение.
       </Button>
     </Typography>
     <hr/>
     <Grid container justifyContent="center">
-      <Button onClick={handleClick} className={classes.reloadBtn}
-        variant="contained">
+      <Button onClick={handleClick} className={classes.reloadBtn} variant="contained">
         Обновить
       </Button>
     </Grid>

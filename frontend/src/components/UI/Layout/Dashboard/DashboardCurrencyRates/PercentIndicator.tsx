@@ -33,9 +33,9 @@ const PercentIndicator: React.FC<PercentIndicatorProps> = ({ number, alignText =
       {
                 total ?
                     (
-                        (number >= -6.99 && number <= 6.99) ?
+                        (number >= -7.99 && number <= 7.99) ?
                             <StopIcon className={classes.grow}/> :
-                            ((number >= 7 && number <= 10.99) || (number >= -10.99 && number <= -7) ?
+                            ((number >= 8 && number <= 10.99) || (number >= -10.99 && number <= -8) ?
                                 <StopIcon className={classes.yellowText}/> :
                                 (number >= 11 || number <= -11) && <StopIcon color='error'/>)) :
                     (
