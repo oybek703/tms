@@ -1,24 +1,19 @@
 import React from 'react'
-import { Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
+import { Grid, Typography } from '@mui/material'
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard'
 
-const useStyles = makeStyles(theme => ({
-	inner: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		border: '3px solid #333',
-		borderRadius: 10,
-		padding: 40
-	}
-}))
-
 const InProcess = () => {
-	const classes = useStyles()
 	return (
 		<>
-			<div className={classes.inner}>
+			<Grid
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					borderRadius: 10,
+					padding: 40
+				}}
+			>
 				<Typography align="center" variant="h3">
 					Page is in development process.
 				</Typography>
@@ -30,7 +25,7 @@ const InProcess = () => {
 				<Typography align="center">
 					<DeveloperBoardIcon fontSize="large" />
 				</Typography>
-			</div>
+			</Grid>
 		</>
 	)
 }

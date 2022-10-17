@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { IconButton, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Grid from '@mui/material/Grid'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import Button from '@mui/material/Button'
+import { ISxStyles } from '../../interfaces/styles.interface'
 
-const useStyles = makeStyles(theme => ({
+const styles: ISxStyles = {
 	alertBox: {
 		border: '1px solid black',
 		borderRadius: 10,
@@ -21,11 +21,9 @@ const useStyles = makeStyles(theme => ({
 	reloadBtn: {
 		backgroundColor: '#7794aa !important'
 	}
-}))
+}
 
 const ErrorAlert = () => {
-	const classes = useStyles()
-
 	function handleClick() {
 		localStorage.clear()
 		window.location.reload()
@@ -33,7 +31,7 @@ const ErrorAlert = () => {
 
 	return (
 		<>
-			<Grid className={classes.alertBox} container>
+			<Grid sx={styles.alertBox} container>
 				<IconButton size="large">
 					<ErrorOutlineIcon color="error" fontSize="large" />
 				</IconButton>
@@ -48,7 +46,7 @@ const ErrorAlert = () => {
 			</Typography>
 			<hr />
 			<Grid container justifyContent="center">
-				<Button onClick={handleClick} className={classes.reloadBtn} variant="contained">
+				<Button onClick={handleClick} sx={styles.reloadBtn} variant="contained">
 					Обновить
 				</Button>
 			</Grid>
