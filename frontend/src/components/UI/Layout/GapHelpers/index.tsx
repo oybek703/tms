@@ -218,10 +218,10 @@ const RedRow: React.FC<{ row: any }> = function ({ row = {} }) {
 	)
 }
 
-function LcrAndNsfrTable({ data = [], month = '', halfWidth = false }) {
+function LcrAndNsfrTable({ data = [], month = '' }) {
 	const classes = useStyles()
 	return (
-		<TableContainer component={Paper} style={{ maxWidth: halfWidth ? '50%' : '100%' }}>
+		<TableContainer component={Paper}>
 			<Table size="small">
 				<TableHead className={classes.stickTableHead}>
 					<TableRow>

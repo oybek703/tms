@@ -4,7 +4,7 @@ import Card from '@mui/material/Card'
 import { CardContent } from '@mui/material'
 import { chartTitle, formatNumber } from '../../../utils'
 
-function renderOptions(values: any, categories: any) {
+function renderOptions(values: any, categories: any, title: string, id: string) {
 	const colors = [
 		function ({ value }: { value: number }) {
 			if (value > 0) {
@@ -52,23 +52,18 @@ function renderOptions(values: any, categories: any) {
 		dataLabels: {
 			enabled: true,
 			textAnchor: 'middle',
-			formatter: function (val: number, opt: any) {
-				return formatNumber(val)
-			},
-			background: {
-				enabled: true
-			},
 			style: {
 				colors: ['#666']
 			},
+			formatter: function (val: number, opt: any) {
+				return formatNumber(val)
+			},
 			offsetX: 0,
 			dropShadow: {
-				enabled: false,
-				top: 1,
-				left: 1,
-				blur: 1,
-				color: '#000',
-				opacity: 0.45
+				enabled: true
+			},
+			background: {
+				enabled: true
 			}
 		},
 		stroke: {
@@ -79,7 +74,7 @@ function renderOptions(values: any, categories: any) {
 			tickPlacement: 'on'
 		},
 		title: {
-			...chartTitle('Прогноз суммы отклонения(дефицита) ВЛА в национальной валюте')
+			...chartTitle(title)
 		},
 		yaxis: {
 			labels: {
@@ -93,29 +88,31 @@ function renderOptions(values: any, categories: any) {
 		}
 	}
 
-	const chart = new ApexCharts(document.querySelector('#national_curreny_chart'), options)
+	const chart = new ApexCharts(document.querySelector(`#${id}`), options)
 	chart.render()
 }
 
-interface NationalCurrencyChartProps {
+interface ForeignCurrencyChartProps {
 	series: any
 	categories: any
+	title: string
+	id: string
 }
 
-const NationalCurrencyChart: React.FC<NationalCurrencyChartProps> = ({ series = [], categories = [] }) => {
+const DeficitChart: React.FC<ForeignCurrencyChartProps> = ({ series = [], categories = [], title, id }) => {
 	useEffect(() => {
 		if (series.length) {
-			document.querySelector('#national_curreny_chart')!.innerHTML = ''
-			renderOptions(series, categories)
+			document.querySelector(`#${id}`)!.innerHTML = ''
+			renderOptions(series, categories, title, id)
 		}
-	}, [series, categories])
+	}, [id, title, series, categories])
 	return (
-		<Card style={{ width: '49%', height: '218px' }}>
-			<CardContent style={{ padding: '0' }}>
-				<div id="national_curreny_chart" />
+		<Card>
+			<CardContent sx={{ padding: '10px 5px 0px 5px', maxHeight: 185 }}>
+				<div id={`${id}`} />
 			</CardContent>
 		</Card>
 	)
-} /* Сумма отклонения(дефицит) на конец месяца (Нац.вал. (UZS)) */
+}
 
-export default NationalCurrencyChart
+export default DeficitChart

@@ -8,18 +8,16 @@ import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
 import makeStyles from '@mui/styles/makeStyles'
-import ForeignCurrencyChart from '../charts/GAP/ForeignCurrencyChart'
-import NationalCurrencyChart from '../charts/GAP/NationalCurrencyChart'
 import useActions from '../../hooks/useActions'
+import { Grid } from '@mui/material'
+import DeficitChart from '../charts/GAP/DeficitChart'
 
 const useStyles = makeStyles(theme => ({
-	tableContainer: {
-		maxHeight: '90vh',
-		position: 'relative'
-	},
 	chartContainer: {
-		display: 'flex',
-		justifyContent: 'space-between'
+		display: 'grid',
+		gridTemplateColumns: '[start] 1fr [middle] 1fr [end]',
+		gap: 20,
+		gridTemplateRows: '[start] auto [middle1] auto [end]'
 	}
 }))
 
@@ -40,12 +38,16 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
 	const nationalCurrency =
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
+	const totalCurrency =
+		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['TOTAL'].toFixed(2))) : []
+
 	useEffect(() => {
 		getLastGapUpdate()
 	}, [getLastGapUpdate])
+
 	return (
 		<Fragment>
-			<TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
+			<TableContainer component={Paper}>
 				<ExportButton id={`gap-${formatOneDate(new Date().toString())}`} />
 				<Table id={`gap-${formatOneDate(new Date().toString())}`} size="small" aria-label="a dense table">
 					<GapTableHead months={months} />
@@ -71,13 +73,28 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 			</TableContainer>
 			<br />
 			<div className={classes.chartContainer}>
-				<LcrAndNsfrTable halfWidth month={months[1]} data={lcrData} />
-				<ForeignCurrencyChart series={foreignCurrency} categories={months.slice(0, 6)} />
-			</div>
-			<br />
-			<div className={classes.chartContainer}>
-				<LcrAndNsfrTable halfWidth data={nsfrData} month={months[1]} />
-				<NationalCurrencyChart series={nationalCurrency} categories={months.slice(0, 6)} />
+				<LcrAndNsfrTable month={months[1]} data={lcrData} />
+				<DeficitChart
+					series={foreignCurrency}
+					id={'for_value'}
+					title={'Сумма отклонения(дефицит) на конец месяца (Ин.вал. (USD екв.))'}
+					categories={months.slice(0, 6)}
+				/>
+				<LcrAndNsfrTable data={nsfrData} month={months[1]} />
+				<Grid sx={{ display: 'grid', rowGap: '20px' }}>
+					<DeficitChart
+						id={'nat_value'}
+						series={nationalCurrency}
+						title={'Сумма отклонения(дефицит) на конец месяца (Нац.вал. (UZS))'}
+						categories={months.slice(0, 6)}
+					/>
+					<DeficitChart
+						id={'total_value'}
+						title={'Итого сумма отклонения(дефицит) на конец месяца'}
+						series={totalCurrency}
+						categories={months.slice(0, 6)}
+					/>
+				</Grid>
 			</div>
 		</Fragment>
 	)
