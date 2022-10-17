@@ -13,14 +13,7 @@ import DashboardMonthlyTable from './DashboardMonthlyTable'
 import useActions from '../../../../hooks/useActions'
 import { format } from 'date-fns'
 
-const useStyles = makeStyles(theme => ({
-	optionBlock: {
-		maxWidth: 600
-	}
-}))
-
 const DashboardMonthly: React.FC = () => {
-	const classes = useStyles()
 	const { fetchDashboardMonthly } = useActions()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const [dateOption, setDateOption] = useState('two')
@@ -85,8 +78,7 @@ const DashboardMonthly: React.FC = () => {
 			{
 				<>
 					<InputLabel htmlFor="dates_option">Выберите период</InputLabel>
-					<br />
-					<FormControl className={classes.optionBlock}>
+					<FormControl>
 						{/*
               //@ts-ignore */}
 						<Select
@@ -95,7 +87,10 @@ const DashboardMonthly: React.FC = () => {
 							value={dateOption}
 							inputProps={{
 								name: 'date_option',
-								id: 'dates_option'
+								id: 'dates_option',
+								style: {
+									padding: '5px 10px'
+								}
 							}}
 							variant="outlined"
 							margin="dense"
