@@ -20,149 +20,174 @@ import useActions from '../../../../hooks/useActions'
 import EditUser from '../EditUser'
 
 const useStyles = makeStyles(theme => ({
-  table: {
-    marginTop: 20,
-    backgroundColor: '#fff'
-  },
-  actionCol: {
-    textAlign: 'center',
-    whiteSpace: 'nowrap'
-  },
-  actionBtn: {
-    color: 'white',
-    background: 'gray',
-    padding: 3,
-    borderRadius: 5
-  },
-  paddingMain: {
-    padding: 30
-  },
-  buttonWith: {
-    minWidth: '40px'
-  }
+	table: {
+		marginTop: 20,
+		backgroundColor: '#fff'
+	},
+	actionCol: {
+		textAlign: 'center',
+		whiteSpace: 'nowrap'
+	},
+	actionBtn: {
+		color: 'white',
+		background: 'gray',
+		padding: 3,
+		borderRadius: 5
+	},
+	paddingMain: {
+		padding: 30
+	},
+	buttonWith: {
+		minWidth: '40px'
+	}
 }))
 
-
 const updatedBaseRoutes = [...baseRoutes].reduce((acc: any, val: any) => {
-  acc[val['route']] = val['title']
-  return acc
+	acc[val['route']] = val['title']
+	return acc
 }, {})
 
 const Users = () => {
-  const [addNewUser, setAddNewUser] = useState(false)
-  const [editUser, setEditUser] = useState(false)
-  const classes = useStyles()
-  const { users, loading, error } = useTypedSelector(state => state.users)
-  const addUserState = useTypedSelector(state => state.addUser)
-  const editUserState = useTypedSelector(state => state.editUser)
-  const { deleteUserByName, fetchUsers, getUser } = useActions()
-  function handleDelete(username: string) {
-    if (window.confirm(`Are you sure you want to delete user: ${username}?`)) {
-      deleteUserByName(username)
-      window.location.reload()
-    }
-  }
+	const [addNewUser, setAddNewUser] = useState(false)
+	const [editUser, setEditUser] = useState(false)
+	const classes = useStyles()
+	const { users, loading, error } = useTypedSelector(state => state.users)
+	const addUserState = useTypedSelector(state => state.addUser)
+	const editUserState = useTypedSelector(state => state.editUser)
+	const { deleteUserByName, fetchUsers, getUser } = useActions()
+	function handleDelete(username: string) {
+		if (window.confirm(`Are you sure you want to delete user: ${username}?`)) {
+			deleteUserByName(username)
+			window.location.reload()
+		}
+	}
 
-  function handleEdit(id: number) {
-    setEditUser(!editUser)
-    getUser(id)
-  }
+	function handleEdit(id: number) {
+		setEditUser(!editUser)
+		getUser(id)
+	}
 
-  const checkAction = () => {
-    if (editUser) {
-      setEditUser(false)
-    } else
-    if (addNewUser) {
-      setAddNewUser(false)
-    } else if (!addNewUser) {
-      setAddNewUser(true)
-    }
-  }
+	const checkAction = () => {
+		if (editUser) {
+			setEditUser(false)
+		} else if (addNewUser) {
+			setAddNewUser(false)
+		} else if (!addNewUser) {
+			setAddNewUser(true)
+		}
+	}
 
-  useEffect(() => {
-    if (addUserState.state === 'added') setAddNewUser(false)
-    if (editUserState.state === 'edited') setEditUser(false)
-  }, [addUserState.state, editUserState.state])
+	useEffect(() => {
+		if (addUserState.state === 'added') setAddNewUser(false)
+		if (editUserState.state === 'edited') setEditUser(false)
+	}, [addUserState.state, editUserState.state])
 
-  useEffect(() => {
-    if (!addNewUser || (!addNewUser && !editUser) ) fetchUsers()
-  }, [fetchUsers, addNewUser, editUser])
-  return (
-    <Paper className={classes.paddingMain}>
-      {
-                loading ?
-                    <Loader/> :
-                    error ?
-                    <Alert message={error}/> :
-                    <>
-                      <Grid container justifyContent='space-between' alignItems='center'>
-                        <Grid item>
-                          <Typography><b>{addNewUser ? 'Add User' : editUser ? 'Edit User' : 'All Users'}</b></Typography>
-                        </Grid>
-                        <Grid item>
-                          <Button
-                            endIcon={addNewUser ? <PeopleOutlineIcon/> : <AddTwoToneIcon/>}
-                            onClick={() => checkAction()}
-                            disabled={loading} size='small'
-                            variant='contained' color='primary'>{addNewUser ? 'Users' : editUser ? 'Users' : 'Add User'}</Button>
-                        </Grid>
-                      </Grid>
-                      <hr/>
-                      {addNewUser ? <AddUser/> : editUser ? <EditUser/> : <TableContainer>
-                        <Table size='small' className={classes.table}>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell align="center"><b>ID</b></TableCell>
-                              <TableCell align="center"><b>USERNAME</b></TableCell>
-                              <TableCell align="center"><b>ADMIN</b></TableCell>
-                              <TableCell align="center"><b>ALLOWED_PAGES</b></TableCell>
-                              <TableCell/>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {users.map((user: any, i: number) => (
-                              <TableRow key={i}>
-                                <TableCell align='center'>{user['ID']}</TableCell>
-                                <TableCell align='center'>{user['USERNAME']}</TableCell>
-                                <TableCell align='center'>
-                                  {
-                                                    user.ROLE === 'admin' ?
-                                                        <CheckTwoToneIcon fontSize='small'
-                                                          style={{ color: 'green' }}/> :
-                                                        <ClearTwoToneIcon fontSize='small' style={{ color: 'red' }}/>}
-                                </TableCell>
-                                <TableCell align='center'>
-                                  {
-                                                    user['ALLOWED_PAGES'] === null ? 'Dashboard':
-                                                    user['ALLOWED_PAGES'] === 'ALL' ?
-                                                        'All pages' :
-                                                        (user['ALLOWED_PAGES'] || '').split(',')
-                                                            .map((route: any) => <Fragment
-                                                              key={route}>{updatedBaseRoutes[route]}, &nbsp;</Fragment>)
-                                  }
-                                </TableCell>
-                                <TableCell className={classes.actionCol}>
-                                  <Button title='Delete user' className={classes.buttonWith}
-                                    onClick={() => handleDelete(user['USERNAME'])} component='span'
-                                    color='inherit'>
-                                    <DeleteOutlineRoundedIcon style={{ color: 'red' }}/>
-                                  </Button>
-                                  <Button title='Edit user' className={classes.buttonWith}
-                                    onClick={(e: any) => handleEdit(user['ID'])}
-                                    component='span'
-                                    color='inherit'>
-                                    <CreateOutlinedIcon color= 'action'/>
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>}
-                    </>
-      }
-    </Paper>
-  )
+	useEffect(() => {
+		if (!addNewUser || (!addNewUser && !editUser)) fetchUsers()
+	}, [fetchUsers, addNewUser, editUser])
+	return (
+		<Paper className={classes.paddingMain}>
+			{loading ? (
+				<Loader />
+			) : error ? (
+				<Alert message={error} />
+			) : (
+				<>
+					<Grid container justifyContent="space-between" alignItems="center">
+						<Grid item>
+							<Typography>
+								<b>{addNewUser ? 'Add User' : editUser ? 'Edit User' : 'All Users'}</b>
+							</Typography>
+						</Grid>
+						<Grid item>
+							<Button
+								endIcon={addNewUser ? <PeopleOutlineIcon /> : <AddTwoToneIcon />}
+								onClick={() => checkAction()}
+								disabled={loading}
+								size="small"
+								variant="contained"
+								color="primary"
+							>
+								{addNewUser ? 'Users' : editUser ? 'Users' : 'Add User'}
+							</Button>
+						</Grid>
+					</Grid>
+					<hr />
+					{addNewUser ? (
+						<AddUser />
+					) : editUser ? (
+						<EditUser />
+					) : (
+						<TableContainer>
+							<Table size="small" className={classes.table}>
+								<TableHead>
+									<TableRow>
+										<TableCell align="center">
+											<b>ID</b>
+										</TableCell>
+										<TableCell align="center">
+											<b>USERNAME</b>
+										</TableCell>
+										<TableCell align="center">
+											<b>ADMIN</b>
+										</TableCell>
+										<TableCell align="center">
+											<b>ALLOWED_PAGES</b>
+										</TableCell>
+										<TableCell />
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{users.map((user: any, i: number) => (
+										<TableRow key={i}>
+											<TableCell align="center">{user['ID']}</TableCell>
+											<TableCell align="center">{user['USERNAME']}</TableCell>
+											<TableCell align="center">
+												{user.ROLE === 'admin' ? (
+													<CheckTwoToneIcon fontSize="small" style={{ color: 'green' }} />
+												) : (
+													<ClearTwoToneIcon fontSize="small" style={{ color: 'red' }} />
+												)}
+											</TableCell>
+											<TableCell align="center">
+												{user['ALLOWED_PAGES'] === null
+													? 'Dashboard'
+													: user['ALLOWED_PAGES'] === 'ALL'
+													? 'All pages'
+													: (user['ALLOWED_PAGES'] || '')
+															.split(',')
+															.map((route: any) => <Fragment key={route}>{updatedBaseRoutes[route]}, &nbsp;</Fragment>)}
+											</TableCell>
+											<TableCell className={classes.actionCol}>
+												<Button
+													title="Delete user"
+													className={classes.buttonWith}
+													onClick={() => handleDelete(user['USERNAME'])}
+													component="span"
+													color="inherit"
+												>
+													<DeleteOutlineRoundedIcon style={{ color: 'red' }} />
+												</Button>
+												<Button
+													title="Edit user"
+													className={classes.buttonWith}
+													onClick={(e: any) => handleEdit(user['ID'])}
+													component="span"
+													color="inherit"
+												>
+													<CreateOutlinedIcon color="action" />
+												</Button>
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					)}
+				</>
+			)}
+		</Paper>
+	)
 }
 
 export default Users

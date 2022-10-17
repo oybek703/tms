@@ -7,21 +7,24 @@ import useActions from '../../../hooks/useActions'
 import FilialEffectivenessTable from '../../tables/FilialEffectivenessTable'
 
 const FilialEffectiveness = () => {
-  const { fetchFilialEffectiveness } = useActions()
-  const { filialEffectiveness, loading, error } = useTypedSelector(state => state.filialEffectiveness)
-  const { reportDate } = useTypedSelector(state => state.date)
-  useEffect(() => {
-    fetchFilialEffectiveness(reportDate)
-  }, [fetchFilialEffectiveness, reportDate])
-  return (
-    <Fragment>
-      <PageTitle title='Анализ эффективности филиалов'/>
-      {loading ?
-                <Loader/> :
-                error ? <Alert message={error}/> :
-                    <FilialEffectivenessTable rows={filialEffectiveness}/>}
-    </Fragment>
-  )
+	const { fetchFilialEffectiveness } = useActions()
+	const { filialEffectiveness, loading, error } = useTypedSelector(state => state.filialEffectiveness)
+	const { reportDate } = useTypedSelector(state => state.date)
+	useEffect(() => {
+		fetchFilialEffectiveness(reportDate)
+	}, [fetchFilialEffectiveness, reportDate])
+	return (
+		<Fragment>
+			<PageTitle title="Анализ эффективности филиалов" />
+			{loading ? (
+				<Loader />
+			) : error ? (
+				<Alert message={error} />
+			) : (
+				<FilialEffectivenessTable rows={filialEffectiveness} />
+			)}
+		</Fragment>
+	)
 }
 
 export default FilialEffectiveness
