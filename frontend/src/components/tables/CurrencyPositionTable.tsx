@@ -1,5 +1,4 @@
 import React, { memo } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -12,25 +11,17 @@ import TableCap from '../UI/helpers/TableCap'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	stickyTableHead: {
-		...theme.mixins.stickyTableHead,
-		position: 'relative'
-	}
-}))
+import globalStyles from '../../styles/globalStyles'
 
 const CurrencyPositionTable: React.FC<{ rows: any }> = function ({ rows }) {
 	const { allRows = [], tableSumData = [] } = rows
-	const classes = useStyles()
 	const { reportDate } = useTypedSelector(state => state.date)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`currency-position-${formatOneDate(reportDate)}`} />
 			<Table size="small" id={`currency-position-${formatOneDate(reportDate)}`} aria-label="a dense table">
 				<TableCap rows={15} text={'в сумм экв.'} />
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell align="center" rowSpan={2}>
 							<small>
@@ -198,59 +189,59 @@ const CurrencyPositionTable: React.FC<{ rows: any }> = function ({ rows }) {
 						<TableRow hover key={`${row.currency_code}+${i}`}>
 							<TableCell align="center">{row.isTableHead ? <b>{i + 1}</b> : i + 1}</TableCell>
 							<TableCell align="center">{row.isTableHead ? <b>{row.CURRENCY_CODE}</b> : row.CURRENCY_CODE}</TableCell>
-							<TableCell className={classes.noWrap} align="left">
+							<TableCell sx={globalStyles.noWrap} align="left">
 								{row.isTableHead ? <b>{row.CURRENCY_NAME}</b> : row.CURRENCY_NAME}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.RCC, true)}</b> : formatNumber(row.RCC, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.REQUIREMENTS, true)}</b> : formatNumber(row.REQUIREMENTS, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{formatNumber(row.CONTINGENCY_CLAIMS, true)}</b>
 								) : (
 									formatNumber(row.CONTINGENCY_CLAIMS, true)
 								)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.L_CL, true)}</b> : formatNumber(row.L_CL, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.LIABILITIES, true)}</b> : formatNumber(row.LIABILITIES, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{formatNumber(row.CONTINGENCY_LIABILITIES, true)}</b>
 								) : (
 									formatNumber(row.CONTINGENCY_LIABILITIES, true)
 								)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.ZERO8, true)}</b> : formatNumber(row.ZERO8, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{formatNumber(row.OPEN_CUR_RATE, true)}</b>
 								) : (
 									formatNumber(row.OPEN_CUR_RATE, true)
 								)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{formatNumber(row.FOR_CURR_RATE, true)}</b>
 								) : (
 									formatNumber(row.FOR_CURR_RATE, true)
 								)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.LONG_VAL, true)}</b> : formatNumber(row.LONG_VAL, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.SHORT_VAL, true)}</b> : formatNumber(row.SHORT_VAL, true)}
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{row.POS_RATIO ? `${formatNumber(row.POS_RATIO, true)}%` : '-'}</b>
 								) : row.POS_RATIO ? (

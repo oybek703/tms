@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import { CardContent, TableContainer } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
 import { withToken } from '../../../../utils/axiosUtils'
@@ -24,18 +23,10 @@ import Typography from '@mui/material/Typography'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import axios from 'axios'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	editCell: {
-		cursor: 'pointer',
-		...theme.mixins.dottedBorder
-	}
-}))
+import globalStyles from '../../../../styles/globalStyles'
 
 const UpdateLimitOfBanks = () => {
 	const { fetchBankLimits } = useActions()
-	const classes = useStyles()
 	const [dialog, setDialog] = useState(false)
 	const [editingCell, setEditingCell] = useState<any>({})
 	const [newLimit, setNewLimit] = useState<any>('')
@@ -143,7 +134,7 @@ const UpdateLimitOfBanks = () => {
 												<TableCell>{row['NAME']}</TableCell>
 												{currencies.map(c => (
 													<TableCell
-														className={`${classes.noWrap} ${classes.editCell}`}
+														sx={{ ...globalStyles.noWrap, cursor: 'pointer' }}
 														data-cellinfo={JSON.stringify({
 															code: row['CLIENT_CODE'],
 															name: row['NAME'],

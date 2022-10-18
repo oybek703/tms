@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid'
 import TableCell from '@mui/material/TableCell'
 import { formatNumber } from '../../../../utils'
 import TableRow from '@mui/material/TableRow'
-import makeStyles from '@mui/styles/makeStyles'
 import TableHead from '@mui/material/TableHead'
 import WhiteCell from '../../helpers/FormattedCell/WhiteCell'
 import Paper from '@mui/material/Paper'
@@ -11,10 +10,10 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import BoldWithColor from '../../helpers/BoldWithColor'
-import theme from '../../theme'
+import globalStyles from '../../../../styles/globalStyles'
+import { Grid } from '@mui/material'
 
-const useStyles = makeStyles({
-	noWrap: theme.mixins.noWrap,
+const styles = {
 	verticalText: {
 		writingMode: 'vertical-rl',
 		transform: 'rotate(180deg)',
@@ -25,16 +24,8 @@ const useStyles = makeStyles({
 	darkBackground: {
 		backgroundColor: '#eeeeee',
 		fontWeight: 'bold'
-	},
-	stickyCol: theme.mixins.stickyCol,
-	blueBackground: theme.mixins.blueBackground,
-	stickTableHead: theme.mixins.stickyTableHead,
-	redRow: {
-		fontWeight: 600,
-		color: 'rgb(255, 51, 0)'
-	},
-	bordered: theme.mixins.dottedBorder
-})
+	}
+}
 
 interface RenderByMonthProps {
 	months: string[]
@@ -51,7 +42,6 @@ const RenderByMonth: React.FC<RenderByMonthProps> = function ({
 	blueBackground = false,
 	withPercent = false
 }) {
-	const classes = useStyles()
 	return (
 		<Fragment>
 			{months.map((_, monthIndex) => (
@@ -59,10 +49,11 @@ const RenderByMonth: React.FC<RenderByMonthProps> = function ({
 					{['TOTAL', 'NATIONAL_CURRENCY', 'FOREIGN_CURRENCY', 'USD', 'EUR'].map((propName, index) => (
 						<Fragment key={uuid()}>
 							<TableCell
-								className={`${classes.noWrap} ${total && classes.darkBackground} 
-                        ${blueBackground ? classes.blueBackground : ''} 
-                        ${(row[monthIndex] || {})['editable'] && classes.bordered}`}
-								style={{
+								sx={{
+									...globalStyles.noWrap,
+									...(total && styles.darkBackground),
+									...(blueBackground && globalStyles.blueBackground),
+									...((row[monthIndex] || {})['editable'] && globalStyles.dottedBorder),
 									borderRight:
 										index === 4
 											? total
@@ -108,12 +99,15 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function ({
 	blueBackground = false,
 	withPercent = false
 }) {
-	const classes = useStyles()
 	return (
 		<TableRow key={uuid()}>
 			<TableCell
 				align={align}
-				className={`${classes.noWrap} ${classes.darkBackground} ${blueBackground ? classes.blueBackground : ''}`}
+				sx={{
+					...globalStyles.noWrap,
+					...styles.darkBackground,
+					...(blueBackground && globalStyles.blueBackground)
+				}}
 				colSpan={2}
 			>
 				{(total[0] || {})['INDICATOR_NAME']}
@@ -124,24 +118,22 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function ({
 }
 
 const VerticalColumn: React.FC<{ data: []; text: string }> = function ({ data = [], text = 'приток' }) {
-	const classes = useStyles()
 	return (
 		<TableRow hover>
-			<TableCell align="center" style={{ borderRight: '2px solid #7794aa' }} rowSpan={data.length + 1}>
-				<div className={classes.verticalText}>{text}</div>
+			<TableCell align="center" sx={{ borderRight: '2px solid #7794aa' }} rowSpan={data.length + 1}>
+				<Grid sx={styles.verticalText}>{text}</Grid>
 			</TableCell>
 		</TableRow>
 	)
 }
 
 const InnerDataRows: React.FC<{ data: any; months: string[] }> = function ({ data = [], months }) {
-	const classes = useStyles()
 	if (data.length === 0) return <tr />
 	return (
 		<>
 			{data.map((row: any) => (
 				<TableRow hover key={uuid()}>
-					<TableCell align="left" className={classes.noWrap}>
+					<TableCell align="left" sx={globalStyles.noWrap}>
 						{(row[0] || {})['INDICATOR_NAME']}
 					</TableCell>
 					<RenderByMonth row={row} months={months} />
@@ -156,24 +148,15 @@ interface GapTableHeadProps {
 }
 
 const GapTableHead: React.FC<GapTableHeadProps> = function ({ months = [] }) {
-	const classes = useStyles()
 	return (
-		<TableHead className={classes.stickTableHead}>
+		<TableHead sx={globalStyles.stickyTableHead}>
 			<TableRow>
 				<WhiteCell rowSpan={2} />
 				<WhiteCell align="center" rowSpan={2}>
 					<b>Наименование</b>
 				</WhiteCell>
 				{months.map(month => (
-					<WhiteCell
-						key={uuid()}
-						colSpan={5}
-						style={{
-							borderRight: '1px solid #ddd',
-							borderLeft: '1px solid #ddd'
-						}}
-						align="center"
-					>
+					<WhiteCell key={uuid()} colSpan={5} align="center">
 						<b>{month}</b>
 					</WhiteCell>
 				))}
@@ -182,14 +165,7 @@ const GapTableHead: React.FC<GapTableHeadProps> = function ({ months = [] }) {
 				{months.map(_ => (
 					<Fragment key={uuid()}>
 						{['Итого (UZS екв.)', 'Нац.вал. (UZS)', 'Ин.вал. (USD екв.)', 'USD', 'EUR'].map((propName, index) => (
-							<WhiteCell
-								key={uuid()}
-								style={{
-									borderRight: index === 4 ? '1px solid #ddd' : '1px solid #eee',
-									borderLeft: index === 0 ? '1px solid #ddd' : '1px solid #eee'
-								}}
-								align="center"
-							>
+							<WhiteCell key={uuid()} align="center">
 								<b>{propName}</b>
 							</WhiteCell>
 						))}
@@ -201,17 +177,23 @@ const GapTableHead: React.FC<GapTableHeadProps> = function ({ months = [] }) {
 }
 
 const RedRow: React.FC<{ row: any }> = function ({ row = {} }) {
-	const classes = useStyles()
 	return (
 		<TableRow hover>
-			<TableCell className={classes.redRow}>{row['INDICATOR_NAME']}</TableCell>
-			<TableCell align="center" className={`${classes.redRow} ${classes.noWrap}`}>
+			<TableCell
+				sx={{
+					fontWeight: 600,
+					color: 'rgb(255, 51, 0)'
+				}}
+			>
+				{row['INDICATOR_NAME']}
+			</TableCell>
+			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
 				{formatNumber(row['TOTAL'])}%
 			</TableCell>
-			<TableCell align="center" className={`${classes.redRow} ${classes.noWrap}`}>
+			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
 				{formatNumber(row['NATIONAL_CURRENCY'])}%
 			</TableCell>
-			<TableCell align="center" className={`${classes.redRow} ${classes.noWrap}`}>
+			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
 				{formatNumber(row['FOREIGN_CURRENCY'])}%
 			</TableCell>
 		</TableRow>
@@ -219,11 +201,10 @@ const RedRow: React.FC<{ row: any }> = function ({ row = {} }) {
 }
 
 function LcrAndNsfrTable({ data = [], month = '' }) {
-	const classes = useStyles()
 	return (
 		<TableContainer component={Paper}>
 			<Table size="small">
-				<TableHead className={classes.stickTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell>
 							<BoldWithColor>{month}</BoldWithColor>
@@ -234,7 +215,7 @@ function LcrAndNsfrTable({ data = [], month = '' }) {
 						<TableCell align="center">
 							<BoldWithColor>Нац. вал.</BoldWithColor>
 						</TableCell>
-						<TableCell align="center" className={classes.noWrap}>
+						<TableCell align="center" sx={globalStyles.noWrap}>
 							<BoldWithColor>Ин. вал.</BoldWithColor>
 						</TableCell>
 					</TableRow>
@@ -246,13 +227,13 @@ function LcrAndNsfrTable({ data = [], month = '' }) {
 						) : (
 							<TableRow hover key={uuid()}>
 								<TableCell>{row['INDICATOR_NAME']}</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(row['TOTAL'])}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(row['NATIONAL_CURRENCY'])}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(row['FOREIGN_CURRENCY'])}
 								</TableCell>
 							</TableRow>

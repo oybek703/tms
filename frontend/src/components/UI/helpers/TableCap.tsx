@@ -2,26 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
-import makeStyles from '@mui/styles/makeStyles'
-
-interface StylesProps {
-	isGrey: boolean
-	redBack: boolean
-	textAlign?: string
-}
-
-const useStyles = makeStyles({
-	no_border: {
-		border: 'none',
-		backgroundColor: '#fff',
-		whiteSpace: 'nowrap'
-	},
-	redBack: {
-		color: ({ isGrey, redBack }: StylesProps) => (isGrey || redBack ? '#fff' : '#000'),
-		backgroundColor: ({ isGrey, redBack }: StylesProps) => (isGrey ? `#7794aa` : redBack ? 'red' : 'fff'),
-		fontSize: 14
-	}
-})
+import globalStyles from '../../../styles/globalStyles'
 
 interface WrapperProps {
 	isHead: boolean
@@ -50,16 +31,24 @@ const TableCap: React.FC<TableCapProps> = ({
 	cellStyles = {},
 	textAlign = 'right'
 }) => {
-	const classes = useStyles({ isGrey, redBack, textAlign })
 	return (
 		<Wrapper isHead={isHead}>
 			<TableRow>
 				{new Array(rows - 1).fill('').map((c, i) => (
-					<TableCell style={{ ...cellStyles }} className={classes.no_border} key={i}>
+					<TableCell sx={{ ...globalStyles.noBorder, ...cellStyles }} key={i}>
 						<b>{''}</b>
 					</TableCell>
 				))}
-				<TableCell style={{ ...cellStyles }} className={`${classes.no_border} ${classes.redBack}`} align={textAlign}>
+				<TableCell
+					sx={{
+						...globalStyles.noBorder,
+						...cellStyles,
+						color: isGrey || redBack ? '#fff' : '#000',
+						backgroundColor: isGrey ? `#7794aa` : redBack ? 'red' : 'fff',
+						fontSize: 14
+					}}
+					align={textAlign}
+				>
 					<b>
 						<i>{text}</i>
 					</b>

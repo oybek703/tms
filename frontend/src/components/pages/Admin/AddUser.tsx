@@ -3,40 +3,12 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import makeStyles from '@mui/styles/makeStyles'
 import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
-
-const useStyles = makeStyles(theme => ({
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: 'crimson'
-	},
-	form: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		marginTop: theme.spacing(3),
-		backgroundColor: '#fff',
-		padding: 40
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-		padding: '10px 20px',
-		minWidth: 250
-	},
-	chips: {
-		display: 'flex',
-		flexWrap: 'wrap'
-	},
-	chip: {
-		margin: 2
-	}
-}))
+import globalStyles from '../../../styles/globalStyles'
 
 export default function AddUser() {
-	const classes = useStyles()
 	const { addUser } = useActions()
 	const [allowedPages, setAllowedPages] = useState<string[]>([])
 	const { loading, error } = useTypedSelector(state => state.addUser)
@@ -111,7 +83,7 @@ export default function AddUser() {
 			<Typography align="center" component="h1" variant="h5">
 				<b>ADD NEW USER</b>
 			</Typography>
-			<form className={classes.form} noValidate onSubmit={handleAddUser}>
+			<Grid component="form" sx={globalStyles.userForm} noValidate onSubmit={handleAddUser}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
@@ -159,10 +131,10 @@ export default function AddUser() {
 					</Grid>
 					<AllowedPages pages={allowedPages} setPages={handleAddPage} />
 				</Grid>
-				<Button disabled={btnDisabled} type="submit" variant="outlined" color="primary" className={classes.submit}>
+				<Button disabled={btnDisabled} type="submit" variant="outlined" color="primary" sx={globalStyles.usetSubmitBtn}>
 					Add
 				</Button>
-			</form>
+			</Grid>
 		</>
 	)
 }

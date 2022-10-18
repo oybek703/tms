@@ -4,44 +4,14 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import { v4 as uuid } from 'uuid'
 import { useLocation } from 'react-router-dom'
-import makeStyles from '@mui/styles/makeStyles'
-
-const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1,
-		display: 'flex'
-	},
-	tabs: {
-		borderRight: `1px solid ${theme.palette.divider}`,
-		borderRadius: 5,
-		backgroundColor: '#fff',
-		border: '3px solid #333',
-		width: '15%'
-	},
-	tab: {
-		textAlign: 'left',
-		alignItems: 'flex-start',
-		justifyContent: 'flex-start',
-		width: '100%',
-		color: '#000'
-	},
-	tabData: {
-		width: '84%',
-		paddingLeft: '1%'
-	},
-	selectedTab: {
-		backgroundColor: theme.palette.info.light,
-		color: '#000'
-	}
-}))
+import { Grid, Paper } from '@mui/material'
+import theme from '../../../UI/theme'
 
 function TabPanel(props: any) {
 	const { children, value, index, ...other } = props
-	const classes = useStyles()
 	return (
 		<div
 			role="tabpanel"
-			className={classes.tabData}
 			hidden={value !== index}
 			id={`vertical-tabpanel-${index}`}
 			aria-labelledby={`vertical-tab-${index}`}
@@ -77,26 +47,31 @@ interface VerticalTabsProps {
 }
 
 const VerticalTabs: React.FC<VerticalTabsProps> = function ({ tabs = [] }) {
-	const classes = useStyles()
 	const { hash } = useLocation()
 	const [value, setValue] = React.useState(hash ? +hash[1] : 0)
 	const tabNames = tabs.map(tab => tab['tabName'])
 	const tabDatas = tabs.map(tab => tab['tabData'])
-	const handleChange = (event: React.ChangeEvent, newValue: any) => {
+	const handleChange = (event: React.SyntheticEvent, newValue: any) => {
 		setValue(newValue)
 	}
 
 	return (
-		<div className={classes.root}>
-			{/*
-        //@ts-ignore*/}
-			<Tabs onChange={handleChange} orientation="vertical" variant="scrollable" value={value} className={classes.tabs}>
+		<Grid sx={{ display: 'grid', gridTemplateColumns: 'minmax(300px, auto) 1fr', gap: '20px' }}>
+			<Tabs component={Paper} onChange={handleChange} orientation="vertical" variant="scrollable" value={value}>
 				{tabNames.map((tabName, index) => (
 					<Tab
-						classes={{
-							wrapped: classes.tab,
-							root: classes.tab,
-							selected: classes.selectedTab
+						sx={{
+							'&.MuiTab-root': {
+								textAlign: 'left',
+								alignItems: 'flex-start',
+								justifyContent: 'flex-start',
+								width: '100%',
+								color: '#000'
+							},
+							'&.Mui-selected': {
+								backgroundColor: theme.palette.info.light,
+								color: '#fff'
+							}
 						}}
 						key={uuid()}
 						href={`#${index}`}
@@ -106,13 +81,12 @@ const VerticalTabs: React.FC<VerticalTabsProps> = function ({ tabs = [] }) {
 					/>
 				))}
 			</Tabs>
-			<hr />
 			{tabDatas.map((tabData, index) => (
 				<TabPanel key={uuid()} value={value} index={index}>
 					{tabData}
 				</TabPanel>
 			))}
-		</div>
+		</Grid>
 	)
 }
 

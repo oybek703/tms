@@ -1,24 +1,23 @@
 import React, { Fragment } from 'react'
 import TableCap from '../TableCap'
 import { TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableBody from '@mui/material/TableBody'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import globalStyles from '../../../../styles/globalStyles'
 
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	red_cell: {
+const styles = {
+	redCell: {
 		background: 'red',
 		color: 'white',
 		fontWeight: 'bold'
 	},
-	red_text: {
+	redText: {
 		color: 'red',
 		fontWeight: 'bold'
 	}
-}))
+}
 
 interface InterbankDepositsBodyProps {
 	rows: any
@@ -44,7 +43,6 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 	isInterbank = false,
 	cap = <></>
 }) => {
-	const classes = useStyles()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const formattedReportDate = formatReportDate(reportDate)
 	const currencies = ['сум', 'доллар', 'евро']
@@ -62,7 +60,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 								<TableCell align="left" title={b['NAME_BANK']}>
 									{b['NAME_BANK']}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(b['SALDO_OUT'])}
 								</TableCell>
 								<TableCell align="center">
@@ -72,7 +70,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 										? formatOneDate(b['BEGIN_DATE'])
 										: b['BEGIN_DATE']}
 								</TableCell>
-								<TableCell align="center" className={formattedReportDate === b['END_DATE'] ? classes.red_text : ''}>
+								<TableCell align="center" sx={{ ...(formattedReportDate === b['END_DATE'] && styles.redText) }}>
 									{b['END_DATE'] === '0' || !b['END_DATE']
 										? ''
 										: isInterbank
@@ -80,13 +78,13 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 										: b['END_DATE']}
 								</TableCell>
 								<TableCell align="center">{formatNumber(b['PERCENT_RATE'])}%</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(b['FOR_DAY'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(b['FOR_PERIOD'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(b['DAY_COUNT'])}
 								</TableCell>
 								<TableCell align="center">{b['PERCENT_SHARE']}%</TableCell>
@@ -96,19 +94,19 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 							<TableCell colSpan={2}>
 								<b>{((rows[j] || {}).sumRow || [])[0]}</b>
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								<b>{formatNumber(((rows[j] || {}).sumRow || [])[1])}</b>
 							</TableCell>
-							<TableCell colSpan={2} className={classes.red_cell}>
+							<TableCell colSpan={2} sx={styles.redCell}>
 								Средневзвешенные % ставка
 							</TableCell>
-							<TableCell className={`${classes.noWrap} ${classes.red_cell}`} align="center">
+							<TableCell sx={{ ...globalStyles.noWrap, ...styles.redCell }} align="center">
 								<b>{formatNumber(((rows[j] || {}).sumRow || [])[2])}%</b>
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								<b>{formatNumber(((rows[j] || {}).sumRow || [])[3])}</b>
 							</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								<b>{formatNumber(((rows[j] || {}).sumRow || [])[4])}</b>
 							</TableCell>
 							<TableCell />

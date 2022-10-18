@@ -3,20 +3,17 @@ import Grid from '@mui/material/Grid'
 import { v4 as uuid } from 'uuid'
 import Card from '@mui/material/Card'
 import { Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import { formatNumber } from '../../../../utils'
 import RWAPoints from '../../../charts/Dashboard/Capital/RWAPoints'
 import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
 
-const useStyles = makeStyles(theme => ({
+const styles = {
 	greens: {
 		color: '#00B050',
 		fontSize: '12pt'
 	},
-	smallCardContainer: theme.mixins.smallCardContainer,
-	smallCard: theme.mixins.smallCard,
 	capitalText: {
-		padding: 10,
+		padding: '10px',
 		fontSize: '1.2em',
 		fontWeight: 600,
 		color: '#555'
@@ -24,14 +21,13 @@ const useStyles = makeStyles(theme => ({
 	capitalNumber: {
 		fontSize: '1.05em'
 	}
-}))
+}
 
 interface CapitalTabProps {
 	vla: any
 }
 
 const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => {
-	const classes = useStyles()
 	const capitalPoints: any = {
 		rc: 6183.7,
 		car: 14.24,
@@ -61,12 +57,12 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
 				].map(({ title, shortKey }, i) => (
 					<Grid key={uuid()} item sm={6}>
 						<Card>
-							<Typography className={`${classes.greens} ${classes.capitalText}`} align="center">
+							<Typography sx={{ ...styles.greens, ...styles.capitalText }} align="center">
 								{title}
 								&nbsp;
-								<span className={`${classes.greens} ${classes.capitalNumber}`}>
+								<Typography component="span" sx={{ ...styles.greens, ...styles.capitalNumber }}>
 									{formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
-								</span>
+								</Typography>
 							</Typography>
 						</Card>
 					</Grid>
@@ -107,12 +103,12 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
 				].map(({ title, shortKey }, i) => (
 					<Grid key={uuid()} item sm={6}>
 						<Card>
-							<Typography className={`${classes.greens} ${classes.capitalText}`} align="center">
+							<Typography sx={{ ...styles.greens, ...styles.capitalText }} align="center">
 								{title}
 								&nbsp;
-								<span className={`${classes.greens} ${classes.capitalNumber}`}>
+								<Typography component="span" sx={{ ...styles.greens, ...styles.capitalNumber }}>
 									{formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
-								</span>
+								</Typography>
 							</Typography>
 						</Card>
 					</Grid>

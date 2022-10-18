@@ -3,21 +3,13 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import { TableBody, TableContainer, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
 
-const useStyles = makeStyles(theme => ({
-	tableContainer: {
-		maxHeight: '77vh'
-	}
-}))
-
 const Normatives = () => {
-	const classes = useStyles()
 	return (
-		<TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
+		<TableContainer component={Paper}>
 			<Table size="small">
 				<TableHead>
 					<TableRow style={{ background: '#7794aa' }}>

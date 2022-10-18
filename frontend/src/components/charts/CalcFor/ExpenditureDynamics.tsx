@@ -31,7 +31,11 @@ function renderOptions(values: any, categories: any) {
 		},
 		title: {
 			text: 'Динамика перерасхода по ФОР',
-			align: 'center'
+			align: 'center',
+			style: {
+				fontWeight: 100,
+				fontSize: 19
+			}
 		},
 		grid: {
 			row: {

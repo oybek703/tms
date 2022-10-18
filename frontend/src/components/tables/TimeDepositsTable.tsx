@@ -6,7 +6,6 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import { TableBody } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import { v4 as uuid } from 'uuid'
 import { formatDate, formatNumber } from '../../utils'
 import TableContainer from '@mui/material/TableContainer'
@@ -16,15 +15,7 @@ import TimeDepositsByCurrency from '../charts/TimeDeposits/TimeDepositsByCurrenc
 import TimeDepositsChange from '../charts/TimeDeposits/TimeDepositsChange'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	marginTop10: theme.mixins.marginTop10,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	hoverColor: {
-		backgroundColor: theme.palette.action.hover
-	}
-}))
+import globalStyles from '../../styles/globalStyles'
 
 interface TimeDepositsTableProps {
 	rows: any
@@ -35,7 +26,6 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {
 	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
 	const { tableData = [], currentBalance = [], balanceInMonthBegin = [] } = rows
 	const changeData = currentBalance.map((v: any, i: number) => currentBalance[i] - balanceInMonthBegin[i])
-	const classes = useStyles()
 	return (
 		<Fragment>
 			<Grid container spacing={2}>
@@ -59,11 +49,11 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {
 					<TimeDepositsChange series={changeData} />
 				</Grid>
 			</Grid>
-			<TableContainer component={Paper} className={classes.marginTop10}>
+			<TableContainer component={Paper} sx={globalStyles.marginTop10}>
 				<ExportButton id={`time-deposits-${selectedDate}`} />
 				<Table size="small" id={`time-deposits-${selectedDate}`}>
 					<TableCap rows={13} text={'млн.сум'} />
-					<TableHead className={classes.stickyTableHead}>
+					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center" rowSpan={3}>
 								<BoldWithColor>№</BoldWithColor>
@@ -145,37 +135,43 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {
 							<TableRow hover key={uuid()}>
 								<TableCell align="center">{i + 1}</TableCell>
 								<TableCell align="left">{r['FILIAL_NAME']}</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['YEAR_BEGIN'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['MONTH_BEGIN'], true)}
 								</TableCell>
-								<TableCell align="center" className={`${classes.noWrap} ${classes.hoverColor}`}>
+								<TableCell
+									align="center"
+									sx={{
+										...globalStyles.noWrap,
+										backgroundColor: '#eee'
+									}}
+								>
 									{formatNumber(r['SELECTED_DATE'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['CHANGE_FROM_YB'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['CHANGE_FROM_YB_PERCENT'])}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['CHANGE_FROM_MB'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['CHANGE_FROM_MB_PERCENT'])}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{r['COUNT_IN_DATE'] || '-'}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['SUM_IN_DATE'], true)}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{r['COUNT_IN_MONTH'] || '-'}
 								</TableCell>
-								<TableCell align="center" className={classes.noWrap}>
+								<TableCell align="center" sx={globalStyles.noWrap}>
 									{formatNumber(r['SUM_IN_MONTH'], true)}
 								</TableCell>
 							</TableRow>

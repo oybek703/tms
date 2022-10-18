@@ -1,5 +1,4 @@
 import * as React from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -36,20 +35,6 @@ const getColor = (type: string) => {
 	}
 }
 
-const useStyles = makeStyles(theme => ({
-	alert: {
-		backgroundColor: ({ type }: { type: string }) => getBackGroundColor(type),
-		color: ({ type }: { type: string }) => getColor(type),
-		borderRadius: '5px',
-		margin: '1em auto',
-		maxWidth: '40em',
-		width: '90%',
-		[theme.breakpoints.down('md')]: {
-			maxWidth: '20em'
-		}
-	}
-}))
-
 interface AlertProps {
 	type?: string
 	message?: string
@@ -57,12 +42,20 @@ interface AlertProps {
 }
 
 const Alert: React.FC<AlertProps> = props => {
-	// @ts-ignore
-	const classes = useStyles(props)
-	const { type, message = 'Unexpected internal server error!', icon = true } = props
+	const { type = 'danger', message = 'Unexpected internal server error!', icon = true } = props
 	if (message === 'access_denied') return <Redirect to={'/403'} />
 	return (
-		<List disablePadding classes={{ root: classes.alert }}>
+		<List
+			disablePadding
+			sx={{
+				backgroundColor: getBackGroundColor(type),
+				color: getColor(type),
+				borderRadius: '5px',
+				margin: '1em auto',
+				maxWidth: '40em',
+				width: '90%'
+			}}
+		>
 			<ListItem>
 				<ListItemIcon>
 					{type === 'success' && <CheckCircleOutlineOutlinedIcon />}

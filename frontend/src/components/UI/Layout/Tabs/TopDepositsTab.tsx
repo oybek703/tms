@@ -2,25 +2,8 @@ import React from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
-import makeStyles from '@mui/styles/makeStyles'
-import blueGrey from '@mui/material/colors/blueGrey'
-
-const useStyles = makeStyles(theme => ({
-	content: {
-		marginBottom: 10
-	},
-	btn: {
-		marginRight: 20,
-		border: `1px solid ${blueGrey[500]}`,
-		borderRadius: '5px !important',
-		padding: '6px 10px',
-		borderRightColor: `${blueGrey[500]} !important`,
-		fontSize: 15,
-		lineHeight: 1,
-		textTransform: 'lowercase',
-		fontWeight: 560
-	}
-}))
+import { Grid } from '@mui/material'
+import globalStyles from '../../../../styles/globalStyles'
 
 interface TopDepositsTabProps {
 	active: number
@@ -39,13 +22,15 @@ const TopDepositsTab: React.FC<TopDepositsTabProps> = ({ active = 1, handleChang
 		},
 		{ title: 'СРЕДСТВА КЛИЕНТОВ, СКОНВЕРТИРОВАННЫЕ', code: '22614' }
 	]
-	const classes = useStyles()
 	return (
-		<div className={classes.content}>
-			<ButtonGroup disableElevation size="small" color="primary">
+		<Grid sx={globalStyles.marginBottom10}>
+			<ButtonGroup size="small" color="primary">
 				{titles.map(({ title, code }, i) => (
 					<Button
-						classes={{ root: classes.btn }}
+						sx={{
+							...globalStyles.tabBtn,
+							textTransform: 'lowercase'
+						}}
 						title={`${title} - ${code}`}
 						onClick={handleChange.bind(null, i + 1)}
 						size="small"
@@ -56,7 +41,7 @@ const TopDepositsTab: React.FC<TopDepositsTabProps> = ({ active = 1, handleChang
 					</Button>
 				))}
 			</ButtonGroup>
-		</div>
+		</Grid>
 	)
 }
 

@@ -6,7 +6,6 @@ import ListItemText from '@mui/material/ListItemText'
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
 import { Button, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Navbar from './Navbar'
 import Drawer from '@mui/material/Drawer'
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -20,6 +19,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import globalStyles from '../../../../styles/globalStyles'
 
 interface BaseRoute {
 	title: string
@@ -144,28 +144,17 @@ export const baseRoutes: BaseRoute[] = [
 	}
 ]
 
-const useStyles = makeStyles(theme => ({
-	routes: {
-		fontSize: '16px',
-		maxWidth: 210
-	},
+const styles = {
 	active: {
-		...theme.mixins.active,
+		...globalStyles.active,
 		backgroundColor: '#636363',
 		color: '#fff',
 		'&:hover': {
 			backgroundColor: '#8b8b8b',
 			color: '#fff'
 		}
-	},
-	roundIcon: {
-		minWidth: '25px'
-	},
-	logo: theme.mixins.logo,
-	nested: {
-		paddingLeft: theme.spacing(5)
 	}
-}))
+}
 
 function groupRoutes(routes: BaseRoute[] = [], indicatorName = 'key_indicators'): any {
 	return routes.map(route => route['group'] === indicatorName && route).filter(Boolean)
@@ -179,7 +168,6 @@ interface GroupedRoutesProps {
 }
 
 const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchorClose, Icon, title }) => {
-	const classes = useStyles()
 	const { pathname } = useLocation()
 	const isRouteCovered = Boolean(routes.find(({ route }) => route === pathname))
 	const [open, setOpen] = useState(isRouteCovered)
@@ -200,13 +188,16 @@ const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchor
 							button
 							key={index}
 							disableRipple
-							className={route === pathname ? `${classes.active} ${classes.nested}` : classes.nested}
+							sx={{
+								paddingLeft: '40px',
+								...(route === pathname && styles.active)
+							}}
 							onClick={handleAnchorClose}
 							component={Link}
 							to={route}
 						>
 							<ListItemText>
-								<Typography classes={{ root: classes.routes }}>{title}</Typography>
+								<Typography sx={{ fontSize: '16px', maxWidth: 210 }}>{title}</Typography>
 							</ListItemText>
 						</ListItem>
 					))}
@@ -217,7 +208,6 @@ const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchor
 }
 
 function Header() {
-	const classes = useStyles()
 	const { pathname } = useLocation()
 	const { push } = useHistory()
 	const [anchor, setAnchor] = useState(false)
@@ -255,7 +245,7 @@ function Header() {
 	const list = useCallback(
 		() => (
 			<Fragment>
-				<Toolbar component={Grid} container className={classes.logo} alignItems="center" justifyContent="center">
+				<Toolbar component={Grid} container sx={globalStyles.logo} alignItems="center" justifyContent="center">
 					<Button onClick={handleAnchorClose}>
 						<img src={process.env.PUBLIC_URL + '/logo.svg'} width="140" height="80" alt="Treasury Reports" />
 					</Button>
@@ -296,7 +286,6 @@ function Header() {
 			</Fragment>
 		),
 		[
-			classes,
 			handleAnchorClose,
 			gapRoutes,
 			keyIndicatorsRoutes,

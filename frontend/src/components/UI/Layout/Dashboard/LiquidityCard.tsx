@@ -2,23 +2,12 @@ import React from 'react'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import ListItemText from '@mui/material/ListItemText'
-import makeStyles from '@mui/styles/makeStyles'
-import { formatDate, formatNumber, formatOneDate } from '../../../../utils'
-import theme from '../../theme'
+import { formatNumber, formatOneDate } from '../../../../utils'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
+import globalStyles from '../../../../styles/globalStyles'
+import { Typography } from '@mui/material'
 
-const useStyles = makeStyles({
-	greens: {
-		color: '#00B050',
-		fontSize: '1.2em'
-	},
-	liquidityCard: {
-		...theme.mixins.smallCard,
-		padding: 0,
-		paddingLeft: 2,
-		marginBottom: -5,
-		paddingBottom: 5
-	},
+const styles = {
 	totalText: {
 		fontSize: '1.5em',
 		fontWeight: 550,
@@ -39,20 +28,11 @@ const useStyles = makeStyles({
 		color: '#000',
 		fontSize: '0.8em',
 		fontWeight: 700,
-		marginTop: 5
+		marginTop: '5px'
 	},
 	natValue: {
 		fontSize: '1.3em',
 		fontWeight: 400
-	},
-	labelPart: {
-		borderRight: '2px dashed #ddd'
-	},
-	mainText: {
-		transform: 'translateY(4px)'
-	},
-	wrapperCard: {
-		position: 'relative'
 	},
 	stateCard: {
 		position: 'absolute',
@@ -62,9 +42,9 @@ const useStyles = makeStyles({
 		fontSize: '0.65em',
 		fontWeight: 'bold',
 		color: 'white',
-		padding: 0.1
+		padding: '0.1px'
 	}
-})
+}
 
 interface LiquidityCardProps {
 	data: any
@@ -72,31 +52,46 @@ interface LiquidityCardProps {
 }
 
 function StateCard() {
-	const classes = useStyles()
-	return <span className={classes.stateCard}>Текущее состояние</span>
+	return (
+		<Typography component="span" sx={styles.stateCard}>
+			Текущее состояние
+		</Typography>
+	)
 }
 
 const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛА' }) => {
 	const [lastTotal, lastNat, lastForeign] = data
 	const { reportDate } = useTypedSelector(state => state.date)
 	const isToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
-	const classes = useStyles()
 	const splittedLabel = label.split(' ')
 	return (
-		<Grid className={classes.liquidityCard} item component={Paper} variant="outlined">
-			<Grid container className={classes.wrapperCard} justifyContent="space-between" alignItems="center">
+		<Grid
+			sx={{ ...globalStyles.smallCardPadding, padding: '0px 2px 5px 0px' }}
+			item
+			component={Paper}
+			variant="outlined"
+		>
+			<Grid container sx={{ position: 'relative' }} justifyContent="space-between" alignItems="center">
 				{isToday && label === 'ЮЛА (HQLA)' && <StateCard />}
 				<Grid item xs={6}>
-					<Grid container justifyContent="space-around" alignItems="baseline" className={classes.labelPart}>
-						<Grid item className={classes.mainText}>
-							<span className={classes.totalText}>{splittedLabel[0]}</span>{' '}
-							<span className={classes.totalSecondaryText}>{splittedLabel[1]}</span>
+					<Grid container justifyContent="space-around" alignItems="baseline" sx={{ borderRight: '2px dashed #ddd' }}>
+						<Grid item sx={{ transform: 'translateY(4px)' }}>
+							<Typography component="span" sx={styles.totalText}>
+								{splittedLabel[0]}
+							</Typography>{' '}
+							<Typography component="span" sx={styles.totalSecondaryText}>
+								{splittedLabel[1]}
+							</Typography>
 						</Grid>
 						<Grid item>
 							{lastTotal && (
 								<ListItemText
-									primary={<b className={`${classes.greens} ${classes.totalValue}`}>{formatNumber(lastTotal)}%</b>}
-									secondaryTypographyProps={{ className: classes.secondaryText }}
+									primary={
+										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+											{formatNumber(lastTotal)}%
+										</Typography>
+									}
+									secondaryTypographyProps={{ sx: styles.secondaryText }}
 									secondary="итого"
 								/>
 							)}
@@ -108,8 +103,12 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 						<Grid item xs={6}>
 							{lastNat && (
 								<ListItemText
-									primary={<b className={`${classes.greens} ${classes.natValue}`}>{formatNumber(lastNat)}%</b>}
-									secondaryTypographyProps={{ className: classes.secondaryText }}
+									primary={
+										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+											{formatNumber(lastNat)}%
+										</Typography>
+									}
+									secondaryTypographyProps={{ sx: styles.secondaryText }}
 									secondary="нац.валюта"
 								/>
 							)}
@@ -117,8 +116,12 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 						<Grid item xs={6}>
 							{lastForeign && (
 								<ListItemText
-									primary={<b className={`${classes.greens} ${classes.natValue}`}>{formatNumber(lastForeign)}%</b>}
-									secondaryTypographyProps={{ className: classes.secondaryText }}
+									primary={
+										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+											{formatNumber(lastForeign)}%
+										</Typography>
+									}
+									secondaryTypographyProps={{ sx: styles.secondaryText }}
 									secondary="ин.валюта"
 								/>
 							)}

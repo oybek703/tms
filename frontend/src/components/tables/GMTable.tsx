@@ -10,10 +10,10 @@ import { formatNumber, formatOneDate } from '../../utils'
 import Grid from '@mui/material/Grid'
 import GMLiabilities from '../charts/GM/GMLiabilities'
 import GMClassification from '../charts/GM/GMClassification'
-import makeStyles from '@mui/styles/makeStyles'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import globalStyles from '../../styles/globalStyles'
 
 function sumByCode(array = [], code = '') {
 	let usd = 0
@@ -37,17 +37,7 @@ function sumByCode(array = [], code = '') {
 	return [usd, eur, rub, uzs].map(n => +(n / Math.pow(10, 6)).toFixed(1))
 }
 
-const useStyles = makeStyles(theme => ({
-	paddingBottom0: theme.mixins.paddingBottom0,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	blueBackground: {
-		...theme.mixins.blueBackground,
-		backgroundColor: '#b4c6cf'
-	}
-}))
-
 const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
-	const classes = useStyles()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const { tableData = [], accredetiv = { acs: [], others: [] }, currRates = [] } = rows
 	let uzsSum = 0
@@ -109,7 +99,7 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 				<Grid item xs={6}>
 					<Fragment>
 						<Table size="small">
-							<TableHead className={classes.stickyTableHead}>
+							<TableHead sx={globalStyles.stickyTableHead}>
 								<TableRow>
 									<TableCell align="center">
 										<BoldWithColor>Обязательства АО &quot;UzAuto Motors&quot; перед банком</BoldWithColor>
@@ -118,9 +108,9 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 							</TableHead>
 						</Table>
 						<br />
-						<TableContainer component={Paper} className={classes.paddingBottom0}>
+						<TableContainer component={Paper} sx={globalStyles.paddingBottom0}>
 							<Table size="small">
-								<TableHead className={classes.stickyTableHead}>
+								<TableHead sx={globalStyles.stickyTableHead}>
 									<TableRow>
 										<TableCell align="center">
 											<BoldWithColor>Задолженность</BoldWithColor>
@@ -144,7 +134,7 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 										</TableRow>
 									))}
 									{(accredetiv['others'] || []).map((v: any, i: number) => (
-										<TableRow key={i} className={i === 0 ? classes.blueBackground : ''}>
+										<TableRow key={i} sx={{ ...(i === 0 && { backgroundColor: '#b4c6cf' }) }}>
 											{i === 0 ? (
 												<Fragment>
 													<TableCell>
@@ -175,9 +165,9 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 					<GMLiabilities series={gmLiabilities} />
 				</Grid>
 				<Grid item xs={7}>
-					<TableContainer component={Paper} className={classes.paddingBottom0}>
+					<TableContainer component={Paper} sx={globalStyles.paddingBottom0}>
 						<Table size="small">
-							<TableHead className={classes.stickyTableHead}>
+							<TableHead sx={globalStyles.stickyTableHead}>
 								<TableRow>
 									<TableCell />
 									<TableCell align="center">
@@ -237,7 +227,7 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 			<TableContainer component={Paper}>
 				<ExportButton id={`uzAuto-GM-${formatOneDate(reportDate)}`} />
 				<Table size="small" id={`uzAuto-GM-${formatOneDate(reportDate)}`} aria-label="a dense table">
-					<TableHead className={classes.stickyTableHead}>
+					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
 								<BoldWithColor>Расчетный счет</BoldWithColor>

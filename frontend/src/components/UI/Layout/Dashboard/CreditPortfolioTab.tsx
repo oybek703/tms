@@ -5,24 +5,14 @@ import { formatNumber } from '../../../../utils'
 import CreditPortfolio from '../../../charts/Dashboard/CreditPortfolioCharts/RiskPart/CreditPortfolio'
 import CPBreakdown from '../../../charts/Dashboard/CreditPortfolioCharts/RiskPart/CPBreakdown'
 import FundingStructure from '../../../charts/Dashboard/CreditPortfolioCharts/FundingStructure'
-import makeStyles from '@mui/styles/makeStyles'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import Loader from '../Loader'
 import Alert from '../Alert'
-
-const useStyles = makeStyles(theme => ({
-	greens: {
-		color: '#00B050',
-		fontSize: '12pt'
-	},
-	smallCardContainer: theme.mixins.smallCardContainer,
-	smallCard: theme.mixins.smallCard,
-	horizontalTitle: theme.mixins.oneRowTitle
-}))
+import globalStyles from '../../../../styles/globalStyles'
+import { Typography } from '@mui/material'
 
 const CreditPortfolioTab = () => {
-	const classes = useStyles()
 	const { fetchDashboardCreditData } = useActions()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const { creditData, error, loading } = useTypedSelector(state => state.creditData)
@@ -42,22 +32,22 @@ const CreditPortfolioTab = () => {
 				<Grid>
 					{/* Выдача кредитов */}
 					<Grid container justifyContent="center">
-						<Grid className={classes.horizontalTitle} container justifyContent="center" component={Paper}>
+						<Grid sx={globalStyles.oneRowTitle} container justifyContent="center" component={Paper}>
 							Выдача кредитов
 						</Grid>
-						<Grid className={classes.smallCardContainer} container>
+						<Grid sx={globalStyles.smallCardGrid} container>
 							{['UZS', 'USD', 'EUR'].map((v, i) => (
-								<Grid className={classes.smallCard} key={i} item component={Paper}>
+								<Grid key={i} sx={globalStyles.smallCardPadding} item component={Paper}>
 									{v} &nbsp;
-									<span className={classes.greens}>
+									<Typography component="span" sx={globalStyles.greens}>
 										{formatNumber(issuedCredits[i])} {i === 0 ? 'млрд.' : 'млн.'}{' '}
-									</span>
+									</Typography>
 								</Grid>
 							))}
 						</Grid>
 					</Grid>
 					{/* Выдача кредитов COLS */}
-					<Grid className={classes.horizontalTitle} container justifyContent="center" component={Paper}>
+					<Grid sx={globalStyles.oneRowTitle} container justifyContent="center" component={Paper}>
 						<span>Качество кредитного портфеля</span>
 					</Grid>
 					{/* Качество кредитного портфеля CHARTS */}
@@ -74,11 +64,13 @@ const CreditPortfolioTab = () => {
 						</Grid>
 					</Grid>
 					{/* Качество кредитного портфеля NUMBERS */}
-					<Grid className={classes.smallCardContainer} container>
+					<Grid sx={globalStyles.smallCardGrid} container>
 						{['КП', 'NPL', 'ПР'].map((v, i) => (
-							<Grid key={i} className={classes.smallCard} item component={Paper}>
+							<Grid key={i} sx={globalStyles.smallCardPadding} item component={Paper}>
 								<span>{v} &nbsp;</span>
-								<span className={classes.greens}>{formatNumber(+creditPart[i])} млн.</span>
+								<Typography component="span" sx={globalStyles.greens}>
+									{formatNumber(+creditPart[i])} млн.
+								</Typography>
 							</Grid>
 						))}
 					</Grid>

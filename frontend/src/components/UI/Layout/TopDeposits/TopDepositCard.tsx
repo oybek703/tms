@@ -1,28 +1,12 @@
 import React, { memo } from 'react'
 import { Paper, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import { v4 as uuid } from 'uuid'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import ExportButton from '../ExportButton'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	clientName: {
-		maxWidth: 130,
-		fontSize: 13
-	},
-	tableHeader: {
-		backgroundColor: ({ color }: { color: string }) => color,
-		color: '#fff'
-	},
-	tableCard: {
-		maxHeight: '700px'
-	},
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
+import globalStyles from '../../../../styles/globalStyles'
 
 interface TopDepositCardProps {
 	data: any
@@ -37,16 +21,15 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({
 	currency = '',
 	title = 'demo-title'
 }) => {
-	const classes = useStyles({ color })
 	while (data.length < 20) {
 		data.push({})
 	}
 	const { reportDate } = useTypedSelector(state => state.date)
 	return (
-		<TableContainer component={Paper} classes={{ root: classes.tableCard }}>
+		<TableContainer component={Paper} sx={{ maxHeight: '700px' }}>
 			<ExportButton id={`${title}-${currency}-${formatOneDate(reportDate)}`} />
 			<Table size="small" id={`${title}-${currency}-${formatOneDate(reportDate)}`}>
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell>{''}</TableCell>
 						<TableCell align="center">
@@ -64,8 +47,8 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({
 					{data.map((d: any, i: number) => (
 						<TableRow hover key={uuid()}>
 							<TableCell align="center">{i + 1}</TableCell>
-							<TableCell className={classes.clientName}>{d['NAME']}</TableCell>
-							<TableCell align="center" className={classes.noWrap}>
+							<TableCell sx={{ maxWidth: '130px', fontSize: 13 }}>{d['NAME']}</TableCell>
+							<TableCell align="center" sx={globalStyles.noWrap}>
 								{formatNumber(d['SALDO_OUT'])}
 							</TableCell>
 							<TableCell align="center">{d['PERCENT'] && `${formatNumber(d['PERCENT'])}%`}</TableCell>

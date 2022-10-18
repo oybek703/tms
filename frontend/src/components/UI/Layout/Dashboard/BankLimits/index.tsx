@@ -1,6 +1,5 @@
 import React, { Fragment, ReactNode, useCallback, useMemo, useState } from 'react'
-import { Paper, TableBody, TableContainer, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
+import { Paper, TableBody, TableContainer, TableRow, Typography } from '@mui/material'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableCell from '@mui/material/TableCell'
@@ -11,15 +10,7 @@ import ProgressBar from '../../ProgressBar'
 import ButtonTabs from '../../Tabs/ButtonsTab'
 import Grid from '@mui/material/Grid'
 import LimitsMenu from './LimitsMenu'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	exceeded: {
-		color: 'red'
-	},
-	blueBackground: theme.mixins.blueBackground
-}))
+import globalStyles from '../../../../../styles/globalStyles'
 
 interface NoWrapCellProps {
 	celldata: number | ReactNode
@@ -28,32 +19,29 @@ interface NoWrapCellProps {
 }
 
 const NoWrapCell: React.FC<NoWrapCellProps> = props => {
-	const classes = useStyles()
 	const { celldata, colSpan = 0 } = props
 	return (
-		<TableCell colSpan={colSpan} {...props} align="center" className={classes.noWrap}>
+		<TableCell colSpan={colSpan} {...props} align="center" sx={globalStyles.noWrap}>
 			{typeof celldata === 'number' ? formatNumber(celldata) : celldata}
 		</TableCell>
 	)
 }
 
 function ProgressOrText({ celldata = '0', showNumber = false }: { celldata: limitPercent; showNumber?: boolean }) {
-	const classes = useStyles()
 	return celldata === 'no_limit' ? (
 		<i>Лимит не установлен.</i>
 	) : celldata === 'exceeded' ? (
-		<b className={classes.exceeded}>
+		<Typography component="b" sx={{ color: 'red' }}>
 			<i>Лимит нарушен.</i>
-		</b>
+		</Typography>
 	) : (
 		<ProgressBar showNumber={showNumber} value={+Number(celldata).toFixed(2)} />
 	)
 }
 
 function BankLimitsTableHead() {
-	const classes = useStyles()
 	return (
-		<TableHead className={classes.stickyTableHead}>
+		<TableHead sx={globalStyles.stickyTableHead}>
 			<TableRow>
 				<TableCell align="center">
 					<BoldWithColor>№</BoldWithColor>
@@ -141,10 +129,10 @@ const BanksTable: React.FC<BanksProps> = ({ rows = [] }) => {
 									<Fragment>
 										{+row['limitPercent22'] >= 100 ? (
 											<Grid container justifyContent="space-between" alignItems="center">
-												<Grid style={{ width: '96%' }}>
+												<Grid sx={{ width: '96%' }}>
 													<ProgressOrText celldata={row['limitPercent22']} />
 												</Grid>
-												<Grid style={{ width: '4%' }}>
+												<Grid sx={{ width: '4%' }}>
 													<LimitsMenu
 														innerData={
 															<Table>

@@ -6,16 +6,10 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import TableBody from '@mui/material/TableBody'
-import makeStyles from '@mui/styles/makeStyles'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../utils'
 import BoldWithColor from '../../helpers/BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	paddingBottom0: theme.mixins.paddingBottom0,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	sumRow: theme.mixins.blueBackground
-}))
+import globalStyles from '../../../../styles/globalStyles'
 
 interface TimeDepositsCardProps {
 	title: string
@@ -23,11 +17,10 @@ interface TimeDepositsCardProps {
 }
 
 const TimeDepositsCard: React.FC<TimeDepositsCardProps> = ({ title = 'THERE MUST BE TITLE', data = [] }) => {
-	const classes = useStyles()
 	return (
 		<>
 			<Table size="small">
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell align="center">
 							<BoldWithColor>{title}</BoldWithColor>
@@ -35,7 +28,7 @@ const TimeDepositsCard: React.FC<TimeDepositsCardProps> = ({ title = 'THERE MUST
 					</TableRow>
 				</TableHead>
 			</Table>
-			<TableContainer className={classes.paddingBottom0} component={Paper}>
+			<TableContainer sx={globalStyles.paddingBottom0} component={Paper}>
 				<Table size="small">
 					<TableHead>
 						<TableRow hover>
@@ -58,7 +51,7 @@ const TimeDepositsCard: React.FC<TimeDepositsCardProps> = ({ title = 'THERE MUST
 						))}
 						<TableRow hover>
 							<TableCell colSpan={2} />
-							<TableCell className={classes.sumRow} align="center">
+							<TableCell sx={globalStyles.blueBackground} align="center">
 								<b>{formatNumber(data.reduce((acc: any, val: any) => (acc += val), 0) / Math.pow(10, 6))}</b>
 							</TableCell>
 						</TableRow>

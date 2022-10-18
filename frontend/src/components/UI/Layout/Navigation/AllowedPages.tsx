@@ -1,17 +1,17 @@
 import React from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import { baseRoutes } from './Header'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import { Typography } from '@mui/material'
 
-const useStyles = makeStyles(theme => ({
+const styles = {
 	title: {
 		fontStyle: 'italic',
 		color: '#767676',
 		fontSize: 18,
-		marginBottom: 10
+		margin: '20px auto 10px'
 	}
-}))
+}
 
 interface AllowedPagesProps {
 	setPages: any
@@ -19,7 +19,6 @@ interface AllowedPagesProps {
 }
 
 const AllowedPages: React.FC<AllowedPagesProps> = function ({ setPages, pages = [] }) {
-	const classes = useStyles()
 	const allowedPages = new Set(pages)
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const route = event.target.name
@@ -32,7 +31,9 @@ const AllowedPages: React.FC<AllowedPagesProps> = function ({ setPages, pages = 
 	}
 	return (
 		<div>
-			<p className={classes.title}>Tick pages you want to allow:</p>
+			<Typography component="p" sx={styles.title}>
+				Tick pages you want to allow:
+			</Typography>
 			{baseRoutes.map(({ title, route }) => (
 				<FormControlLabel
 					key={route}

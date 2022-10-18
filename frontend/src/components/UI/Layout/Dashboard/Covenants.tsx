@@ -3,24 +3,11 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import { TableBody, TableContainer, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import { v4 as uuid } from 'uuid'
 import { covenantData, Status } from '../../../../tempData'
 import BoldWithColor from '../../helpers/BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	blueBackground: theme.mixins.blueBackground,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	tableContainer: {
-		maxHeight: '77vh'
-	},
-	greenCell: {
-		backgroundColor: '#00B050',
-		color: 'white'
-	}
-}))
+import globalStyles from '../../../../styles/globalStyles'
 
 function getColorByStatus(status: Status) {
 	if (status === Status.safe) return '#00B050'
@@ -30,11 +17,10 @@ function getColorByStatus(status: Status) {
 }
 
 const Covenants = () => {
-	const classes = useStyles()
 	return (
-		<TableContainer className={classes.tableContainer} component={Paper}>
+		<TableContainer component={Paper}>
 			<Table size="small">
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell align="center" rowSpan={2}>
 							<BoldWithColor>№</BoldWithColor>
@@ -60,7 +46,7 @@ const Covenants = () => {
 							'Европейский Банк Реконструкции и Развития',
 							'Deutsche Bank AG'
 						].map(bank => (
-							<TableCell className={classes.blueBackground} key={uuid()} align="center">
+							<TableCell sx={globalStyles.blueBackground} key={uuid()} align="center">
 								<BoldWithColor>{bank}</BoldWithColor>
 							</TableCell>
 						))}
@@ -75,7 +61,7 @@ const Covenants = () => {
 							<TableCell>
 								<b>{b.title}</b>
 							</TableCell>
-							<TableCell align="center" className={classes.noWrap}>
+							<TableCell align="center" sx={globalStyles.noWrap}>
 								{b.main_bank} {typeof b.main_bank === 'number' && '%'}
 							</TableCell>
 							{Array(8)
@@ -83,7 +69,7 @@ const Covenants = () => {
 								.map((_, idx) => (
 									<TableCell
 										key={uuid()}
-										className={classes.noWrap}
+										sx={globalStyles.noWrap}
 										align="center"
 										style={{
 											// @ts-ignore

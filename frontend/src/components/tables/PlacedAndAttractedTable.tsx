@@ -4,7 +4,6 @@ import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import TableCap from '../UI/helpers/TableCap'
 import { Grid, TableBody, TableHead, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import { formatNumber, formatOneDate } from '../../utils'
 import InvolvedFunds from '../charts/Dashboard/PlacedAndAttracted/InvolvedFunds'
@@ -13,6 +12,7 @@ import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
+import globalStyles from '../../styles/globalStyles'
 
 function getFundCategoryAndSeries(fundData: any = []) {
 	let fundChartData = [...fundData]
@@ -28,21 +28,12 @@ function getFundCategoryAndSeries(fundData: any = []) {
 	return [fundCategories, fundSeries]
 }
 
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	wrappedRow: {
-		maxWidth: 200
-	}
-}))
-
 interface PlacedAndAttractedTableProps {
 	rows: any
 	forDashboard: boolean
 }
 
 const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows = {}, forDashboard = false }) => {
-	const classes = useStyles()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const { involvedFunds = [], placedFunds = [] } = rows
 	const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
@@ -68,7 +59,7 @@ const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows 
 					<ExportButton id={`placed-attracted-${formatOneDate(reportDate)}`} />
 					<Table id={`placed-attracted-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
 						<TableCap text="тыс. сум" rows={8} />
-						<TableHead className={classes.stickyTableHead}>
+						<TableHead sx={globalStyles.stickyTableHead}>
 							<TableRow>
 								<TableCell align="center" colSpan={4}>
 									<BoldWithColor>РАЗМЕЩЕННЫЕ СРЕДСТВА</BoldWithColor>
@@ -107,17 +98,17 @@ const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows 
 						<TableBody>
 							{placedFunds.map((f: any, i: number) => (
 								<TableRow hover key={uuid()}>
-									<TableCell className={classes.wrappedRow}>{f['fund_name']}</TableCell>
+									<TableCell>{f['fund_name']}</TableCell>
 									<TableCell align="center">{f['balance_code']}</TableCell>
-									<TableCell align="center" className={classes.noWrap}>
+									<TableCell align="center" sx={globalStyles.noWrap}>
 										{formatNumber(f['sum'])}
 									</TableCell>
 									<TableCell align="center">{f['percent']}</TableCell>
 									<TableCell>{involvedFunds[i]['fund_name']}</TableCell>
-									<TableCell align="center" className={classes.noWrap}>
+									<TableCell align="center" sx={globalStyles.noWrap}>
 										{involvedFunds[i]['balance_code']}
 									</TableCell>
-									<TableCell align="center" className={classes.noWrap}>
+									<TableCell align="center" sx={globalStyles.noWrap}>
 										{formatNumber(involvedFunds[i]['sum'])}
 									</TableCell>
 									<TableCell align="center">{involvedFunds[i]['percent']}</TableCell>

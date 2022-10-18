@@ -9,16 +9,9 @@ import Paper from '@mui/material/Paper'
 import { formatDate, formatNumber } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
 import { Typography } from '@mui/material'
-
-import makeStyles from '@mui/styles/makeStyles'
-
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	down: theme.mixins.down,
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
+import globalStyles from '../../styles/globalStyles'
 
 interface MainIndicatorsTableProps {
 	pickedDate: string
@@ -27,13 +20,12 @@ interface MainIndicatorsTableProps {
 
 const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, rows }) => {
 	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
-	const classes = useStyles()
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`main-indicators-${selectedDate}`} />
 			<Table id={`main-indicators-${selectedDate}`} size="small" aria-label="a dense table">
 				<TableCap textAlign="right" rows={7} text={'млрд.сум'} />
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell align="center">
 							<BoldWithColor>№</BoldWithColor>
@@ -73,7 +65,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 								) : (
 									<>
 										{formatNumber(row.yearBegin).includes('-') ? (
-											<Typography variant="caption" component="b" className={classes.down}>
+											<Typography variant="caption" component="b" sx={globalStyles.down}>
 												({formatNumber(row.yearBegin).slice(1)})
 											</Typography>
 										) : (
@@ -88,7 +80,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 								) : (
 									<>
 										{formatNumber(row.monthBegin).includes('-') ? (
-											<Typography variant="caption" component="b" className={classes.down}>
+											<Typography variant="caption" component="b" sx={globalStyles.down}>
 												({formatNumber(row.monthBegin).slice(1)})
 											</Typography>
 										) : (
@@ -103,7 +95,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 								) : (
 									<>
 										{formatNumber(row.selectedDate).includes('-') ? (
-											<Typography variant="caption" component="b" className={classes.down}>
+											<Typography variant="caption" component="b" sx={globalStyles.down}>
 												({formatNumber(row.selectedDate).slice(1)})
 											</Typography>
 										) : (
@@ -114,7 +106,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 							</TableCell>
 							<TableCell align="center">
 								{formatNumber(row.differ).includes('-') ? (
-									<Typography variant="caption" component="b" className={classes.down}>
+									<Typography variant="caption" component="b" sx={globalStyles.down}>
 										({formatNumber(row.differ).slice(1)})
 									</Typography>
 								) : (

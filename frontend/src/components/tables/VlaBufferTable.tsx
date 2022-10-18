@@ -8,17 +8,12 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
 import ExportButton from '../UI/Layout/ExportButton'
-import makeStyles from '@mui/styles/makeStyles'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 import Grid from '@mui/material/Grid'
 import TableCap from '../UI/helpers/TableCap'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
+import globalStyles from '../../styles/globalStyles'
 
 interface IVlaBufferRowData {
 	indicatorName: string
@@ -38,7 +33,6 @@ interface VLaBufferTableProps {
 }
 
 function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
-	const classes = useStyles()
 	return (
 		<TableBody>
 			{rows.map((row: IVlaBufferRowData) => (
@@ -47,15 +41,15 @@ function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
 						<b>{row['indicatorName']}</b>
 					</TableCell>
 					<TableCell align="center">{row['totalPercent'] && `${formatNumber(row['totalPercent'])} %`}</TableCell>
-					<TableCell align="center" className={classes.noWrap}>
+					<TableCell align="center" sx={globalStyles.noWrap}>
 						{formatNumber(row['total'])}
 					</TableCell>
 					<TableCell align="center">{row['uzsPercent'] && `${formatNumber(row['uzsPercent'])} %`}</TableCell>
-					<TableCell align="center" className={classes.noWrap}>
+					<TableCell align="center" sx={globalStyles.noWrap}>
 						{formatNumber(row['uzs'])}
 					</TableCell>
 					<TableCell align="center">{row['foreignPercent'] && `${formatNumber(row['foreignPercent'])} %`}</TableCell>
-					<TableCell align="center" className={classes.noWrap}>
+					<TableCell align="center" sx={globalStyles.noWrap}>
 						{formatNumber(row['foreign'])}
 					</TableCell>
 				</TableRow>
@@ -65,7 +59,6 @@ function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
 }
 
 const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
-	const classes = useStyles()
 	const { liquidityAssets = [], liabilitiesOnDemand = [] } = rows
 	const { reportDate } = useTypedSelector(state => state.date)
 	const forFOR = (liabilitiesOnDemand[0] || {}).total * 0.7
@@ -76,7 +69,7 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
 				<ExportButton id={`liquidity-assets-${formatOneDate(reportDate)}`} />
 				<Table id={`liquidity-assets-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
 					<TableCap rows={7} text={'сум. экв.'} />
-					<TableHead className={classes.stickyTableHead}>
+					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
 								<BoldWithColor>ЛИКВИДНЫЕ АКТЫВЫ</BoldWithColor>
@@ -109,7 +102,7 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
 				<ExportButton id={`liabilities-on-demand-${formatOneDate(reportDate)}`} />
 				<Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
 					<TableCap rows={7} text={'сум. экв.'} />
-					<TableHead className={classes.stickyTableHead}>
+					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
 								<BoldWithColor>ОБЯЗАТЕЛСТВА ДО ВОСТРЕБОВАНИЯ</BoldWithColor>
@@ -135,7 +128,7 @@ const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
 			</TableContainer>
 			<Grid sx={{ margin: '20px 0', maxWidth: '40%' }}>
 				<Table size="small">
-					<TableHead className={classes.stickyTableHead}>
+					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="left">
 								<BoldWithColor>

@@ -1,17 +1,9 @@
 import React from 'react'
 import { Button, Grid, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import PanToolOutlinedIcon from '@mui/icons-material/PanToolOutlined'
 import { Link } from 'react-router-dom'
 
-const useStyles = makeStyles(theme => ({
-	mainBtn: {
-		maxWidth: 220
-	}
-}))
-
 const Forbidden = () => {
-	const classes = useStyles()
 	return (
 		<Grid container direction="column" alignItems="center" justifyContent="center">
 			<div>
@@ -30,7 +22,16 @@ const Forbidden = () => {
 				</Typography>
 				<br />
 			</div>
-			<Button component={Link} to="/" className={classes.mainBtn} color="secondary" variant="contained" size="small">
+			<Button
+				component={Link}
+				to="/"
+				sx={{
+					maxWidth: 220
+				}}
+				color="secondary"
+				variant="contained"
+				size="small"
+			>
 				Вернуться на главная
 			</Button>
 		</Grid>

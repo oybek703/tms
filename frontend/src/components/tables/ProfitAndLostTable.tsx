@@ -8,15 +8,9 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatDate, formatNumber } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
-
 import ExportButton from '../UI/Layout/ExportButton'
-import makeStyles from '@mui/styles/makeStyles'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	stickyHead: theme.mixins.stickyTableHead,
-	blueBackground: theme.mixins.blueBackground
-}))
+import globalStyles from '../../styles/globalStyles'
 
 interface ProfitAndLostTableProps {
 	pickedDate: string
@@ -25,13 +19,12 @@ interface ProfitAndLostTableProps {
 
 const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, rows }) => {
 	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
-	const classes = useStyles()
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`profit-and-lost-${selectedDate}`} />
 			<Table id={`profit-and-lost-${selectedDate}`} size="small" aria-label="a dense table">
 				<TableCap rows={7} text={'млрд. сум'} />
-				<TableHead className={classes.stickyHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell align="center">
 							<BoldWithColor>№</BoldWithColor>

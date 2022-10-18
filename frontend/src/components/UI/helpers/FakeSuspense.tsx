@@ -1,11 +1,11 @@
 import React, { useState, useEffect, PropsWithChildren } from 'react'
-import { LinearProgress } from '@mui/material'
+import { Grid, LinearProgress } from '@mui/material'
 
 function LinearFallback() {
 	return (
-		<div style={{ margin: '20px 0' }}>
+		<Grid sx={{ margin: '20px 0' }}>
 			<LinearProgress />
-		</div>
+		</Grid>
 	)
 }
 

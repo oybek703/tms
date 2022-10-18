@@ -1,15 +1,12 @@
 import React, { PropsWithChildren } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
-
-const useStyles = makeStyles(theme => ({
-	whiteBold: {
-		color: '#fff'
-	}
-}))
+import { Typography } from '@mui/material'
 
 const BoldWithColor: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-	const classes = useStyles()
-	return <b className={classes.whiteBold}>{children}</b>
+	return (
+		<Typography variant="body2" sx={{ color: '#fff' }}>
+			<b>{children}</b>
+		</Typography>
+	)
 }
 
 export default BoldWithColor

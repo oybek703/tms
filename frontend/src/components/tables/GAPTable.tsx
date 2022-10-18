@@ -7,19 +7,9 @@ import { formatOneDate } from '../../utils'
 import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
-import makeStyles from '@mui/styles/makeStyles'
 import useActions from '../../hooks/useActions'
 import { Grid } from '@mui/material'
 import DeficitChart from '../charts/GAP/DeficitChart'
-
-const useStyles = makeStyles(theme => ({
-	chartContainer: {
-		display: 'grid',
-		gridTemplateColumns: '[start] 1fr [middle] 1fr [end]',
-		gap: 20,
-		gridTemplateRows: '[start] auto [middle1] auto [end]'
-	}
-}))
 
 const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 	const {
@@ -33,7 +23,6 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		nsfrData = []
 	} = rows
 	const { getLastGapUpdate } = useActions()
-	const classes = useStyles()
 	const foreignCurrency =
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
 	const nationalCurrency =
@@ -46,7 +35,7 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 	}, [getLastGapUpdate])
 
 	return (
-		<Fragment>
+		<div>
 			<TableContainer component={Paper}>
 				<ExportButton id={`gap-${formatOneDate(new Date().toString())}`} />
 				<Table id={`gap-${formatOneDate(new Date().toString())}`} size="small" aria-label="a dense table">
@@ -72,7 +61,14 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 				</Table>
 			</TableContainer>
 			<br />
-			<div className={classes.chartContainer}>
+			<Grid
+				sx={{
+					display: 'grid',
+					gridTemplateColumns: '[start] 1fr [middle] 1fr [end]',
+					gap: '20px',
+					gridTemplateRows: '[start] auto [middle1] auto [end]'
+				}}
+			>
 				<LcrAndNsfrTable month={months[1]} data={lcrData} />
 				<DeficitChart
 					series={foreignCurrency}
@@ -95,8 +91,8 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 						categories={months.slice(0, 6)}
 					/>
 				</Grid>
-			</div>
-		</Fragment>
+			</Grid>
+		</div>
 	)
 }
 

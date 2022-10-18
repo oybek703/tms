@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
 import { Table, TableBody, TableContainer } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableRow from '@mui/material/TableRow'
 import { v4 as uuid } from 'uuid'
 import TableCell from '@mui/material/TableCell'
 import { GapTableHead, TotalOrBoldRow, VerticalColumn } from '../../../UI/Layout/GapHelpers'
 import { formatNumber } from '../../../../utils'
+import globalStyles from '../../../../styles/globalStyles'
 
 const colNames = [
 	{ propName: 'TOTAL', eqv: 'Итого(UZS екв.)' },
@@ -14,14 +14,6 @@ const colNames = [
 	{ propName: 'USD', eqv: 'USD', canEdit: true },
 	{ propName: 'EUR', eqv: 'EUR', canEdit: true }
 ]
-
-const useStyles = makeStyles(theme => ({
-	tableContainer: {
-		maxHeight: '80vh'
-	},
-	bordered: theme.mixins.dottedBorder,
-	noWrap: theme.mixins.noWrap
-}))
 
 interface EditableCellProps {
 	canEdit: boolean | undefined
@@ -46,7 +38,6 @@ const EditableCell: React.FC<EditableCellProps> = function ({
 	eqv = 'EQV',
 	type = 'приток'
 }) {
-	const classes = useStyles()
 	const cellData = formatNumber((row[monthIndex] || {})[propName], true)
 	const dataCellInfo = JSON.stringify({
 		source: (row[0] || {})['SOURCE'],
@@ -62,17 +53,18 @@ const EditableCell: React.FC<EditableCellProps> = function ({
 	})
 	if (!canEdit) {
 		return (
-			<TableCell align="center" className={classes.noWrap}>
+			<TableCell align="center" sx={globalStyles.noWrap}>
 				{cellData}
 			</TableCell>
 		)
 	}
 	return (
 		<TableCell
-			style={{
-				borderRight: propName === 'EUR' ? '3px solid #7794aa' : 'default'
+			sx={{
+				borderRight: propName === 'EUR' ? '3px solid #7794aa' : 'default',
+				...globalStyles.noWrap,
+				...globalStyles.dottedBorder
 			}}
-			className={`${classes.noWrap} ${classes.bordered}`}
 			data-cellinfo={dataCellInfo}
 			onClick={handleEditClick}
 			title={'Нажмите, чтобы изменить'}
@@ -98,10 +90,9 @@ const SimulationTableOneRow: React.FC<SimulationTableRowProps> = function ({
 	handleEditClick = () => {},
 	type = 'приток'
 }) {
-	const classes = useStyles()
 	return (
 		<TableRow hover key={uuid()}>
-			<TableCell align="left" className={`${classes.noWrap}`} style={{ borderRight: '3px solid #7794aa' }}>
+			<TableCell align="left" sx={{ borderRight: '3px solid #7794aa', ...globalStyles.noWrap }}>
 				{(row[0] || {})['INDICATOR_NAME']}
 			</TableCell>
 			{months.map((month, monthIndex) => (
@@ -146,10 +137,9 @@ const GapSimulationTable: React.FC<GapSimulationTableProps> = ({
 	vlaLcrData = [],
 	handleEditClick = () => {}
 }) => {
-	const classes = useStyles()
 	return (
 		<Fragment>
-			<TableContainer classes={{ root: classes.tableContainer }}>
+			<TableContainer>
 				<Table size="small" aria-label="a dense table">
 					<GapTableHead months={months} />
 					<TableBody>

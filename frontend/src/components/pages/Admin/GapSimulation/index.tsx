@@ -5,26 +5,16 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 import SaveIcon from '@mui/icons-material/Save'
-import { useHistory } from 'react-router-dom'
 import Paper from '@mui/material/Paper'
 import { getErrorMessage } from '../../../../utils'
 import Loader from '../../../UI/Layout/Loader'
 import Alert from '../../../UI/Layout/Alert'
 import GapSimulationTable from './GapSimulationTable'
 import GapSimulationDialog from './GapSimulationDialog'
-import makeStyles from '@mui/styles/makeStyles'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import axios from 'axios'
-
-const useStyles = makeStyles(theme => ({
-	buttonsRow: {
-		marginBottom: 5
-	},
-	actionContent: {
-		padding: '5px 10px'
-	}
-}))
+import { Grid } from '@mui/material'
 
 interface ActionContentProps {
 	handleReset: () => void
@@ -32,10 +22,9 @@ interface ActionContentProps {
 }
 
 const ActionContent: React.FC<ActionContentProps> = function ({ handleReset, handleSave }) {
-	const classes = useStyles()
 	return (
-		<div className={classes.actionContent}>
-			<div className={classes.buttonsRow}>
+		<Grid sx={{ padding: '5px 10px' }}>
+			<Grid sx={{ marginBottom: '5px' }}>
 				<Button size="small" startIcon={<RotateLeftIcon />} variant="contained" color="primary" onClick={handleReset}>
 					Reset
 				</Button>
@@ -44,7 +33,7 @@ const ActionContent: React.FC<ActionContentProps> = function ({ handleReset, han
 					Save
 				</Button>
 				&nbsp;
-			</div>
+			</Grid>
 			<Typography color="primary" component="i">
 				<b>
 					Обратите внимание, что редактировать можно только ячейки с пунктирной рамкой и не забудьте сохранить ваши
@@ -52,13 +41,12 @@ const ActionContent: React.FC<ActionContentProps> = function ({ handleReset, han
 				</b>
 				<b> Для редактирования значения ячейки щелкните по этой ячейке.</b>
 			</Typography>
-		</div>
+		</Grid>
 	)
 }
 
 const GapSimulation = () => {
-	const history = useHistory()
-	const { fetchGapManual, fetchGap } = useActions()
+	const { fetchGapManual } = useActions()
 	const [newValue, setNewValue] = useState<any>('')
 	const [dialog, setDialog] = useState(false)
 	const [editingCell, setEditingCell] = useState<any>({})

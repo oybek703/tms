@@ -8,23 +8,17 @@ import FakeSuspense from '../../helpers/FakeSuspense'
 import LiquidityPoints from '../../../charts/Dashboard/DailyIndicators/LiquidityPoints'
 import Position from './DashboardCurrencyRates/Position'
 import CurrencyPositionChart from '../../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
-import makeStyles from '@mui/styles/makeStyles'
 import { getDashboardLiquidityIndicator } from '../../../../utils'
+import globalStyles from '../../../../styles/globalStyles'
 
-const useStyles = makeStyles(theme => ({
+const styles = {
 	liqRate: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'space-between',
-		margin: '20px auto'
-	},
-	smallCardContainer: theme.mixins.smallCardContainer,
-	smallCard: theme.mixins.smallCard,
-	horizontalTitle: theme.mixins.oneRowTitle,
-
-	noWrap: theme.mixins.noWrap,
-	marginBottom10: theme.mixins.marginBottom10
-}))
+		display: 'grid',
+		gridTemplateColumns: 'repeat(4, 1fr)',
+		gap: '10px',
+		margin: '10px auto'
+	}
+}
 
 interface DailyIndicatorsProps {
 	dashboardCorrespondent: any
@@ -41,27 +35,26 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 	lcr = {},
 	nsfr = {}
 }) => {
-	const classes = useStyles()
 	const [lcrLastPointers, nsfrLastPointers] = [lcr, nsfr].map(getDashboardLiquidityIndicator)
 	const { vlaCurrent } = vla
 	const { currencyPosition = [], position = [] } = dashboardCurrencyPosition
 	return (
 		<Fragment>
 			{/* CURRENCY(CORRESPONDENT) RATE*/}
-			<Grid container justifyContent="center" component={Paper} className={classes.horizontalTitle}>
+			<Grid container justifyContent="center" component={Paper} sx={globalStyles.oneRowTitle}>
 				Остатки корреспондентских счетов
 			</Grid>
 			{/* LIQUIDITY RATE*/}
-			<Grid container justifyContent="space-between" className={classes.liqRate}>
+			<Grid container justifyContent="space-between" sx={styles.liqRate}>
 				{dashboardCorrespondent.map(({ value, differ, image }: { value: number; differ: number; image: string }) => (
 					<Valute key={image} number={value} differ={differ} image={image} />
 				))}
 			</Grid>
-			<Grid container justifyContent="center" component={Paper} className={classes.horizontalTitle}>
+			<Grid container justifyContent="center" component={Paper} sx={globalStyles.oneRowTitle}>
 				Показатели ликвидности
 			</Grid>
 			{/* VLA LCR NSFR*/}
-			<Grid className={classes.smallCardContainer} container>
+			<Grid sx={globalStyles.smallCardGrid} container>
 				{[
 					{ label: 'ЮЛА (HQLA)', data: vlaCurrent },
 					{ label: 'ЛКМК (LCR)', data: lcrLastPointers },
@@ -71,14 +64,14 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 				))}
 			</Grid>
 			<FakeSuspense>
-				<Grid container justifyContent="space-between" className={classes.smallCardContainer}>
-					<Grid item xs={12} sm={6} className={classes.smallCard} md={4} component={Paper}>
+				<Grid container sx={globalStyles.smallCardGrid}>
+					<Grid item component={Paper}>
 						<LiquidityPoints data={vla} id="vla" normative={10} />
 					</Grid>
-					<Grid item xs={12} sm={6} className={classes.smallCard} md={4} component={Paper}>
+					<Grid item component={Paper}>
 						<LiquidityPoints data={lcr} id="lcr" />
 					</Grid>
-					<Grid item xs={12} sm={6} className={classes.smallCard} md={4} component={Paper}>
+					<Grid item component={Paper}>
 						<LiquidityPoints data={nsfr} id="nsfr" />
 					</Grid>
 				</Grid>
@@ -87,7 +80,7 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 				container
 				justifyContent="center"
 				component={Paper}
-				className={[classes.horizontalTitle, classes.marginBottom10].join(' ')}
+				sx={{ ...globalStyles.oneRowTitle, ...globalStyles.marginBottom10 }}
 			>
 				Валютные позиции
 			</Grid>

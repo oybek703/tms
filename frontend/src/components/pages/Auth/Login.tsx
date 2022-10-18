@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Button, CardContent, IconButton } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -13,44 +12,17 @@ import { parse } from 'query-string'
 import { toast } from 'react-toastify'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
+import globalStyles from '../../../styles/globalStyles'
 
-const useStyles = makeStyles(theme => ({
-	darkText: {
-		color: '#000'
-	},
-	boldText: {
-		textTransform: 'uppercase',
-		fontWeight: 'bold'
-	},
+const styles = {
 	formFields: {
 		minWidth: '40em',
 		margin: '1em auto 2.5em',
-		textAlign: 'center',
-		[theme.breakpoints.down('md')]: {
-			minWidth: '25em'
-		}
-	},
-	form: {
-		backgroundColor: 'white',
-		padding: '30px 20px'
-	},
-	root: {
-		margin: '50px auto'
-	},
-	submit_btn: {
-		backgroundColor: theme.palette.success['main']
-	},
-	submit_end_icon: {
-		color: theme.palette.error['main']
-	},
-	logo: {
-		marginTop: -80,
-		marginBottom: -60
+		textAlign: 'center'
 	}
-}))
+}
 
 const LoginPage = () => {
-	const classes = useStyles()
 	const { signInUser } = useActions()
 	const {
 		user: { token },
@@ -109,9 +81,9 @@ const LoginPage = () => {
 		return <Redirect to={redirectTo === '/' || !redirectTo ? '/' : redirectTo} />
 	}
 	return (
-		<Grid container direction="column" alignItems="center" justifyContent="center" className={classes.root}>
+		<Grid container direction="column" alignItems="center" justifyContent="center" sx={{ margin: '50px auto' }}>
 			<Grid item>
-				<Grid className={classes.logo}>
+				<Grid sx={{ marginTop: '-80px', marginBottom: '-60px' }}>
 					<Grid>
 						<img src={process.env.PUBLIC_URL + '/asakabank.jpg'} width="350" height="300" alt="Treasury Reports" />
 					</Grid>
@@ -119,15 +91,24 @@ const LoginPage = () => {
 				<br />
 			</Grid>
 			<Grid item>
-				<Typography className={`${classes.darkText} ${classes.boldText}`} variant="h5" gutterBottom align="center">
+				<Typography
+					sx={{
+						color: '#000',
+						textTransform: 'uppercase',
+						fontWeight: 'bold'
+					}}
+					variant="h5"
+					gutterBottom
+					align="center"
+				>
 					Treasury Management System
 				</Typography>
 			</Grid>
 			<Grid item>
-				<Card classes={{ root: classes.form }} elevation={12} variant="elevation">
+				<Card sx={{ backgroundColor: 'white', padding: '30px 20px' }} elevation={12} variant="elevation">
 					<CardContent>
 						<form onSubmit={handleSubmit} autoComplete="on" autoSave="on">
-							<Grid container className={classes.formFields} justifyContent="center">
+							<Grid container sx={styles.formFields} justifyContent="center">
 								<TextField
 									error={!!usernameHelperText}
 									helperText={usernameHelperText}
@@ -139,7 +120,7 @@ const LoginPage = () => {
 									label="Username*"
 								/>
 							</Grid>
-							<Grid container className={classes.formFields} justifyContent="center">
+							<Grid container sx={styles.formFields} justifyContent="center">
 								<TextField
 									type={showPassword ? 'text' : 'password'}
 									error={!!passwordHelperText}
@@ -166,8 +147,8 @@ const LoginPage = () => {
 									size="large"
 									variant="contained"
 									fullWidth
-									className={classes.submit_btn}
-									endIcon={loading && <CircularProgress className={classes.submit_end_icon} size="20px" />}
+									sx={globalStyles.blueBackground}
+									endIcon={loading && <CircularProgress size="20px" />}
 								>
 									Sign In
 								</Button>

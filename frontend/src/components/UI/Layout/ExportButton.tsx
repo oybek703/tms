@@ -3,24 +3,15 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { TableExport } from 'tableexport'
 import { IconButton } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Popover from '@mui/material/Popover'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import excelImage from '../../../images/excel.png'
-
-const useStyles = makeStyles(theme => ({
-	button: {
-		textTransform: 'none',
-		borderRadius: 0
-	}
-}))
 
 interface ExportButtonProps {
 	id: string
 }
 
 const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
-	const classes = useStyles()
 	const [anchorEl, setAnchorEl] = useState(null)
 
 	const handleClick = useCallback((event: any) => {
@@ -77,7 +68,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
 					variant="outlined"
 					color="primary"
 					onClick={export2Excel}
-					className={classes.button}
+					sx={{ textTransform: 'none', borderRadius: 0 }}
 					startIcon={<img width={20} height={20} src={excelImage} alt="Export to Excel" />}
 				>
 					Экспорт в Excel

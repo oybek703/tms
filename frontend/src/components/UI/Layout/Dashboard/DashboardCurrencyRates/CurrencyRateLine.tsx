@@ -23,38 +23,35 @@ const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} })
 		setSeries((last90Rates[value] || []).map((value: any) => value['EQUIVAL']))
 	}
 	return (
-		<>
-			<Grid container direction="column" component={Paper} style={{ paddingTop: 10 }}>
-				<CurrencyLineChart
-					data={{
-						categories,
-						series
-					}}
-					id="rate"
-				/>
-				<br />
-				<FormControl component="fieldset">
-					<RadioGroup
-						row
-						value={currency}
-						onChange={handleChange}
-						aria-label="position"
-						name="position"
-						defaultValue="USD"
-					>
-						{currencyOrder.map(v => (
-							<FormControlLabel
-								key={uuid()}
-								value={v}
-								control={<Radio color="primary" />}
-								label={v}
-								labelPlacement="bottom"
-							/>
-						))}
-					</RadioGroup>
-				</FormControl>
-			</Grid>
-		</>
+		<Grid container direction="column" component={Paper} sx={{ paddingTop: '10px' }}>
+			<CurrencyLineChart
+				data={{
+					categories,
+					series
+				}}
+				id="rate"
+			/>
+			<FormControl component="fieldset">
+				<RadioGroup
+					row
+					value={currency}
+					onChange={handleChange}
+					aria-label="position"
+					name="position"
+					defaultValue="USD"
+				>
+					{currencyOrder.map(v => (
+						<FormControlLabel
+							key={uuid()}
+							value={v}
+							control={<Radio color="primary" />}
+							label={v}
+							labelPlacement="bottom"
+						/>
+					))}
+				</RadioGroup>
+			</FormControl>
+		</Grid>
 	)
 }
 

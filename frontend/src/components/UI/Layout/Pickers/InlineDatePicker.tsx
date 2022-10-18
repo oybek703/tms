@@ -18,7 +18,6 @@ interface InlineDatePickerProps {
 const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
 	reportDate,
 	disabled = false,
-	inputVariant,
 	handleDateChange = () => {}
 }) => {
 	const { operDays, loading } = useTypedSelector(state => state.operDays)

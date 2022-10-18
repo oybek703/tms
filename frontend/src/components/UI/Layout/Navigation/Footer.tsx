@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Spaces from '../../helpers/FormattedCell/Spaces'
 
-const useStyles = makeStyles(theme => ({
+const styles = {
 	root: {
 		display: 'flex',
 		alignItems: 'center',
@@ -13,9 +12,8 @@ const useStyles = makeStyles(theme => ({
 		boxSizing: 'border-box',
 		color: '#424040',
 		borderRadius: 0,
-		width: '100%',
 		padding: '10px 40px',
-		marginTop: 10,
+		marginTop: '10px',
 		borderLeft: 0,
 		borderRight: 0
 	},
@@ -26,17 +24,16 @@ const useStyles = makeStyles(theme => ({
 			textDecoration: 'none'
 		}
 	}
-}))
+}
 
 const Footer = () => {
-	const classes = useStyles()
 	return (
-		<Paper variant="outlined" component="footer" elevation={0} className={classes.root}>
+		<Paper variant="outlined" component="footer" elevation={0} sx={styles.root}>
 			<Grid item>
-				<Typography variant="body1" className={classes.link} href="#" align="center" component={Link}>
+				<Typography variant="body1" sx={styles.link} href="#" align="center" component={Link}>
 					Support <Spaces count={5} />
 				</Typography>
-				<Typography variant="body1" className={classes.link} href="#" align="center" component={Link}>
+				<Typography variant="body1" sx={styles.link} href="#" align="center" component={Link}>
 					Help
 				</Typography>
 			</Grid>

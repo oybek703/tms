@@ -4,30 +4,15 @@ import Grow from '@mui/material/Grow'
 import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
 import MenuList from '@mui/material/MenuList'
-import { Theme } from '@mui/material/styles'
-import makeStyles from '@mui/styles/makeStyles'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import { IconButton } from '@mui/material'
 import CardActionArea from '@mui/material/CardActionArea'
-
-const useStyles = makeStyles((theme: Theme) => ({
-	root: {
-		display: 'flex'
-	},
-	paper: {
-		marginRight: theme.spacing(2)
-	},
-	iconBtnRoot: {
-		padding: 3
-	}
-}))
 
 interface LimitsMenuProps {
 	innerData: JSX.Element
 }
 
 const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
-	const classes = useStyles()
 	const [open, setOpen] = React.useState(false)
 	const anchorRef = React.useRef<HTMLButtonElement>(null)
 
@@ -61,10 +46,10 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
 	}, [open])
 
 	return (
-		<div className={classes.root}>
+		<>
 			<IconButton
 				title="Нажмите, чтобы просмотреть подробности"
-				classes={{ root: classes.iconBtnRoot }}
+				sx={{ padding: '3px' }}
 				ref={anchorRef}
 				onClick={handleToggle}
 				aria-controls={open ? 'menu-list-grow' : undefined}
@@ -74,7 +59,7 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
 				<ArrowDropDownIcon />
 			</IconButton>
 			<Popper
-				style={{ zIndex: 100000 }}
+				sx={{ zIndex: 100000 }}
 				placement="bottom-end"
 				open={open}
 				anchorEl={anchorRef.current}
@@ -84,7 +69,7 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
 			>
 				{({ TransitionProps, placement }) => (
 					<Grow {...TransitionProps} style={{ transformOrigin: 'right end' }}>
-						<Paper style={{ background: '#ebf5ff' }}>
+						<Paper sx={{ background: '#ebf5ff' }}>
 							{/*
               @ts-ignore */}
 							<ClickAwayListener onClickAway={handleClose}>
@@ -96,7 +81,7 @@ const LimitsMenu: React.FC<LimitsMenuProps> = ({ innerData }) => {
 					</Grow>
 				)}
 			</Popper>
-		</div>
+		</>
 	)
 }
 

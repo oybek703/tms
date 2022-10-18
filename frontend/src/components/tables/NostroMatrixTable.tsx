@@ -1,16 +1,15 @@
 import React, { Fragment, memo } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
-import { formatNumber, formatOneDate } from '../../utils'
+import { formatNumber } from '../../utils'
 import TableRow from '@mui/material/TableRow'
-import useTypedSelector from '../../hooks/useTypedSelector'
 import { TableCell } from '@mui/material'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
+import globalStyles from '../../styles/globalStyles'
 
 interface RowData {
 	code: string
@@ -37,23 +36,17 @@ interface RowData {
 	}[]
 }
 
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	italic: theme.mixins.italic,
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
-
 interface NostroMatrixTableProps {
 	rows: RowData[]
 	noData?: boolean
 }
 
 function EmptyCell() {
-	return <TableCell style={{ background: '#fff', border: 'none' }} rowSpan={2} />
+	return <TableCell sx={{ background: '#fff', border: 'none' }} rowSpan={2} />
 }
 
 function NoBorderCell() {
-	return <TableCell style={{ border: 'none' }} />
+	return <TableCell sx={{ border: 'none' }} />
 }
 
 function RowTitle({ title = '', colSpan = 1 }) {
@@ -65,27 +58,25 @@ function RowTitle({ title = '', colSpan = 1 }) {
 }
 
 const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, noData }) {
-	const classes = useStyles()
-	const { reportDate } = useTypedSelector(state => state.date)
 	if (noData) return <Fragment />
 	return (
 		<TableContainer component={Paper}>
 			<Table size="small" aria-label="a dense table">
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
-						<TableCell className={classes.noWrap} colSpan={2} rowSpan={2} align="center">
+						<TableCell sx={globalStyles.noWrap} colSpan={2} rowSpan={2} align="center">
 							<BoldWithColor>Наименование</BoldWithColor>
 						</TableCell>
 						<EmptyCell />
-						<TableCell className={classes.noWrap} colSpan={4} align="center">
+						<TableCell sx={globalStyles.noWrap} colSpan={4} align="center">
 							<BoldWithColor>Качество обслуживание</BoldWithColor>
 						</TableCell>
 						<EmptyCell />
-						<TableCell className={classes.noWrap} colSpan={5} align="center">
+						<TableCell sx={globalStyles.noWrap} colSpan={5} align="center">
 							<BoldWithColor>Информация о остатках и оборотах</BoldWithColor>
 						</TableCell>
 						<EmptyCell />
-						<TableCell className={classes.noWrap} colSpan={7} align="center">
+						<TableCell sx={globalStyles.noWrap} colSpan={7} align="center">
 							<BoldWithColor>Виды операций</BoldWithColor>
 						</TableCell>
 					</TableRow>
@@ -108,7 +99,7 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, no
 							'Кредитная линия',
 							'Востро'
 						].map(title => (
-							<TableCell align="center" key={uuid()} className={classes.noWrap}>
+							<TableCell align="center" key={uuid()} sx={globalStyles.noWrap}>
 								<BoldWithColor>{title}</BoldWithColor>
 							</TableCell>
 						))}
@@ -132,7 +123,7 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, no
 										<TableCell align="center">
 											<b>{index + 1}</b>
 										</TableCell>
-										<TableCell className={classes.noWrap}>
+										<TableCell sx={globalStyles.noWrap}>
 											<b>{cell.name}</b>
 										</TableCell>
 										<NoBorderCell />
@@ -141,19 +132,19 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, no
 										<TableCell align="center">{cell.safe}</TableCell>
 										<TableCell align="center">{cell.expensiveOrCheap}</TableCell>
 										<NoBorderCell />
-										<TableCell align="center" className={classes.noWrap}>
+										<TableCell align="center" sx={globalStyles.noWrap}>
 											{formatNumber(cell.saldoOut)}
 										</TableCell>
-										<TableCell align="center" className={classes.noWrap}>
+										<TableCell align="center" sx={globalStyles.noWrap}>
 											{formatNumber(cell.turnoverDebit)}
 										</TableCell>
-										<TableCell align="center" className={classes.noWrap}>
+										<TableCell align="center" sx={globalStyles.noWrap}>
 											{formatNumber(cell.percentDebit)}
 										</TableCell>
-										<TableCell align="center" className={classes.noWrap}>
+										<TableCell align="center" sx={globalStyles.noWrap}>
 											{formatNumber(cell.turnoverCredit)}
 										</TableCell>
-										<TableCell align="center" className={classes.noWrap}>
+										<TableCell align="center" sx={globalStyles.noWrap}>
 											{formatNumber(cell.percentCredit)}
 										</TableCell>
 										<NoBorderCell />

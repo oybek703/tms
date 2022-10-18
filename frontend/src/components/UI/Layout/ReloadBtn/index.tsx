@@ -1,19 +1,11 @@
 import React from 'react'
 import { Button } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
 import './reloadBtn.css'
 import useActions from '../../../../hooks/useActions'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 
-const useStyles = makeStyles(theme => ({
-	btn: {
-		height: 38
-	}
-}))
-
 const ReloadBtn = () => {
-	const classes = useStyles()
 	const { fetchDashboard, getLastUpdateTime } = useActions()
 	const { reportDate } = useTypedSelector(state => state.date)
 	const { loading } = useTypedSelector(state => state.dashboard)
@@ -29,7 +21,7 @@ const ReloadBtn = () => {
 	return (
 		<Button
 			onClick={handleClick}
-			className={classes.btn}
+			sx={{ height: '38px' }}
 			size="medium"
 			title="Обновить данные страницы"
 			disabled={loading}

@@ -1,5 +1,4 @@
 import React, { memo } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -8,27 +7,20 @@ import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
-
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import TableRow from '@mui/material/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	italic: theme.mixins.italic,
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
+import globalStyles from '../../styles/globalStyles'
 
 const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
-	const classes = useStyles()
 	const { reportDate } = useTypedSelector(state => state.date)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`capital-${formatOneDate(reportDate)}`} />
 			<Table id={`capital-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
 				<TableCap rows={3} text={'тыс. сум'} />
-				<TableHead className={classes.stickyTableHead}>
+				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
 						<TableCell component="th" scope="row" />
 						<TableCell component="th" scope="row" align="center">
@@ -57,7 +49,7 @@ const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
 								{row.isTableHead ? <b>{row.first_row}</b> : row.first_row}
 							</TableCell>
 							<TableCell align="left">{row.isTableHead ? <b>{row.name}</b> : row.name}</TableCell>
-							<TableCell className={classes.noWrap} align="center">
+							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
 									<b>{row.total === 0 ? '0.00' : formatNumber(row.total)}</b>
 								) : row.total === 0 ? (

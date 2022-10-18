@@ -1,5 +1,4 @@
 import React, { Fragment, memo } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -12,7 +11,7 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined'
 import Typography from '@mui/material/Typography'
 import ExpenditureDynamics from '../charts/CalcFor/ExpenditureDynamics'
-import { TableRow } from '@mui/material'
+import { Grid, TableRow } from '@mui/material'
 import CorrespondentDynamics from '../charts/Dashboard/ForCharts/CorrespondentDynamic'
 import Deviation from '../charts/Dashboard/ForCharts/Deviation'
 import Alert from '../UI/Layout/Alert'
@@ -21,41 +20,7 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { Variant } from '@mui/material/styles/createTypography'
 import Delayed from '../UI/helpers/Delayed'
-
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	italic: theme.mixins.italic,
-	cbNorm: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'space-between'
-	},
-	editIcon: {
-		padding: '1px 3px',
-		cursor: 'pointer',
-		backgroundColor: '#eee',
-		color: '#000',
-		transform: 'scale(1)',
-		'&:hover': {
-			backgroundColor: '#000',
-			color: 'white',
-			transform: 'scale(1.1)'
-		}
-	},
-	grow: theme.mixins.grow,
-	paddingBottom0: {
-		...theme.mixins.paddingBottom0,
-		...theme.mixins.marginBottom10
-	},
-	mainTable: theme.mixins.marginTop10,
-	down: theme.mixins.down,
-	stickyTableHead: theme.mixins.stickyTableHead,
-	formattedCell: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center'
-	}
-}))
+import globalStyles from '../../styles/globalStyles'
 
 interface FormattedDataProps {
 	number: number
@@ -63,11 +28,10 @@ interface FormattedDataProps {
 }
 
 const FormattedData: React.FC<FormattedDataProps> = ({ number, variant = 'body2' }) => {
-	const classes = useStyles()
 	return (
-		<span className={classes.formattedCell}>
+		<Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 			{
-				<Typography component="span" variant={variant} className={number < 0 ? classes.down : classes.grow}>
+				<Typography component="span" variant={variant} sx={number < 0 ? globalStyles.down : globalStyles.grow}>
 					{formatNumber(number, 'e')}
 				</Typography>
 			}
@@ -76,9 +40,9 @@ const FormattedData: React.FC<FormattedDataProps> = ({ number, variant = 'body2'
 			) : number === 0 ? (
 				''
 			) : (
-				<ArrowDropUpOutlinedIcon className={classes.grow} />
+				<ArrowDropUpOutlinedIcon sx={globalStyles.grow} />
 			)}
-		</span>
+		</Grid>
 	)
 }
 
@@ -105,7 +69,6 @@ interface CalcForTableProps {
 }
 
 const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = false }) => {
-	const classes = useStyles()
 	const {
 		user: { role }
 	} = useTypedSelector(state => state.auth)
@@ -141,9 +104,9 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 				<WarningAlert role={role} rows={rows} />
 			</Delayed>
 			<Fragment>
-				<TableContainer component={Paper} className={classes.paddingBottom0}>
+				<TableContainer component={Paper} sx={{ ...globalStyles.marginBottom10, ...globalStyles.paddingBottom0 }}>
 					<Table size="small">
-						<TableHead className={classes.stickyTableHead}>
+						<TableHead sx={globalStyles.stickyTableHead}>
 							<TableRow>
 								<TableCell align="center">
 									<BoldWithColor>
@@ -187,11 +150,11 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 					</Table>
 				</TableContainer>
 				<ExpenditureDynamics categories={categories} series={expenditureSeries} />
-				<TableContainer component={Paper} className={classes.mainTable}>
+				<TableContainer component={Paper} sx={globalStyles.marginTop10}>
 					<ExportButton id={`calc-for-${formatOneDate(reportDate)}`} />
 					<Table id={`calc-for-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
 						<TableCap rows={5} text={'тыс. сум'} />
-						<TableHead className={classes.stickyTableHead}>
+						<TableHead sx={globalStyles.stickyTableHead}>
 							<TableRow>
 								<TableCell scope="row" align="center">
 									<BoldWithColor>Дата</BoldWithColor>

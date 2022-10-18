@@ -7,48 +7,8 @@ import CurrencyMBD from '../../../charts/Dashboard/FundingCharts/CurrencyMBD'
 import CurrencyTimeDeposits from '../../../charts/Dashboard/FundingCharts/CurrencyTimeDeposits'
 import TimeDepositsChart from '../../../charts/Dashboard/FundingCharts/TimeDepositsChart'
 import InterbankDepositsChart from '../../../charts/Dashboard/FundingCharts/InterbankDepositsChart'
-import makeStyles from '@mui/styles/makeStyles'
-
-const useStyles = makeStyles(theme => ({
-	margin: {
-		marginBottom: '20px'
-	},
-	currency: {
-		padding: '8px 0',
-		fontSize: '12pt',
-		color: '#636363'
-	},
-	grow: theme.mixins.grow,
-	liqRate: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'space-between',
-		margin: '20px auto'
-	},
-	greens: {
-		color: '#00B050',
-		fontSize: '12pt'
-	},
-	smallCardContainer: theme.mixins.smallCardContainer,
-	smallCard: theme.mixins.smallCard,
-	marginBottom10: theme.mixins.marginBottom10,
-	liquidityCard: {
-		...theme.mixins.smallCard,
-		padding: 0,
-		paddingLeft: 5
-	},
-	horizontalTitle: theme.mixins.oneRowTitle,
-	capitalText: {
-		padding: 10,
-		fontSize: '1.2em',
-		fontWeight: 600,
-		color: '#555'
-	},
-	capitalNumber: {
-		fontSize: '1.05em'
-	},
-	noWrap: theme.mixins.noWrap
-}))
+import globalStyles from '../../../../styles/globalStyles'
+import { Typography } from '@mui/material'
 
 interface FundingTabProps {
 	currencyMfi: any
@@ -65,7 +25,6 @@ const FundingTab: React.FC<FundingTabProps> = ({
 	timeDeposits = {},
 	interbankDeposits = {}
 }) => {
-	const classes = useStyles()
 	const mfiSum = Number(currencyMfi.reduce((a: any, b: any) => +a + +b, 0)).toFixed(2)
 	const mbdSum = Number(currencyMBD.reduce((a: any, b: any) => +a + +b, 0)).toFixed(2)
 	const currencyTimeDepositsSum = Number(currencyTimeDeposits.reduce((a: any, b: any) => +a + +b, 0)).toFixed(2)
@@ -73,16 +32,24 @@ const FundingTab: React.FC<FundingTabProps> = ({
 		<>
 			<Fragment>
 				{/* CREDIT DEPOSITS */}
-				<Grid className={classes.smallCardContainer} container justifyContent="space-between">
-					<Grid className={classes.smallCard} item component={Paper}>
-						МФИ &nbsp; <span className={classes.greens}>{formatNumber(+mfiSum)} млрд.</span>
+				<Grid sx={globalStyles.smallCardGrid} container justifyContent="space-between">
+					<Grid sx={globalStyles.smallCardPadding} item component={Paper}>
+						МФИ &nbsp;{' '}
+						<Typography component="span" sx={globalStyles.greens}>
+							{formatNumber(+mfiSum)} млрд.
+						</Typography>
 					</Grid>
-					<Grid className={classes.smallCard} item component={Paper}>
-						МБД &nbsp; <span className={classes.greens}>{formatNumber(+mbdSum)} млрд.</span>
+					<Grid sx={globalStyles.smallCardPadding} item component={Paper}>
+						МБД &nbsp;{' '}
+						<Typography component="span" sx={globalStyles.greens}>
+							{formatNumber(+mbdSum)} млрд.
+						</Typography>
 					</Grid>
-					<Grid className={classes.smallCard} item component={Paper}>
+					<Grid sx={globalStyles.smallCardPadding} item component={Paper}>
 						Срочные депозиты &nbsp;
-						<span className={classes.greens}>{formatNumber(+currencyTimeDepositsSum)} млрд.</span>
+						<Typography component="span" sx={globalStyles.greens}>
+							{formatNumber(+currencyTimeDepositsSum)} млрд.
+						</Typography>
 					</Grid>
 				</Grid>
 				{/* CREDIT SECOND BAR ROWS */}

@@ -1,5 +1,4 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
-import makeStyles from '@mui/styles/makeStyles'
 import { dateRegex, findRecursive } from '../../../../utils'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -88,7 +87,7 @@ const DashboardMonthly: React.FC = () => {
 							inputProps={{
 								name: 'date_option',
 								id: 'dates_option',
-								style: {
+								sx: {
 									padding: '5px 10px'
 								}
 							}}

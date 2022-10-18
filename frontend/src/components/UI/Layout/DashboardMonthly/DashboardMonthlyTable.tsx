@@ -8,24 +8,10 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../../../utils'
 import TableCap from '../../helpers/TableCap'
-
 import { v4 as uuid } from 'uuid'
-import makeStyles from '@mui/styles/makeStyles'
 import ExportButton from '../ExportButton'
-import theme from '../../theme'
 import InlineDatePicker from '../Pickers/InlineDatePicker'
-
-const useStyles = makeStyles({
-	pickerCell: {
-		minWidth: 140,
-		maxWidth: 150
-	},
-	noWrap: theme.mixins.noWrap,
-	centeredTitleRow: {
-		...theme.mixins.blueBackground,
-		fontWeight: 700
-	}
-})
+import globalStyles from '../../../../styles/globalStyles'
 
 interface DashboardMonthlyTableProps {
 	rows: any
@@ -40,7 +26,6 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 	secondDate,
 	handleDateChange
 }) => {
-	const classes = useStyles()
 	const { capital = [], liquidity = [], riskPart = [] } = rows
 	const colCount = (([...riskPart].pop() || {})['data'] || []).length
 	const colsHead = (([...riskPart].pop() || {})['data'] || [])
@@ -67,16 +52,16 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 						<TableCell rowSpan={2} align="center">
 							<b>Показатели</b>
 						</TableCell>
-						<TableCell className={classes.pickerCell} align="center" rowSpan={2}>
+						<TableCell sx={globalStyles.inlinePickerCell} align="center" rowSpan={2}>
 							<span hidden>{firstDate}</span>
 							<InlineDatePicker reportDate={firstDate} handleDateChange={handleDateChange('first_date')} />
 						</TableCell>
 						{colsHead.map((h: any) => (
-							<TableCell align="center" className={classes.noWrap} key={uuid()} rowSpan={2}>
+							<TableCell align="center" sx={globalStyles.noWrap} key={uuid()} rowSpan={2}>
 								{h}
 							</TableCell>
 						))}
-						<TableCell className={classes.pickerCell} align="center" rowSpan={2}>
+						<TableCell sx={globalStyles.inlinePickerCell} align="center" rowSpan={2}>
 							<span hidden>{secondDate}</span>
 							<InlineDatePicker reportDate={secondDate} handleDateChange={handleDateChange('second_date')} />
 						</TableCell>
@@ -101,7 +86,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 					].map(({ rows, title }) => (
 						<Fragment key={uuid()}>
 							<TableRow>
-								<TableCell className={classes.centeredTitleRow} align="center" colSpan={colCount + 4}>
+								<TableCell sx={globalStyles.blueBackground} align="center" colSpan={colCount + 4}>
 									<b>{title}</b>
 								</TableCell>
 							</TableRow>
@@ -113,7 +98,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 									<TableCell>{row['isTableHead'] ? <b>{row['state']}</b> : row['state']}</TableCell>
 									{row['data'].map((d: any, j: number) => (
 										<TableCell
-											className={classes.noWrap}
+											sx={globalStyles.noWrap}
 											align="center"
 											key={uuid()}
 											title={`${row['state']} - ${
@@ -127,10 +112,10 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 											{formatNumber(d['SUM'])} {row['withPercent'] ? '%' : ''}
 										</TableCell>
 									))}
-									<TableCell className={classes.noWrap} align="center">
+									<TableCell sx={globalStyles.noWrap} align="center">
 										{formatNumber(row['differ'])} {row['withPercent'] ? '%' : ''}
 									</TableCell>
-									<TableCell className={classes.noWrap} align="center">
+									<TableCell sx={globalStyles.noWrap} align="center">
 										{row['differ_percent']} {row['withPercent'] ? '%' : ''}
 									</TableCell>
 								</TableRow>

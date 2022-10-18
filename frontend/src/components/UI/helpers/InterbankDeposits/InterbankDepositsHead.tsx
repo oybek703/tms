@@ -1,20 +1,15 @@
 import React from 'react'
 import TableCap from '../TableCap'
 import { TableHead, TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../BoldWithColor'
-
-const useStyles = makeStyles(theme => ({
-	stickyTableHead: theme.mixins.stickyTableHead
-}))
+import globalStyles from '../../../../styles/globalStyles'
 
 const InterbankDepositsHead = () => {
-	const classes = useStyles()
 	return (
 		<>
 			<TableCap rows={10} text={'в номинале'} />
-			<TableHead className={classes.stickyTableHead}>
+			<TableHead sx={globalStyles.stickyTableHead}>
 				<TableRow>
 					<TableCell align="center" rowSpan={2}>
 						<BoldWithColor>№</BoldWithColor>

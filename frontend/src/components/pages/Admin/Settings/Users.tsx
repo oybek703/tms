@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import Button from '@mui/material/Button'
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
 import TableCell from '@mui/material/TableCell'
@@ -19,28 +18,11 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import EditUser from '../EditUser'
 
-const useStyles = makeStyles(theme => ({
-	table: {
-		marginTop: 20,
-		backgroundColor: '#fff'
-	},
-	actionCol: {
-		textAlign: 'center',
-		whiteSpace: 'nowrap'
-	},
-	actionBtn: {
-		color: 'white',
-		background: 'gray',
-		padding: 3,
-		borderRadius: 5
-	},
-	paddingMain: {
-		padding: 30
-	},
+const styles = {
 	buttonWith: {
 		minWidth: '40px'
 	}
-}))
+}
 
 const updatedBaseRoutes = [...baseRoutes].reduce((acc: any, val: any) => {
 	acc[val['route']] = val['title']
@@ -50,7 +32,6 @@ const updatedBaseRoutes = [...baseRoutes].reduce((acc: any, val: any) => {
 const Users = () => {
 	const [addNewUser, setAddNewUser] = useState(false)
 	const [editUser, setEditUser] = useState(false)
-	const classes = useStyles()
 	const { users, loading, error } = useTypedSelector(state => state.users)
 	const addUserState = useTypedSelector(state => state.addUser)
 	const editUserState = useTypedSelector(state => state.editUser)
@@ -86,7 +67,7 @@ const Users = () => {
 		if (!addNewUser || (!addNewUser && !editUser)) fetchUsers()
 	}, [fetchUsers, addNewUser, editUser])
 	return (
-		<Paper className={classes.paddingMain}>
+		<Paper sx={{ padding: '30px' }}>
 			{loading ? (
 				<Loader />
 			) : error ? (
@@ -119,7 +100,7 @@ const Users = () => {
 						<EditUser />
 					) : (
 						<TableContainer>
-							<Table size="small" className={classes.table}>
+							<Table size="small" sx={{ marginTop: '20px', backgroundColor: '#fff' }}>
 								<TableHead>
 									<TableRow>
 										<TableCell align="center">
@@ -158,10 +139,10 @@ const Users = () => {
 															.split(',')
 															.map((route: any) => <Fragment key={route}>{updatedBaseRoutes[route]}, &nbsp;</Fragment>)}
 											</TableCell>
-											<TableCell className={classes.actionCol}>
+											<TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
 												<Button
 													title="Delete user"
-													className={classes.buttonWith}
+													sx={styles.buttonWith}
 													onClick={() => handleDelete(user['USERNAME'])}
 													component="span"
 													color="inherit"
@@ -170,7 +151,7 @@ const Users = () => {
 												</Button>
 												<Button
 													title="Edit user"
-													className={classes.buttonWith}
+													sx={styles.buttonWith}
 													onClick={(e: any) => handleEdit(user['ID'])}
 													component="span"
 													color="inherit"

@@ -6,22 +6,15 @@ import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
 import TableCap from '../UI/helpers/TableCap'
 import { TableRow, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import TableCell from '@mui/material/TableCell'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../utils'
 import Grid from '@mui/material/Grid'
 import LongArrowDown from '../../images/long-arrow-down.png'
+import globalStyles from '../../styles/globalStyles'
 
-const useStyles = makeStyles(theme => ({
-	noWrap: theme.mixins.noWrap,
-	noBorder: theme.mixins.noBorder,
-	smallCardContainer: theme.mixins.smallCardContainer,
-	smallCard: {
-		...theme.mixins.smallCard,
-		padding: '0'
-	},
+const styles = {
 	borderRadius: {
 		border: '1.5px solid #ffffff',
 		borderRadius: '10px',
@@ -35,10 +28,6 @@ const useStyles = makeStyles(theme => ({
 		margin: '0',
 		paddingBottom: '4px',
 		marginBottom: '10px'
-	},
-	fullWidthCard: {
-		...theme.mixins.smallCard,
-		width: '100%'
 	},
 	redBoldText: {
 		color: '#009c34',
@@ -64,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 		maxWidth: '99%',
 		margin: '0 auto',
 		fontWeight: 600,
-		...theme.mixins.noWrap
+		whiteSpace: 'nowrap'
 	},
 	balanceActive: {
 		padding: '10px 10px',
@@ -91,14 +80,10 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: '#EBF5FF',
 		border: 'none',
 		boxShadow: 'none'
-	},
-	setMargin: {
-		marginRight: '0'
 	}
-}))
+}
 
 function NoBorderCell(props: any) {
-	const classes = useStyles()
 	const {
 		children,
 		nowrap = false,
@@ -110,15 +95,15 @@ function NoBorderCell(props: any) {
 	} = props
 	return (
 		<TableCell
-			className={`
-        ${classes.noBorder} 
-        ${nowrap ? classes.noWrap : ''}
-        ${redbold ? classes.redBoldText : ''}
-        ${titletext ? classes.titleText : ''}
-        ${titlenumber ? classes.titleNumber : ''}
-        ${morered ? classes.moreRedText : ''}
-        ${blacktext ? classes.blackText : ''}
-    `}
+			sx={{
+				...globalStyles.noBorder,
+				...(nowrap && globalStyles.noWrap),
+				...(redbold && { color: '#009c34', fontWeight: 600 }),
+				...(titletext && { fontSize: '20px' }),
+				...(titlenumber && { fontSize: '26px', fontWeight: 600 }),
+				...(morered && { color: 'rgb(192, 0, 0)', fontSize: '17px' }),
+				...(blacktext && { fontSize: '18px' })
+			}}
 			align="center"
 			{...props}
 		>
@@ -128,12 +113,11 @@ function NoBorderCell(props: any) {
 }
 
 function RedLightText(props: any) {
-	const classes = useStyles()
 	const { children } = props
 	return (
-		<b className={classes.lightRed} {...props}>
+		<Typography component="b" sx={{ color: '#009c34', fontWeight: 600 }} {...props}>
 			{children}
-		</b>
+		</Typography>
 	)
 }
 
@@ -142,7 +126,6 @@ interface FcrbTableProps {
 }
 
 const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
-	const classes = useStyles()
 	const {
 		mfiData = {},
 		treasuryData = {},
@@ -151,14 +134,14 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 		portfolioData = {}
 	} = rows
 	return (
-		<Paper className={classes.wrapper}>
+		<Paper sx={{ backgroundColor: '#EBF5FF', border: 'none', boxShadow: 'none' }}>
 			<Table size="small" stickyHeader>
 				<TableCap rows={20} text={'млрд.сум'} />
 			</Table>
 			{/* МФИ, КАЗНАЧЕЙСТВО(деп. юр. лиц меж.банк), РОЗНИЦА(депозиты физ.лиц) */}
-			<Grid container className={classes.smallCardContainer}>
-				<Grid className={classes.smallCard} item xs={4}>
-					<Table className={classes.borderRadius} size="small">
+			<Grid container sx={globalStyles.smallCardGrid}>
+				<Grid>
+					<Table sx={styles.borderRadius} size="small">
 						<TableHead>
 							<TableRow>
 								<NoBorderCell titletext="true" colSpan={6} align="center">
@@ -169,12 +152,12 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						<TableBody>
 							<TableRow>
 								<NoBorderCell colSpan={6} redbold="true" titlenumber="true" align="center">
-									<b>
+									<>
 										{formatNumber(
 											// mfiData['mfiTotal']
 											26238.5
 										)}
-									</b>
+									</>
 								</NoBorderCell>
 							</TableRow>
 							<TableRow>
@@ -202,8 +185,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						</TableBody>
 					</Table>
 				</Grid>
-				<Grid className={classes.smallCard} item xs={4}>
-					<Table className={classes.borderRadius} size="small">
+				<Grid>
+					<Table sx={styles.borderRadius} size="small">
 						<TableHead>
 							<TableRow>
 								<NoBorderCell titletext="true" colSpan={6} align="center">
@@ -248,8 +231,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						</TableBody>
 					</Table>
 				</Grid>
-				<Grid className={classes.smallCard} item xs={4}>
-					<Table className={classes.borderRadius} size="small">
+				<Grid>
+					<Table sx={styles.borderRadius} size="small">
 						<TableHead>
 							<TableRow>
 								<NoBorderCell titletext="true" colSpan={6} align="center">
@@ -295,25 +278,25 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 					</Table>
 				</Grid>
 			</Grid>
-			<Grid container className={classes.smallCardContainer}>
+			<Grid container sx={globalStyles.smallCard}>
 				{Array(3)
 					.fill('')
 					.map(_ => (
-						<Grid key={uuid()} className={classes.smallCard} item xs={4}>
+						<Grid key={uuid()} sx={globalStyles.smallCard} item xs={4}>
 							<ArrowDownwardIcon />
 						</Grid>
 					))}
 			</Grid>
 			{/* ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА */}
-			<Grid container justifyContent="center" className={`${classes.resourceBase}`}>
-				<Grid item className={classes.smallCard}>
-					<Typography gutterBottom variant="h5">
-						<b className={classes.black}>ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА</b>
+			<Grid container justifyContent="center" sx={styles.resourceBase}>
+				<Grid item sx={globalStyles.smallCard}>
+					<Typography gutterBottom variant="h5" sx={{ color: 'rgb(102, 102, 102)', fontWeight: 600 }}>
+						ЦЕНТРАЛИЗОВАННАЯ РЕСУРСНАЯ БАЗА
 					</Typography>
 				</Grid>
 				<Grid container spacing={2}>
 					<Grid item xs={4}>
-						<Table className={classes.borderRadius} size="small">
+						<Table sx={styles.borderRadius} size="small">
 							<TableHead>
 								<TableRow>
 									<NoBorderCell titlenumber="true" colSpan={3} align="right">
@@ -332,7 +315,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						</Table>
 					</Grid>
 					<Grid item xs={8}>
-						<Table className={classes.borderRadius} size="small">
+						<Table sx={styles.borderRadius} size="small">
 							<TableHead>
 								<TableRow>
 									<NoBorderCell titlenumber="true" colSpan={4} align="right">
@@ -359,12 +342,12 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 					<TableBody>
 						{/* другие активы, инвестиции, цен. бумаги и меж. банк., кредитования + аккредитив, розничное кредитования */}
 						<TableRow>
-							<NoBorderCell colSpan={3} className={classes.setPadding} align="center">
-								<Table className={`${classes.borderRadius}`} size="small">
+							<NoBorderCell colSpan={3} sx={styles.setPadding} align="center">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
-											<NoBorderCell nowrap="true" align="center">
-												<b className={classes.blackText}>другие активы</b>
+											<NoBorderCell nowrap="true" blacktext="true" align="center">
+												<b>другие активы</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" nowrap="true" morered="true" align="left">
 												<RedLightText>
@@ -380,11 +363,11 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 							</NoBorderCell>
 							<NoBorderCell rowSpan={3} />
 							<NoBorderCell colSpan={3} align="center">
-								<Table className={classes.borderRadius} size="small">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
-											<NoBorderCell colSpan={2} align="center">
-												<b className={classes.blackText}>инвестиции</b>
+											<NoBorderCell colSpan={2} nowrap="true" blacktext="true" align="center">
+												<b>инвестиции</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" morered="true" colSpan={3} align="left">
 												<RedLightText>
@@ -400,7 +383,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 							</NoBorderCell>
 							<NoBorderCell rowSpan={2} />
 							<NoBorderCell colSpan={3} align="center">
-								<Table className={classes.borderRadius} size="small">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
 											<NoBorderCell nowrap="true" blacktext="true" colSpan={3} align="center">
@@ -419,11 +402,14 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 								</Table>
 							</NoBorderCell>
 							<NoBorderCell colSpan={4} align="center">
-								<Table className={classes.borderRadius} size="small">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
 											<NoBorderCell
-												className={`${classes.setPadding} ${classes.blackText}`}
+												sx={{
+													...styles.setPadding,
+													...styles.blackText
+												}}
 												nowrap="true"
 												colSpan={3}
 												align="center"
@@ -443,7 +429,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 								</Table>
 							</NoBorderCell>
 							<NoBorderCell colSpan={2} align="center">
-								<Table className={classes.borderRadius} size="small">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
 											<NoBorderCell nowrap="true" colSpan={3} align="center" blacktext="true">
@@ -465,7 +451,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						{/* ARROWS PART */}
 						<TableRow>
 							<NoBorderCell align="center" colSpan={3} rowSpan={3}>
-								<img style={{ paddingTop: 40 }} src={LongArrowDown} alt="pointer arrow" />
+								<Grid component="img" sx={{ paddingTop: 'px' }} src={LongArrowDown} alt="pointer arrow" />
 							</NoBorderCell>
 							<NoBorderCell colSpan={3} align="center">
 								<ArrowDownwardIcon />
@@ -474,16 +460,16 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 								<ArrowDownwardIcon />
 							</NoBorderCell>
 							<NoBorderCell align="center" colSpan={4} rowSpan={3}>
-								<img style={{ paddingTop: 40 }} src={LongArrowDown} alt="pointer arrow" />
+								<Grid component="img" sx={{ paddingTop: 'px' }} src={LongArrowDown} alt="pointer arrow" />
 							</NoBorderCell>
 							<NoBorderCell align="center" colSpan={3} rowSpan={3}>
-								<img style={{ paddingTop: 40 }} src={LongArrowDown} alt="pointer arrow" />
+								<Grid component="img" sx={{ paddingTop: 'px' }} src={LongArrowDown} alt="pointer arrow" />
 							</NoBorderCell>
 						</TableRow>
 						{/* КАЗНАЧЕЙСКИЙ ПОРТФЕЛЬ */}
 						<TableRow>
 							<NoBorderCell colSpan={7} align="center">
-								<Table className={classes.borderRadius} size="small">
+								<Table sx={styles.borderRadius} size="small">
 									<TableHead>
 										<TableRow>
 											<NoBorderCell colSpan={6} align="center" titlenumber="true">
@@ -512,11 +498,11 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 			<br />
 			<Grid
 				container
-				className={`${classes.smallCardContainer} ${classes.balanceActive} ${classes.setPadding}`}
+				sx={{ ...globalStyles.smallCardContainer, ...styles.balanceActive, ...styles.setPadding }}
 				justifyContent="center"
 			>
 				<Grid item xs={12}>
-					<Table className={classes.borderRadius} size="small">
+					<Table sx={styles.borderRadius} size="small">
 						<TableHead>
 							<TableRow>
 								<NoBorderCell titlenumber="true" nowrap="true" colSpan={6} align="center" titletext="true">
@@ -540,9 +526,9 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 			</Grid>
 			<br />
 			{/** Средняя ставка всего фондирования*/}
-			<Grid container className={`${classes.smallCardContainer} ${classes.fundingAvg}`} justifyContent="space-evenly">
+			<Grid container sx={{ ...globalStyles.smallCardContainer, ...styles.fundingAvg }} justifyContent="space-evenly">
 				<Grid item xs={6}>
-					<Table className={classes.borderRadius} size="small">
+					<Table sx={styles.borderRadius} size="small">
 						<TableHead>
 							<TableRow>
 								<NoBorderCell blacktext="true" nowrap="true" align="left">

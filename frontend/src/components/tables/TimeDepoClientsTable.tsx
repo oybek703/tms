@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useState } from 'react'
+import React, { memo, useState } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../UI/Layout/StyledDataGrid'
@@ -108,11 +108,7 @@ const columns: GridColDef[] = [
 
 const TimeDepoClientsTable: React.FC<{ rows: unknown[] }> = function ({ rows = [] }) {
 	const [pageSize, setPageSize] = useState(30)
-	return (
-		<Fragment>
-			<StyledDataGrid onPageSizeChange={setPageSize} pageSize={pageSize} columns={columns} rows={rows} />
-		</Fragment>
-	)
+	return <StyledDataGrid onPageSizeChange={setPageSize} pageSize={pageSize} columns={columns} rows={rows} />
 }
 
 export default memo(TimeDepoClientsTable)

@@ -8,14 +8,7 @@ import TableCap from '../UI/helpers/TableCap'
 import ButtonTabs from '../UI/Layout/Tabs/ButtonsTab'
 import ExportButton from '../UI/Layout/ExportButton'
 import { formatOneDate } from '../../utils'
-import makeStyles from '@mui/styles/makeStyles'
 import useTypedSelector from '../../hooks/useTypedSelector'
-
-const useStyles = makeStyles(theme => ({
-	tableContainer: {
-		maxHeight: '70vh'
-	}
-}))
 
 const titles = [
 	{ title: 'Межбанковские депозиты', code: 'all' },
@@ -24,7 +17,6 @@ const titles = [
 ]
 
 const InterbankDepositsTable: React.FC<{ rows: any }> = function ({ rows = [] }) {
-	const classes = useStyles()
 	const { land, borrow, fullBorrowData, fullLandData } = rows
 	const { reportDate } = useTypedSelector(state => state.date)
 	const [expanded, setExpanded] = useState<string>('all')
@@ -33,7 +25,7 @@ const InterbankDepositsTable: React.FC<{ rows: any }> = function ({ rows = [] })
 		<Fragment>
 			<ButtonTabs handleChange={handleChange} active={expanded} titles={titles} />
 			{
-				<TableContainer classes={{ root: classes.tableContainer }} component={Paper}>
+				<TableContainer component={Paper}>
 					<ExportButton id={`${expanded === 'all' ? 'interbank-deposits' : expanded}-${formatOneDate(reportDate)}`} />
 					<Table
 						size="small"

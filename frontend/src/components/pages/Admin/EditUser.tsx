@@ -3,42 +3,14 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import makeStyles from '@mui/styles/makeStyles'
 import AllowedPages from '../../UI/Layout/Navigation/AllowedPages'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 import Loader from '../../UI/Layout/Loader'
 import Alert from '../../UI/Layout/Alert'
-
-const useStyles = makeStyles(theme => ({
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: 'crimson'
-	},
-	form: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		marginTop: theme.spacing(3),
-		backgroundColor: '#fff',
-		padding: 40
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-		padding: '10px 20px',
-		minWidth: 250
-	},
-	chips: {
-		display: 'flex',
-		flexWrap: 'wrap'
-	},
-	chip: {
-		margin: 2
-	}
-}))
+import globalStyles from '../../../styles/globalStyles'
 
 export default function EditUser() {
-	const classes = useStyles()
 	const { editUser } = useActions()
 	const [allowedPages, setAllowedPages] = useState<string[]>([])
 	const { loading, user, error } = useTypedSelector(state => state.getUser)
@@ -121,7 +93,7 @@ export default function EditUser() {
 					<Typography align="center" component="h1" variant="h5">
 						<b>EDIT USER</b>
 					</Typography>
-					<form className={classes.form} noValidate onSubmit={handleEditUser}>
+					<Grid component="form" sx={globalStyles.userForm} noValidate onSubmit={handleEditUser}>
 						<Grid container spacing={2}>
 							<Grid item xs={12}>
 								<TextField
@@ -169,10 +141,16 @@ export default function EditUser() {
 							</Grid>
 							<AllowedPages pages={allowedPages} setPages={handleAddPage} />
 						</Grid>
-						<Button disabled={btnDisabled} type="submit" variant="outlined" color="primary" className={classes.submit}>
+						<Button
+							disabled={btnDisabled}
+							type="submit"
+							variant="outlined"
+							color="primary"
+							sx={globalStyles.usetSubmitBtn}
+						>
 							Save
 						</Button>
-					</form>
+					</Grid>
 				</>
 			)}
 		</>
