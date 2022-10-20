@@ -36,7 +36,6 @@ const styles = {
 	},
 	stateCard: {
 		position: 'absolute',
-		left: -2,
 		bottom: -6,
 		background: '#7794aa',
 		fontSize: '0.65em',
