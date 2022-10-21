@@ -86,7 +86,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 					].map(({ rows, title }) => (
 						<Fragment key={uuid()}>
 							<TableRow>
-								<TableCell sx={globalStyles.blueBackground} align="center" colSpan={colCount + 4}>
+								<TableCell sx={globalStyles.blueBackground} align="center" colSpan={colCount + 6}>
 									<b>{title}</b>
 								</TableCell>
 							</TableRow>
@@ -116,7 +116,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 										{formatNumber(row['differ'])} {row['withPercent'] ? '%' : ''}
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										{row['differ_percent']} {row['withPercent'] ? '%' : ''}
+										{row['differ_percent']}
 									</TableCell>
 								</TableRow>
 							))}

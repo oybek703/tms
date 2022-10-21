@@ -31,8 +31,8 @@ class DashboardMonthlyMainClass extends MainClass {
 		const onlyTwo = `SELECT DAT,
                             ROUND(ABS(SUM(SALDO_ACTIVE_EQ_IN + SALDO_PASSIVE_EQ_IN) / POWER(10, 8)), 2) AS SUM
                      FROM IBS.SVOD_SALDO_DUMP@IABS
-                     WHERE DAT IN (TO_DATE('${this.firstDate}', 'dd.mm.yyyy'),
-                                   TO_DATE('${this.secondDate}', 'dd.mm.yyyy'))
+                     WHERE DAT IN (TO_DATE('${this.firstDate}', 'DD.MM.YYYY'),
+                                   TO_DATE('${this.secondDate}', 'DD.MM.YYYY'))
                        AND (${whereQuery})
                      GROUP BY DAT
                      ORDER BY DAT`
@@ -40,8 +40,8 @@ class DashboardMonthlyMainClass extends MainClass {
                         TO_CHAR(DAT, 'DD.MM.YYYY')                                                     DATE_VALUE,
                         ROUND(ABS(SUM(SALDO_ACTIVE_EQ_IN + SALDO_PASSIVE_EQ_IN) / POWER(10, 8)), 2) AS SUM
                  FROM IBS.SVOD_SALDO_DUMP@IABS
-                 WHERE DAT BETWEEN TO_DATE('${this.firstDate}', 'dd.mm.yyyy') AND
-                     TO_DATE('${this.secondDate}', 'dd.mm.yyyy')
+                 WHERE DAT BETWEEN TO_DATE('${this.firstDate}', 'DD.MM.YYYY') AND
+                     TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
                    AND (${whereQuery})
                  GROUP BY DAT
                  ORDER BY DAT`
@@ -254,75 +254,134 @@ class DashboardMonthlyMainClass extends MainClass {
 		return this.chooseQuery(onlyTwo, all, month)
 	}
 
-	weightedAvgRatesQuery() {
-		const onlyTwo = `SELECT TO_DATE('${this.firstDate}', 'DD.MM.YYYY')                          AS DAT,
-                            ROUND(SUM(PERCENT * SALDO_EQUIVAL_OUT) / SUM(SALDO_EQUIVAL_OUT), 2) AS SUM
-                     FROM (SELECT CONTRACT_ID,
-                                  DATE_VALIDATE,
-                                  ACCOUNT_CODE,
-                                  (SELECT /*+index_desc (sl UK_SALDO_ACCOUNT_DAY)*/
-                                       SALDO_EQUIVAL_OUT
-                                   FROM IBS.SALDO@IABS SL
-                                   WHERE ACCOUNT_CODE = ACC.ACCOUNT_CODE
-                                     AND OPER_DAY < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
-                                     AND ROWNUM = 1)         AS SALDO_EQUIVAL_OUT,
-                                  NVL((SELECT /*+index_desc(s DEP_CONTRACTS_PERCENT_RATE_PK)*/
-                                           PERCENT_RATE
-                                       FROM IBS.DEP_CONTRACTS_PERCENT_RATE@IABS S
-                                       WHERE CONTRACT_ID = ACC.CONTRACT_ID
-                                         AND DATE_VALIDATE < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
-                                         AND ROWNUM = 1), 0) AS PERCENT
-                           FROM (SELECT CONTRACT_ID,
-                                        MAX(DATE_VALIDATE) AS DATE_VALIDATE,
-                                        ACCOUNT_CODE
-                                 FROM IBS.DEP_ACCOUNTS@IABS DEP_AC
-                                          JOIN IBS.DEP_CONTRACTS@IABS DEP_CON
-                                               ON DEP_CON.ID = DEP_AC.CONTRACT_ID
-                                 WHERE COA LIKE '204%'
-                                   AND COA <> '20406'
-                                   AND DEP_CON.STATE NOT IN ('DELETE')
-                                   AND ACCOUNT_TYPE = 1
-                                   AND DEP_CON.DATE_BEGIN < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
-                                   AND DEP_CON.DATE_END > TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
-                                 GROUP BY ACCOUNT_CODE, CONTRACT_ID) ACC
-                           WHERE SUBSTR(ACCOUNT_CODE, 13, 3) != '000')
-                     UNION ALL
-                     SELECT TO_DATE('${this.secondDate}', 'DD.MM.YYYY')                         AS DAT,
-                            ROUND(SUM(PERCENT * SALDO_EQUIVAL_OUT) / SUM(SALDO_EQUIVAL_OUT), 2) AS SUM
-                     FROM (SELECT CONTRACT_ID,
-                                  DATE_VALIDATE,
-                                  ACCOUNT_CODE,
-                                  (SELECT /*+index_desc (sl UK_SALDO_ACCOUNT_DAY)*/
-                                       SALDO_EQUIVAL_OUT
-                                   FROM IBS.SALDO@IABS SL
-                                   WHERE ACCOUNT_CODE = ACC.ACCOUNT_CODE
-                                     AND OPER_DAY < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
-                                     AND ROWNUM = 1)         AS SALDO_EQUIVAL_OUT,
-                                  NVL((SELECT /*+index_desc(s DEP_CONTRACTS_PERCENT_RATE_PK)*/
-                                           PERCENT_RATE
-                                       FROM IBS.DEP_CONTRACTS_PERCENT_RATE@IABS S
-                                       WHERE CONTRACT_ID = ACC.CONTRACT_ID
-                                         AND DATE_VALIDATE < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
-                                         AND ROWNUM = 1), 0) AS PERCENT
-                           FROM (SELECT CONTRACT_ID,
-                                        MAX(DATE_VALIDATE) AS DATE_VALIDATE,
-                                        ACCOUNT_CODE
-                                 FROM IBS.DEP_ACCOUNTS@IABS DEP_AC
-                                          JOIN IBS.DEP_CONTRACTS@IABS DEP_CON
-                                               ON DEP_CON.ID = DEP_AC.CONTRACT_ID
-                                 WHERE COA LIKE '204%'
-                                   AND COA <> '20406'
-                                   AND DEP_CON.STATE NOT IN ('DELETE')
-                                   AND ACCOUNT_TYPE = 1
-                                   AND DEP_CON.DATE_BEGIN < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
-                                   AND DEP_CON.DATE_END > TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
-                                 GROUP BY ACCOUNT_CODE,
-                                          CONTRACT_ID) ACC
-                           WHERE SUBSTR(ACCOUNT_CODE, 13, 3) != '000')`
-		// TODO left two queries must be done too
-		const all = onlyTwo
-		const month = onlyTwo
-		return this.chooseQuery(onlyTwo, all, month)
+	LDWeightedAvgRatesQuery = (
+		codeCoa: '204' | '206' | '216-220',
+		currency: 'foreign' | 'national'
+	) => {
+		return () => {
+			const _whereQuery =
+				codeCoa === '204'
+					? `COA LIKE '204%' AND COA <> '20406'`
+					: codeCoa === '216-220'
+					? `(COA LIKE '220%' OR COA LIKE '216%')`
+					: `COA LIKE '206%' AND COA <> '20606'`
+			const _currency =
+				currency === 'foreign'
+					? `SUBSTR(ACCOUNT_CODE, 13, 3) != '000')`
+					: `SUBSTR(ACCOUNT_CODE, 13, 3) = '000')`
+			const onlyTwo = `SELECT TO_DATE('${this.firstDate}', 'DD.MM.YYYY')                          AS DAT,
+                              ROUND(SUM(PERCENT * SALDO_EQUIVAL_OUT) / SUM(SALDO_EQUIVAL_OUT), 2) AS SUM
+                       FROM (SELECT CONTRACT_ID,
+                                    ACCOUNT_CODE,
+                                    (SELECT /*+index_desc (sl UK_SALDO_ACCOUNT_DAY)*/
+                                         SALDO_EQUIVAL_OUT
+                                     FROM IBS.SALDO@IABS SL
+                                     WHERE ACCOUNT_CODE = ACC.ACCOUNT_CODE
+                                       AND OPER_DAY < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
+                                       AND ROWNUM = 1)         AS SALDO_EQUIVAL_OUT,
+                                    NVL((SELECT /*+index_desc(s DEP_CONTRACTS_PERCENT_RATE_PK)*/
+                                             PERCENT_RATE
+                                         FROM IBS.DEP_CONTRACTS_PERCENT_RATE@IABS S
+                                         WHERE CONTRACT_ID = ACC.CONTRACT_ID
+                                           AND DATE_VALIDATE < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
+                                           AND ROWNUM = 1), 0) AS PERCENT
+                             FROM (SELECT CONTRACT_ID,
+                                          MAX(DATE_VALIDATE) AS DATE_VALIDATE,
+                                          ACCOUNT_CODE
+                                   FROM IBS.DEP_ACCOUNTS@IABS DEP_AC
+                                            JOIN IBS.DEP_CONTRACTS@IABS DEP_CON
+                                                 ON DEP_CON.ID = DEP_AC.CONTRACT_ID
+                                   WHERE ${_whereQuery}
+                                     AND DEP_CON.STATE NOT IN ('DELETE')
+                                     AND ACCOUNT_TYPE = 1
+                                     AND DEP_CON.DATE_BEGIN < TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
+                                     AND DEP_CON.DATE_END > TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
+                                   GROUP BY ACCOUNT_CODE, CONTRACT_ID) ACC
+                             WHERE ${_currency}
+                             UNION ALL
+                             SELECT TO_DATE('${this.secondDate}', 'DD.MM.YYYY')                         AS DAT,
+                                    ROUND(SUM(PERCENT * SALDO_EQUIVAL_OUT) / SUM(SALDO_EQUIVAL_OUT), 2) AS SUM
+                             FROM (SELECT CONTRACT_ID,
+                                          DATE_VALIDATE,
+                                          ACCOUNT_CODE,
+                                          (SELECT /*+index_desc (sl UK_SALDO_ACCOUNT_DAY)*/
+                                               SALDO_EQUIVAL_OUT
+                                           FROM IBS.SALDO@IABS SL
+                                           WHERE ACCOUNT_CODE = ACC.ACCOUNT_CODE
+                                             AND OPER_DAY < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
+                                             AND ROWNUM = 1)         AS SALDO_EQUIVAL_OUT,
+                                          NVL((SELECT /*+index_desc(s DEP_CONTRACTS_PERCENT_RATE_PK)*/
+                                                   PERCENT_RATE
+                                               FROM IBS.DEP_CONTRACTS_PERCENT_RATE@IABS S
+                                               WHERE CONTRACT_ID = ACC.CONTRACT_ID
+                                                 AND DATE_VALIDATE < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
+                                                 AND ROWNUM = 1), 0) AS PERCENT
+                                   FROM (SELECT CONTRACT_ID,
+                                                MAX(DATE_VALIDATE) AS DATE_VALIDATE,
+                                                ACCOUNT_CODE
+                                         FROM IBS.DEP_ACCOUNTS@IABS DEP_AC
+                                                  JOIN IBS.DEP_CONTRACTS@IABS DEP_CON
+                                                       ON DEP_CON.ID = DEP_AC.CONTRACT_ID
+                                         WHERE ${_whereQuery}
+                                           AND DEP_CON.STATE NOT IN ('DELETE')
+                                           AND ACCOUNT_TYPE = 1
+                                           AND DEP_CON.DATE_BEGIN < TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
+                                           AND DEP_CON.DATE_END > TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
+                                         GROUP BY ACCOUNT_CODE,
+                                                  CONTRACT_ID) ACC
+                                   WHERE ${_currency}`
+			// TODO left two queries must be done too
+			const all = onlyTwo
+			const month = onlyTwo
+			return this.chooseQuery(onlyTwo, all, month)
+		}
+	}
+
+	PDWeightedAvgRatesQuery = (codeCoa: '204' | '206', currency: 'foreign' | 'national') => {
+		return () => {
+			const _whereQuery =
+				codeCoa === '204' ? `AC.CODE_COA IN ('20406')` : `AC.CODE_COA IN ('20606')`
+			const _currency = currency === 'foreign' ? `CODE_CURRENCY != '000'` : `CODE_CURRENCY = '000'`
+			const onlyTwo = `SELECT TO_DATE('${this.firstDate}', 'DD.MM.YYYY')                         AS DAT,
+														 NVL(ROUND(SUM(SALDO_EQUIVAL_OUT * PERCENT) / SUM(SALDO_EQUIVAL_OUT), 2), 0) AS SUM
+											FROM (SELECT AC.CODE_CURRENCY,
+																	 AC.ACC_EXTERNAL,
+																	 (SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/ SALDO_EQUIVAL_OUT
+																		FROM IBS.SALDO@IABS S
+																		WHERE S.ACCOUNT_CODE = AC.CODE
+																			AND S.OPER_DAY <= TO_DATE('${this.firstDate}', 'DD.MM.YYYY')
+																			AND ROWNUM = 1) AS SALDO_EQUIVAL_OUT,
+																	 P_DEP.PERCENT
+														FROM IBS.ACCOUNTS@IABS AC
+																		 JOIN IBS.SBD_DEP_ACC@IABS P_DEP
+																					ON P_DEP.ACC = AC.ACC_EXTERNAL
+														WHERE ${_whereQuery}
+															AND SALDO_EQUIVAL_OUT <> 0
+															AND PERCENT <> 0
+															AND ${_currency})
+											UNION
+											SELECT TO_DATE('${this.secondDate}', 'DD.MM.YYYY')                         AS DAT,
+														 NVL(ROUND(SUM(SALDO_EQUIVAL_OUT * PERCENT) / SUM(SALDO_EQUIVAL_OUT), 2), 0) AS SUM
+											FROM (SELECT AC.CODE_CURRENCY,
+																	 AC.ACC_EXTERNAL,
+																	 (SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/ SALDO_EQUIVAL_OUT
+																		FROM IBS.SALDO@IABS S
+																		WHERE S.ACCOUNT_CODE = AC.CODE
+																			AND S.OPER_DAY <= TO_DATE('${this.secondDate}', 'DD.MM.YYYY')
+																			AND ROWNUM = 1) AS SALDO_EQUIVAL_OUT,
+																	 P_DEP.PERCENT
+														FROM IBS.ACCOUNTS@IABS AC
+																		 JOIN IBS.SBD_DEP_ACC@IABS P_DEP
+																					ON P_DEP.ACC = AC.ACC_EXTERNAL
+														WHERE ${_whereQuery}
+															AND SALDO_EQUIVAL_OUT <> 0
+															AND PERCENT <> 0
+															AND ${_currency})`
+			// TODO left two queries must be done too
+			const all = onlyTwo
+			const month = onlyTwo
+			return this.chooseQuery(onlyTwo, all, month)
+		}
 	}
 
 	createData(
@@ -469,20 +528,30 @@ class DashboardMonthlyMainClass extends MainClass {
 		)
 	} /*  - в нац. валюте */
 
-	async sld_weighted_avg_rates() {
+	async sld_weighted_avg_rates_NC() {
 		/* -средневзвешенные процентные ставки */
-		const data = await this.getDataInDates('', this.weightedAvgRatesQuery.bind(this), true)
-		return this.createData('2.2.2', '-средневзвешенные процентные ставки', data)
+		const data = await this.getDataInDates(
+			'',
+			this.LDWeightedAvgRatesQuery(`204`, 'national'),
+			true
+		)
+		return this.createData('2.2.2', '-средневзвешенные процентные ставки', data, false, true)
 	} /*  -средневзвешенные процентные ставки */
 
 	async saving_legals_deposits_for_curr() {
 		/*  - в иностранной. валюте */
 		return await this.getOneRow(
-			'2.2.1',
+			'2.2.3',
 			' - в иностранной. валюте',
-			`BAL LIKE '204%' AND BAL != '20406' AND VAL='000'`
+			`BAL LIKE '204%' AND BAL != '20406' AND VAL!='000'`
 		)
 	} /*  - в иностранной. валюте */
+
+	async sld_weighted_avg_rates_FC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates('', this.LDWeightedAvgRatesQuery(`204`, 'foreign'), true)
+		return this.createData('2.2.4', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async time_legals_deposits() {
 		/* Срочные депозиты юр. лиц */
@@ -492,6 +561,40 @@ class DashboardMonthlyMainClass extends MainClass {
 			`BAL LIKE '206%' AND BAL != '20606'`
 		)
 	} /* Срочные депозиты юр. лиц */
+
+	async time_legals_deposits_nat_curr() {
+		/*  - в нац. валюте */
+		return await this.getOneRow(
+			'2.3.1',
+			' - в нац. валюте',
+			`BAL LIKE '206%' AND BAL != '20606' AND VAL='000'`
+		)
+	} /*  - в нац. валюте */
+
+	async tld_weighted_avg_rates_NC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates(
+			'',
+			this.LDWeightedAvgRatesQuery(`206`, 'national'),
+			true
+		)
+		return this.createData('2.3.2', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
+
+	async time_legals_deposits_for_curr() {
+		/*  - в иностранной. валюте */
+		return await this.getOneRow(
+			'2.3.3',
+			' - в иностранной. валюте',
+			`BAL LIKE '206%' AND BAL != '20606' AND VAL!='000'`
+		)
+	} /*  - в иностранной. валюте */
+
+	async tld_weighted_avg_rates_FC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates('', this.LDWeightedAvgRatesQuery(`206`, 'foreign'), true)
+		return this.createData('2.3.4', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async physicals_deposits() {
 		/* Депозиты физ. Лиц */
@@ -505,18 +608,70 @@ class DashboardMonthlyMainClass extends MainClass {
 
 	async demand_physicals_deposits() {
 		/* депозиты до востребования физ. лиц */
-		return await this.getOneRow('3.2', 'депозиты до востребования физ. лиц', `BAL='20206'`)
+		return await this.getOneRow('3.1', 'депозиты до востребования физ. лиц', `BAL='20206'`)
 	} /* депозиты до востребования физ. лиц */
 
 	async saving_physicals_deposits() {
 		/* Сберегательные депозиты физ. лиц */
-		return await this.getOneRow('3.1', 'Сберегательные депозиты физ. лиц', `BAL='20406'`)
+		return await this.getOneRow('3.2', 'Сберегательные депозиты физ. лиц', `BAL='20406'`)
 	} /* Сберегательные депозиты физ. лиц */
+
+	async saving_physicals_deposits_nat_curr() {
+		/*  - в нац. валюте */
+		return await this.getOneRow('3.2.1', ' - в нац. валюте', `BAL='20406' AND VAL='000'`)
+	} /*  - в нац. валюте */
+
+	async spd_weighted_avg_rates_NC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates(
+			'',
+			this.PDWeightedAvgRatesQuery(`204`, 'national'),
+			true
+		)
+		return this.createData('3.2.2', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
+
+	async saving_physicals_deposits_for_curr() {
+		/*  - в иностранной. валюте */
+		return await this.getOneRow('3.2.3', ' - в иностранной. валюте', `BAL='20406' AND VAL!='000'`)
+	} /*  - в иностранной. валюте */
+
+	async spd_weighted_avg_rates_FC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates('', this.PDWeightedAvgRatesQuery(`204`, 'foreign'), true)
+		return this.createData('3.2.4', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async time_physicals_deposits() {
 		/* срочные депозиты физ. лиц */
 		return await this.getOneRow('3.3', 'срочные депозиты физ. лиц', `BAL='20606'`)
 	} /* срочные депозиты физ. лиц */
+
+	async time_physicals_deposits_nat_curr() {
+		/*  - в нац. валюте */
+		return await this.getOneRow('3.3.1', ' - в нац. валюте', `BAL='20606' AND VAL='000'`)
+	} /*  - в нац. валюте */
+
+	async tpd_weighted_avg_rates_NC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates(
+			'',
+			this.PDWeightedAvgRatesQuery(`206`, 'national'),
+			true
+		)
+		return this.createData('3.3.2', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
+
+	async time_physicals_deposits_for_curr() {
+		/*  - в иностранной. валюте */
+		return await this.getOneRow('3.3.3', ' - в иностранной. валюте', `BAL='20606' AND VAL!='000'`)
+	} /*  - в иностранной. валюте */
+
+	async tpd_weighted_avg_rates_FC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates('', this.PDWeightedAvgRatesQuery(`206`, 'foreign'), true)
+		return this.createData('3.3.4', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async external_funding() {
 		/* Внешнее фондирование */
@@ -528,8 +683,6 @@ class DashboardMonthlyMainClass extends MainClass {
 		)
 	} /* Внешнее фондирование */
 
-	// TODO -средневзвешенные процентные ставки
-
 	async national_curr() {
 		/* в том числе в нац.валюте */
 		return await this.getOneRow(
@@ -539,7 +692,15 @@ class DashboardMonthlyMainClass extends MainClass {
 		)
 	} /* в том числе в нац.валюте */
 
-	// TODO -средневзвешенные процентные ставки
+	async ef_weighted_avg_rates_NC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates(
+			'',
+			this.LDWeightedAvgRatesQuery(`216-220`, 'national'),
+			true
+		)
+		return this.createData('4.1.1', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async foreign_curr() {
 		/* в том числе в иностранной валюте */
@@ -550,7 +711,15 @@ class DashboardMonthlyMainClass extends MainClass {
 		)
 	} /* в том числе в иностранной валюте */
 
-	// TODO -средневзвешенные процентные ставки
+	async ef_weighted_avg_rates_FC() {
+		/* -средневзвешенные процентные ставки */
+		const data = await this.getDataInDates(
+			'',
+			this.LDWeightedAvgRatesQuery(`216-220`, 'foreign'),
+			true
+		)
+		return this.createData('4.2.1', '-средневзвешенные процентные ставки', data, false, true)
+	} /*  -средневзвешенные процентные ставки */
 
 	async getRows() {
 		const [
@@ -568,15 +737,31 @@ class DashboardMonthlyMainClass extends MainClass {
 			demandLegalsDeposits,
 			savingLegalsDeposits,
 			savingLegalsDepositsNatCurr,
-			sldWeightedAvgRates,
+			sldWeightedAvgRatesNC,
+			savingLegalsDepositsForCurr,
+			sldWeightedAvgRatesFC,
 			timeLegalsDeposits,
+			timeLegalsDepositsNatCcurr,
+			tldWeightedAvgRatesNC,
+			timeLegalsDepositsForCcurr,
+			tldWeightedAvgRatesFC,
 			physicalsDeposits,
 			demandPhysicalsDeposits,
 			savingPhysicalsDeposits,
+			savingPhysicalsDepositsNatCurr,
+			spdWeightedAvgRatesNC,
+			savingPhysicalsDepositsForCurr,
+			spdWeightedAvgRatesFC,
 			timePhysicalsDeposits,
+			timePhysicalsDepositsNatCurr,
+			tpdWeightedAvgRatesNC,
+			timePhysicalsDepositsForCurr,
+			tpdWeightedAvgRatesFC,
 			externalFunding,
 			nationalCurr,
-			foreignCurr
+			efWeightedAvgRatesNC,
+			foreignCurr,
+			efWeightedAvgRatesFC
 		] = await Promise.all([
 			this.all_actives(),
 			this.authorized_capital(),
@@ -592,15 +777,31 @@ class DashboardMonthlyMainClass extends MainClass {
 			this.demand_legals_deposits(),
 			this.saving_legals_deposits(),
 			this.saving_legals_deposits_nat_curr(),
-			this.sld_weighted_avg_rates(),
+			this.sld_weighted_avg_rates_NC(),
+			this.saving_legals_deposits_for_curr(),
+			this.sld_weighted_avg_rates_FC(),
 			this.time_legals_deposits(),
+			this.time_legals_deposits_nat_curr(),
+			this.tld_weighted_avg_rates_NC(),
+			this.time_legals_deposits_for_curr(),
+			this.tld_weighted_avg_rates_FC(),
 			this.physicals_deposits(),
 			this.demand_physicals_deposits(),
 			this.saving_physicals_deposits(),
+			this.saving_physicals_deposits_nat_curr(),
+			this.spd_weighted_avg_rates_NC(),
+			this.saving_physicals_deposits_for_curr(),
+			this.spd_weighted_avg_rates_FC(),
 			this.time_physicals_deposits(),
+			this.time_physicals_deposits_nat_curr(),
+			this.tpd_weighted_avg_rates_NC(),
+			this.time_physicals_deposits_for_curr(),
+			this.tpd_weighted_avg_rates_FC(),
 			this.external_funding(),
 			this.national_curr(),
-			this.foreign_curr()
+			this.ef_weighted_avg_rates_NC(),
+			this.foreign_curr(),
+			this.ef_weighted_avg_rates_FC()
 		])
 		const capital = [
 			allActives,
@@ -619,15 +820,31 @@ class DashboardMonthlyMainClass extends MainClass {
 			demandLegalsDeposits,
 			savingLegalsDeposits,
 			savingLegalsDepositsNatCurr,
-			sldWeightedAvgRates,
+			sldWeightedAvgRatesNC,
+			savingLegalsDepositsForCurr,
+			sldWeightedAvgRatesFC,
 			timeLegalsDeposits,
+			timeLegalsDepositsNatCcurr,
+			tldWeightedAvgRatesNC,
+			timeLegalsDepositsForCcurr,
+			tldWeightedAvgRatesFC,
 			physicalsDeposits,
 			demandPhysicalsDeposits,
 			savingPhysicalsDeposits,
+			savingPhysicalsDepositsNatCurr,
+			spdWeightedAvgRatesNC,
+			savingPhysicalsDepositsForCurr,
+			spdWeightedAvgRatesFC,
 			timePhysicalsDeposits,
+			timePhysicalsDepositsNatCurr,
+			tpdWeightedAvgRatesNC,
+			timePhysicalsDepositsForCurr,
+			tpdWeightedAvgRatesFC,
 			externalFunding,
 			nationalCurr,
-			foreignCurr
+			efWeightedAvgRatesNC,
+			foreignCurr,
+			efWeightedAvgRatesFC
 		]
 		return {
 			// КАПИТАЛ
