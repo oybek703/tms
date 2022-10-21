@@ -384,6 +384,37 @@ class DashboardMonthlyMainClass extends MainClass {
 		}
 	}
 
+	dashboardLiquidityQuery = (
+		role:
+			| 'VLA_NAT'
+			| 'LCR_NAT'
+			| 'NSFR_FOR'
+			| 'VLA'
+			| 'NSFR'
+			| 'NSFR_NAT'
+			| 'VLA_FOR'
+			| 'LCR'
+			| 'LCR_FOR'
+	) => {
+		return () => {
+			const onlyTwo = `SELECT OPER_DAY AS DAT,
+															 PERCENT AS SUM
+												FROM   DASHBOARD_LIQUIDITY
+												WHERE  ROLE LIKE '${role}'
+															 AND OPER_DAY = TRUNC(TO_DATE('${this.firstDate}', 'DD.MM.YYYY'), 'MM')
+												UNION ALL
+												SELECT OPER_DAY AS DAT,
+															 PERCENT  AS SUM
+												FROM   DASHBOARD_LIQUIDITY
+												WHERE  ROLE LIKE '${role}'
+															 AND OPER_DAY = TRUNC(TO_DATE('${this.secondDate}', 'DD.MM.YYYY'), 'MM')`
+			// TODO left two queries must be done too
+			const all = onlyTwo
+			const month = onlyTwo
+			return this.chooseQuery(onlyTwo, all, month)
+		}
+	}
+
 	createData(
 		count: string,
 		state: string,
@@ -721,6 +752,66 @@ class DashboardMonthlyMainClass extends MainClass {
 		return this.createData('4.2.1', '-средневзвешенные процентные ставки', data, false, true)
 	} /*  -средневзвешенные процентные ставки */
 
+	async LCR_total() {
+		/* Коеффициент покрытия ликвидности (> 100 %) */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('LCR'), true)
+		return this.createData('5', 'Коеффициент покрытия ликвидности (> 100 %)', data, true, true)
+	} /*  Коеффициент покрытия ликвидности (> 100 %) */
+
+	async LCR_nat_curr() {
+		/* - в нац.валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('LCR_NAT'), true)
+		return this.createData('5.1', '- в нац.валюте', data, false, true)
+	} /*  - в нац.валюте */
+
+	async LCR_for_curr() {
+		/* - в иностранной валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('LCR_FOR'), true)
+		return this.createData('5.2', '- в иностранной валюте', data, false, true)
+	} /*  - в иностранной валюте */
+
+	async NSFR_total() {
+		/* Норма чистого стабилного фондирование (> 100 %) */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('NSFR'), true)
+		return this.createData('6', 'Норма чистого стабилного фондирование (> 100 %)', data, true, true)
+	} /*  Норма чистого стабилного фондирование (> 100 %) */
+
+	async NSFR_nat_curr() {
+		/* - в нац.валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('NSFR_NAT'), true)
+		return this.createData('6.1', '- в нац.валюте', data, false, true)
+	} /*  - в нац.валюте */
+
+	async NSFR_for_curr() {
+		/* - в иностранной валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('NSFR_FOR'), true)
+		return this.createData('6.2', '- в иностранной валюте', data, false, true)
+	} /*  - в иностранной валюте */
+
+	async VLA_total() {
+		/* Расчет коэффициента высоколиквыдных активов к всего актывам (> 10 %) */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('VLA'), true)
+		return this.createData(
+			'7',
+			'Расчет коэффициента высоколиквыдных активов к всего актывам (> 10 %)',
+			data,
+			true,
+			true
+		)
+	} /*  Расчет коэффициента высоколиквыдных активов к всего актывам (> 10 %) */
+
+	async VLA_nat_curr() {
+		/* - в нац.валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('VLA_NAT'), true)
+		return this.createData('7.1', '- в нац.валюте', data, false, true)
+	} /*  - в нац.валюте */
+
+	async VLA_for_curr() {
+		/* - в иностранной валюте */
+		const data = await this.getDataInDates('', this.dashboardLiquidityQuery('VLA_FOR'), true)
+		return this.createData('7.2', '- в иностранной валюте', data, false, true)
+	} /*  - в иностранной валюте */
+
 	async getRows() {
 		const [
 			allActives,
@@ -761,7 +852,16 @@ class DashboardMonthlyMainClass extends MainClass {
 			nationalCurr,
 			efWeightedAvgRatesNC,
 			foreignCurr,
-			efWeightedAvgRatesFC
+			efWeightedAvgRatesFC,
+			LCRTotal,
+			LCRNatCurr,
+			LCRForCurr,
+			NSFRTotal,
+			NSFRNatCurr,
+			NSFRForCurr,
+			VLATotal,
+			VLANatCurr,
+			VLAForCurr
 		] = await Promise.all([
 			this.all_actives(),
 			this.authorized_capital(),
@@ -801,7 +901,16 @@ class DashboardMonthlyMainClass extends MainClass {
 			this.national_curr(),
 			this.ef_weighted_avg_rates_NC(),
 			this.foreign_curr(),
-			this.ef_weighted_avg_rates_FC()
+			this.ef_weighted_avg_rates_FC(),
+			this.LCR_total(),
+			this.LCR_nat_curr(),
+			this.LCR_for_curr(),
+			this.NSFR_total(),
+			this.NSFR_nat_curr(),
+			this.NSFR_for_curr(),
+			this.VLA_total(),
+			this.VLA_nat_curr(),
+			this.VLA_for_curr()
 		])
 		const capital = [
 			allActives,
@@ -844,7 +953,16 @@ class DashboardMonthlyMainClass extends MainClass {
 			nationalCurr,
 			efWeightedAvgRatesNC,
 			foreignCurr,
-			efWeightedAvgRatesFC
+			efWeightedAvgRatesFC,
+			LCRTotal,
+			LCRNatCurr,
+			LCRForCurr,
+			NSFRTotal,
+			NSFRNatCurr,
+			NSFRForCurr,
+			VLATotal,
+			VLANatCurr,
+			VLAForCurr
 		]
 		return {
 			// КАПИТАЛ

@@ -73,7 +73,7 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 				<DeficitChart
 					series={foreignCurrency}
 					id={'for_value'}
-					title={'Сумма отклонения(дефицит) на конец месяца (Ин.вал. (USD екв.))'}
+					title={'Сумма отклонения (дефицит) на конец месяца (Ин.вал. (USD екв.))'}
 					categories={months.slice(0, 6)}
 				/>
 				<LcrAndNsfrTable data={nsfrData} month={months[1]} />
@@ -81,12 +81,12 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 					<DeficitChart
 						id={'nat_value'}
 						series={nationalCurrency}
-						title={'Сумма отклонения(дефицит) на конец месяца (Нац.вал. (UZS))'}
+						title={'Сумма отклонения (дефицит) на конец месяца (Нац.вал. (UZS))'}
 						categories={months.slice(0, 6)}
 					/>
 					<DeficitChart
 						id={'total_value'}
-						title={'Итого сумма отклонения(дефицит) на конец месяца'}
+						title={'Итого сумма отклонения (дефицит) на конец месяца'}
 						series={totalCurrency}
 						categories={months.slice(0, 6)}
 					/>
