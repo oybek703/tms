@@ -317,7 +317,7 @@ class FcrbMainClass extends MainClass {
 		const [
 			mfiTotal,
 			mfiPercents,
-			// treasuryTotal,
+			treasuryTotal,
 			treasuryPercents,
 			retailTotal,
 			retailPercents,
@@ -334,7 +334,7 @@ class FcrbMainClass extends MainClass {
 		] = await Promise.all([
 			this.mfi(),
 			this.mfi_percents(),
-			// this.treasury(),
+			this.treasury(),
 			this.treasury_percents(),
 			this.retail(),
 			this.retail_percents(),
@@ -353,7 +353,7 @@ class FcrbMainClass extends MainClass {
 		const retailData = { retailTotal, retailPercents }
 		const centralizedResourceBaseData = { capital, obligations }
 		// TODO treasuryTotal is calculated temporary
-		const treasuryTotal = obligations - (mfiTotal + retailTotal)
+		// const treasuryTotal = obligations - (mfiTotal + retailTotal)
 		const treasuryData = { treasuryTotal, treasuryPercents }
 		const portfolioData = {
 			otherActives,
