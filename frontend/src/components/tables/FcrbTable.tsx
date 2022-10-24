@@ -152,12 +152,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						<TableBody>
 							<TableRow>
 								<NoBorderCell colSpan={6} redbold="true" titlenumber="true" align="center">
-									<>
-										{formatNumber(
-											// mfiData['mfiTotal']
-											26238.5
-										)}
-									</>
+									<b>{formatNumber(mfiData['mfiTotal'])}</b>
 								</NoBorderCell>
 							</TableRow>
 							<TableRow>
@@ -197,12 +192,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						<TableBody>
 							<TableRow>
 								<NoBorderCell colSpan={6} redbold="true" titlenumber="true">
-									<b>
-										{formatNumber(
-											// treasuryData['treasuryTotal']
-											13426.3
-										)}
-									</b>
+									<b>{formatNumber(treasuryData['treasuryTotal'])}</b>
 								</NoBorderCell>
 							</TableRow>
 							<TableRow>
@@ -243,12 +233,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 						<TableBody>
 							<TableRow>
 								<NoBorderCell colSpan={6} redbold="true" titlenumber="true" align="center">
-									<b>
-										{formatNumber(
-											// retailData['retailTotal']
-											2488.8
-										)}
-									</b>
+									<b>{formatNumber(retailData['retailTotal'])}</b>
 								</NoBorderCell>
 							</TableRow>
 							<TableRow>
@@ -303,12 +288,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 										<b>КАПИТАЛ</b>
 									</NoBorderCell>
 									<NoBorderCell redbold="true" titlenumber="true" colSpan={2} align="left">
-										<b>
-											{formatNumber(
-												// centralizedResourceBaseData['capital']
-												6476.9
-											)}
-										</b>
+										<b>{formatNumber(centralizedResourceBaseData['capital'])}</b>
 									</NoBorderCell>
 								</TableRow>
 							</TableHead>
@@ -322,12 +302,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 										<b>ОБЯЗАТЕЛЬСТВА</b>
 									</NoBorderCell>
 									<NoBorderCell titlenumber="true" redbold="true" colSpan={2} align="left">
-										<b>
-											{formatNumber(
-												// centralizedResourceBaseData['obligations']
-												42153.6
-											)}
-										</b>
+										<b>{formatNumber(centralizedResourceBaseData['obligations'])}</b>
 									</NoBorderCell>
 								</TableRow>
 							</TableHead>
@@ -350,12 +325,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>другие активы</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" nowrap="true" morered="true" align="left">
-												<RedLightText>
-													{formatNumber(
-														// portfolioData['otherActives'])
-														8793.7
-													)}
-												</RedLightText>
+												<RedLightText>{formatNumber(portfolioData['otherActives'])}</RedLightText>
 											</NoBorderCell>
 										</TableRow>
 									</TableHead>
@@ -370,12 +340,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>инвестиции</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" morered="true" colSpan={3} align="left">
-												<RedLightText>
-													{formatNumber(
-														// portfolioData['investments']
-														745.7
-													)}
-												</RedLightText>
+												<RedLightText>{formatNumber(portfolioData['investments'])}</RedLightText>
 											</NoBorderCell>
 										</TableRow>
 									</TableHead>
@@ -390,12 +355,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>цен. бум. и меж. банк.</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" morered="true" colSpan={3} nowrap="true" align="left">
-												<RedLightText>
-													{formatNumber(
-														// portfolioData['billsAndInterbankDeposits']
-														3449.2
-													)}
-												</RedLightText>
+												<RedLightText>{formatNumber(portfolioData['billsAndInterbankDeposits'])}</RedLightText>
 											</NoBorderCell>
 										</TableRow>
 									</TableHead>
@@ -417,12 +377,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>кредитования + аккредитив</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" morered="true" nowrap="true" colSpan={3} align="left">
-												<RedLightText>
-													{formatNumber(
-														// portfolioData['creditingAndAccredetiv']
-														30843.3
-													)}
-												</RedLightText>
+												<RedLightText>{formatNumber(portfolioData['creditingAndAccredetiv'])}</RedLightText>
 											</NoBorderCell>
 										</TableRow>
 									</TableHead>
@@ -436,12 +391,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>розничное кредитования</b>
 											</NoBorderCell>
 											<NoBorderCell redbold="true" morered="true" nowrap="true" colSpan={3} align="left">
-												<RedLightText>
-													{formatNumber(
-														// portfolioData['retailLending']
-														4798.6
-													)}
-												</RedLightText>
+												<RedLightText>{formatNumber(portfolioData['retailLending'])}</RedLightText>
 											</NoBorderCell>
 										</TableRow>
 									</TableHead>
@@ -476,13 +426,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<b>
 													КАЗНАЧЕЙСКИЙ ПОРТФЕЛЬ
 													<NoBorderCell component="span" titlenumber="true" redbold="true">
-														&nbsp;{' '}
-														<b>
-															{formatNumber(
-																// portfolioData['treasuryPortfolio']
-																4194.9
-															)}
-														</b>
+														&nbsp; <b>{formatNumber(portfolioData['treasuryPortfolio'])}</b>
 													</NoBorderCell>
 												</b>
 											</NoBorderCell>
@@ -510,12 +454,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 										БАЛАНСОВЫЕ АКТИВЫ
 										<NoBorderCell component="span" titlenumber="true" redbold="true">
 											&nbsp;
-											<b>
-												{formatNumber(
-													// portfolioData['balanceActive']
-													48630.5
-												)}
-											</b>
+											<b>{formatNumber(portfolioData['balanceActive'])}</b>
 										</NoBorderCell>
 									</b>
 								</NoBorderCell>

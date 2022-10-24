@@ -186,17 +186,12 @@ class FcrbMainClass extends MainClass {
 	async mfi_percents() {
 		/* МФИ Проценты */
 		// TODO temporary data
-		// const data = await this.getDataInDates(
-		//     '',
-		//     false,
-		//     this.mfiPercentsQuery.bind(this, this.date),
-		//     true
-		// )
-		return Promise.resolve([
-			{ CURRENCY_NAME: 'UZS', PERCENT: 18.7 },
-			{ CURRENCY_NAME: 'USD', PERCENT: 5.69 },
-			{ CURRENCY_NAME: 'EUR', PERCENT: 4.91 }
-		])
+		return await this.getDataInDates('', this.mfiPercentsQuery.bind(this, this.date), true)
+		// return Promise.resolve([
+		// 	{ CURRENCY_NAME: 'UZS', PERCENT: 18.7 },
+		// 	{ CURRENCY_NAME: 'USD', PERCENT: 5.69 },
+		// 	{ CURRENCY_NAME: 'EUR', PERCENT: 4.91 }
+		// ])
 	} /* МФИ Проценты */
 
 	async treasury() {
@@ -310,17 +305,12 @@ class FcrbMainClass extends MainClass {
 	async funding_avg_rate_percents() {
 		/* *Средняя ставка всего фондирования Проценты */
 		// TODO temporary data
-		// return await this.getDataInDates(
-		//     '',
-		//     false,
-		//     this.fundingAvgRatePercents,
-		//     true
-		// )
-		return Promise.resolve([
-			{ CURRENCY_NAME: 'UZS', PERCENT: 7.8 },
-			{ CURRENCY_NAME: 'USD', PERCENT: 3.37 },
-			{ CURRENCY_NAME: 'EUR', PERCENT: 3.04 }
-		])
+		return await this.getDataInDates('', this.fundingAvgRatePercents, true)
+		// return Promise.resolve([
+		// 	{ CURRENCY_NAME: 'UZS', PERCENT: 7.8 },
+		// 	{ CURRENCY_NAME: 'USD', PERCENT: 3.37 },
+		// 	{ CURRENCY_NAME: 'EUR', PERCENT: 3.04 }
+		// ])
 	} /* *Средняя ставка всего фондирования Проценты */
 
 	async getRows() {
