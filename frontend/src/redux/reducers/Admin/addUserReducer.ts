@@ -1,4 +1,4 @@
-import { ADDUSER_START, ADDUSER_SUCCESS, ADDUSER_FAIL, ADDUSER_REFRESH } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,13 +9,13 @@ const initialState = {
 function addUser(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case ADDUSER_START:
+		case ActionsTypes.ADDUSER_START:
 			return { loading: true, state: 'start', error: null }
-		case ADDUSER_SUCCESS:
+		case ActionsTypes.ADDUSER_SUCCESS:
 			return { loading: false, state: payload, error: null }
-		case ADDUSER_FAIL:
+		case ActionsTypes.ADDUSER_FAIL:
 			return { error: payload, loading: false, state: 'error' }
-		case ADDUSER_REFRESH:
+		case ActionsTypes.ADDUSER_REFRESH:
 			return { error: payload, loading: false, state: 'ended' }
 		default:
 			return state

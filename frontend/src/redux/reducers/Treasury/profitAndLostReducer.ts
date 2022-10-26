@@ -1,4 +1,4 @@
-import { PROFITANDLOST_FAIL, PROFITANDLOST_START, PROFITANDLOST_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function profitAndLost(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case PROFITANDLOST_START:
+		case ActionsTypes.PROFITANDLOST_START:
 			return { loading: true, profitandlost: [], error: null }
-		case PROFITANDLOST_SUCCESS:
+		case ActionsTypes.PROFITANDLOST_SUCCESS:
 			return { loading: false, profitandlost: payload, error: null }
-		case PROFITANDLOST_FAIL:
+		case ActionsTypes.PROFITANDLOST_FAIL:
 			return { error: payload, loading: false, profitandlost: [] }
 		default:
 			return state

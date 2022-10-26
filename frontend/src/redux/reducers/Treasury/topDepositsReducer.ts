@@ -1,4 +1,4 @@
-import { TOPDEPOSITS_FAIL, TOPDEPOSITS_START, TOPDEPOSITS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function topDeposits(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case TOPDEPOSITS_START:
+		case ActionsTypes.TOPDEPOSITS_START:
 			return { ...state, loading: true, error: null }
-		case TOPDEPOSITS_SUCCESS:
+		case ActionsTypes.TOPDEPOSITS_SUCCESS:
 			return { loading: false, error: null, topDeposits: payload }
-		case TOPDEPOSITS_FAIL:
+		case ActionsTypes.TOPDEPOSITS_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

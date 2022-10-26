@@ -1,4 +1,4 @@
-import { GAP_LAST_UPDATE_FAIL, GAP_LAST_UPDATE_START, GAP_LAST_UPDATE_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function lastGapUpdate(state = initialState, action: any) {
 	const { payload, type } = action
 	switch (type) {
-		case GAP_LAST_UPDATE_START:
+		case ActionsTypes.GAP_LAST_UPDATE_START:
 			return { ...state, loading: true, error: null }
-		case GAP_LAST_UPDATE_SUCCESS:
+		case ActionsTypes.GAP_LAST_UPDATE_SUCCESS:
 			return { loading: false, error: null, lastGapUpdate: payload }
-		case GAP_LAST_UPDATE_FAIL:
+		case ActionsTypes.GAP_LAST_UPDATE_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

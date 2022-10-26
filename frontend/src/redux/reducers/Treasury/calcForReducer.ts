@@ -1,4 +1,4 @@
-import { CALCFOR_FAIL, CALCFOR_START, CALCFOR_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	calcfor: [],
@@ -9,11 +9,11 @@ const initialState = {
 function calcFor(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case CALCFOR_START:
+		case ActionsTypes.CALCFOR_START:
 			return { loading: true, error: null, calcfor: [] }
-		case CALCFOR_SUCCESS:
+		case ActionsTypes.CALCFOR_SUCCESS:
 			return { loading: false, error: null, calcfor: payload }
-		case CALCFOR_FAIL:
+		case ActionsTypes.CALCFOR_FAIL:
 			return { loading: false, error: payload, calcfor: [] }
 		default:
 			return state

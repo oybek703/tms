@@ -1,4 +1,4 @@
-import { GETUSER_START, GETUSER_FAIL, GETUSER_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function getUser(state = initialState, action: any) {
 	const { payload, type } = action
 	switch (type) {
-		case GETUSER_START:
+		case ActionsTypes.GETUSER_START:
 			return { loading: true, error: null, user: {} }
-		case GETUSER_SUCCESS:
+		case ActionsTypes.GETUSER_SUCCESS:
 			return { loading: false, error: null, user: payload }
-		case GETUSER_FAIL:
+		case ActionsTypes.GETUSER_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

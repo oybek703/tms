@@ -1,4 +1,4 @@
-import { INTERBANKDEPOSITS_FAIL, INTERBANKDEPOSITS_START, INTERBANKDEPOSITS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -14,11 +14,11 @@ const initialState = {
 function interbankdeposits(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case INTERBANKDEPOSITS_START:
+		case ActionsTypes.INTERBANKDEPOSITS_START:
 			return { ...state, loading: true, error: null }
-		case INTERBANKDEPOSITS_SUCCESS:
+		case ActionsTypes.INTERBANKDEPOSITS_SUCCESS:
 			return { loading: false, error: null, interbankdeposits: payload }
-		case INTERBANKDEPOSITS_FAIL:
+		case ActionsTypes.INTERBANKDEPOSITS_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

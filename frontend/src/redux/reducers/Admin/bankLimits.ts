@@ -1,4 +1,4 @@
-import { BANKLIMITS_FAIL, BANKLIMITS_START, BANKLIMITS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	bankLimits: {},
@@ -9,11 +9,11 @@ const initialState = {
 function bankLimits(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case BANKLIMITS_START:
+		case ActionsTypes.BANKLIMITS_START:
 			return { loading: true, error: null, bankLimits: [] }
-		case BANKLIMITS_SUCCESS:
+		case ActionsTypes.BANKLIMITS_SUCCESS:
 			return { loading: false, error: null, bankLimits: payload }
-		case BANKLIMITS_FAIL:
+		case ActionsTypes.BANKLIMITS_FAIL:
 			return { loading: false, error: payload, bankLimits: [] }
 		default:
 			return state

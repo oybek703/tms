@@ -1,64 +1,8 @@
-import {
-	ADDUSER_FAIL,
-	ADDUSER_REFRESH,
-	ADDUSER_START,
-	ADDUSER_SUCCESS,
-	BANKLIMITS_FAIL,
-	BANKLIMITS_START,
-	BANKLIMITS_SUCCESS,
-	CHANGE_DATE,
-	CORRESPONDENT_CURRENT_FAIL,
-	CORRESPONDENT_CURRENT_START,
-	CORRESPONDENT_CURRENT_SUCCESS,
-	CORRESPONDENT_CURRENT_UPDATE,
-	DASHBOARD_ACTIVE_TAB_CHANGE,
-	DASHBOARDMONTHLY_FAIL,
-	DASHBOARDMONTHLY_START,
-	DASHBOARDMONTHLY_SUCCESS,
-	DELETE_USER,
-	GAP_FAIL,
-	GAP_START,
-	GAP_SUCCESS,
-	GAPMANUAL_FAIL,
-	GAPMANUAL_START,
-	GAPMANUAL_SUCCESS,
-	LAST_UPDATE_FAIL,
-	LAST_UPDATE_START,
-	LAST_UPDATE_SUCCESS,
-	LIQUIDITY_CURRENT_FAIL,
-	LIQUIDITY_CURRENT_START,
-	LIQUIDITY_CURRENT_SUCCESS,
-	LIQUIDITY_CURRENT_UPDATE,
-	LOGIN_FAIL,
-	LOGIN_START,
-	LOGIN_SUCCESS,
-	LOGOUT,
-	NOSTROMATRIX_FAIL,
-	NOSTROMATRIX_START,
-	NOSTROMATRIX_SUCCESS,
-	OPERATIONAL_DAYS_FAIL,
-	OPERATIONAL_DAYS_START,
-	OPERATIONAL_DAYS_SUCCESS,
-	UPDATE_CBN,
-	USER_EXITED,
-	USERS_FAIL,
-	USERS_START,
-	USERS_SUCCESS,
-	GETUSER_START,
-	GETUSER_FAIL,
-	GETUSER_SUCCESS,
-	EDITUSER_START,
-	EDITUSER_SUCCESS,
-	EDITUSER_REFRESH,
-	EDITUSER_FAIL,
-	GAP_LAST_UPDATE_START,
-	GAP_LAST_UPDATE_SUCCESS,
-	GAP_LAST_UPDATE_FAIL
-} from './types'
 import { formatOneDate, getErrorMessage } from '../../utils'
 import { withToken } from '../../utils/axiosUtils'
 import { Dispatch } from 'redux'
 import axios from 'axios'
+import ActionsTypes from './types'
 
 async function checkCashOrSave(date: string, property = 'capital', dispatch: Dispatch) {
 	const queryDate = formatOneDate(date)
@@ -175,7 +119,7 @@ export function changeReportDate(value: string) {
 	return function (dispatch: Dispatch) {
 		if (Boolean(value)) {
 			localStorage.setItem('reportDate', value)
-			dispatch({ type: CHANGE_DATE, payload: value })
+			dispatch({ type: ActionsTypes.CHANGE_DATE, payload: value })
 		}
 	}
 }
@@ -189,17 +133,17 @@ export function fetchCorrespondent(date: string) {
 export function fetchDashboardMonthly(firstDate: string, secondDate: string, dateOption: string) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: DASHBOARDMONTHLY_START })
+			dispatch({ type: ActionsTypes.DASHBOARDMONTHLY_START })
 			const {
 				data: { rows }
 			} = await axios.get(
 				`/api/dashboardmonthly?firstDate=${firstDate}&secondDate=${secondDate}&dateOption=${dateOption}`,
 				withToken()
 			)
-			dispatch({ type: DASHBOARDMONTHLY_SUCCESS, payload: rows })
+			dispatch({ type: ActionsTypes.DASHBOARDMONTHLY_SUCCESS, payload: rows })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: DASHBOARDMONTHLY_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.DASHBOARDMONTHLY_FAIL, payload: message })
 		}
 	}
 }
@@ -225,14 +169,14 @@ export function fetchFcrb(date: string) {
 export function fetchNostroMatrix(firstDate: string, secondDate?: string) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: NOSTROMATRIX_START })
+			dispatch({ type: ActionsTypes.NOSTROMATRIX_START })
 			const {
 				data: { rows }
 			} = await axios.get(`/api/nostroMatrix?firstDate=${firstDate}&secondDate=${secondDate}`, withToken())
-			dispatch({ type: NOSTROMATRIX_SUCCESS, payload: rows })
+			dispatch({ type: ActionsTypes.NOSTROMATRIX_SUCCESS, payload: rows })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: NOSTROMATRIX_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.NOSTROMATRIX_FAIL, payload: message })
 		}
 	}
 }
@@ -258,14 +202,14 @@ export function fetchCurrencyPosition(date: string) {
 export function getOperDays() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: OPERATIONAL_DAYS_START })
+			dispatch({ type: ActionsTypes.OPERATIONAL_DAYS_START })
 			const {
 				data: { dates }
 			} = await axios.get(`/api/operDays`)
-			dispatch({ type: OPERATIONAL_DAYS_SUCCESS, payload: dates })
+			dispatch({ type: ActionsTypes.OPERATIONAL_DAYS_SUCCESS, payload: dates })
 		} catch (e: any) {
 			const error = e.toString()
-			dispatch({ type: OPERATIONAL_DAYS_FAIL, payload: error })
+			dispatch({ type: ActionsTypes.OPERATIONAL_DAYS_FAIL, payload: error })
 		}
 	}
 }
@@ -273,14 +217,14 @@ export function getOperDays() {
 export function getLastUpdateTime() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: LAST_UPDATE_START })
+			dispatch({ type: ActionsTypes.LAST_UPDATE_START })
 			const {
 				data: { lastUpdate }
 			} = await axios.get(`/api/operDays/lastUpdate`)
-			dispatch({ type: LAST_UPDATE_SUCCESS, payload: lastUpdate })
+			dispatch({ type: ActionsTypes.LAST_UPDATE_SUCCESS, payload: lastUpdate })
 		} catch (e: any) {
 			const error = e.toString()
-			dispatch({ type: LAST_UPDATE_FAIL, payload: error })
+			dispatch({ type: ActionsTypes.LAST_UPDATE_FAIL, payload: error })
 		}
 	}
 }
@@ -288,7 +232,7 @@ export function getLastUpdateTime() {
 export function signInUser({ username, password }: { username: string; password: string }) {
 	return async (dispatch: Dispatch) => {
 		try {
-			dispatch({ type: LOGIN_START })
+			dispatch({ type: ActionsTypes.LOGIN_START })
 			const { data } = await axios.post(`/api/auth/login`, { username, password })
 			const userData = {
 				username,
@@ -297,10 +241,10 @@ export function signInUser({ username, password }: { username: string; password:
 				pages: data.pages
 			}
 			localStorage.setItem('user', JSON.stringify(userData))
-			dispatch({ type: LOGIN_SUCCESS, payload: userData })
+			dispatch({ type: ActionsTypes.LOGIN_SUCCESS, payload: userData })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: LOGIN_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.LOGIN_FAIL, payload: message })
 		}
 	}
 }
@@ -308,15 +252,15 @@ export function signInUser({ username, password }: { username: string; password:
 export function addUser(formData: any) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: ADDUSER_START })
+			dispatch({ type: ActionsTypes.ADDUSER_START })
 			await axios.post(`/api/auth/adduser`, formData, withToken())
-			dispatch({ type: ADDUSER_SUCCESS, payload: 'added' })
+			dispatch({ type: ActionsTypes.ADDUSER_SUCCESS, payload: 'added' })
 			setTimeout(function () {
-				dispatch({ type: ADDUSER_REFRESH })
+				dispatch({ type: ActionsTypes.ADDUSER_REFRESH })
 			}, 500)
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: ADDUSER_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.ADDUSER_FAIL, payload: message })
 		}
 	}
 }
@@ -324,15 +268,15 @@ export function addUser(formData: any) {
 export function editUser(ID: any, formData: any) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: EDITUSER_START })
+			dispatch({ type: ActionsTypes.EDITUSER_START })
 			await axios.put(`/api/auth/users/${ID}`, formData, withToken())
-			dispatch({ type: EDITUSER_SUCCESS, payload: 'edited' })
+			dispatch({ type: ActionsTypes.EDITUSER_SUCCESS, payload: 'edited' })
 			setTimeout(function () {
-				dispatch({ type: EDITUSER_REFRESH })
+				dispatch({ type: ActionsTypes.EDITUSER_REFRESH })
 			}, 500)
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: EDITUSER_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.EDITUSER_FAIL, payload: message })
 		}
 	}
 }
@@ -341,7 +285,7 @@ export function deleteUserByName(username: string) {
 	return async function (dispatch: Dispatch) {
 		try {
 			await axios.delete(`/api/auth/users/${username}`, withToken())
-			dispatch({ type: DELETE_USER })
+			dispatch({ type: ActionsTypes.DELETE_USER })
 		} catch (e: any) {
 			console.log(e)
 		}
@@ -351,20 +295,20 @@ export function deleteUserByName(username: string) {
 export function logout() {
 	return function (dispatch: Dispatch) {
 		localStorage.removeItem('user')
-		dispatch({ type: LOGOUT, payload: USER_EXITED })
+		dispatch({ type: ActionsTypes.LOGOUT, payload: ActionsTypes.USER_EXITED })
 	}
 }
 
 export function fetchUsers() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: USERS_START })
+			dispatch({ type: ActionsTypes.USERS_START })
 			const {
 				data: { users }
 			} = await axios.get('/api/auth/users', withToken())
-			dispatch({ type: USERS_SUCCESS, payload: users })
+			dispatch({ type: ActionsTypes.USERS_SUCCESS, payload: users })
 		} catch (e: any) {
-			dispatch({ type: USERS_FAIL, payload: e })
+			dispatch({ type: ActionsTypes.USERS_FAIL, payload: e })
 		}
 	}
 }
@@ -372,13 +316,13 @@ export function fetchUsers() {
 export function getUser(id: number) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: GETUSER_START })
+			dispatch({ type: ActionsTypes.GETUSER_START })
 			const {
 				data: { user }
 			} = await axios.get(`/api/auth/users/${id}`, withToken())
-			dispatch({ type: GETUSER_SUCCESS, payload: user })
+			dispatch({ type: ActionsTypes.GETUSER_SUCCESS, payload: user })
 		} catch (e: any) {
-			dispatch({ type: GETUSER_FAIL, payload: e })
+			dispatch({ type: ActionsTypes.GETUSER_FAIL, payload: e })
 		}
 	}
 }
@@ -386,13 +330,13 @@ export function getUser(id: number) {
 export function fetchBankLimits() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: BANKLIMITS_START })
+			dispatch({ type: ActionsTypes.BANKLIMITS_START })
 			const {
 				data: { data }
 			} = await axios.get('/api/banklimits', withToken())
-			dispatch({ type: BANKLIMITS_SUCCESS, payload: data })
+			dispatch({ type: ActionsTypes.BANKLIMITS_SUCCESS, payload: data })
 		} catch (e: any) {
-			dispatch({ type: BANKLIMITS_FAIL, payload: e })
+			dispatch({ type: ActionsTypes.BANKLIMITS_FAIL, payload: e })
 		}
 	}
 }
@@ -400,14 +344,14 @@ export function fetchBankLimits() {
 export function fetchGapManual(forEditing = false) {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: GAPMANUAL_START })
+			dispatch({ type: ActionsTypes.GAPMANUAL_START })
 			const {
 				data: { data }
 			} = await axios.get(`/api/gapSimulation?forEditing=${forEditing}`, withToken())
-			dispatch({ type: GAPMANUAL_SUCCESS, payload: data })
+			dispatch({ type: ActionsTypes.GAPMANUAL_SUCCESS, payload: data })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: GAPMANUAL_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.GAPMANUAL_FAIL, payload: message })
 		}
 	}
 }
@@ -415,21 +359,21 @@ export function fetchGapManual(forEditing = false) {
 export function fetchCorrespondentCurrent() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: CORRESPONDENT_CURRENT_START })
+			dispatch({ type: ActionsTypes.CORRESPONDENT_CURRENT_START })
 			const {
 				data: { rows }
 			} = await axios.get('/api/correspondent/current_state', withToken())
-			dispatch({ type: CORRESPONDENT_CURRENT_SUCCESS, payload: rows })
+			dispatch({ type: ActionsTypes.CORRESPONDENT_CURRENT_SUCCESS, payload: rows })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: CORRESPONDENT_CURRENT_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.CORRESPONDENT_CURRENT_FAIL, payload: message })
 		}
 	}
 }
 
 export function correspondentCurrentUpdate(state: any) {
 	return {
-		type: CORRESPONDENT_CURRENT_UPDATE,
+		type: ActionsTypes.CORRESPONDENT_CURRENT_UPDATE,
 		payload: state
 	}
 }
@@ -437,21 +381,21 @@ export function correspondentCurrentUpdate(state: any) {
 export function fetchLiquidityCurrent() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: LIQUIDITY_CURRENT_START })
+			dispatch({ type: ActionsTypes.LIQUIDITY_CURRENT_START })
 			const {
 				data: { rows }
 			} = await axios.get('/api/liquidity/current_state', withToken())
-			dispatch({ type: LIQUIDITY_CURRENT_SUCCESS, payload: rows })
+			dispatch({ type: ActionsTypes.LIQUIDITY_CURRENT_SUCCESS, payload: rows })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: LIQUIDITY_CURRENT_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.LIQUIDITY_CURRENT_FAIL, payload: message })
 		}
 	}
 }
 
 export function liquidityCurrentUpdate(state: any) {
 	return {
-		type: LIQUIDITY_CURRENT_UPDATE,
+		type: ActionsTypes.LIQUIDITY_CURRENT_UPDATE,
 		payload: state
 	}
 }
@@ -459,14 +403,14 @@ export function liquidityCurrentUpdate(state: any) {
 export function fetchGap() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: GAP_START })
+			dispatch({ type: ActionsTypes.GAP_START })
 			const {
 				data: { rows }
 			} = await axios.get('/api/gap', withToken())
-			dispatch({ type: GAP_SUCCESS, payload: rows })
+			dispatch({ type: ActionsTypes.GAP_SUCCESS, payload: rows })
 		} catch (e: any) {
 			const message = getErrorMessage(e)
-			dispatch({ type: GAP_FAIL, payload: message })
+			dispatch({ type: ActionsTypes.GAP_FAIL, payload: message })
 		}
 	}
 }
@@ -474,14 +418,14 @@ export function fetchGap() {
 export function getLastGapUpdate() {
 	return async function (dispatch: Dispatch) {
 		try {
-			dispatch({ type: GAP_LAST_UPDATE_START })
+			dispatch({ type: ActionsTypes.GAP_LAST_UPDATE_START })
 			const {
 				data: { lastGapUpdate }
 			} = await axios.get(`/api/gap/lastGapUpdate`, withToken())
-			dispatch({ type: GAP_LAST_UPDATE_SUCCESS, payload: lastGapUpdate })
+			dispatch({ type: ActionsTypes.GAP_LAST_UPDATE_SUCCESS, payload: lastGapUpdate })
 		} catch (e: any) {
 			const error = getErrorMessage(e)
-			dispatch({ type: GAP_LAST_UPDATE_FAIL, payload: error })
+			dispatch({ type: ActionsTypes.GAP_LAST_UPDATE_FAIL, payload: error })
 		}
 	}
 }
@@ -490,7 +434,7 @@ export function updateCBN(data: any) {
 	return async function (dispatch: Dispatch) {
 		try {
 			await axios.put(`/api/calcfor/updatecbn`, data, withToken())
-			dispatch({ type: UPDATE_CBN })
+			dispatch({ type: ActionsTypes.UPDATE_CBN })
 		} catch (e: any) {
 			console.log(e)
 		}
@@ -500,6 +444,6 @@ export function updateCBN(data: any) {
 export function updateDashboardActiveTab(newTab = 0) {
 	return function (dispatch: Dispatch) {
 		localStorage.setItem('dashboard_active_tab', String(newTab))
-		dispatch({ type: DASHBOARD_ACTIVE_TAB_CHANGE, payload: newTab })
+		dispatch({ type: ActionsTypes.DASHBOARD_ACTIVE_TAB_CHANGE, payload: newTab })
 	}
 }

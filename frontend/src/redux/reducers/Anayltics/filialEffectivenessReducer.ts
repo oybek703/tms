@@ -1,4 +1,4 @@
-import { FILIALEFFECTIVENESS_FAIL, FILIALEFFECTIVENESS_START, FILIALEFFECTIVENESS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	filialEffectiveness: [],
@@ -9,11 +9,11 @@ const initialState = {
 function filialEffectiveness(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case FILIALEFFECTIVENESS_START:
+		case ActionsTypes.FILIALEFFECTIVENESS_START:
 			return { loading: true, error: null, filialEffectiveness: [] }
-		case FILIALEFFECTIVENESS_SUCCESS:
+		case ActionsTypes.FILIALEFFECTIVENESS_SUCCESS:
 			return { loading: false, error: null, filialEffectiveness: payload }
-		case FILIALEFFECTIVENESS_FAIL:
+		case ActionsTypes.FILIALEFFECTIVENESS_FAIL:
 			return { loading: false, error: payload, filialEffectiveness: [] }
 		default:
 			return state

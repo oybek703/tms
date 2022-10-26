@@ -1,4 +1,4 @@
-import { GAP_FAIL, GAP_START, GAP_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -16,11 +16,11 @@ const initialState = {
 function gap(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case GAP_START:
+		case ActionsTypes.GAP_START:
 			return { loading: true, gap: {}, error: null }
-		case GAP_SUCCESS:
+		case ActionsTypes.GAP_SUCCESS:
 			return { loading: false, gap: payload, error: null }
-		case GAP_FAIL:
+		case ActionsTypes.GAP_FAIL:
 			return { error: payload, loading: false, gap: {} }
 		default:
 			return state

@@ -1,4 +1,4 @@
-import { EDITUSER_START, EDITUSER_SUCCESS, EDITUSER_FAIL, EDITUSER_REFRESH } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,13 +9,13 @@ const initialState = {
 function editUser(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case EDITUSER_START:
+		case ActionsTypes.EDITUSER_START:
 			return { loading: true, state: 'start', error: null }
-		case EDITUSER_SUCCESS:
+		case ActionsTypes.EDITUSER_SUCCESS:
 			return { loading: false, state: payload, error: null }
-		case EDITUSER_FAIL:
+		case ActionsTypes.EDITUSER_FAIL:
 			return { error: payload, loading: false, state: 'error' }
-		case EDITUSER_REFRESH:
+		case ActionsTypes.EDITUSER_REFRESH:
 			return { error: payload, loading: false, state: 'ended' }
 		default:
 			return state

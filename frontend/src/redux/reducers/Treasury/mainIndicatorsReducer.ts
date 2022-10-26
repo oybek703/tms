@@ -1,4 +1,4 @@
-import { MAININDICATORS_FAIL, MAININDICATORS_START, MAININDICATORS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function mainIndicators(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case MAININDICATORS_START:
+		case ActionsTypes.MAININDICATORS_START:
 			return { loading: true, mainIndicators: [], error: null }
-		case MAININDICATORS_SUCCESS:
+		case ActionsTypes.MAININDICATORS_SUCCESS:
 			return { loading: false, mainIndicators: payload, error: null }
-		case MAININDICATORS_FAIL:
+		case ActionsTypes.MAININDICATORS_FAIL:
 			return { error: payload, loading: false, mainIndicators: [] }
 		default:
 			return state

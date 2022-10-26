@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import store from '../redux/store'
-import { LOGOUT } from '../redux/actions/types'
+import ActionsTypes from '../redux/actions/types'
 
 axios.interceptors.request.use(
 	function (config: AxiosRequestConfig) {
@@ -26,7 +26,7 @@ axios.interceptors.response.use(
 		if (status === 440) {
 			localStorage.clear()
 			window.location.reload()
-			store.dispatch({ type: LOGOUT })
+			store.dispatch({ type: ActionsTypes.LOGOUT })
 		}
 		return Promise.reject(error)
 	}

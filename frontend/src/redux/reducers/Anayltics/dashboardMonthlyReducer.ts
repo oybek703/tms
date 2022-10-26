@@ -1,4 +1,4 @@
-import { DASHBOARDMONTHLY_FAIL, DASHBOARDMONTHLY_START, DASHBOARDMONTHLY_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,11 +9,11 @@ const initialState = {
 function dashboardMonthly(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case DASHBOARDMONTHLY_START:
+		case ActionsTypes.DASHBOARDMONTHLY_START:
 			return { ...state, loading: true, error: null }
-		case DASHBOARDMONTHLY_SUCCESS:
+		case ActionsTypes.DASHBOARDMONTHLY_SUCCESS:
 			return { loading: false, error: null, dashboardMonthly: payload }
-		case DASHBOARDMONTHLY_FAIL:
+		case ActionsTypes.DASHBOARDMONTHLY_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

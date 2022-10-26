@@ -1,4 +1,4 @@
-import { TIMEDEPOSITS_FAIL, TIMEDEPOSITS_START, TIMEDEPOSITS_SUCCESS } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -13,11 +13,11 @@ const initialState = {
 function timeDeposits(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case TIMEDEPOSITS_START:
+		case ActionsTypes.TIMEDEPOSITS_START:
 			return { ...state, loading: true, error: null }
-		case TIMEDEPOSITS_SUCCESS:
+		case ActionsTypes.TIMEDEPOSITS_SUCCESS:
 			return { loading: false, error: null, timeDeposits: payload }
-		case TIMEDEPOSITS_FAIL:
+		case ActionsTypes.TIMEDEPOSITS_FAIL:
 			return { ...state, loading: false, error: payload }
 		default:
 			return state

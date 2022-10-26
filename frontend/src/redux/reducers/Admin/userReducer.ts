@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOGOUT } from '../../actions/types'
+import ActionsTypes from '../../actions/types'
 
 const initialState = {
 	loading: false,
@@ -9,13 +9,13 @@ const initialState = {
 function auth(state = initialState, action: any) {
 	const { type, payload } = action
 	switch (type) {
-		case LOGIN_START:
+		case ActionsTypes.LOGIN_START:
 			return { loading: true, user: {}, error: null }
-		case LOGIN_SUCCESS:
+		case ActionsTypes.LOGIN_SUCCESS:
 			return { loading: false, user: payload, error: null }
-		case LOGIN_FAIL:
+		case ActionsTypes.LOGIN_FAIL:
 			return { error: payload, loading: false, user: {} }
-		case LOGOUT:
+		case ActionsTypes.LOGOUT:
 			return { error: null, loading: false, user: {} }
 		default:
 			return state
