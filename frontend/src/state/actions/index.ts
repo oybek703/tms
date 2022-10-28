@@ -1,24 +1,22 @@
-import { formatOneDate, getErrorMessage } from '../../utils'
+import { getErrorMessage } from '../../utils'
 import { withToken } from '../../utils/axiosUtils'
 import { Dispatch } from 'redux'
 import axios from 'axios'
 import ActionsTypes from './types'
 
 async function checkCashOrSave(date: string, property = 'capital', dispatch: Dispatch) {
-	const queryDate = formatOneDate(date)
-	// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 	const cacheData = JSON.parse(<string>localStorage.getItem(property))
 	const action = `${property.toUpperCase()}_`
 	try {
 		if (Boolean(cacheData)) {
-			if (queryDate === cacheData.date) {
+			if (date === cacheData.date) {
 				dispatch({ type: `${action}SUCCESS`, payload: cacheData.data })
 			} else {
 				dispatch({ type: `${action}START` })
 				const {
 					data: { rows }
 				} = await axios.get(`/api/${property}?date=${date}`, withToken())
-				const newCashData = { date: queryDate, data: rows }
+				const newCashData = { date: date, data: rows }
 				localStorage.setItem(property, JSON.stringify(newCashData))
 				dispatch({ type: `${action}SUCCESS`, payload: rows })
 			}
@@ -27,7 +25,7 @@ async function checkCashOrSave(date: string, property = 'capital', dispatch: Dis
 			const {
 				data: { rows }
 			} = await axios.get(`/api/${property}?date=${date}`, withToken())
-			const newCashData = { date: queryDate, data: rows }
+			const newCashData = { date: date, data: rows }
 			localStorage.setItem(property, JSON.stringify(newCashData))
 			dispatch({ type: `${action}SUCCESS`, payload: rows })
 		}

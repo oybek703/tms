@@ -3,8 +3,9 @@ import { Link, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Spaces from '../../helpers/FormattedCell/Spaces'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	root: {
 		display: 'flex',
 		alignItems: 'center',

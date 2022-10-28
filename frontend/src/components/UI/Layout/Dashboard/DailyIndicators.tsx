@@ -8,10 +8,11 @@ import FakeSuspense from '../../helpers/FakeSuspense'
 import LiquidityPoints from '../../../charts/Dashboard/DailyIndicators/LiquidityPoints'
 import Position from './DashboardCurrencyRates/Position'
 import CurrencyPositionChart from '../../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
-import { getDashboardLiquidityIndicator } from '../../../../utils'
+import { getDashboardLiquidityIndicator, mergeStyles } from '../../../../utils'
 import globalStyles from '../../../../styles/globalStyles'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	liqRate: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(4, 1fr)',
@@ -80,7 +81,7 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 				container
 				justifyContent="center"
 				component={Paper}
-				sx={{ ...globalStyles.oneRowTitle, ...globalStyles.marginBottom10 }}
+				sx={mergeStyles(globalStyles.oneRowTitle, globalStyles.marginBottom10)}
 			>
 				Валютные позиции
 			</Grid>

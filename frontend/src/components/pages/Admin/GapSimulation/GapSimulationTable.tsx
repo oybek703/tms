@@ -4,7 +4,7 @@ import TableRow from '@mui/material/TableRow'
 import { v4 as uuid } from 'uuid'
 import TableCell from '@mui/material/TableCell'
 import { GapTableHead, TotalOrBoldRow, VerticalColumn } from '../../../UI/Layout/GapHelpers'
-import { formatNumber } from '../../../../utils'
+import { formatNumber, mergeStyles } from '../../../../utils'
 import globalStyles from '../../../../styles/globalStyles'
 
 const colNames = [
@@ -62,8 +62,7 @@ const EditableCell: React.FC<EditableCellProps> = function ({
 		<TableCell
 			sx={{
 				borderRight: propName === 'EUR' ? '3px solid #7794aa' : 'default',
-				...globalStyles.noWrap,
-				...globalStyles.dottedBorder
+				...mergeStyles(globalStyles.noWrap, globalStyles.dottedBorder)
 			}}
 			data-cellinfo={dataCellInfo}
 			onClick={handleEditClick}

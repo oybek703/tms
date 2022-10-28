@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { v4 as uuid } from 'uuid'
 import TableCell from '@mui/material/TableCell'
-import { formatNumber } from '../../../../utils'
+import { formatNumber, mergeStyles } from '../../../../utils'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
 import WhiteCell from '../../helpers/FormattedCell/WhiteCell'
@@ -12,8 +12,9 @@ import TableContainer from '@mui/material/TableContainer'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import globalStyles from '../../../../styles/globalStyles'
 import { Grid } from '@mui/material'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	verticalText: {
 		writingMode: 'vertical-rl',
 		transform: 'rotate(180deg)',
@@ -103,11 +104,9 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function ({
 		<TableRow key={uuid()}>
 			<TableCell
 				align={align}
-				sx={{
-					...globalStyles.noWrap,
-					...styles.darkBackground,
+				sx={mergeStyles(globalStyles.noWrap, styles.darkBackground, {
 					...(blueBackground && globalStyles.blueBackground)
-				}}
+				})}
 				colSpan={2}
 			>
 				{(total[0] || {})['INDICATOR_NAME']}

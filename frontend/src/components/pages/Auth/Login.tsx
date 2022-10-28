@@ -13,8 +13,9 @@ import { toast } from 'react-toastify'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 import globalStyles from '../../../styles/globalStyles'
+import { ISxStyles } from '../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	formFields: {
 		minWidth: '40em',
 		margin: '1em auto 2.5em',

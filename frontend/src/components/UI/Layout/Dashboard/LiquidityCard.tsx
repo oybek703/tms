@@ -2,12 +2,13 @@ import React from 'react'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import ListItemText from '@mui/material/ListItemText'
-import { formatNumber, formatOneDate } from '../../../../utils'
+import { formatNumber, formatOneDate, mergeStyles } from '../../../../utils'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import globalStyles from '../../../../styles/globalStyles'
 import { Typography } from '@mui/material'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	totalText: {
 		fontSize: '1.5em',
 		fontWeight: 550,
@@ -86,7 +87,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 							{lastTotal && (
 								<ListItemText
 									primary={
-										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+										<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
 											{formatNumber(lastTotal)}%
 										</Typography>
 									}
@@ -103,7 +104,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 							{lastNat && (
 								<ListItemText
 									primary={
-										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+										<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
 											{formatNumber(lastNat)}%
 										</Typography>
 									}
@@ -116,7 +117,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 							{lastForeign && (
 								<ListItemText
 									primary={
-										<Typography component="b" sx={{ ...globalStyles.greens, ...styles.natValue }}>
+										<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
 											{formatNumber(lastForeign)}%
 										</Typography>
 									}

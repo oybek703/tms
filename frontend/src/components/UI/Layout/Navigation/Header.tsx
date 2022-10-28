@@ -20,6 +20,7 @@ import TimelineIcon from '@mui/icons-material/Timeline'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import globalStyles from '../../../../styles/globalStyles'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
 interface BaseRoute {
 	title: string
@@ -144,7 +145,7 @@ export const baseRoutes: BaseRoute[] = [
 	}
 ]
 
-const styles = {
+const styles: ISxStyles = {
 	active: {
 		...globalStyles.active,
 		backgroundColor: '#636363',

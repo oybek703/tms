@@ -3,8 +3,9 @@ import { baseRoutes } from './Header'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { Typography } from '@mui/material'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	title: {
 		fontStyle: 'italic',
 		color: '#767676',

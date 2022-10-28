@@ -17,8 +17,9 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import useActions from '../../../../hooks/useActions'
 import EditUser from '../EditUser'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	buttonWith: {
 		minWidth: '40px'
 	}

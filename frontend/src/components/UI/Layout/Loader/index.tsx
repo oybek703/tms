@@ -1,8 +1,9 @@
 import React from 'react'
 import Grid from '@mui/material/Grid'
 import './loader.css'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	loaderContent: {
 		margin: '0 auto',
 		minHeight: 550,

@@ -22,8 +22,9 @@ import useActions from '../../../../hooks/useActions'
 import LastUpdate from './LastUpdate'
 import globalStyles from '../../../../styles/globalStyles'
 import rootColors from '../../../../styles/palette'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	menu: {
 		minWidth: 125,
 		backgroundColor: '#f8f8f8',

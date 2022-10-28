@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import store from '../redux/store'
-import ActionsTypes from '../redux/actions/types'
+import store from '../state/store'
+import ActionsTypes from '../state/actions/types'
 
 axios.interceptors.request.use(
 	function (config: AxiosRequestConfig) {

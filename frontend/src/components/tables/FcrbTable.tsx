@@ -9,12 +9,13 @@ import { TableRow, Typography } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { v4 as uuid } from 'uuid'
-import { formatNumber } from '../../utils'
+import { formatNumber, mergeStyles } from '../../utils'
 import Grid from '@mui/material/Grid'
 import LongArrowDown from '../../images/long-arrow-down.png'
 import globalStyles from '../../styles/globalStyles'
+import { ISxStyles } from '../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	borderRadius: {
 		border: '1.5px solid #ffffff',
 		borderRadius: '10px',
@@ -366,10 +367,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 									<TableHead>
 										<TableRow>
 											<NoBorderCell
-												sx={{
-													...styles.setPadding,
-													...styles.blackText
-												}}
+												sx={mergeStyles(styles.setPadding, styles.blackText)}
 												nowrap="true"
 												colSpan={3}
 												align="center"
@@ -442,7 +440,7 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 			<br />
 			<Grid
 				container
-				sx={{ ...globalStyles.smallCardContainer, ...styles.balanceActive, ...styles.setPadding }}
+				sx={mergeStyles(globalStyles.smallCardContainer, styles.balanceActive, styles.setPadding)}
 				justifyContent="center"
 			>
 				<Grid item xs={12}>
@@ -465,7 +463,11 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 			</Grid>
 			<br />
 			{/** Средняя ставка всего фондирования*/}
-			<Grid container sx={{ ...globalStyles.smallCardContainer, ...styles.fundingAvg }} justifyContent="space-evenly">
+			<Grid
+				container
+				sx={mergeStyles(globalStyles.smallCardContainer, styles.fundingAvg)}
+				justifyContent="space-evenly"
+			>
 				<Grid item xs={6}>
 					<Table sx={styles.borderRadius} size="small">
 						<TableHead>

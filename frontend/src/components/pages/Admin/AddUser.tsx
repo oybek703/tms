@@ -80,7 +80,7 @@ export default function AddUser() {
 
 	return (
 		<>
-			<Typography align="center" component="h1" variant="h5">
+			<Typography sx={{ bgcolor: 'red' }} align="center" component="h1" variant="h5">
 				<b>ADD NEW USER</b>
 			</Typography>
 			<Grid component="form" sx={globalStyles.userForm} noValidate onSubmit={handleAddUser}>

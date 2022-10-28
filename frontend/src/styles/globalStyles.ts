@@ -1,6 +1,7 @@
 import rootColors from './palette'
+import { ISxStyles } from '../interfaces/styles.interface'
 
-const globalStyles = {
+const globalStyles: ISxStyles = {
 	userForm: {
 		display: 'flex',
 		flexDirection: 'column',

@@ -2,12 +2,13 @@ import React, { Fragment } from 'react'
 import TableCap from '../TableCap'
 import { TableRow } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
-import { formatNumber, formatOneDate } from '../../../../utils'
+import { formatNumber, formatOneDate, mergeStyles } from '../../../../utils'
 import TableBody from '@mui/material/TableBody'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import globalStyles from '../../../../styles/globalStyles'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	redCell: {
 		background: 'red',
 		color: 'white',
@@ -100,7 +101,7 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 							<TableCell colSpan={2} sx={styles.redCell}>
 								Средневзвешенные % ставка
 							</TableCell>
-							<TableCell sx={{ ...globalStyles.noWrap, ...styles.redCell }} align="center">
+							<TableCell sx={mergeStyles(globalStyles.noWrap, styles.redCell)} align="center">
 								<b>{formatNumber(((rows[j] || {}).sumRow || [])[2])}%</b>
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">

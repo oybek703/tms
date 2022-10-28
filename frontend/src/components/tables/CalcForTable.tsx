@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
 import TableCap from '../UI/helpers/TableCap'
-import { formatNumber, formatOneDate } from '../../utils'
+import { formatNumber, formatOneDate, mergeStyles } from '../../utils'
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined'
 import Typography from '@mui/material/Typography'
@@ -104,7 +104,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 				<WarningAlert role={role} rows={rows} />
 			</Delayed>
 			<Fragment>
-				<TableContainer component={Paper} sx={{ ...globalStyles.marginBottom10, ...globalStyles.paddingBottom0 }}>
+				<TableContainer component={Paper} sx={mergeStyles(globalStyles.marginBottom10, globalStyles.paddingBottom0)}>
 					<Table size="small">
 						<TableHead sx={globalStyles.stickyTableHead}>
 							<TableRow>

@@ -20,7 +20,7 @@ const CurrencyRatesTab: React.FC<CurrencyRatesTabProps> = ({ currencyRates = {} 
 			{/* CURRENCY RATES*/}
 			<Grid sx={globalStyles.smallCardGrid} container justifyContent="space-between">
 				{['Курсы ЦБ', 'Курсы для юр. лиц', 'Курсы для физ. лиц'].map(title => (
-					<Grid sx={{ ...globalStyles.oneRowTitle }} component={Paper} item key={uuid()} xs={12}>
+					<Grid sx={globalStyles.oneRowTitle} component={Paper} item key={uuid()} xs={12}>
 						{title}
 					</Grid>
 				))}

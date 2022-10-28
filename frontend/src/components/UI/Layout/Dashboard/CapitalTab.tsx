@@ -3,11 +3,12 @@ import Grid from '@mui/material/Grid'
 import { v4 as uuid } from 'uuid'
 import Card from '@mui/material/Card'
 import { Typography } from '@mui/material'
-import { formatNumber } from '../../../../utils'
+import { formatNumber, mergeStyles } from '../../../../utils'
 import RWAPoints from '../../../charts/Dashboard/Capital/RWAPoints'
 import CapitalPoints from '../../../charts/Dashboard/Capital/CapitalPoints'
+import { ISxStyles } from '../../../../interfaces/styles.interface'
 
-const styles = {
+const styles: ISxStyles = {
 	greens: {
 		color: '#00B050',
 		fontSize: '12pt'
@@ -57,10 +58,10 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
 				].map(({ title, shortKey }, i) => (
 					<Grid key={uuid()} item sm={6}>
 						<Card>
-							<Typography sx={{ ...styles.greens, ...styles.capitalText }} align="center">
+							<Typography sx={mergeStyles(styles.greens, styles.capitalText)} align="center">
 								{title}
 								&nbsp;
-								<Typography component="span" sx={{ ...styles.greens, ...styles.capitalNumber }}>
+								<Typography component="span" sx={mergeStyles(styles.greens, styles.capitalNumber)}>
 									{formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
 								</Typography>
 							</Typography>
@@ -103,10 +104,10 @@ const CapitalTab: React.FC<CapitalTabProps> = ({ vla = { categories: [] } }) => 
 				].map(({ title, shortKey }, i) => (
 					<Grid key={uuid()} item sm={6}>
 						<Card>
-							<Typography sx={{ ...styles.greens, ...styles.capitalText }} align="center">
+							<Typography sx={mergeStyles(styles.greens, styles.capitalText)} align="center">
 								{title}
 								&nbsp;
-								<Typography component="span" sx={{ ...styles.greens, ...styles.capitalNumber }}>
+								<Typography component="span" sx={mergeStyles(styles.greens, styles.capitalNumber)}>
 									{formatNumber(capitalPoints[shortKey])} {i === 1 && '%'}
 								</Typography>
 							</Typography>

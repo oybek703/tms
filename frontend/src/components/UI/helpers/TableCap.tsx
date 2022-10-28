@@ -3,6 +3,8 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import globalStyles from '../../../styles/globalStyles'
+import { ISxStyles } from '../../../interfaces/styles.interface'
+import { mergeStyles } from '../../../utils'
 
 interface WrapperProps {
 	isHead: boolean
@@ -18,7 +20,7 @@ interface TableCapProps {
 	redBack?: boolean
 	isGrey?: boolean
 	isHead?: boolean
-	cellStyles?: any
+	cellStyles?: ISxStyles
 	textAlign?: 'left' | 'right' | 'inherit' | 'center' | 'justify' | undefined
 }
 
@@ -35,7 +37,7 @@ const TableCap: React.FC<TableCapProps> = ({
 		<Wrapper isHead={isHead}>
 			<TableRow>
 				{new Array(rows - 1).fill('').map((c, i) => (
-					<TableCell sx={{ ...globalStyles.noBorder, ...cellStyles }} key={i}>
+					<TableCell sx={mergeStyles(globalStyles.noBorder, cellStyles)} key={i}>
 						<b>{''}</b>
 					</TableCell>
 				))}
