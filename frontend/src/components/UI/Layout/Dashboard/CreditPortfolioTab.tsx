@@ -6,28 +6,28 @@ import CreditPortfolio from '../../../charts/Dashboard/CreditPortfolioCharts/Ris
 import CPBreakdown from '../../../charts/Dashboard/CreditPortfolioCharts/RiskPart/CPBreakdown'
 import FundingStructure from '../../../charts/Dashboard/CreditPortfolioCharts/FundingStructure'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import useActions from '../../../../hooks/useActions'
 import Loader from '../Loader'
 import Alert from '../Alert'
 import globalStyles from '../../../../styles/globalStyles'
 import { Typography } from '@mui/material'
+import useActions1 from '../../../../hooks/useActions1'
 
 const CreditPortfolioTab = () => {
-	const { fetchDashboardCreditData } = useActions()
-	const { reportDate } = useTypedSelector(state => state.date)
-	const { creditData, error, loading } = useTypedSelector(state => state.creditData)
-	const { dashboard, error: dashboardError, loading: dashboardLoading } = useTypedSelector(state => state.dashboard)
+	const { fetchDashboardCreditData } = useActions1()
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { error, loading, dashboard } = useTypedSelector(state => state.dashboard)
+	const { creditData, loading: creditDataLoading, error: creditDataError } = useTypedSelector(state => state.creditData)
 	const { disaggregatedByTime = [], creditPart = [], issuedCredits = [] } = creditData
 	const { fundingStructure = [] } = dashboard
 	useEffect(() => {
-		fetchDashboardCreditData(reportDate)
+		fetchDashboardCreditData()
 	}, [fetchDashboardCreditData, reportDate])
 	return (
 		<Fragment>
-			{loading || dashboardLoading ? (
+			{loading || creditDataLoading ? (
 				<Loader />
-			) : error || dashboardError ? (
-				<Alert message={error || dashboardError} />
+			) : error || creditDataError ? (
+				<Alert message={error || creditDataError} />
 			) : (
 				<Grid>
 					{/* Выдача кредитов */}

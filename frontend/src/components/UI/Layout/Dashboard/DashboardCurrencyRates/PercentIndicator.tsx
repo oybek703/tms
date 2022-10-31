@@ -22,12 +22,12 @@ const PercentIndicator: React.FC<PercentIndicatorProps> = ({ number, alignText =
 				) : (
 					(number >= 11 || number <= -11) && <StopIcon color="error" />
 				)
-			) : number >= -4.99 && number <= 4.99 ? (
+			) : number > -5 && number < 5 ? (
 				<StopIcon sx={globalStyles.grow} />
-			) : (number > 5 && number <= 6.99) || (number >= -6.99 && number <= -5) ? (
+			) : (number >= 5 && number < 8) || (number > -8 && number <= -5) ? (
 				<StopIcon sx={{ color: '#ecd100' }} />
 			) : (
-				(number > 7 || number < -7) && <StopIcon color="error" />
+				(number <= -8 || number <= 8) && <StopIcon color="error" />
 			)}
 			{
 				<Typography variant="caption" sx={{ color: '#000' }}>

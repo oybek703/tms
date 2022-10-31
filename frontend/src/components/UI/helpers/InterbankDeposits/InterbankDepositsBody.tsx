@@ -44,8 +44,8 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 	isInterbank = false,
 	cap = <></>
 }) => {
-	const { reportDate } = useTypedSelector(state => state.date)
-	const formattedReportDate = formatReportDate(reportDate)
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const formattedReportDate = formatReportDate(reportDate as any)
 	const currencies = ['сум', 'доллар', 'евро']
 	if (extraCurrency) currencies.push(extraCurrency)
 	return (

@@ -72,7 +72,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 	const {
 		user: { role }
 	} = useTypedSelector(state => state.auth)
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const forValues = rows.filter((r: any) => r['F_O_R'] !== 0)
 	const forSum = rows.reduce((acc: any, val: any) => (acc += val['F_O_R']), 0) / forValues.length
 	const consumptionSum = rows.reduce((acc: any, val: any) => (acc += val['AVG_CONSUMPTION']), 0)

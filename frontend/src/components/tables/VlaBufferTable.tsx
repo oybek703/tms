@@ -60,7 +60,7 @@ function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
 
 const VLaBufferTable: React.FC<VLaBufferTableProps> = ({ rows = {} }) => {
 	const { liquidityAssets = [], liabilitiesOnDemand = [] } = rows
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const forFOR = (liabilitiesOnDemand[0] || {}).total * 0.7
 	const forDemandDeposits = (liquidityAssets[0] || {}).total - forFOR
 	return (

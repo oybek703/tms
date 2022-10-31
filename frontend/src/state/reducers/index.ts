@@ -1,76 +1,60 @@
-import { combineReducers } from 'redux'
-import mainIndicators from './Treasury/mainIndicatorsReducer'
-import capital from './Treasury/capitalReducer'
-import liquidity, { liquidityCurrent, liquidityCurrentState } from './Treasury/liquidityReducer'
-import date from './dates/dateReducer'
-import correspondent, { correspondentCurrent, correspondentCurrentState } from './Treasury/correspondentReducer'
-import operDays from './dates/operDaysReducer'
-import profitAndLost from './Treasury/profitAndLostReducer'
-import currencyPosition from './Treasury/currenncyPositionReducer'
-import auth from './Admin/userReducer'
-import users from './Admin/userListReducer'
-import { creditData, dashboard, dashboardActiveTab } from './Anayltics/dashboardReducer'
-import addUser from './Admin/addUserReducer'
-import calcFor from './Treasury/calcForReducer'
-import gm from './Treasury/GMReducer'
-import plat from './Treasury/platReducer'
-import interbankdeposits from './Treasury/interbankDepositsReducer'
-import topDeposits from './Treasury/topDepositsReducer'
-import timeDepoClients from './Treasury/timeDepoClientsReducer'
-import timeDeposits from './Treasury/timeDepositsReducer'
-import lastUpdate from './dates/lastUpdateReducer'
-import dashboardMonthly from './Anayltics/dashboardMonthlyReducer'
-import depositsByDeadline from './Anayltics/depositsByDeadlineReducer'
-import reportLiabilities from './Anayltics/reportLiabilitiesReducer'
-import fcrb from './Anayltics/fcrbReducer'
-import gap from './Anayltics/gapReducer'
-import bankLimits from './Admin/bankLimits'
-import gapManual from './Admin/gapManual'
-import nostroMatrix from './Anayltics/nostroMatrixReducer'
+import { combineReducers } from '@reduxjs/toolkit'
 import editUser from './Admin/editUserReducer'
 import getUser from './Admin/getUserReducer'
-import lastGapUpdate from './Anayltics/lastGapUpdateReducer'
-import vlaBuffer from './Anayltics/vlaBufferReducer'
-import filialEffectiveness from './Anayltics/filialEffectivenessReducer'
+import { operDaysReducer } from '../../features/operDays/operDaysSlice'
+import { dashboardReducer } from '../../features/dashboard/dashboardSlice'
+import { mainIndicatorsReducer } from '../../features/mainIndicators/mainIndicatorsSlice'
+import { fcrbReducer } from '../../features/fcrb/fcrbSlice'
+import { calcForReducer } from '../../features/calcFor/calcForSlice'
+import { capitalReducer } from '../../features/capital/capitalSlice'
+import { profitAndLostReducer } from '../../features/profitAndLost/profitAndLostSlice'
+import { liquidityReducer } from '../../features/liquidity/liquiditySlice'
+import { correspondentReducer } from '../../features/correspondent/correspondentSlice'
+import { currencyPositionReducer } from '../../features/currencyPosition/currencyPositionSlice'
+import { dashboardMonthlyReducer } from '../../features/dashboardMonthly/dashboardMonthlySlice'
+import { creditDataReducer } from '../../features/creditData/creditDataSlice'
+import { nostroMatrixReducer } from '../../features/nostroMatrix/nostroMatrixSlice'
+import { vlaBufferReducer } from '../../features/vlaBuffer/vlaBufferSlice'
+import { platReducer } from '../../features/plat/platSlice'
+import { interbankDepositsReducer } from '../../features/interbankDeposits/interbankDepositsSlice'
+import { topDepositsReducer } from '../../features/topDeposits/topDepositsSlice'
+import { timeDepoClientsReducer } from '../../features/timeDepoClients/timeDepoClientsSlice'
+import { timeDepositsReducer } from '../../features/timeDeposits/timeDepositsSlice'
+import { depositsByDeadlineReducer } from '../../features/depositsByDeadline/depositsByDeadlineSlice'
+import { reportLiabilitiesReducer } from '../../features/reportLiabilities/reportLiabilitiesSlice'
+import { filialEffectivenessReducer } from '../../features/filialEffectiveness/filialEffectivenessSlice'
+import { GMReducer } from '../../features/gm/gmSlice'
+import { gapReducer } from '../../features/gap/gapSlice'
+import { adminReducer } from '../../features/admin/adminSlice'
+import { authReducer } from '../../features/auth/authSlice'
 
 const rootReducer = combineReducers({
-	auth,
-	date,
-	operDays,
-	lastUpdate,
-	dashboard,
-	dashboardActiveTab,
-	creditData,
-	dashboardMonthly,
-	mainIndicators,
-	profitAndLost,
-	capital,
-	liquidity,
-	liquidityCurrentState,
-	liquidityCurrent,
-	correspondent,
-	correspondentCurrentState,
-	correspondentCurrent,
-	currencyPosition,
-	calcFor,
-	interbankdeposits,
-	plat,
-	topDeposits,
-	timeDepoClients,
-	timeDeposits,
-	depositsByDeadline,
-	gm,
-	reportLiabilities,
-	fcrb,
-	nostroMatrix,
-	vlaBuffer,
-	filialEffectiveness,
-	gap,
-	lastGapUpdate,
-	bankLimits,
-	gapManual,
-	users,
-	addUser,
+	auth: authReducer,
+	operDays: operDaysReducer,
+	dashboard: dashboardReducer,
+	mainIndicators: mainIndicatorsReducer,
+	dashboardMonthly: dashboardMonthlyReducer,
+	profitAndLost: profitAndLostReducer,
+	capital: capitalReducer,
+	liquidity: liquidityReducer,
+	correspondent: correspondentReducer,
+	currencyPosition: currencyPositionReducer,
+	calcFor: calcForReducer,
+	interbankDeposits: interbankDepositsReducer,
+	plat: platReducer,
+	topDeposits: topDepositsReducer,
+	timeDepoClients: timeDepoClientsReducer,
+	timeDeposits: timeDepositsReducer,
+	depositsByDeadline: depositsByDeadlineReducer,
+	gm: GMReducer,
+	reportLiabilities: reportLiabilitiesReducer,
+	fcrb: fcrbReducer,
+	creditData: creditDataReducer,
+	nostroMatrix: nostroMatrixReducer,
+	vlaBuffer: vlaBufferReducer,
+	filialEffectiveness: filialEffectivenessReducer,
+	gap: gapReducer,
+	admin: adminReducer,
 	getUser,
 	editUser
 })

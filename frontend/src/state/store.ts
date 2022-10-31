@@ -1,17 +1,11 @@
-import { applyMiddleware, compose, createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
-import thunk from 'redux-thunk'
 import { checkLogoutType } from './middlewares'
 
-declare global {
-	// eslint-disable-next-line no-unused-vars
-	interface Window {
-		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-	}
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, checkLogoutType)))
+const store = configureStore({
+	reducer: rootReducer,
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(checkLogoutType),
+	devTools: process.env.NODE_ENV !== 'production'
+})
 
 export default store

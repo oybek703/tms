@@ -18,7 +18,7 @@ const titles = [
 
 const InterbankDepositsTable: React.FC<{ rows: any }> = function ({ rows = [] }) {
 	const { land, borrow, fullBorrowData, fullLandData } = rows
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const [expanded, setExpanded] = useState<string>('all')
 	const handleChange = useCallback((code: string) => setExpanded(code), [])
 	return (

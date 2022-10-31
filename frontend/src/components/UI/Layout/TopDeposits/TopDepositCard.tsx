@@ -15,16 +15,11 @@ interface TopDepositCardProps {
 	title: string
 }
 
-const TopDepositCard: React.FC<TopDepositCardProps> = ({
-	data = [],
-	color = '#eee',
-	currency = '',
-	title = 'demo-title'
-}) => {
+const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], currency = '', title = 'demo-title' }) => {
 	while (data.length < 20) {
 		data.push({})
 	}
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper} sx={{ maxHeight: '700px' }}>
 			<ExportButton id={`${title}-${currency}-${formatOneDate(reportDate)}`} />

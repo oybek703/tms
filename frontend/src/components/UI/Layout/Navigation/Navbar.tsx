@@ -23,6 +23,8 @@ import LastUpdate from './LastUpdate'
 import globalStyles from '../../../../styles/globalStyles'
 import rootColors from '../../../../styles/palette'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
+import useActions1 from '../../../../hooks/useActions1'
+import { correspondentCurrentUpdate } from '../../../../state/actions'
 
 const styles: ISxStyles = {
 	menu: {
@@ -52,40 +54,34 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 	const anchorRef = useRef(null)
 	const { push } = useHistory()
-	const {
-		getLastUpdateTime,
-		getOperDays,
-		logout,
-		correspondentCurrentUpdate,
-		liquidityCurrentUpdate,
-		updateDashboardActiveTab
-	} = useActions()
+	const { logout } = useActions()
+	const { changeLiquidityCurrenState, changeCorrespondentCurrenState } = useActions1()
+	const { getOperDays, getDashBoardLastUpdate } = useActions1()
 	const { user = {} } = useTypedSelector(state => state.auth)
-	const correspondentCurrentState = useTypedSelector(state => state.correspondentCurrentState)
-	const liquidityCurrentState = useTypedSelector(state => state.liquidityCurrentState)
+	const { currentState: correspondentCurrentState } = useTypedSelector(state => state.correspondent)
+	const { currentState: liquidityCurrentState } = useTypedSelector(state => state.liquidity)
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [open, setOpen] = useState(false)
 	const { pathname } = useLocation()
-	const { reportDate } = useTypedSelector(state => state.date)
-	const { operDays, loading } = useTypedSelector(state => state.operDays)
-	const { lastUpdate, loading: lastUpdateLoading } = useTypedSelector(state => state.lastUpdate)
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { operDays, operDaysLoading, lastUpdate, lastUpdateLoading } = useTypedSelector(state => state.operDays)
 	const handleClick = useCallback(() => {
 		setAnchorEl(() => anchorRef.current && anchorRef.current)
 		setOpen(true)
 	}, [anchorRef])
 
 	const setCorrCurrentState = useCallback(
-		(state: unknown) => {
-			correspondentCurrentUpdate(state)
+		(state: boolean) => {
+			changeCorrespondentCurrenState(state)
 		},
-		[correspondentCurrentUpdate]
+		[changeCorrespondentCurrenState]
 	)
 
 	const setLiqCurrentState = useCallback(
-		(state: unknown) => {
-			liquidityCurrentUpdate(state)
+		(state: boolean) => {
+			changeLiquidityCurrenState(state)
 		},
-		[liquidityCurrentUpdate]
+		[changeLiquidityCurrenState]
 	)
 
 	const handleClose = useCallback(() => setOpen(false), [])
@@ -96,14 +92,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 
 	function handleLogoClick() {
 		if (pathname !== '/') push('/')
-		updateDashboardActiveTab(0)
 	}
 
 	useEffect(() => {
-		if (pathname === '/') getLastUpdateTime()
-	}, [getLastUpdateTime, pathname])
+		if (pathname === '/') getDashBoardLastUpdate()
+	}, [getDashBoardLastUpdate, pathname])
 	useEffect(() => {
-		if (pathname !== '/gap') getOperDays()
+		if (pathname !== '/gap' && pathname !== '/gapSimulation' && !pathname.includes('settings')) getOperDays()
 		//    eslint-disable-next-line
     }, [getOperDays])
 	return (
@@ -135,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 													control={
 														<Checkbox
 															color="primary"
-															disabled={loading}
+															disabled={operDaysLoading}
 															checked={correspondentCurrentState}
 															onChange={() => setCorrCurrentState(!correspondentCurrentState)}
 															name="correspondent_current_state"
@@ -151,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 													<DatePicker
 														reportDate={reportDate}
 														operDays={operDays}
-														disabled={loading || correspondentCurrentState}
+														disabled={operDaysLoading || correspondentCurrentState}
 													/>
 												)}
 											</>
@@ -161,7 +156,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 													control={
 														<Checkbox
 															color="primary"
-															disabled={loading}
+															disabled={operDaysLoading}
 															checked={liquidityCurrentState}
 															onChange={() => setLiqCurrentState(!liquidityCurrentState)}
 															name="liquidity_current_state"
@@ -177,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 													<DatePicker
 														reportDate={reportDate}
 														operDays={operDays}
-														disabled={loading || liquidityCurrentState}
+														disabled={operDaysLoading || liquidityCurrentState}
 													/>
 												)}
 											</>
@@ -186,7 +181,11 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 										)}
 									</>
 								) : (
-									pathname !== '/gap' && <DatePicker reportDate={reportDate} operDays={operDays} disabled={loading} />
+									pathname !== '/gap' &&
+									pathname !== '/gapSimulation' &&
+									!pathname.includes('settings') && (
+										<DatePicker reportDate={reportDate} operDays={operDays} disabled={operDaysLoading} />
+									)
 								)}
 								<Tab
 									disableRipple

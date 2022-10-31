@@ -1,0 +1,38 @@
+import React, { useEffect } from 'react'
+import PageTitle from '../../components/UI/Layout/PageTitle'
+import Loader from '../../components/UI/Layout/Loader'
+import Alert from '../../components/UI/Layout/Alert'
+import PlacedAndAttractedTable from '../../components/tables/PlacedAndAttractedTable'
+import useTypedSelector from '../../hooks/useTypedSelector'
+import useActions from '../../hooks/useActions'
+import useActions1 from '../../hooks/useActions1'
+
+interface PlacedAndAttractedProps {
+	forDashboard?: boolean
+}
+
+const PlacedAndAttracted: React.FC<PlacedAndAttractedProps> = ({ forDashboard = false }) => {
+	const { fetchPlat } = useActions1()
+	const { plat, loading, error } = useTypedSelector(state => state.plat)
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	useEffect(() => {
+		fetchPlat()
+	}, [fetchPlat, reportDate])
+	useEffect(() => {
+		window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
+	}, [])
+	return (
+		<>
+			{!forDashboard && <PageTitle title="Информация о привлеченных и размещенных средствах банка" />}
+			{loading ? (
+				<Loader />
+			) : error ? (
+				<Alert message={error} />
+			) : (
+				<PlacedAndAttractedTable forDashboard={forDashboard} rows={plat} />
+			)}
+		</>
+	)
+}
+
+export default PlacedAndAttracted

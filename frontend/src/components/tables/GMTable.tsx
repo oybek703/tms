@@ -38,7 +38,7 @@ function sumByCode(array = [], code = '') {
 }
 
 const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { tableData = [], accredetiv = { acs: [], others: [] }, currRates = [] } = rows
 	let uzsSum = 0
 	let usdSum = 0

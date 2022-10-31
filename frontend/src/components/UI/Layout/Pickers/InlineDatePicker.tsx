@@ -20,7 +20,7 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
 	disabled = false,
 	handleDateChange = () => {}
 }) => {
-	const { operDays, loading } = useTypedSelector(state => state.operDays)
+	const { operDays, operDaysLoading } = useTypedSelector(state => state.operDays)
 	const memoizedDisableWeekends = useCallback(
 		(date: string) => {
 			const formattedDate = format(new Date(date), 'yyyy-MM-dd')
@@ -32,7 +32,7 @@ const InlineDatePicker: React.FC<InlineDatePickerProps> = ({
 		<LocalizationProvider adapterLocale={ru} dateAdapter={AdapterDateFns}>
 			<DesktopDatePicker
 				value={reportDate}
-				disabled={disabled || loading}
+				disabled={disabled || operDaysLoading}
 				closeOnSelect
 				disableHighlightToday
 				inputFormat="dd.MM.yyyy"

@@ -13,7 +13,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
 function DepositsByDeadlineTable({ rows = [] }) {
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`deposits-by-deadline-${formatOneDate(reportDate)}`} />

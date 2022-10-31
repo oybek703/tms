@@ -21,7 +21,6 @@ export const getGapLastUpdate = asyncMiddleware(
 			`SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') 
               AS "lastGapUpdate" FROM   USER_SCHEDULER_JOBS WHERE  JOB_NAME = UPPER('GAP_Analysis')`
 		)
-		const { lastGapUpdate } = rows[0] as { lastGapUpdate: string }
-		res.status(200).json({ success: true, lastGapUpdate })
+		res.status(200).json({ success: true, rows })
 	}
 )

@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
@@ -7,7 +7,6 @@ import { formatOneDate } from '../../utils'
 import ExportButton from '../UI/Layout/ExportButton'
 import { v4 as uuid } from 'uuid'
 import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
-import useActions from '../../hooks/useActions'
 import { Grid } from '@mui/material'
 import DeficitChart from '../charts/GAP/DeficitChart'
 
@@ -22,17 +21,12 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		lcrData = [],
 		nsfrData = []
 	} = rows
-	const { getLastGapUpdate } = useActions()
 	const foreignCurrency =
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
 	const nationalCurrency =
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
 	const totalCurrency =
 		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['TOTAL'].toFixed(2))) : []
-
-	useEffect(() => {
-		getLastGapUpdate()
-	}, [getLastGapUpdate])
 
 	return (
 		<div>

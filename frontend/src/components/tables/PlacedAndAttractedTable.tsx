@@ -34,7 +34,7 @@ interface PlacedAndAttractedTableProps {
 }
 
 const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows = {}, forDashboard = false }) => {
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { involvedFunds = [], placedFunds = [] } = rows
 	const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
 	const [placedCategories, placedSeries] = getFundCategoryAndSeries(placedFunds)

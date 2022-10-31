@@ -11,10 +11,11 @@ import useTypedSelector from '../../../../hooks/useTypedSelector'
 import DashboardMonthlyTable from './DashboardMonthlyTable'
 import useActions from '../../../../hooks/useActions'
 import { format } from 'date-fns'
+import useActions1 from '../../../../hooks/useActions1'
 
 const DashboardMonthly: React.FC = () => {
-	const { fetchDashboardMonthly } = useActions()
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { fetchDashboardMonthly } = useActions1()
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const [dateOption, setDateOption] = useState('two')
 	const { operDays } = useTypedSelector(state => state.operDays)
 	const dayBefore = findRecursive(operDays, reportDate)
@@ -23,7 +24,7 @@ const DashboardMonthly: React.FC = () => {
 	const [secondDate, setSecondDate] = useState(dayBefore as string)
 	useEffect(() => {
 		if (firstDate && secondDate && firstDate !== secondDate) {
-			fetchDashboardMonthly(firstDate, secondDate, dateOption)
+			fetchDashboardMonthly({ firstDate, secondDate, dateOption })
 		}
 	}, [fetchDashboardMonthly, firstDate, secondDate, dateOption])
 	useEffect(() => {

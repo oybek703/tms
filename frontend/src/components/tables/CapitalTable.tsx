@@ -14,7 +14,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
 const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`capital-${formatOneDate(reportDate)}`} />

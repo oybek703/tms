@@ -1,6 +1,5 @@
 import 'colors'
 import express, { Express } from 'express'
-import { checkConnection } from './models/db_apis'
 import morgan from 'morgan'
 import cors from 'cors'
 import notFoundPage from './middleware/notFound'
@@ -32,6 +31,7 @@ import bankLimitsRoutes from './routes/Admin/Manual/bankLimits'
 import nostroMatrixRoutes from './routes/Analytics/nostroMatrix'
 import vlaBufferRoutes from './routes/Analytics/vlaBuffer'
 import filialEffectivenessRoutes from './routes/Analytics/filialEffectiveness'
+import { checkConnection } from './models/db_apis'
 
 const app: Express = express()
 const port: string = process.env.PORT || '4200'
@@ -43,28 +43,28 @@ app.use(cors())
 
 app.use('/api/auth', userRoutes)
 app.use('/api/operDays', operDayRoutes)
-app.use('/api/mainindicators', mainIndicatorsRoutes)
-app.use('/api/profitandlost', profitAndLostRoutes)
+app.use('/api/mainIndicators', mainIndicatorsRoutes)
+app.use('/api/profitAndLost', profitAndLostRoutes)
 app.use('/api/capital', capitalRoutes)
 app.use('/api/liquidity', liquidityRoutes)
 app.use('/api/correspondent', correspondentRoutes)
-app.use('/api/calcfor', calcForRoutes)
-app.use('/api/currencyposition', currencyPositionRoutes)
+app.use('/api/calcFor', calcForRoutes)
+app.use('/api/currencyPosition', currencyPositionRoutes)
 app.use('/api/plat', platRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/creditData', creditDataRoutes)
-app.use('/api/interbankdeposits', interbankDepositsRoutes)
-app.use('/api/topdeposits', topDepositsRoutes)
-app.use('/api/timedepoclients', timeDepoClientsRoutes)
-app.use('/api/timedeposits', timeDepositsRoutes)
-app.use('/api/depositsbydeadline', depositsByDeadlineRoutes)
-app.use('/api/reportliabilities', reportLiabilitiesRoutes)
+app.use('/api/interbankDeposits', interbankDepositsRoutes)
+app.use('/api/topDeposits', topDepositsRoutes)
+app.use('/api/timeDepoClients', timeDepoClientsRoutes)
+app.use('/api/timeDeposits', timeDepositsRoutes)
+app.use('/api/depositsByDeadline', depositsByDeadlineRoutes)
+app.use('/api/reportLiabilities', reportLiabilitiesRoutes)
 app.use('/api/gm', gmRoutes)
-app.use('/api/dashboardmonthly', dashboardMonthlyRoutes)
+app.use('/api/dashboardMonthly', dashboardMonthlyRoutes)
 app.use('/api/fcrb', fcrbRoutes)
 app.use('/api/gap', gapRoutes)
 app.use('/api/gapSimulation', gapManualRoutes)
-app.use('/api/banklimits', bankLimitsRoutes)
+app.use('/api/bankLimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
 app.use('/api/vlaBuffer', vlaBufferRoutes)
 app.use('/api/filialEffectiveness', filialEffectivenessRoutes)

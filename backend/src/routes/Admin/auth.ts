@@ -12,9 +12,9 @@ import {
 const router = Router()
 
 router.route('/login').post(signInUser)
-router.route('/adduser').post(auth, admin, addUser)
+router.route('/addUser').post(auth, admin, addUser)
 router.route('/users').get(auth, admin, getAllUsers)
-router.route('/users/:username').delete(auth, admin, deleteUserByName)
+router.route('/users/:userName').delete(auth, admin, deleteUserByName)
 router.route('/users/:userId').get(auth, admin, getUserByName).put(auth, admin, editUser)
 
 export default router

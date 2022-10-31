@@ -32,13 +32,13 @@ interface BaseRoute {
 export const baseRoutes: BaseRoute[] = [
 	{
 		title: 'Основные показатели',
-		route: '/mainindicators',
+		route: '/mainIndicators',
 		group: 'key_indicators'
 	},
 	{ title: 'Расчет капитала', route: '/capital', group: 'key_indicators' },
 	{
 		title: 'Прибыл и убыток банка',
-		route: '/profitandlost',
+		route: '/profitAndLost',
 		group: 'key_indicators'
 	},
 	{
@@ -53,13 +53,13 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{
 		title: 'Расчет ФОР',
-		route: '/calcfor',
+		route: '/calcFor',
 		group: 'liquidity_indicators',
 		forAll: true
 	},
 	{
 		title: 'Валютная позиция',
-		route: '/currencyposition',
+		route: '/currencyPosition',
 		group: 'liquidity_indicators'
 	},
 	{
@@ -81,32 +81,32 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{
 		title: 'Межбанковские депозиты',
-		route: '/interbankdeposits',
+		route: '/interbankDeposits',
 		group: 'active_passive'
 	},
 	{
 		title: 'Топ-20 крупных депозитов',
-		route: '/topdeposits',
+		route: '/topDeposits',
 		group: 'active_passive'
 	},
 	{
 		title: 'СД юр.лиц. - по клиентам',
-		route: '/timedepoclients',
+		route: '/timeDepoClients',
 		group: 'active_passive'
 	},
 	{
 		title: 'Срочные депозиты юр. лиц',
-		route: '/timedeposits',
+		route: '/timeDeposits',
 		group: 'active_passive'
 	},
 	{
 		title: 'Депозиты по срокам',
-		route: '/depositsbydeadline',
+		route: '/depositsByDeadline',
 		group: 'active_passive'
 	},
 	{
 		title: 'Отчет об обязательствах',
-		route: '/reportliabilities',
+		route: '/reportLiabilities',
 		group: 'active_passive'
 	},
 	{ title: 'Эффективност филиалов', route: '/filialEffectiveness', group: 'active_passive' },

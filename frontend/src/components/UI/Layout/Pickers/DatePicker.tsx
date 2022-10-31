@@ -2,12 +2,12 @@ import { format } from 'date-fns'
 import React, { Fragment, memo, useCallback } from 'react'
 import { dateRegex, disableDays } from '../../../../utils'
 import { useLocation } from 'react-router-dom'
-import useActions from '../../../../hooks/useActions'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import TextField from '@mui/material/TextField'
 import ReloadBtn from '../ReloadBtn'
 import { ru } from 'date-fns/locale'
+import useActions1 from '../../../../hooks/useActions1'
 
 interface DatePickerProps {
 	reportDate: string
@@ -17,7 +17,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = function ({ reportDate, operDays = [], disabled = false }) {
 	const { pathname } = useLocation()
-	const { changeReportDate } = useActions()
+	const { changeReportDate } = useActions1()
 	const handleDateChange = useCallback(
 		(date: string | null) => {
 			let formattedDate: string

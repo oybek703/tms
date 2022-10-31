@@ -23,7 +23,7 @@ const singleColouredRow = 'Доля высоколиквидных активо�
 
 const LiqPointersTable: React.FC<LiqPointersTableProps> = function ({ rows = {}, currentState = false }) {
 	const { liquidityAssets = [], obligations = [] } = rows
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const renderTableBody = useCallback(
 		(tableData: unknown[]) => (
 			<TableBody>

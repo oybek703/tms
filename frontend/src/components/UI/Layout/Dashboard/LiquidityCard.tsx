@@ -61,7 +61,7 @@ function StateCard() {
 
 const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛА' }) => {
 	const [lastTotal, lastNat, lastForeign] = data
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const isToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
 	const splittedLabel = label.split(' ')
 	return (

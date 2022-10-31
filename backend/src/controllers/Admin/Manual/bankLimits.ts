@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import asyncMiddleware from '../../../utils/async'
 import { getData } from '../../../models/db_apis'
 
-// @desc Get limit of banks dates
-// @route /banklimits/dates
+// @desc Get limit of banks operDays
+// @route /banklimits/operDays
 // access Admin
 export const getBankLimits = asyncMiddleware(async (req: Request, res: Response) => {
 	const { rows: dates } = await getData(`SELECT UNIQUE TO_CHAR(DATE_BEGIN, 'yyyy-MM-dd') BEGIN,
@@ -24,7 +24,7 @@ export const getBankLimits = asyncMiddleware(async (req: Request, res: Response)
 	res.json({ success: true, data: { dates, tableData } })
 })
 
-// @desc Update limit of banks dates
+// @desc Update limit of banks operDays
 // @route /banklimits/updateDates
 // access Admin
 export const updateDates = asyncMiddleware(async (req: Request, res: Response) => {

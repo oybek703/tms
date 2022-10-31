@@ -20,7 +20,7 @@ const RenderedCorrespondentTable = function ({
 	totalCash = [],
 	interbankDeposits = []
 }) {
-	const { reportDate } = useTypedSelector(state => state.date)
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`correspondent-${currentState ? 'realtime' : formatOneDate(reportDate)}`} />
