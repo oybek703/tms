@@ -75,9 +75,7 @@ const TopDepositsTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 	}, [])
 
 	for (const rowsKey in rows) {
-		if (rows.hasOwnProperty(rowsKey)) {
-			accountCodes.push({ code: rowsKey, title: memoizedMatchTitle(rowsKey) })
-		}
+		accountCodes.push({ code: rowsKey, title: memoizedMatchTitle(rowsKey) })
 	}
 	return (
 		<Fragment>

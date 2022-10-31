@@ -16,9 +16,6 @@ interface TopDepositCardProps {
 }
 
 const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], currency = '', title = 'demo-title' }) => {
-	while (data.length < 20) {
-		data.push({})
-	}
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper} sx={{ maxHeight: '700px' }}>
@@ -49,6 +46,17 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], currency = '
 							<TableCell align="center">{d['PERCENT'] && `${formatNumber(d['PERCENT'])}%`}</TableCell>
 						</TableRow>
 					))}
+					{data.length < 20 &&
+						Array(20 - data.length)
+							.fill('')
+							.map((_, index) => (
+								<TableRow key={uuid()}>
+									<TableCell align="center">{index + data.length + 1}</TableCell>
+									<TableCell sx={{ maxWidth: '130px', fontSize: 13 }} />
+									<TableCell align="center" sx={globalStyles.noWrap} />
+									<TableCell align="center" />
+								</TableRow>
+							))}
 				</TableBody>
 			</Table>
 		</TableContainer>
