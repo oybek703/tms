@@ -3,11 +3,11 @@ import PageTitle from '../../components/UI/Layout/PageTitle'
 import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 import FilialEffectivenessTable from '../../components/tables/FilialEffectivenessTable'
 
 const FilialEffectiveness = () => {
-	const { fetchFilialEffectiveness } = useActions1()
+	const { fetchFilialEffectiveness } = useActions()
 	const { filialEffectiveness, loading, error } = useTypedSelector(state => state.filialEffectiveness)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

@@ -4,14 +4,14 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import CalcForTable from '../../components/tables/CalcForTable'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 interface CalcForProps {
 	forDashboard: boolean
 }
 
 const CalcFor: React.FC<CalcForProps> = ({ forDashboard = false }) => {
-	const { fetchCalcFor } = useActions1()
+	const { fetchCalcFor } = useActions()
 	const { calcFor = [], loading, error } = useTypedSelector(state => state.calcFor)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { DATE_VALUE: startDate }: any = [...calcFor].shift() || {}

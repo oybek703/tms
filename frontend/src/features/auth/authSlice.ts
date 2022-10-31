@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { APIRoutes } from '../../interfaces/apiRoutes.interface'
 import { getErrorMessage } from '../../utils'
 import axios from 'axios'
 
@@ -26,10 +25,14 @@ export const login = createAsyncThunk('auth', async (options: { userName: string
 	}
 })
 
-const fcrbSlice = createSlice({
-	name: APIRoutes.fcrb,
+const authSlice = createSlice({
+	name: 'auth',
 	initialState,
-	reducers: {},
+	reducers: {
+		logout() {
+			localStorage.clear()
+		}
+	},
 	extraReducers: builder => {
 		builder.addCase(login.pending, state => {
 			state.loading = true
@@ -45,5 +48,5 @@ const fcrbSlice = createSlice({
 	}
 })
 
-export const authActions = fcrbSlice.actions
-export const authReducer = fcrbSlice.reducer
+export const authActions = authSlice.actions
+export const authReducer = authSlice.reducer

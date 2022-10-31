@@ -4,10 +4,10 @@ import LiqPointersTable from '../../components/tables/LiqPointersTable'
 import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const LiqPointers = () => {
-	const { fetchLiquidity, fetchLiquidityCurrent } = useActions1()
+	const { fetchLiquidity, fetchLiquidityCurrent } = useActions()
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { liquidity, loading, error, currentState, currentLiquidityLoading, currentLiquidityError, currentLiquidity } =
 		useTypedSelector(state => state.liquidity)

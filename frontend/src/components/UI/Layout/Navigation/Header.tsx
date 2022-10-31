@@ -238,10 +238,10 @@ function Header() {
 	}, [pages, role])
 	const onMenuOpen = useCallback(() => setAnchor(!anchor), [anchor])
 	const handleAnchorClose = useCallback(() => {
-		setAnchor(false)
 		if (pathname !== '/') push('/')
+		setAnchor(false)
 		//  eslint-disable-next-line
-  }, [])
+  }, [pathname])
 
 	const list = useCallback(
 		() => (

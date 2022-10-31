@@ -5,14 +5,13 @@ import Alert from '../../components/UI/Layout/Alert'
 import PlacedAndAttractedTable from '../../components/tables/PlacedAndAttractedTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
-import useActions1 from '../../hooks/useActions1'
 
 interface PlacedAndAttractedProps {
 	forDashboard?: boolean
 }
 
 const PlacedAndAttracted: React.FC<PlacedAndAttractedProps> = ({ forDashboard = false }) => {
-	const { fetchPlat } = useActions1()
+	const { fetchPlat } = useActions()
 	const { plat, loading, error } = useTypedSelector(state => state.plat)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

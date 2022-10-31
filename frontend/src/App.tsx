@@ -51,20 +51,20 @@ function App() {
 						<Switch>
 							<Route component={LoginPage} path="/login" />
 							<PrivateRoute component={Dashboard} path="/" exact />
-							<PrivateRoute component={MainIndicators} path="/mainindicators" />
+							<PrivateRoute component={MainIndicators} path="/mainIndicators" />
 							<PrivateRoute component={Capital} path="/capital" />
-							<PrivateRoute component={ProfitAndLost} path="/profitandlost" />
+							<PrivateRoute component={ProfitAndLost} path="/profitAndLost" />
 							<PrivateRoute component={LiqPointers} path="/liquidity" />
 							<PrivateRoute component={Correspondent} path="/correspondent" />
-							<PrivateRoute component={CalcFor} path="/calcfor" />
-							<PrivateRoute component={CurrencyPosition} path="/currencyposition" />
+							<PrivateRoute component={CalcFor} path="/calcFor" />
+							<PrivateRoute component={CurrencyPosition} path="/currencyPosition" />
 							<PrivateRoute component={PlacedAndAttracted} path="/plat" />
-							<PrivateRoute component={InterbankDeposits} path="/interbankdeposits" />
-							<PrivateRoute component={TopDeposits} path="/topdeposits" />
-							<PrivateRoute component={TimeDepoClients} path="/timedepoclients" />
-							<PrivateRoute component={TimeDeposits} path="/timedeposits" />
-							<PrivateRoute component={DepositsByDeadline} path="/depositsbydeadline" />
-							<PrivateRoute component={ReportLiabilities} path="/reportliabilities" />
+							<PrivateRoute component={InterbankDeposits} path="/interbankDeposits" />
+							<PrivateRoute component={TopDeposits} path="/topDeposits" />
+							<PrivateRoute component={TimeDepoClients} path="/timeDepoClients" />
+							<PrivateRoute component={TimeDeposits} path="/timeDeposits" />
+							<PrivateRoute component={DepositsByDeadline} path="/depositsByDeadline" />
+							<PrivateRoute component={ReportLiabilities} path="/reportLiabilities" />
 							<PrivateRoute component={NostroMatrix} path="/nostroMatrix" />
 							<PrivateRoute component={VlaBuffer} path="/vlaBuffer" />
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />

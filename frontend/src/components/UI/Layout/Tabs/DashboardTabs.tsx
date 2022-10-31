@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { v4 as uuid } from 'uuid'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import globalStyles from '../../../../styles/globalStyles'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 function TabPanel(props: any) {
 	const { children, value, index, ...other } = props
@@ -22,7 +22,7 @@ interface DashboardTabsProps {
 }
 
 const DashboardTabs: React.FC<DashboardTabsProps> = function ({ tabs = [] }) {
-	const { changeActiveTab } = useActions1()
+	const { changeActiveTab } = useActions()
 	const { activeTab } = useTypedSelector(state => state.dashboard)
 	const handleChange = (event: React.SyntheticEvent, newValue: any) => {
 		changeActiveTab(newValue)

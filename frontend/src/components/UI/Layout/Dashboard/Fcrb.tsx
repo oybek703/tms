@@ -3,10 +3,10 @@ import Loader from '../Loader'
 import Alert from '../Alert'
 import FcrbTable from '../../../tables/FcrbTable'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 const Fcrb = () => {
-	const { fetchFcrb } = useActions1()
+	const { fetchFcrb } = useActions()
 	const { fcrb, loading, error } = useTypedSelector(state => state.fcrb)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

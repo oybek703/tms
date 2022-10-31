@@ -6,10 +6,10 @@ import GAPTable from '../../components/tables/GAPTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import LastUpdate from '../../components/UI/Layout/Navigation/LastUpdate'
 import { toast } from 'react-toastify'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const GAP = () => {
-	const { fetchGap, fetchLastGapUpdateTime } = useActions1()
+	const { fetchGap, fetchLastGapUpdateTime } = useActions()
 	const { gap, loading, error, lastUpdateError, lastUpdateLoading, lastUpdate } = useTypedSelector(state => state.gap)
 	useEffect(() => {
 		fetchGap()

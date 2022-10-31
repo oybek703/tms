@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { RootState } from '../state/reducers'
 import { getErrorMessage } from './index'
 import { ApiRoutesType } from '../interfaces/apiRoutes.interface'
+import { RootState } from '../app/rootReducer'
 
 axios.interceptors.request.use(
 	function (config: AxiosRequestConfig) {

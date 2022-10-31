@@ -10,10 +10,10 @@ import Loader from '../Loader'
 import Alert from '../Alert'
 import globalStyles from '../../../../styles/globalStyles'
 import { Typography } from '@mui/material'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 const CreditPortfolioTab = () => {
-	const { fetchDashboardCreditData } = useActions1()
+	const { fetchDashboardCreditData } = useActions()
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { error, loading, dashboard } = useTypedSelector(state => state.dashboard)
 	const { creditData, loading: creditDataLoading, error: creditDataError } = useTypedSelector(state => state.creditData)

@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import VLaBufferTable from '../../components/tables/VlaBufferTable'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const VlaBuffer = () => {
-	const { fetchVlaBuffer } = useActions1()
+	const { fetchVlaBuffer } = useActions()
 	const { vlaBuffer, loading, error } = useTypedSelector(state => state.vlaBuffer)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

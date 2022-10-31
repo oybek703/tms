@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import CorrespondentTable from '../../components/tables/CorrespondentTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const Correspondent = () => {
-	const { fetchCorrespondent, fetchCorrespondentCurrent } = useActions1()
+	const { fetchCorrespondent, fetchCorrespondentCurrent } = useActions()
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const {
 		correspondent,

@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import CurrencyPositionTable from '../../components/tables/CurrencyPositionTable'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const CurrencyPosition = () => {
-	const { fetchCurrencyPosition } = useActions1()
+	const { fetchCurrencyPosition } = useActions()
 	const { currencyPosition, loading, error } = useTypedSelector(state => state.currencyPosition)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

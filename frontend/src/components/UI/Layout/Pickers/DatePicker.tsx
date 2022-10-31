@@ -7,7 +7,7 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import TextField from '@mui/material/TextField'
 import ReloadBtn from '../ReloadBtn'
 import { ru } from 'date-fns/locale'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 interface DatePickerProps {
 	reportDate: string
@@ -17,7 +17,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = function ({ reportDate, operDays = [], disabled = false }) {
 	const { pathname } = useLocation()
-	const { changeReportDate } = useActions1()
+	const { changeReportDate } = useActions()
 	const handleDateChange = useCallback(
 		(date: string | null) => {
 			let formattedDate: string

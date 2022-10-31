@@ -16,10 +16,10 @@ import FundingTab from '../../components/UI/Layout/Dashboard/FundingTab'
 import CreditPortfolioTab from '../../components/UI/Layout/Dashboard/CreditPortfolioTab'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import DashboardTabs from '../../components/UI/Layout/Tabs/DashboardTabs'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const Dashboard = () => {
-	const { fetchDashboard } = useActions1()
+	const { fetchDashboard } = useActions()
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { dashboard, loading, error } = useTypedSelector(state => state.dashboard)
 	const {

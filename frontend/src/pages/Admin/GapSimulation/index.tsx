@@ -12,7 +12,7 @@ import Alert from '../../../components/UI/Layout/Alert'
 import GapSimulationTable from './GapSimulationTable'
 import GapSimulationDialog from './GapSimulationDialog'
 import useTypedSelector from '../../../hooks/useTypedSelector'
-import useActions1 from '../../../hooks/useActions1'
+import useActions from '../../../hooks/useActions'
 import axios from 'axios'
 import { Grid } from '@mui/material'
 
@@ -46,7 +46,7 @@ const ActionContent: React.FC<ActionContentProps> = function ({ handleReset, han
 }
 
 const GapSimulation = () => {
-	const { fetchGapSimulation } = useActions1()
+	const { fetchGapSimulation } = useActions()
 	const [newValue, setNewValue] = useState<any>('')
 	const [dialog, setDialog] = useState(false)
 	const [editingCell, setEditingCell] = useState<any>({})

@@ -9,10 +9,10 @@ import { toast } from 'react-toastify'
 import InlineDatePicker from '../../components/UI/Layout/Pickers/InlineDatePicker'
 import { Grid } from '@mui/material'
 import { format } from 'date-fns'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const NostroMatrix = () => {
-	const { fetchNostroMatrix } = useActions1()
+	const { fetchNostroMatrix } = useActions()
 	const { nostroMatrix, loading, error } = useTypedSelector(state => state.nostroMatrix)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { operDays } = useTypedSelector(state => state.operDays)

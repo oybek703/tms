@@ -4,10 +4,10 @@ import CapitalTable from '../../components/tables/CapitalTable'
 import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const Capital = () => {
-	const { fetchCapital } = useActions1()
+	const { fetchCapital } = useActions()
 	const { capital, loading, error } = useTypedSelector(state => state.capital)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

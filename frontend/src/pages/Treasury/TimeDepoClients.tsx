@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import TimeDepoClientsTable from '../../components/tables/TimeDepoClientsTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const TimeDepoClients = () => {
-	const { fetchTimeDepoClients } = useActions1()
+	const { fetchTimeDepoClients } = useActions()
 	const { timeDepoClients, loading, error } = useTypedSelector(state => state.timeDepoClients)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

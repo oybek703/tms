@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import ReportLiabilitiesTable from '../../components/tables/ReportLiabilitiesTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const ReportLiabilities = () => {
-	const { fetchReportLiabilities } = useActions1()
+	const { fetchReportLiabilities } = useActions()
 	const { reportLiabilities, loading, error } = useTypedSelector(state => state.reportLiabilities)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

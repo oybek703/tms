@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import ProfitAndLostTable from '../../components/tables/ProfitAndLostTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const ProfitAndLost = () => {
-	const { fetchProfitAndLost } = useActions1()
+	const { fetchProfitAndLost } = useActions()
 	const { profitAndLost, loading, error } = useTypedSelector(state => state.profitAndLost)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

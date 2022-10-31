@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import TopDepositsTable from '../../components/tables/TopDepositsTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const TopDeposits = () => {
-	const { fetchTopDeposits } = useActions1()
+	const { fetchTopDeposits } = useActions()
 	const { topDeposits, loading, error } = useTypedSelector(state => state.topDeposits)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

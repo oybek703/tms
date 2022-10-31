@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import MainIndicatorsTable from '../../components/tables/MainIndicatorsTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const MainIndicators = () => {
-	const { fetchMainIndicators } = useActions1()
+	const { fetchMainIndicators } = useActions()
 	const { mainIndicators, loading, error } = useTypedSelector(state => state.mainIndicators)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {

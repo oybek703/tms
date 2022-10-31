@@ -17,7 +17,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import EditUser from '../EditUser'
 import { ISxStyles } from '../../../interfaces/styles.interface'
-import useActions1 from '../../../hooks/useActions1'
+import useActions from '../../../hooks/useActions'
 
 const styles: ISxStyles = {
 	buttonWith: {
@@ -34,7 +34,7 @@ const Users = () => {
 	const [addNewUser, setAddNewUser] = useState(false)
 	const [editUser, setEditUser] = useState(false)
 	const { users, usersError, usersLoading } = useTypedSelector(state => state.admin)
-	const { fetchUsers, fetchSingleUser, deleteUserByName } = useActions1()
+	const { fetchUsers, fetchSingleUser, deleteUserByName } = useActions()
 	function handleDelete(userName: string) {
 		if (window.confirm(`Are you sure you want to delete user: ${userName}?`)) {
 			deleteUserByName(userName)
@@ -130,7 +130,12 @@ const Users = () => {
 													? 'All pages'
 													: (user['allowedPages'] || '')
 															.split(',')
-															.map((route: any) => <Fragment key={route}>{updatedBaseRoutes[route]}, &nbsp;</Fragment>)}
+															.map(
+																(route: any) =>
+																	updatedBaseRoutes[route] && (
+																		<Fragment key={route}>{updatedBaseRoutes[route]}, &nbsp;</Fragment>
+																	)
+															)}
 											</TableCell>
 											<TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
 												<Button

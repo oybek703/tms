@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { parse } from 'query-string'
 import { toast } from 'react-toastify'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 import globalStyles from '../../styles/globalStyles'
 import { ISxStyles } from '../../interfaces/styles.interface'
 
@@ -24,7 +24,7 @@ const styles: ISxStyles = {
 }
 
 const LoginPage = () => {
-	const { login } = useActions1()
+	const { login } = useActions()
 	const {
 		user: { token },
 		loading,

@@ -9,12 +9,11 @@ import Alert from '../Alert'
 import Loader from '../Loader'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import DashboardMonthlyTable from './DashboardMonthlyTable'
-import useActions from '../../../../hooks/useActions'
 import { format } from 'date-fns'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 const DashboardMonthly: React.FC = () => {
-	const { fetchDashboardMonthly } = useActions1()
+	const { fetchDashboardMonthly } = useActions()
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const [dateOption, setDateOption] = useState('two')
 	const { operDays } = useTypedSelector(state => state.operDays)

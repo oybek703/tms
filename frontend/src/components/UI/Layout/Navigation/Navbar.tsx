@@ -18,13 +18,10 @@ import DatePicker from '../Pickers/DatePicker'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import useActions from '../../../../hooks/useActions'
 import LastUpdate from './LastUpdate'
 import globalStyles from '../../../../styles/globalStyles'
-import rootColors from '../../../../styles/palette'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
-import useActions1 from '../../../../hooks/useActions1'
-import { correspondentCurrentUpdate } from '../../../../state/actions'
+import useActions from '../../../../hooks/useActions'
 
 const styles: ISxStyles = {
 	menu: {
@@ -54,9 +51,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 	const anchorRef = useRef(null)
 	const { push } = useHistory()
-	const { logout } = useActions()
-	const { changeLiquidityCurrenState, changeCorrespondentCurrenState } = useActions1()
-	const { getOperDays, getDashBoardLastUpdate } = useActions1()
+	const { changeLiquidityCurrenState, changeCorrespondentCurrenState, changeActiveTab } = useActions()
+	const { getOperDays, getDashBoardLastUpdate, logout } = useActions()
 	const { user = {} } = useTypedSelector(state => state.auth)
 	const { currentState: correspondentCurrentState } = useTypedSelector(state => state.correspondent)
 	const { currentState: liquidityCurrentState } = useTypedSelector(state => state.liquidity)
@@ -88,17 +84,19 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 
 	function handleExit() {
 		logout()
+		// window.location.reload()
 	}
 
 	function handleLogoClick() {
 		if (pathname !== '/') push('/')
+		changeActiveTab('0')
 	}
 
 	useEffect(() => {
 		if (pathname === '/') getDashBoardLastUpdate()
 	}, [getDashBoardLastUpdate, pathname])
 	useEffect(() => {
-		if (pathname !== '/gap' && pathname !== '/gapSimulation' && !pathname.includes('settings')) getOperDays()
+		if (pathname !== '/gap' && pathname !== '/gapSimulation') getOperDays()
 		//    eslint-disable-next-line
     }, [getOperDays])
 	return (

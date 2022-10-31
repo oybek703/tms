@@ -3,11 +3,11 @@ import { Button } from '@mui/material'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
 import './reloadBtn.css'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import useActions1 from '../../../../hooks/useActions1'
+import useActions from '../../../../hooks/useActions'
 
 const ReloadBtn = () => {
 	const { loading } = useTypedSelector(state => state.dashboard)
-	const { getDashBoardLastUpdate, fetchDashboard } = useActions1()
+	const { getDashBoardLastUpdate, fetchDashboard } = useActions()
 	function handleClick() {
 		localStorage.removeItem('dashboard')
 		localStorage.removeItem('fcrb')

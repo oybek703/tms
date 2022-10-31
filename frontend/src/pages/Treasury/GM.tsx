@@ -4,10 +4,10 @@ import Loader from '../../components/UI/Layout/Loader'
 import Alert from '../../components/UI/Layout/Alert'
 import GMTable from '../../components/tables/GMTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import useActions1 from '../../hooks/useActions1'
+import useActions from '../../hooks/useActions'
 
 const GM = () => {
-	const { fetchGM } = useActions1()
+	const { fetchGM } = useActions()
 	const { gm, loading, error } = useTypedSelector(state => state.gm)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {
