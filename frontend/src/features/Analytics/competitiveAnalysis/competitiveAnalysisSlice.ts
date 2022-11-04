@@ -6,6 +6,7 @@ interface IInitialState {
 	loading: boolean
 	competitiveAnalysis: {
 		quarterDates: string[]
+		totalData: { title: string; q1: number; q2: number; q3: number }[]
 	}
 	error: undefined
 }
@@ -13,7 +14,8 @@ interface IInitialState {
 const initialState: IInitialState = {
 	loading: false,
 	competitiveAnalysis: {
-		quarterDates: []
+		quarterDates: [],
+		totalData: []
 	},
 	error: undefined
 }

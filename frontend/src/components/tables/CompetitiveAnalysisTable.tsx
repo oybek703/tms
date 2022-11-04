@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { formatOneDate } from '../../utils'
+import { formatNumber, formatOneDate } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
@@ -17,6 +17,7 @@ import { v4 as uuid } from 'uuid'
 interface CompetitiveAnalysisProps {
 	rows: {
 		quarterDates: string[]
+		totalData: { title: string; q1: number; q2: number; q3: number }[]
 	}
 }
 
