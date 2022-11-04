@@ -2,10 +2,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 
-const initialState = {
+interface IInitialState {
+	loading: boolean
+	competitiveAnalysis: {
+		quarterDates: string[]
+	}
+	error: undefined
+}
+
+const initialState: IInitialState = {
 	loading: false,
-	competitiveAnalysis: [],
-	error: null
+	competitiveAnalysis: {
+		quarterDates: []
+	},
+	error: undefined
 }
 
 export const fetchCompetitiveAnalysis = checkCacheOrFetch(APIRoutes.competitiveAnalysis)

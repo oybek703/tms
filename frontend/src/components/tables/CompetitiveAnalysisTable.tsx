@@ -12,12 +12,15 @@ import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 import { TableBody, Typography } from '@mui/material'
+import { v4 as uuid } from 'uuid'
 
 interface CompetitiveAnalysisProps {
-	rows: any
+	rows: {
+		quarterDates: string[]
+	}
 }
 
-const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows = {} }) {
+const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	console.log(rows)
 	return (
@@ -44,10 +47,11 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				<TableBody>
 					<TableRow>
 						<TableCell>Нац. вал. млн.</TableCell>
-						<TableCell align="center">1 янв</TableCell>
-						<TableCell align="center">1 апр</TableCell>
-						<TableCell align="center">1 июл</TableCell>
-						<TableCell align="center">1 окт</TableCell>
+						{rows.quarterDates.map(date => (
+							<TableCell key={uuid()} align="center">
+								{date}
+							</TableCell>
+						))}
 					</TableRow>
 				</TableBody>
 			</Table>
