@@ -31,6 +31,7 @@ import { fetchGM } from '../features/Treasury/gm/gmSlice'
 import { fetchGap, fetchGapSimulation, fetchLastGapUpdateTime } from '../features/Analytics/gap/gapSlice'
 import { authActions, login } from '../features/auth/authSlice'
 import { deleteUserByName, fetchSingleUser, fetchUsers } from '../features/admin/adminSlice'
+import { fetchCompetitiveAnalysis } from '../features/Analytics/competitiveAnalysis/competitiveAnalysisSlice'
 
 const actions = {
 	...operDaysActions,
@@ -62,6 +63,7 @@ const actions = {
 	fetchDepositsByDeadline,
 	fetchReportLiabilities,
 	fetchFilialEffectiveness,
+	fetchCompetitiveAnalysis,
 	fetchGM,
 	fetchGap,
 	fetchLastGapUpdateTime,

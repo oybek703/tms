@@ -16,6 +16,7 @@ backend/client/*
 
 # environment variables
 backend/src/config/.env
+backend/.env
 backend/src/config/data.ts
 
 # data

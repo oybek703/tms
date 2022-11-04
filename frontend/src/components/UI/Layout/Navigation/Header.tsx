@@ -109,6 +109,11 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/reportLiabilities',
 		group: 'active_passive'
 	},
+	{
+		title: 'Конкурентный анализ',
+		route: '/competitiveAnalysis',
+		group: 'active_passive'
+	},
 	{ title: 'Эффективност филиалов', route: '/filialEffectiveness', group: 'active_passive' },
 	{ title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
 	{ title: 'ГЭП', route: '/gap', group: 'gap' },

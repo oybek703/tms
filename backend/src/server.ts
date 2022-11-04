@@ -31,6 +31,7 @@ import bankLimitsRoutes from './routes/Admin/Manual/bankLimits'
 import nostroMatrixRoutes from './routes/Analytics/nostroMatrix'
 import vlaBufferRoutes from './routes/Analytics/vlaBuffer'
 import filialEffectivenessRoutes from './routes/Analytics/filialEffectiveness'
+import competitiveAnalysisRoutes from './routes/Analytics/competitiveAnalysis'
 import { checkConnection } from './models/db_apis'
 
 const app: Express = express()
@@ -68,6 +69,7 @@ app.use('/api/bankLimits', bankLimitsRoutes)
 app.use('/api/nostroMatrix', nostroMatrixRoutes)
 app.use('/api/vlaBuffer', vlaBufferRoutes)
 app.use('/api/filialEffectiveness', filialEffectivenessRoutes)
+app.use('/api/competitiveAnalysis', competitiveAnalysisRoutes)
 
 app.use(notFoundPage)
 app.use(errorHandler)

@@ -23,7 +23,8 @@ export enum APIRoutes {
 	gm = 'gm',
 	gap = '/api/gap',
 	gapLastUpdate = '/api/gap/lastGapUpdate',
-	gapSimulation = '/api/gapSimulation'
+	gapSimulation = '/api/gapSimulation',
+	competitiveAnalysis = 'competitiveAnalysis'
 }
 
 export type ApiRoutesType = keyof typeof APIRoutes

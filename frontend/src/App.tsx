@@ -37,6 +37,7 @@ import Settings from './pages/Admin/Settings'
 import NostroMatrix from './pages/Analytics/NostroMatrix'
 import VlaBuffer from './pages/Analytics/VlaBuffer'
 import FilialEffectiveness from './pages/Analytics/FilialEffectiveness'
+import CompetitiveAnalysis from './pages/Analytics/CompetiteveAnalysis'
 
 function App() {
 	const {
@@ -68,6 +69,7 @@ function App() {
 							<PrivateRoute component={NostroMatrix} path="/nostroMatrix" />
 							<PrivateRoute component={VlaBuffer} path="/vlaBuffer" />
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />
+							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />
 							<PrivateRoute component={GM} path="/gm" />
 							<PrivateRoute component={GAP} path="/gap" />
 							<PrivateRoute component={GapSimulation} path="/gapSimulation" />

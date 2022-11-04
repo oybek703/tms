@@ -25,6 +25,7 @@ import { GMReducer } from '../features/Treasury/gm/gmSlice'
 import { gapReducer } from '../features/Analytics/gap/gapSlice'
 import { adminReducer } from '../features/admin/adminSlice'
 import { authReducer } from '../features/auth/authSlice'
+import { competitiveAnalysisReducer } from '../features/Analytics/competitiveAnalysis/competitiveAnalysisSlice'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
 	nostroMatrix: nostroMatrixReducer,
 	vlaBuffer: vlaBufferReducer,
 	filialEffectiveness: filialEffectivenessReducer,
+	competitiveAnalysis: competitiveAnalysisReducer,
 	gap: gapReducer,
 	admin: adminReducer
 })
