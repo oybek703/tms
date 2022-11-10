@@ -1,7 +1,17 @@
 import React, { Fragment, memo, useState } from 'react'
-import { GridColDef } from '@mui/x-data-grid'
+import { GridColDef, GridRowApi, GridRowSelectionCheckboxParams } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../UI/Layout/StyledDataGrid'
+import { Box, Paper } from '@mui/material'
+
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableCap from '../UI/helpers/TableCap'
+import TableRow from '@mui/material/TableRow'
+import globalStyles from '../../styles/globalStyles'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {
@@ -55,9 +65,94 @@ const columns: GridColDef[] = [
 	generateCellAttrs({ field: 'benefitInMonth', headerName: 'Прибыль за месяц', minWidth: 160 })
 ]
 
-const FilialEffectivenessTable: React.FC<{ rows: unknown[] }> = function ({ rows = [] }) {
+interface total_indicator {
+	name: string
+	deposit202: number
+	deposit204: number
+	deposit206: number
+	totalLoan: number
+	issuedLoans: number
+	par30: number
+	par60: number
+	par90: number
+	npl: number
+	nplPercent: number
+	accruedInterest: number
+	roa: number
+	roe: number
+	resourceDebt: number
+	benefitInMonth: number
+}
+
+const FilialEffectivenessTable: React.FC<{ rows: total_indicator[] }> = function ({ rows = [] }) {
+	// итого
+
+	const total_deposit202: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.deposit202
+		return previousValue
+	}, 0)
+
+	const total_deposit204: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.deposit204
+		return previousValue
+	}, 0)
+
+	const total_Loan: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.totalLoan
+		return previousValue
+	}, 0)
+
+	const total_deposit206: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.deposit206
+		return previousValue
+	}, 0)
+
 	return (
 		<Fragment>
+			<TableContainer sx={{ marginTop: '20px', marginBottom: '30px' }} component={Paper}>
+				<Table>
+					<TableHead sx={globalStyles.stickyTableHead}>
+						<TableRow>
+							<TableCell></TableCell>
+							<TableCell>Депозиты довостребования</TableCell>
+							<TableCell>Сберегательные депозиты</TableCell>
+							<TableCell>Срочные депозиты клиентов</TableCell>
+							<TableCell>Кредитний портфель</TableCell>
+							<TableCell>Всего проблеманые кредиты</TableCell>
+							<TableCell>PAR 30</TableCell>
+							<TableCell>PAR 60</TableCell>
+							<TableCell>PAR 90</TableCell>
+							<TableCell>NPL 90</TableCell>
+							<TableCell>NPL %</TableCell>
+							<TableCell>Начисленные проценты</TableCell>
+							<TableCell>ROA</TableCell>
+							<TableCell>ROE</TableCell>
+							<TableCell>Задолженность по ресурсам перед ГО</TableCell>
+							<TableCell>Прибыль за месяц</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						<TableRow>
+							<TableCell>Итого</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit204}</TableCell>
+							<TableCell>{total_deposit206}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_deposit202}</TableCell>
+						</TableRow>
+					</TableBody>
+				</Table>
+			</TableContainer>
 			<StyledDataGrid hideFooter columns={columns} rows={rows} />
 		</Fragment>
 	)
