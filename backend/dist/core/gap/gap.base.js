@@ -17,7 +17,7 @@ class GapBase extends base_1.Base {
                          POWER(10, 6), 2)                                              AS
                        "total",
                    ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS
-                       "nationalCurency",
+                       "nationalCurrency",
                    ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS
                        "foreignCurrency"
             FROM LCR_BUILDER
@@ -69,12 +69,12 @@ class GapBase extends base_1.Base {
         this.nsfrQuery = (role = '1=1') => {
             return () => {
                 return `SELECT ROUND(
-                               SUM((PERCENT_NAT * NATIONAL_CURRENCY 
-                                        + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) / POWER(10, 10)), 2) AS "total",
-                           ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2) AS "nationalCurrency",
-                           ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2) AS "foreignCurrency"
-                    FROM NSFR_BUILDER
-                    WHERE ${role}`;
+                             SUM((PERCENT_NAT * NATIONAL_CURRENCY
+                                 + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) / POWER(10, 10)), 2) AS "total",
+                     ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2)          AS "nationalCurrency",
+                     ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2)           AS "foreignCurrency"
+              FROM NSFR_BUILDER
+              WHERE ${role}`;
             };
         };
         this.fromOffBalanceSheets15Query = () => {
@@ -102,14 +102,14 @@ class GapBase extends base_1.Base {
     }
     manualTableQuery(role) {
         return () => {
-            return `SELECT ROLE AS "role",
-                     INDICATOR_NAME AS "indicatorName",
-                     TOTAL AS "total",
+            return `SELECT ROLE              AS "role",
+                     INDICATOR_NAME    AS "indicatorName",
+                     TOTAL             AS "total",
                      NATIONAL_CURRENCY AS "nationalCurrency",
-                     FOREIGN_CURRENCY AS "foreignCurrency",
-                     USD AS "usd",
-                     EUR AS "eur",
-                     'MANUAL' AS "source"
+                     FOREIGN_CURRENCY  AS "foreignCurrency",
+                     USD               AS "usd",
+                     EUR               AS "eur",
+                     'MANUAL'          AS "source"
               FROM GAP_ANALYSIS_MANUAL
               WHERE ROLE = '${role}'
               ORDER BY OPER_DAY`;
@@ -288,7 +288,7 @@ class GapBase extends base_1.Base {
         const vlaLcrData = [vlaBalance, amountForVlaLcr, deficitAmount, vlaIndicator];
         const outFlow = await this.outFlow();
         const inFlow = await this.inFlow();
-        const rowKeys = Object.keys(outFlow).filter(key => key !== 'INDICATOR_NAME');
+        const rowKeys = Object.keys(outFlow).filter(key => key !== 'indicatorName');
         const cleanOutFlow = this.getLcrOrNsfrOneRow('Чистий отток в последующие 30 дней', rowKeys.reduce((acc, val) => {
             acc[val] = outFlow[val] - inFlow[val];
             return acc;

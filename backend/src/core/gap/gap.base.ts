@@ -23,14 +23,14 @@ export class GapBase extends Base {
 
   protected manualTableQuery(role: string) {
     return () => {
-      return `SELECT ROLE AS "role",
-                     INDICATOR_NAME AS "indicatorName",
-                     TOTAL AS "total",
+      return `SELECT ROLE              AS "role",
+                     INDICATOR_NAME    AS "indicatorName",
+                     TOTAL             AS "total",
                      NATIONAL_CURRENCY AS "nationalCurrency",
-                     FOREIGN_CURRENCY AS "foreignCurrency",
-                     USD AS "usd",
-                     EUR AS "eur",
-                     'MANUAL' AS "source"
+                     FOREIGN_CURRENCY  AS "foreignCurrency",
+                     USD               AS "usd",
+                     EUR               AS "eur",
+                     'MANUAL'          AS "source"
               FROM GAP_ANALYSIS_MANUAL
               WHERE ROLE = '${role}'
               ORDER BY OPER_DAY`
@@ -50,7 +50,7 @@ export class GapBase extends Base {
                          POWER(10, 6), 2)                                              AS
                        "total",
                    ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / 100) / POWER(10, 6), 2) AS
-                       "nationalCurency",
+                       "nationalCurrency",
                    ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / 100) / POWER(10, 6), 2)  AS
                        "foreignCurrency"
             FROM LCR_BUILDER
@@ -105,12 +105,12 @@ export class GapBase extends Base {
   protected nsfrQuery = (role = '1=1') => {
     return () => {
       return `SELECT ROUND(
-                               SUM((PERCENT_NAT * NATIONAL_CURRENCY 
-                                        + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) / POWER(10, 10)), 2) AS "total",
-                           ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2) AS "nationalCurrency",
-                           ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2) AS "foreignCurrency"
-                    FROM NSFR_BUILDER
-                    WHERE ${role}`
+                             SUM((PERCENT_NAT * NATIONAL_CURRENCY
+                                 + PERCENT_FOR * FOREIGIN_CURR_SUMM_EQ) / POWER(10, 10)), 2) AS "total",
+                     ROUND(SUM(PERCENT_NAT * NATIONAL_CURRENCY / POWER(10, 10)), 2)          AS "nationalCurrency",
+                     ROUND(SUM(PERCENT_FOR * FOREIGN_CURRENCY / POWER(10, 10)), 2)           AS "foreignCurrency"
+              FROM NSFR_BUILDER
+              WHERE ${role}`
     }
   }
 
@@ -456,7 +456,7 @@ export class GapBase extends Base {
     // LCR START
     const outFlow = await this.outFlow()
     const inFlow = await this.inFlow()
-    const rowKeys = Object.keys(outFlow).filter(key => key !== 'INDICATOR_NAME')
+    const rowKeys = Object.keys(outFlow).filter(key => key !== 'indicatorName')
     // Чистий отток в последующие 30 дней
     const cleanOutFlow = this.getLcrOrNsfrOneRow(
       'Чистий отток в последующие 30 дней',
