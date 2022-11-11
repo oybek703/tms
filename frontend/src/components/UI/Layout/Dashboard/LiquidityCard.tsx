@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import ListItemText from '@mui/material/ListItemText'
 import { formatNumber, formatOneDate, mergeStyles } from '../../../../utils'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { Typography } from '@mui/material'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 

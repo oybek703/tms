@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchWithoutCache, withToken } from '../../../utils/axiosUtils'
-import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { fetchWithoutCache, withToken } from '../../../utils/axios-utils'
+import { APIRoutes } from '../../../interfaces/api-routes.interface'
 import { getErrorMessage } from '../../../utils'
 import axios from 'axios'
 
@@ -44,9 +44,7 @@ export const fetchGapSimulation = createAsyncThunk(
 	async (options: { forEditing?: boolean } | undefined, thunkAPI) => {
 		const forEditing = (options && options.forEditing) ?? false
 		try {
-			const {
-				data: { data }
-			} = await axios.get(`${APIRoutes.gapSimulation}?forEditing=${forEditing}`, withToken())
+			const { data } = await axios.get(`${APIRoutes.gapSimulation}?forEditing=${forEditing}`, withToken())
 			return data
 		} catch (e) {
 			const message = getErrorMessage(e)
@@ -76,8 +74,8 @@ const gapSlice = createSlice({
 		})
 		builder.addCase(fetchLastGapUpdateTime.fulfilled, (state, action: PayloadAction<any>) => {
 			state.lastUpdateLoading = false
-			const [{ lastGapUpdate }] = action.payload
-			state.lastUpdate = lastGapUpdate
+			const { lastUpdate } = action.payload
+			state.lastUpdate = lastUpdate
 		})
 		builder.addCase(fetchLastGapUpdateTime.rejected, (state, action: PayloadAction<any>) => {
 			state.lastUpdateLoading = false

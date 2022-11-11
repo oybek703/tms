@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../utils'
 import BoldWithColor from '../../helpers/BoldWithColor'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface TimeDepositsCardProps {
 	title: string

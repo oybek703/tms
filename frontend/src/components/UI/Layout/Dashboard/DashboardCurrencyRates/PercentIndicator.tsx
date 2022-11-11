@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import { formatNumber } from '../../../../../utils'
 import StopIcon from '@mui/icons-material/Stop'
-import globalStyles from '../../../../../styles/globalStyles'
+import globalStyles from '../../../../../styles/global-styles'
 
 interface PercentIndicatorProps {
 	number: number

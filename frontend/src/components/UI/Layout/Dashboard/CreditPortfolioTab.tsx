@@ -8,7 +8,7 @@ import FundingStructure from '../../../charts/Dashboard/CreditPortfolioCharts/Fu
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import Loader from '../Loader'
 import Alert from '../Alert'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { Typography } from '@mui/material'
 import useActions from '../../../../hooks/useActions'
 

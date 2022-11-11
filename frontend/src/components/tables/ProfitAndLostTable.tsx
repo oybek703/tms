@@ -10,7 +10,7 @@ import { formatDate, formatNumber } from '../../utils'
 import TableCap from '../UI/helpers/TableCap'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 interface ProfitAndLostTableProps {
 	pickedDate: string
@@ -55,7 +55,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
 							<TableCell align="center">
 								<b>{row['count']}</b>
 							</TableCell>
-							<TableCell>{row['isTableHead'] ? <b>{row['indicator_name']}</b> : row['indicator_name']}</TableCell>
+							<TableCell>{row['isTableHead'] ? <b>{row['indicatorName']}</b> : row['indicatorName']}</TableCell>
 							<TableCell align="center">
 								{row['isTableHead'] ? <b>{formatNumber(row['yearBegin'])}</b> : formatNumber(row['yearBegin'])}
 							</TableCell>
@@ -68,7 +68,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
 							<TableCell align="center">
 								{row['isTableHead'] ? <b>{formatNumber(row['differ'], true)}</b> : formatNumber(row['differ'], true)}
 							</TableCell>
-							<TableCell align="center">{row['differ_percent']}</TableCell>
+							<TableCell align="center">{formatNumber(row['differPercent'], true)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

@@ -5,8 +5,7 @@ import FormattedCell from '../../../helpers/FormattedCell/FormattedCell'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../../utils'
 import BoldWithColor from '../../../helpers/BoldWithColor'
-import globalStyles from '../../../../../styles/globalStyles'
-import Paper from '@mui/material/Paper'
+import globalStyles from '../../../../../styles/global-styles'
 
 const currencyOrder = ['USD', 'EUR', 'RUB', 'GBP', 'CHF', 'JPY', 'KZT', 'CNY']
 

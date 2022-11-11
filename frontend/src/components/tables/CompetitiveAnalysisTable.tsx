@@ -10,7 +10,7 @@ import TableCap from '../UI/helpers/TableCap'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 import { TableBody, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
 

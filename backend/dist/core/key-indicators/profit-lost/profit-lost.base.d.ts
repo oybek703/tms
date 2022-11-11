@@ -1,0 +1,38 @@
+import { Base } from '../../base';
+import { IProfitLostRow } from './profit-lost.interface';
+export declare class ProfitAndLostBase extends Base {
+    protected formatQuery(role: string): string;
+    private getTotalData;
+    private returnDiffer;
+    private getOneRow;
+    private loan_portfolio_interest;
+    private investment_interest;
+    private interbank_deposits_interest;
+    private other_interest_income;
+    private percent_income;
+    private payable_interest;
+    private borrowing_interest;
+    private other_interest_expenses;
+    private percent_expenses;
+    private clear_percent_expenses;
+    private potential_loss_provisions;
+    private potential_loss_provisions_sum;
+    private clear_income_after_reserve;
+    private interest_free_income;
+    private interest_free_expenses;
+    private clear_interest_free_income;
+    private operational_incomes;
+    private salaries_costs;
+    private rent_and_maintenance;
+    private travel_transport;
+    private administrative_expenses;
+    private representation_and_charity;
+    private depreciation_costs;
+    private insurance_taxes;
+    private potential_loss_assessment;
+    private operational_expenses;
+    private operational_result;
+    private tax_assessment;
+    private report_for_period;
+    getRows(): Promise<IProfitLostRow[]>;
+}

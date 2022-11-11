@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getErrorMessage } from '../../../utils'
 import axios from 'axios'
-import { withToken } from '../../../utils/axiosUtils'
+import { withToken } from '../../../utils/axios-utils'
 
 const initialState = {
 	loading: false,
@@ -17,13 +17,11 @@ interface NostroMatrixOptions {
 const prefix = 'nostroMatrix'
 export const fetchNostroMatrix = createAsyncThunk(prefix, async (options: NostroMatrixOptions, thunkApi) => {
 	try {
-		const {
-			data: { rows }
-		} = await axios.get(
+		const { data } = await axios.get(
 			`/api/nostroMatrix?firstDate=${options.firstDate}&secondDate=${options.secondDate}`,
 			withToken()
 		)
-		return rows
+		return data
 	} catch (e) {
 		const message = getErrorMessage(e)
 		return thunkApi.rejectWithValue(message)

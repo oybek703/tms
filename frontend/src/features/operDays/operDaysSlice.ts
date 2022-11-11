@@ -28,7 +28,7 @@ export const getDashBoardLastUpdate = createAsyncThunk('dashboardLastUpdate', as
 	try {
 		const {
 			data: { lastUpdate }
-		} = await axios.get(`/api/operDays/lastUpdate`)
+		} = await axios.get(`/api/dashboard/lastUpdate`)
 		return lastUpdate
 	} catch (e) {
 		const message = getErrorMessage(e)

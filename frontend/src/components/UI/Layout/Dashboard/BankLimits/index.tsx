@@ -10,7 +10,7 @@ import ProgressBar from '../../ProgressBar'
 import ButtonTabs from '../../Tabs/ButtonsTab'
 import Grid from '@mui/material/Grid'
 import LimitsMenu from './LimitsMenu'
-import globalStyles from '../../../../../styles/globalStyles'
+import globalStyles from '../../../../../styles/global-styles'
 
 interface NoWrapCellProps {
 	celldata: number | ReactNode

@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell'
 import { v4 as uuid } from 'uuid'
 import { covenantData, Status } from '../../../../tempData'
 import BoldWithColor from '../../helpers/BoldWithColor'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 function getColorByStatus(status: Status) {
 	if (status === Status.safe) return '#00B050'

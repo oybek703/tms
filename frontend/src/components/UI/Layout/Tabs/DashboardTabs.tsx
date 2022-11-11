@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import { v4 as uuid } from 'uuid'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import useActions from '../../../../hooks/useActions'
 
 function TabPanel(props: any) {

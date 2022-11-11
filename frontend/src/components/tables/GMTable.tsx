@@ -13,7 +13,7 @@ import GMClassification from '../charts/GM/GMClassification'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 function sumByCode(array = [], code = '') {
 	let usd = 0
@@ -21,17 +21,17 @@ function sumByCode(array = [], code = '') {
 	let rub = 0
 	let uzs = 0
 	array.forEach(v => {
-		if (v['CHECK_ACCOUNT'] === code && v['CODE_CURRENCY'] === '840') {
-			usd += v['PAR_VALUE']
+		if (v['checkAccount'] === code && v['codeCurrency'] === '840') {
+			usd += v['parValue']
 		}
-		if (v['CHECK_ACCOUNT'] === code && v['CODE_CURRENCY'] === '978') {
-			eur += v['PAR_VALUE']
+		if (v['checkAccount'] === code && v['codeCurrency'] === '978') {
+			eur += v['parValue']
 		}
-		if (v['CHECK_ACCOUNT'] === code && v['CODE_CURRENCY'] === '643') {
-			rub += v['PAR_VALUE']
+		if (v['checkAccount'] === code && v['codeCurrency'] === '643') {
+			rub += v['parValue']
 		}
-		if (v['CHECK_ACCOUNT'] === code && v['CODE_CURRENCY'] === '000') {
-			uzs += v['PAR_VALUE']
+		if (v['checkAccount'] === code && v['codeCurrency'] === '000') {
+			uzs += v['parValue']
 		}
 	})
 	return [usd, eur, rub, uzs].map(n => +(n / Math.pow(10, 6)).toFixed(1))
@@ -45,11 +45,11 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 	let eurSum = 0
 	let rubSum = 0
 	tableData.forEach((r: any) => {
-		const codeCurrency = r['CODE_CURRENCY']
-		const parValue = r['PAR_VALUE']
+		const codeCurrency = r['codeCurrency']
+		const parValue = r['parValue']
 		switch (codeCurrency) {
 			case '000':
-				if (r['CHECK_ACCOUNT']) {
+				if (r['checkAccount']) {
 					return (uzsSum += parValue)
 				}
 				return uzsSum
@@ -91,7 +91,7 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		.map(v => +v.toFixed(1))
 	const gmLiabilities = [
 		...(accredetiv.acs || []).map(Number),
-		...(accredetiv.others || []).map((v: any) => +v['par_value'])
+		...(accredetiv.others || []).map((v: any) => +v['parValue'])
 	].map(v => Math.round(Math.abs(v)))
 	return (
 		<Fragment>
@@ -138,20 +138,20 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 											{i === 0 ? (
 												<Fragment>
 													<TableCell>
-														<b>{v['loan_name']}</b>
+														<b>{v['indicatorName']}</b>
 													</TableCell>
 													<TableCell align="center">
-														<b>{v['currency_name']}</b>
+														<b>{v['codeCurrency']}</b>
 													</TableCell>
 													<TableCell align="center">
-														<b>{formatNumber(v['par_value'], true)}</b>
+														<b>{formatNumber(v['parValue'], true)}</b>
 													</TableCell>
 												</Fragment>
 											) : (
 												<Fragment>
-													<TableCell>{v['loan_name']}</TableCell>
-													<TableCell align="center">{v['currency_name']}</TableCell>
-													<TableCell align="center">{formatNumber(v['par_value'], true)}</TableCell>
+													<TableCell>{v['indicatorName']}</TableCell>
+													<TableCell align="center">{v['codeCurrency']}</TableCell>
+													<TableCell align="center">{formatNumber(v['parValue'], true)}</TableCell>
 												</Fragment>
 											)}
 										</TableRow>
@@ -246,17 +246,17 @@ const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 					<TableBody>
 						{tableData.map((row: any, i: number) => (
 							<TableRow hover key={i}>
-								<TableCell align="center">{row.CHECK_ACCOUNT}</TableCell>
-								<TableCell align="left">{row.OPERATION_TYPE}</TableCell>
-								<TableCell align="center">{formatNumber(row.PAR_VALUE)}</TableCell>
+								<TableCell align="center">{row.checkAccount}</TableCell>
+								<TableCell align="left">{row.operationType}</TableCell>
+								<TableCell align="center">{formatNumber(row.parValue)}</TableCell>
 								<TableCell align="center">
-									{row.CODE_CURRENCY === '000'
+									{row.codeCurrency === '000'
 										? 'UZS'
-										: row.CODE_CURRENCY === '840'
+										: row.codeCurrency === '840'
 										? 'USD'
-										: row.CODE_CURRENCY === '978'
+										: row.codeCurrency === '978'
 										? 'EUR'
-										: row.CODE_CURRENCY === '643'
+										: row.codeCurrency === '643'
 										? 'RUB'
 										: ''}
 								</TableCell>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { checkCacheOrFetch, withToken } from '../../utils/axiosUtils'
-import { APIRoutes } from '../../interfaces/apiRoutes.interface'
+import { checkCacheOrFetch, withToken } from '../../utils/axios-utils'
+import { APIRoutes } from '../../interfaces/api-routes.interface'
 import { getErrorMessage } from '../../utils'
 import axios from 'axios'
 
@@ -19,10 +19,8 @@ const editUserPrefix = `${prefix}/users/edit`
 
 export const fetchUsers = createAsyncThunk(usersPrefix, async (_, thunkAPI) => {
 	try {
-		const {
-			data: { users }
-		} = await axios.get('/api/auth/users', withToken())
-		return users
+		const { data } = await axios.get('/api/users', withToken())
+		return data
 	} catch (e) {
 		const message = getErrorMessage(e)
 		return thunkAPI.rejectWithValue(message)
@@ -31,10 +29,8 @@ export const fetchUsers = createAsyncThunk(usersPrefix, async (_, thunkAPI) => {
 
 export const fetchSingleUser = createAsyncThunk(editUserPrefix, async (id: number, thunkAPI) => {
 	try {
-		const {
-			data: { user }
-		} = await axios.get(`/api/auth/users/${id}`, withToken())
-		return user
+		const { data } = await axios.get(`/api/users/${id}`, withToken())
+		return data
 	} catch (e) {
 		const message = getErrorMessage(e)
 		return thunkAPI.rejectWithValue(message)
@@ -43,7 +39,7 @@ export const fetchSingleUser = createAsyncThunk(editUserPrefix, async (id: numbe
 
 export const deleteUserByName = createAsyncThunk(editUserPrefix, async (userName: string, thunkAPI) => {
 	try {
-		await axios.delete(`/api/auth/users/${userName}`, withToken())
+		await axios.delete(`/api/users/${userName}`, withToken())
 	} catch (e) {
 		const message = getErrorMessage(e)
 		return thunkAPI.rejectWithValue(message)

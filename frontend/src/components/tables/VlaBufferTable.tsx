@@ -13,7 +13,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 import Grid from '@mui/material/Grid'
 import TableCap from '../UI/helpers/TableCap'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 interface IVlaBufferRowData {
 	indicatorName: string

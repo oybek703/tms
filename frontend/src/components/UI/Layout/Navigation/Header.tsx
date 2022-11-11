@@ -19,7 +19,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 
 interface BaseRoute {

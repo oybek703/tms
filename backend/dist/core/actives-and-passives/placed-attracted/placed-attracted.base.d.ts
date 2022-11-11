@@ -1,0 +1,31 @@
+import { Base } from '../../base';
+import { IPlacedAttractedRow } from './placed-attracted.interface';
+export declare class PlacedAttractedBase extends Base {
+    protected formatQuery(whereQuery: string): string;
+    private platQuery;
+    private getOneRow;
+    private demand_deposits;
+    private organization_deposits;
+    private saving_deposits;
+    private time_deposits;
+    private other_corr_accounts;
+    private payable_loans;
+    private interests_taxes;
+    private other_client_deposits;
+    private issued_bills;
+    private own_resources;
+    private cash_on_hand;
+    private funds_in_cb;
+    private corr_accounts;
+    private bills_investments;
+    private promissory_obligations;
+    private factoring_leasing;
+    private litigation_loans;
+    private investments;
+    private interest_charges;
+    private main_assets;
+    private requirements;
+    private received_funds;
+    private payed_funds;
+    getRows(): Promise<[IPlacedAttractedRow[], IPlacedAttractedRow[]]>;
+}

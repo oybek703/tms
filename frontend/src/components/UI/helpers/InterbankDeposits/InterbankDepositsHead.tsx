@@ -3,7 +3,7 @@ import TableCap from '../TableCap'
 import { TableHead, TableRow } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import BoldWithColor from '../BoldWithColor'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 const InterbankDepositsHead = () => {
 	return (

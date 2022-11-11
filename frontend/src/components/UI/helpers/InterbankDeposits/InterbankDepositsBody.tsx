@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell'
 import { formatNumber, formatOneDate, mergeStyles } from '../../../../utils'
 import TableBody from '@mui/material/TableBody'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 
 const styles: ISxStyles = {
@@ -58,37 +58,37 @@ const InterbankDepositsBody: React.FC<InterbankDepositsBodyProps> = ({
 						{((rows[j] || {})['allMappedBanks'] || []).map((b: any, i: number) => (
 							<TableRow hover key={i}>
 								<TableCell>{i + 1}</TableCell>
-								<TableCell align="left" title={b['NAME_BANK']}>
-									{b['NAME_BANK']}
+								<TableCell align="left" title={b['bankName']}>
+									{b['bankName']}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(b['SALDO_OUT'])}
+									{formatNumber(b['saldoOut'])}
 								</TableCell>
 								<TableCell align="center">
-									{b['BEGIN_DATE'] === '0' || !b['BEGIN_DATE']
+									{b['beginDate'] === '0' || !b['beginDate']
 										? ''
 										: isInterbank
-										? formatOneDate(b['BEGIN_DATE'])
-										: b['BEGIN_DATE']}
+										? formatOneDate(b['beginDate'])
+										: b['beginDate']}
 								</TableCell>
-								<TableCell align="center" sx={{ ...(formattedReportDate === b['END_DATE'] && styles.redText) }}>
-									{b['END_DATE'] === '0' || !b['END_DATE']
+								<TableCell align="center" sx={{ ...(formattedReportDate === b['endDate'] && styles.redText) }}>
+									{b['endDate'] === '0' || !b['endDate']
 										? ''
 										: isInterbank
-										? formatOneDate(b['END_DATE'])
-										: b['END_DATE']}
+										? formatOneDate(b['endDate'])
+										: b['endDate']}
 								</TableCell>
-								<TableCell align="center">{formatNumber(b['PERCENT_RATE'])}%</TableCell>
+								<TableCell align="center">{formatNumber(b['percentRate'])}%</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(b['FOR_DAY'], true)}
-								</TableCell>
-								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(b['FOR_PERIOD'], true)}
+									{formatNumber(b['forDay'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(b['DAY_COUNT'])}
+									{formatNumber(b['forPeriod'], true)}
 								</TableCell>
-								<TableCell align="center">{b['PERCENT_SHARE']}%</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(b['dayCount'])}
+								</TableCell>
+								<TableCell align="center">{b['percentShare']}%</TableCell>
 							</TableRow>
 						))}
 						<TableRow hover>

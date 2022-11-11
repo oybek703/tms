@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import TableCell from '@mui/material/TableCell'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface WhiteCellProps {
 	rowSpan?: number

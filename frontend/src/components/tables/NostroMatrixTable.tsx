@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow'
 import { TableCell } from '@mui/material'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 interface RowData {
 	code: string

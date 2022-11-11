@@ -15,13 +15,14 @@ interface CurrencyRateLineProps {
 }
 
 const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} }) => {
-	const categories = (last90Rates['USD'] || []).map((value: any) => value['CURR_DAY'])
+	const categories = (last90Rates['USD'] || []).map((value: any) => value['currDay'])
 	const [currency, setCurrency] = useState('USD')
-	const [series, setSeries] = useState((last90Rates['USD'] || []).map((value: any) => value['EQUIVAL']))
+	const [series, setSeries] = useState((last90Rates['USD'] || []).map((value: any) => value['equival']))
 	function handleChange({ target: { value } }: React.ChangeEvent<HTMLInputElement>) {
 		setCurrency(value)
-		setSeries((last90Rates[value] || []).map((value: any) => value['EQUIVAL']))
+		setSeries((last90Rates[value] || []).map((value: any) => value['equival']))
 	}
+
 	return (
 		<Grid container direction="column" component={Paper} sx={{ paddingTop: '10px' }}>
 			<CurrencyLineChart
@@ -43,7 +44,7 @@ const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} })
 					{currencyOrder.map(v => (
 						<FormControlLabel
 							key={uuid()}
-							value={v}
+							value={v.toLowerCase()}
 							control={<Radio color="primary" />}
 							label={v}
 							labelPlacement="bottom"

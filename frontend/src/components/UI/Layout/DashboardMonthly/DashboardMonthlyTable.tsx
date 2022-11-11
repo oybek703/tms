@@ -11,7 +11,7 @@ import TableCap from '../../helpers/TableCap'
 import { v4 as uuid } from 'uuid'
 import ExportButton from '../ExportButton'
 import InlineDatePicker from '../Pickers/InlineDatePicker'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface DashboardMonthlyTableProps {
 	rows: any
@@ -31,7 +31,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 	const colsHead = (([...riskPart].pop() || {})['data'] || [])
 		.map((c: any, i: number) => {
 			if (i !== 0 && i !== colCount - 1) {
-				return c['MONTH_BEGIN'] || c['DATE_VALUE']
+				return c['monthBegin'] || c['dateValue']
 			}
 			return undefined
 		})
@@ -95,13 +95,13 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 									<TableCell align="center">
 										<b>{row['count']}</b>
 									</TableCell>
-									<TableCell>{row['isTableHead'] ? <b>{row['state']}</b> : row['state']}</TableCell>
+									<TableCell>{row['isTableHead'] ? <b>{row['indicatorName']}</b> : row['indicatorName']}</TableCell>
 									{row['data'].map((d: any, j: number) => (
 										<TableCell
 											sx={globalStyles.noWrap}
 											align="center"
 											key={uuid()}
-											title={`${row['state']} - ${
+											title={`${row['indicatorName']} - ${
 												j === 0
 													? formatOneDate(firstDate)
 													: j === colCount - 1
@@ -109,14 +109,14 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 													: colsHead[j - 1]
 											}`}
 										>
-											{formatNumber(d['SUM'])} {row['withPercent'] ? '%' : ''}
+											{formatNumber(d['sum'])} {row['withPercent'] ? '%' : ''}
 										</TableCell>
 									))}
 									<TableCell sx={globalStyles.noWrap} align="center">
 										{formatNumber(row['differ'])} {row['withPercent'] ? '%' : ''}
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										{row['differ_percent']}
+										{row['differPercent']}
 									</TableCell>
 								</TableRow>
 							))}

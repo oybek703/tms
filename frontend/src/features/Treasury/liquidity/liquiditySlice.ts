@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { checkCacheOrFetch, fetchWithoutCache } from '../../../utils/axiosUtils'
-import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { checkCacheOrFetch, fetchWithoutCache } from '../../../utils/axios-utils'
+import { APIRoutes } from '../../../interfaces/api-routes.interface'
 
 const initialState = {
 	loading: false,

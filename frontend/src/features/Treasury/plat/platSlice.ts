@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { checkCacheOrFetch } from '../../../utils/axiosUtils'
-import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { checkCacheOrFetch } from '../../../utils/axios-utils'
+import { APIRoutes } from '../../../interfaces/api-routes.interface'
 
 const initialState = {
 	loading: false,
@@ -11,10 +11,10 @@ const initialState = {
 	error: null
 }
 
-export const fetchPlat = checkCacheOrFetch(APIRoutes.plat)
+export const fetchPlat = checkCacheOrFetch(APIRoutes.placedAttracted)
 
 const platSlice = createSlice({
-	name: APIRoutes.plat,
+	name: APIRoutes.placedAttracted,
 	initialState,
 	reducers: {},
 	extraReducers: builder => {

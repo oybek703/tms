@@ -5,21 +5,21 @@ import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../../utils'
 import PercentIndicator from './PercentIndicator'
 import BoldWithColor from '../../../helpers/BoldWithColor'
-import globalStyles from '../../../../../styles/globalStyles'
+import globalStyles from '../../../../../styles/global-styles'
 
 const currencyOrder = ['USD', 'EUR', 'JPY', 'GBP', 'KZT', 'RUB', 'CHF', 'CNY']
 
 const Position = ({ position = [] }) => {
-	const reOrderedPosition = currencyOrder.map(title => position.find(currency => (currency || {})['NAME'] === title))
+	const reOrderedPosition = currencyOrder.map(title => position.find(currency => (currency || {})['name'] === title))
 	const totalPercent = useCallback(
 		function () {
-			return position.reduce((acc, val) => (acc += val['PERCENT']), 0)
+			return position.reduce((acc, val) => (acc += val['percent']), 0)
 		},
 		[position]
 	)
 	const totalSumEquivalent = useCallback(
 		function () {
-			return position.reduce((acc, val) => (acc += val['SUM_EQUIVAL']), 0)
+			return position.reduce((acc, val) => (acc += val['sumEquival']), 0)
 		},
 		[position]
 	)
@@ -42,12 +42,12 @@ const Position = ({ position = [] }) => {
 				<TableBody>
 					{reOrderedPosition.map((row: any = {}) => (
 						<TableRow hover key={uuid()}>
-							<TableCell align="center">{row['NAME']}</TableCell>
+							<TableCell align="center">{row['name']}</TableCell>
 							<TableCell sx={{ color: '#009c34' }} align="center">
-								{formatNumber(row['EQUIVAL'])}
+								{formatNumber(row['equival'])}
 							</TableCell>
 							<TableCell align="center">
-								<PercentIndicator number={row['PERCENT']} />
+								<PercentIndicator number={row['percent']} />
 							</TableCell>
 						</TableRow>
 					))}

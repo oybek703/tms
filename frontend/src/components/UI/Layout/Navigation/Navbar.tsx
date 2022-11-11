@@ -19,7 +19,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
 import LastUpdate from './LastUpdate'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 import useActions from '../../../../hooks/useActions'
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getErrorMessage } from '../../../utils'
 import axios from 'axios'
-import { withToken } from '../../../utils/axiosUtils'
+import { withToken } from '../../../utils/axios-utils'
 
 const initialState = {
 	loading: false,
@@ -18,13 +18,11 @@ interface DashboardMonthlyOptions {
 const prefix = 'dashboardMonthly'
 export const fetchDashboardMonthly = createAsyncThunk(prefix, async (options: DashboardMonthlyOptions, thunkApi) => {
 	try {
-		const {
-			data: { rows }
-		} = await axios.get(
+		const { data } = await axios.get(
 			`/api/dashboardMonthly?firstDate=${options.firstDate}&secondDate=${options.secondDate}&dateOption=${options.dateOption}`,
 			withToken()
 		)
-		return rows
+		return data
 	} catch (e) {
 		const message = getErrorMessage(e)
 		return thunkApi.rejectWithValue(message)

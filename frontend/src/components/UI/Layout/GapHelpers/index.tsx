@@ -10,7 +10,7 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import BoldWithColor from '../../helpers/BoldWithColor'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { Grid } from '@mui/material'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 
@@ -47,7 +47,7 @@ const RenderByMonth: React.FC<RenderByMonthProps> = function ({
 		<Fragment>
 			{months.map((_, monthIndex) => (
 				<Fragment key={uuid()}>
-					{['TOTAL', 'NATIONAL_CURRENCY', 'FOREIGN_CURRENCY', 'USD', 'EUR'].map((propName, index) => (
+					{['total', 'nationalCurrency', 'foreignCurrency', 'usd', 'eur'].map((propName, index) => (
 						<Fragment key={uuid()}>
 							<TableCell
 								sx={{
@@ -109,7 +109,7 @@ const TotalOrBoldRow: React.FC<TotalOrBoldRowProps> = function ({
 				})}
 				colSpan={2}
 			>
-				{(total[0] || {})['INDICATOR_NAME']}
+				{(total[0] || {})['indicatorName']}
 			</TableCell>
 			<RenderByMonth blueBackground={blueBackground} withPercent={withPercent} total months={months} row={total} />
 		</TableRow>
@@ -133,7 +133,7 @@ const InnerDataRows: React.FC<{ data: any; months: string[] }> = function ({ dat
 			{data.map((row: any) => (
 				<TableRow hover key={uuid()}>
 					<TableCell align="left" sx={globalStyles.noWrap}>
-						{(row[0] || {})['INDICATOR_NAME']}
+						{(row[0] || {})['indicatorName']}
 					</TableCell>
 					<RenderByMonth row={row} months={months} />
 				</TableRow>
@@ -184,16 +184,16 @@ const RedRow: React.FC<{ row: any }> = function ({ row = {} }) {
 					color: 'rgb(255, 51, 0)'
 				}}
 			>
-				{row['INDICATOR_NAME']}
+				{row['indicatorName']}
 			</TableCell>
 			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
-				{formatNumber(row['TOTAL'])}%
+				{formatNumber(row['total'])}%
 			</TableCell>
 			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
-				{formatNumber(row['NATIONAL_CURRENCY'])}%
+				{formatNumber(row['nationalCurrency'])}%
 			</TableCell>
 			<TableCell align="center" sx={{ ...globalStyles.noWrap, fontWeight: 600, color: 'rgb(255, 51, 0)' }}>
-				{formatNumber(row['FOREIGN_CURRENCY'])}%
+				{formatNumber(row['foreignCurrency'])}%
 			</TableCell>
 		</TableRow>
 	)
@@ -225,15 +225,15 @@ function LcrAndNsfrTable({ data = [], month = '' }) {
 							<RedRow key={uuid()} row={row} />
 						) : (
 							<TableRow hover key={uuid()}>
-								<TableCell>{row['INDICATOR_NAME']}</TableCell>
+								<TableCell>{row['indicatorName']}</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['TOTAL'])}
+									{formatNumber(row['total'])}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['NATIONAL_CURRENCY'])}
+									{formatNumber(row['nationalCurrency'])}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['FOREIGN_CURRENCY'])}
+									{formatNumber(row['foreignCurrency'])}
 								</TableCell>
 							</TableRow>
 						)

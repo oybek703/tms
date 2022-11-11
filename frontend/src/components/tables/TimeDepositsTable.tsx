@@ -15,7 +15,7 @@ import TimeDepositsByCurrency from '../charts/TimeDeposits/TimeDepositsByCurrenc
 import TimeDepositsChange from '../charts/TimeDeposits/TimeDepositsChange'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 interface TimeDepositsTableProps {
 	rows: any
@@ -134,12 +134,12 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {
 						{tableData.map((r: any, i: number) => (
 							<TableRow hover key={uuid()}>
 								<TableCell align="center">{i + 1}</TableCell>
-								<TableCell align="left">{r['FILIAL_NAME']}</TableCell>
+								<TableCell align="left">{r['filialName']}</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['YEAR_BEGIN'], true)}
+									{formatNumber(r['yearBegin'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['MONTH_BEGIN'], true)}
+									{formatNumber(r['monthBegin'], true)}
 								</TableCell>
 								<TableCell
 									align="center"
@@ -148,31 +148,31 @@ const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {
 										backgroundColor: '#eee'
 									}}
 								>
-									{formatNumber(r['SELECTED_DATE'], true)}
+									{formatNumber(r['selectedDate'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['CHANGE_FROM_YB'], true)}
+									{formatNumber(r['changeFromYB'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['CHANGE_FROM_YB_PERCENT'])}
+									{formatNumber(r['changeFromYBPercent'])}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['CHANGE_FROM_MB'], true)}
+									{formatNumber(r['changeFromMB'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['CHANGE_FROM_MB_PERCENT'])}
+									{formatNumber(r['changeFromMBPercent'])}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{r['COUNT_IN_DATE'] || '-'}
+									{r['countInDate'] || '-'}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['SUM_IN_DATE'], true)}
+									{formatNumber(r['sumInDate'], true)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{r['COUNT_IN_MONTH'] || '-'}
+									{r['countInMonth'] || '-'}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(r['SUM_IN_MONTH'], true)}
+									{formatNumber(r['sumInMonth'], true)}
 								</TableCell>
 							</TableRow>
 						))}

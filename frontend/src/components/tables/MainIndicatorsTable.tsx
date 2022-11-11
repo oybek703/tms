@@ -11,7 +11,7 @@ import TableCap from '../UI/helpers/TableCap'
 import { Typography } from '@mui/material'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 interface MainIndicatorsTableProps {
 	pickedDate: string
@@ -57,7 +57,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 								<b>{row.count}</b>
 							</TableCell>
 							<TableCell component="th" scope="row">
-								{row.isTableHead ? <b>{row.indicator_name}</b> : <>{row.indicator_name}</>}
+								{row.isTableHead ? <b>{row.indicatorName}</b> : <>{row.indicatorName}</>}
 							</TableCell>
 							<TableCell align="center">
 								{row.isTableHead ? (
@@ -113,7 +113,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 									formatNumber(row.differ, true)
 								)}
 							</TableCell>
-							<TableCell align="center">{row.differ_percent}</TableCell>
+							<TableCell align="center">{formatNumber(row.differPercent, true)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

@@ -9,7 +9,7 @@ import LiquidityPoints from '../../../charts/Dashboard/DailyIndicators/Liquidity
 import Position from './DashboardCurrencyRates/Position'
 import CurrencyPositionChart from '../../../charts/Dashboard/DailyIndicators/CurrencyPositionChart'
 import { getDashboardLiquidityIndicator, mergeStyles } from '../../../../utils'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { ISxStyles } from '../../../../interfaces/styles.interface'
 
 const styles: ISxStyles = {

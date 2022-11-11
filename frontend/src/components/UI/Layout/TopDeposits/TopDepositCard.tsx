@@ -6,7 +6,7 @@ import { formatNumber, formatOneDate } from '../../../../utils'
 import ExportButton from '../ExportButton'
 import BoldWithColor from '../../helpers/BoldWithColor'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface TopDepositCardProps {
 	data: any
@@ -39,11 +39,11 @@ const TopDepositCard: React.FC<TopDepositCardProps> = ({ data = [], currency = '
 					{data.map((d: any, i: number) => (
 						<TableRow hover key={uuid()}>
 							<TableCell align="center">{i + 1}</TableCell>
-							<TableCell sx={{ maxWidth: '130px', fontSize: 13 }}>{d['NAME']}</TableCell>
+							<TableCell sx={{ maxWidth: '130px', fontSize: 13 }}>{d['name']}</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(d['SALDO_OUT'])}
+								{formatNumber(d['saldoOut'])}
 							</TableCell>
-							<TableCell align="center">{d['PERCENT'] && `${formatNumber(d['PERCENT'])}%`}</TableCell>
+							<TableCell align="center">{d['percent'] && `${formatNumber(d['percent'])}%`}</TableCell>
 						</TableRow>
 					))}
 					{data.length < 20 &&

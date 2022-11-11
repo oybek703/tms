@@ -12,7 +12,7 @@ import FormattedCell from '../UI/helpers/FormattedCell/FormattedCell'
 import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 const RenderedCorrespondentTable = function ({
 	currentState = false,
@@ -20,7 +20,7 @@ const RenderedCorrespondentTable = function ({
 	totalCash = [],
 	interbankDeposits = []
 }) {
-	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { reportDate } = useTypedSelector(indicatorName => indicatorName.operDays)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`correspondent-${currentState ? 'realtime' : formatOneDate(reportDate)}`} />
@@ -70,64 +70,64 @@ const RenderedCorrespondentTable = function ({
 				</TableHead>
 				<TableBody>
 					{currencyRate.map((row: any, i: number) => (
-						<TableRow hover key={`${row.state}+${i}`}>
+						<TableRow hover key={`${row.indicatorName}+${i}`}>
 							<TableCell align="center">{row['isTableHead'] ? <b>{row.count}</b> : row.count}</TableCell>
-							<TableCell align="left">{row['isTableHead'] ? <b>{row.state}</b> : row.state}</TableCell>
+							<TableCell align="left">{row['isTableHead'] ? <b>{row.indicatorName}</b> : row.indicatorName}</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{row['isTableHead'] ? <b>{formatNumber(row.UZS, 'e')}</b> : formatNumber(row.UZS, 'e')}
+								{row['isTableHead'] ? <b>{formatNumber(row.uzs, 'e')}</b> : formatNumber(row.uzs, 'e')}
 							</TableCell>
 							{i !== 1 ? (
 								<>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.CNY)}</b>
+										<b>{formatNumber(row.cny)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.JPY)}</b>
+										<b>{formatNumber(row.jpy)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.KZT)}</b>
+										<b>{formatNumber(row.kzt)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.RUB)}</b>
+										<b>{formatNumber(row.rub)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.CHF)}</b>
+										<b>{formatNumber(row.chf)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.GBP)}</b>
+										<b>{formatNumber(row.gbp)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.USD)}</b>
+										<b>{formatNumber(row.usd)}</b>
 									</TableCell>
 									<TableCell sx={globalStyles.noWrap} align="center">
-										<b>{formatNumber(row.EUR)}</b>
+										<b>{formatNumber(row.eur)}</b>
 									</TableCell>
 								</>
 							) : (
 								<>
 									<TableCell align="center">
-										<FormattedCell number={row.CNY} />
+										<FormattedCell number={row.cny} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.JPY} />
+										<FormattedCell number={row.jpy} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.KZT} />
+										<FormattedCell number={row.kzt} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.RUB} />
+										<FormattedCell number={row.rub} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.CHF} />
+										<FormattedCell number={row.chf} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.GBP} />
+										<FormattedCell number={row.gbp} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.USD} />
+										<FormattedCell number={row.usd} />
 									</TableCell>
 									<TableCell align="center">
-										<FormattedCell number={row.EUR} />
+										<FormattedCell number={row.eur} />
 									</TableCell>
 								</>
 							)}
@@ -135,35 +135,37 @@ const RenderedCorrespondentTable = function ({
 					))}
 					{[totalCash, interbankDeposits].map((arr: any) =>
 						arr.map((row: any, i: number) => (
-							<TableRow hover key={`${row.state}+${i}`}>
+							<TableRow hover key={`${row.indicatorName}+${i}`}>
 								<TableCell align="center">{row['isTableHead'] ? <b>{row.count}</b> : row.count}</TableCell>
-								<TableCell align="left">{row['isTableHead'] ? <b>{row.state}</b> : row.state}</TableCell>
-								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.UZS, true)}</b> : formatNumber(row.UZS, true)}
+								<TableCell align="left">
+									{row['isTableHead'] ? <b>{row.indicatorName}</b> : row.indicatorName}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.CNY, true)}</b> : formatNumber(row.CNY, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.uzs, true)}</b> : formatNumber(row.uzs, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.JPY, true)}</b> : formatNumber(row.JPY, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.cny, true)}</b> : formatNumber(row.cny, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.KZT, true)}</b> : formatNumber(row.KZT, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.jpy, true)}</b> : formatNumber(row.jpy, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.RUB, true)}</b> : formatNumber(row.RUB, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.kzt, true)}</b> : formatNumber(row.kzt, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.CHF, true)}</b> : formatNumber(row.CHF, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.rub, true)}</b> : formatNumber(row.rub, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.GBP, true)}</b> : formatNumber(row.GBP, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.chf, true)}</b> : formatNumber(row.chf, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.USD, true)}</b> : formatNumber(row.USD, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.gbp, true)}</b> : formatNumber(row.gbp, true)}
 								</TableCell>
 								<TableCell sx={globalStyles.noWrap} align="center">
-									{row['isTableHead'] ? <b>{formatNumber(row.EUR, true)}</b> : formatNumber(row.EUR, true)}
+									{row['isTableHead'] ? <b>{formatNumber(row.usd, true)}</b> : formatNumber(row.usd, true)}
+								</TableCell>
+								<TableCell sx={globalStyles.noWrap} align="center">
+									{row['isTableHead'] ? <b>{formatNumber(row.eur, true)}</b> : formatNumber(row.eur, true)}
 								</TableCell>
 							</TableRow>
 						))

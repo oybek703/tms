@@ -11,7 +11,7 @@ import ExportButton from '../UI/Layout/ExportButton'
 import BoldWithColor from '../UI/helpers/BoldWithColor'
 import TableRow from '@mui/material/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../styles/global-styles'
 
 const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
@@ -44,18 +44,18 @@ const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
 						</TableCell>
 					</TableRow>
 					{rows.map((row: any) => (
-						<TableRow hover key={row.name}>
+						<TableRow hover key={row.indicatorName}>
 							<TableCell component="th" align="center" scope="row">
-								{row.isTableHead ? <b>{row.first_row}</b> : row.first_row}
+								{row.isTableHead ? <b>{row.count}</b> : row.count}
 							</TableCell>
-							<TableCell align="left">{row.isTableHead ? <b>{row.name}</b> : row.name}</TableCell>
+							<TableCell align="left">{row.isTableHead ? <b>{row.indicatorName}</b> : row.indicatorName}</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? (
-									<b>{row.total === 0 ? '0.00' : formatNumber(row.total)}</b>
-								) : row.total === 0 ? (
+									<b>{row.value === 0 ? '0.00' : formatNumber(row.value)}</b>
+								) : row.value === 0 ? (
 									'0.00'
 								) : (
-									formatNumber(row.total)
+									formatNumber(row.value)
 								)}
 							</TableCell>
 						</TableRow>

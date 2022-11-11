@@ -7,7 +7,7 @@ import CurrencyMBD from '../../../charts/Dashboard/FundingCharts/CurrencyMBD'
 import CurrencyTimeDeposits from '../../../charts/Dashboard/FundingCharts/CurrencyTimeDeposits'
 import TimeDepositsChart from '../../../charts/Dashboard/FundingCharts/TimeDepositsChart'
 import InterbankDepositsChart from '../../../charts/Dashboard/FundingCharts/InterbankDepositsChart'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 import { Typography } from '@mui/material'
 
 interface FundingTabProps {

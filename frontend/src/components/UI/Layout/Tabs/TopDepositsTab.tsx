@@ -3,7 +3,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
 import { Grid } from '@mui/material'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface TopDepositsTabProps {
 	active: number

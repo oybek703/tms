@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper'
 import { v4 as uuid } from 'uuid'
 import CurrencyRateLine from './CurrencyRateLine'
 import { DashboardCurrencyRates, ExternalCurrencyRates } from './CurrencyRateTables'
-import globalStyles from '../../../../../styles/globalStyles'
+import globalStyles from '../../../../../styles/global-styles'
 
 interface CurrencyRatesTabProps {
 	currencyRates: any

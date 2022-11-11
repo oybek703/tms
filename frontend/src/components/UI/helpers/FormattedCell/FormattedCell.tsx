@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import { formatNumber } from '../../../../utils'
 import { Variant } from '@mui/material/styles/createTypography'
-import globalStyles from '../../../../styles/globalStyles'
+import globalStyles from '../../../../styles/global-styles'
 
 interface FormattedCellProps {
 	number: number

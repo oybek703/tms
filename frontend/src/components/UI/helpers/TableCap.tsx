@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
-import globalStyles from '../../../styles/globalStyles'
+import globalStyles from '../../../styles/global-styles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
 import { mergeStyles } from '../../../utils'
 
