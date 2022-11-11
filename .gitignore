@@ -26,7 +26,7 @@ backend/benchmarking/*
 backend/ips.txt
 
 # build files
-backend/build/*
+backend/dist/*
 
 # dependencies
 frontend/node_modules

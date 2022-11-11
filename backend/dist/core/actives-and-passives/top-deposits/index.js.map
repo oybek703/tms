@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../src/core/actives-and-passives/top-deposits/index.ts"],"names":[],"mappings":";;AACA,2DAAqD;AAErD,MAAM,kBAAkB,GAAG,KAAK,EAAE,IAAU,EAAE,aAA4B,EAAE,EAAE;IAC5E,MAAM,CAAC,gBAAgB,CAAC,GAAG,MAAM,IAAI,mCAAe,CAAC,IAAI,EAAE,aAAa,CAAC,CAAC,OAAO,EAAE,CAAA;IACnF,OAAO,gBAAgB,CAAA;AACzB,CAAC,CAAA;AAED,kBAAe,kBAAkB,CAAA"}
