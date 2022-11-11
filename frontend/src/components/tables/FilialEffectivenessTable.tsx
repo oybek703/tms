@@ -97,13 +97,54 @@ const FilialEffectivenessTable: React.FC<{ rows: total_indicator[] }> = function
 		return previousValue
 	}, 0)
 
+	const total_deposit206: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.deposit206
+		return previousValue
+	}, 0)
 	const total_Loan: number = rows.reduce((previousValue: number, row) => {
 		previousValue += row.totalLoan
 		return previousValue
 	}, 0)
 
-	const total_deposit206: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.deposit206
+	const total_issuedLoans: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.issuedLoans
+		return previousValue
+	}, 0)
+
+	const total_par30: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.par30
+		return previousValue
+	}, 0)
+
+	const total_par60: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.par60
+		return previousValue
+	}, 0)
+
+	const total_par90: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.par90
+		return previousValue
+	}, 0)
+
+	const total_npl: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.npl
+		return previousValue
+	}, 0)
+
+	const total_nplPercent: number = (100 * total_npl) / total_Loan
+
+	const total_accruedInterest: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.accruedInterest
+		return previousValue
+	}, 0)
+
+	const total_resourceDebt: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.resourceDebt
+		return previousValue
+	}, 0)
+
+	const total_benefitInMonth: number = rows.reduce((previousValue: number, row) => {
+		previousValue += row.benefitInMonth
 		return previousValue
 	}, 0)
 
@@ -111,7 +152,7 @@ const FilialEffectivenessTable: React.FC<{ rows: total_indicator[] }> = function
 		<Fragment>
 			<TableContainer sx={{ marginTop: '20px', marginBottom: '30px' }} component={Paper}>
 				<Table>
-					<TableHead sx={globalStyles.stickyTableHead}>
+					<TableHead>
 						<TableRow>
 							<TableCell></TableCell>
 							<TableCell>Депозиты довостребования</TableCell>
@@ -137,18 +178,18 @@ const FilialEffectivenessTable: React.FC<{ rows: total_indicator[] }> = function
 							<TableCell>{total_deposit202}</TableCell>
 							<TableCell>{total_deposit204}</TableCell>
 							<TableCell>{total_deposit206}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
+							<TableCell>{total_Loan}</TableCell>
+							<TableCell>{total_issuedLoans}</TableCell>
+							<TableCell>{total_par30.toFixed(2)}</TableCell>
+							<TableCell>{total_par60.toFixed(2)}</TableCell>
+							<TableCell>{total_par90.toFixed(2)}</TableCell>
+							<TableCell>{total_npl}</TableCell>
+							<TableCell>{total_nplPercent.toFixed(2)}</TableCell>
+							<TableCell>{total_accruedInterest.toFixed(2)}</TableCell>
+							<TableCell>0</TableCell>
+							<TableCell>0</TableCell>
+							<TableCell>{total_resourceDebt.toFixed(2)}</TableCell>
+							<TableCell>{total_benefitInMonth.toFixed(2)}</TableCell>
 						</TableRow>
 					</TableBody>
 				</Table>
