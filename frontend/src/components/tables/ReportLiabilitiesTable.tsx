@@ -8,9 +8,9 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber } from '../../utils'
 import { v4 as uuid } from 'uuid'
-import PaginatedTable from '../UI/helpers/PaginatedTable'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
-import globalStyles from '../../styles/global-styles'
+import PaginatedTable from '../helpers/PaginatedTable'
+import BoldWithColor from '../helpers/BoldWithColor'
+import globalStyles from '../../styles/globalStyles'
 
 const columns = ['До 7 дней', ...new Array(12).fill('').map((v, i) => `${i + 1} месяц`), '1-2 года', 'свыше 2 лет']
 

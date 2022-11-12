@@ -6,12 +6,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
-import TableCap from '../UI/helpers/TableCap'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import TableCap from '../helpers/TableCap'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import TableRow from '@mui/material/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/global-styles'
+import globalStyles from '../../styles/globalStyles'
 
 const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)

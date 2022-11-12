@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatDate, formatNumber } from '../../utils'
-import TableCap from '../UI/helpers/TableCap'
+import TableCap from '../helpers/TableCap'
 import { Typography } from '@mui/material'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
-import globalStyles from '../../styles/global-styles'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
+import globalStyles from '../../styles/globalStyles'
 
 interface MainIndicatorsTableProps {
 	pickedDate: string

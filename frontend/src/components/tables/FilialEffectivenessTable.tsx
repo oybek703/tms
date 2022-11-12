@@ -1,7 +1,7 @@
 import React, { Fragment, memo, useState } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
-import StyledDataGrid from '../UI/Layout/StyledDataGrid'
+import StyledDataGrid from '../layout/StyledDataGrid'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {

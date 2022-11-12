@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
-import VerticalTabs from './vertical-tabs'
-import CbnUpdate from './cbn-update'
-import MioGm from './mio-gm'
-import Users from './users'
+import VerticalTabs from './VerticalTabs'
+import CbnUpdate from './CbnUpdate'
+import MioGm from './MIOGm'
+import Users from './Users'
 
 const Settings = () => {
 	return (

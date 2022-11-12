@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { checkCacheOrFetch, withToken } from '../../utils/axios-utils'
-import { APIRoutes } from '../../interfaces/api-routes.interface'
+import { checkCacheOrFetch, withToken } from '../../utils/axiosUtils'
+import { APIRoutes } from '../../interfaces/apiRoutes.interface'
 import { getErrorMessage } from '../../utils'
 import axios from 'axios'
 

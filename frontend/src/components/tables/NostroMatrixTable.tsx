@@ -7,9 +7,9 @@ import Paper from '@mui/material/Paper'
 import { formatNumber } from '../../utils'
 import TableRow from '@mui/material/TableRow'
 import { TableCell } from '@mui/material'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import BoldWithColor from '../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
-import globalStyles from '../../styles/global-styles'
+import globalStyles from '../../styles/globalStyles'
 
 interface RowData {
 	code: string

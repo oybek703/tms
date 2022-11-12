@@ -7,13 +7,13 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 import Grid from '@mui/material/Grid'
-import TableCap from '../UI/helpers/TableCap'
-import globalStyles from '../../styles/global-styles'
+import TableCap from '../helpers/TableCap'
+import globalStyles from '../../styles/globalStyles'
 
 interface IVlaBufferRowData {
 	indicatorName: string

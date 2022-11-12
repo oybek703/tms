@@ -10,10 +10,10 @@ import { formatNumber, formatOneDate } from '../../utils'
 import Grid from '@mui/material/Grid'
 import GMLiabilities from '../charts/GM/GMLiabilities'
 import GMClassification from '../charts/GM/GMClassification'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import globalStyles from '../../styles/global-styles'
+import globalStyles from '../../styles/globalStyles'
 
 function sumByCode(array = [], code = '') {
 	let usd = 0
