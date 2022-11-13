@@ -20,7 +20,7 @@ export class OracleService implements OnModuleInit {
   }
 
   async onModuleInit() {
-    // await this.checkConnection()
+    await this.checkConnection()
   }
 
   async checkConnection() {

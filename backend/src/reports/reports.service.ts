@@ -22,7 +22,6 @@ import getReportLiabilitiesData from '../core/actives-and-passives/report-liabil
 import getFilialEffectivenessData from '../core/actives-and-passives/filial-effectiveness'
 import getGmData from '../core/actives-and-passives/gm'
 import getGapData, { getGapManualData } from '../core/gap'
-import { GapManual } from '../core/gap/gap-manual'
 import { colNames, UpdateGapDto } from './dto/update-gap.dto'
 import getDashboardData, {
   getCreditData,
