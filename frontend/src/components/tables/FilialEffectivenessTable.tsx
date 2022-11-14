@@ -3,7 +3,6 @@ import { GridColDef, GridRowApi, GridRowSelectionCheckboxParams } from '@mui/x-d
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../UI/Layout/StyledDataGrid'
 import { Box, Paper } from '@mui/material'
-
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'

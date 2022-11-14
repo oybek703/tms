@@ -4,9 +4,9 @@ import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import { formatOneDate } from '../../utils'
-import ExportButton from '../UI/Layout/ExportButton'
+import ExportButton from '../layout/ExportButton'
 import { v4 as uuid } from 'uuid'
-import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../UI/Layout/GapHelpers'
+import { GapTableHead, InnerDataRows, LcrAndNsfrTable, TotalOrBoldRow, VerticalColumn } from '../layout/GapHelpers'
 import { Grid } from '@mui/material'
 import DeficitChart from '../charts/GAP/DeficitChart'
 
@@ -22,11 +22,11 @@ const GAPTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		nsfrData = []
 	} = rows
 	const foreignCurrency =
-		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['FOREIGN_CURRENCY'].toFixed(2))) : []
+		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['foreignCurrency'].toFixed(2))) : []
 	const nationalCurrency =
-		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['NATIONAL_CURRENCY'].toFixed(2))) : []
+		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['nationalCurrency'].toFixed(2))) : []
 	const totalCurrency =
-		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['TOTAL'].toFixed(2))) : []
+		vlaLcrData.length > 0 ? vlaLcrData[2].slice(0, 6).map((e: any) => Number(e['total'].toFixed(2))) : []
 
 	return (
 		<div>

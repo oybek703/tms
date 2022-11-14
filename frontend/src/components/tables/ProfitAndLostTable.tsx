@@ -7,9 +7,9 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatDate, formatNumber } from '../../utils'
-import TableCap from '../UI/helpers/TableCap'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import TableCap from '../helpers/TableCap'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
 
 interface ProfitAndLostTableProps {
@@ -55,7 +55,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
 							<TableCell align="center">
 								<b>{row['count']}</b>
 							</TableCell>
-							<TableCell>{row['isTableHead'] ? <b>{row['indicator_name']}</b> : row['indicator_name']}</TableCell>
+							<TableCell>{row['isTableHead'] ? <b>{row['indicatorName']}</b> : row['indicatorName']}</TableCell>
 							<TableCell align="center">
 								{row['isTableHead'] ? <b>{formatNumber(row['yearBegin'])}</b> : formatNumber(row['yearBegin'])}
 							</TableCell>
@@ -68,7 +68,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
 							<TableCell align="center">
 								{row['isTableHead'] ? <b>{formatNumber(row['differ'], true)}</b> : formatNumber(row['differ'], true)}
 							</TableCell>
-							<TableCell align="center">{row['differ_percent']}</TableCell>
+							<TableCell align="center">{formatNumber(row['differPercent'], true)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

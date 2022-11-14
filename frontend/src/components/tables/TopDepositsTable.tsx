@@ -1,8 +1,8 @@
 import React, { Fragment, memo, useCallback, useState } from 'react'
-import TopDepositCard from '../UI/Layout/TopDeposits/TopDepositCard'
+import TopDepositCard from '../layout/TopDeposits/TopDepositCard'
 import { v4 as uuid } from 'uuid'
 import { Grid } from '@mui/material'
-import TopDepositsTab from '../UI/Layout/Tabs/TopDepositsTab'
+import TopDepositsTab from '../layout/Tabs/TopDepositsTab'
 import Card from '@mui/material/Card'
 
 function matchTitle(code: string) {

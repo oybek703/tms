@@ -2,14 +2,14 @@ import React, { Fragment, memo } from 'react'
 import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
-import TableCap from '../UI/helpers/TableCap'
+import TableCap from '../helpers/TableCap'
 import { Grid, TableBody, TableHead, TableRow } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import { formatNumber, formatOneDate } from '../../utils'
 import InvolvedFunds from '../charts/Dashboard/PlacedAndAttracted/InvolvedFunds'
 import PlacedFunds from '../charts/Dashboard/PlacedAndAttracted/PlacedFunds'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
 import globalStyles from '../../styles/globalStyles'
@@ -17,7 +17,7 @@ import globalStyles from '../../styles/globalStyles'
 function getFundCategoryAndSeries(fundData: any = []) {
 	let fundChartData = [...fundData]
 		.filter(f => f['forChart'])
-		.map((f: any) => ({ category: f['fund_name'], sum: f['sum'] }))
+		.map((f: any) => ({ category: f['fundName'], sum: f['sum'] }))
 	const involvedChartLeftData =
 		([...fundData].pop() || {})['sum'] - fundChartData.reduce((acc, val) => (acc += val['sum']), 0)
 	fundChartData = fundChartData
@@ -98,15 +98,15 @@ const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows 
 						<TableBody>
 							{placedFunds.map((f: any, i: number) => (
 								<TableRow hover key={uuid()}>
-									<TableCell>{f['fund_name']}</TableCell>
-									<TableCell align="center">{f['balance_code']}</TableCell>
+									<TableCell>{f['fundName']}</TableCell>
+									<TableCell align="center">{f['balanceCode']}</TableCell>
 									<TableCell align="center" sx={globalStyles.noWrap}>
 										{formatNumber(f['sum'])}
 									</TableCell>
 									<TableCell align="center">{f['percent']}</TableCell>
-									<TableCell>{involvedFunds[i]['fund_name']}</TableCell>
+									<TableCell>{involvedFunds[i]['fundName']}</TableCell>
 									<TableCell align="center" sx={globalStyles.noWrap}>
-										{involvedFunds[i]['balance_code']}
+										{involvedFunds[i]['balanceCode']}
 									</TableCell>
 									<TableCell align="center" sx={globalStyles.noWrap}>
 										{formatNumber(involvedFunds[i]['sum'])}

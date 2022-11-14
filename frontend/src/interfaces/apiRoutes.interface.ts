@@ -7,12 +7,12 @@ export enum APIRoutes {
 	capital = 'capital',
 	profitAndLost = 'profitAndLost',
 	liquidity = 'liquidity',
-	liquidityCurrent = '/api/liquidity/current_state',
+	liquidityCurrent = '/api/liquidity/currentState',
 	correspondent = 'correspondent',
-	correspondentCurrent = '/api/correspondent/current_state',
+	correspondentCurrent = '/api/correspondent/currentState',
 	currencyPosition = 'currencyPosition',
 	vlaBuffer = 'vlaBuffer',
-	plat = 'plat',
+	placedAttracted = 'placedAttracted',
 	interbankDeposits = 'interbankDeposits',
 	topDeposits = 'topDeposits',
 	timeDepoClients = 'timeDepoClients',
@@ -22,8 +22,8 @@ export enum APIRoutes {
 	filialEffectiveness = 'filialEffectiveness',
 	gm = 'gm',
 	gap = '/api/gap',
-	gapLastUpdate = '/api/gap/lastGapUpdate',
-	gapSimulation = '/api/gapSimulation',
+	gapLastUpdate = '/api/gap/lastUpdate',
+	gapSimulation = '/api/gapManual',
 	competitiveAnalysis = 'competitiveAnalysis'
 }
 

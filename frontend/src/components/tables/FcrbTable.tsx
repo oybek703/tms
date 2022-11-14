@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
-import TableCap from '../UI/helpers/TableCap'
+import TableCap from '../helpers/TableCap'
 import { TableRow, Typography } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
@@ -168,8 +168,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												{t} &nbsp;{' '}
 												<RedLightText>
 													{formatNumber(
-														((mfiData['mfiPercents'] || []).find((percent: any) => percent['CURRENCY_NAME'] === t) ||
-															{})['PERCENT']
+														((mfiData['mfiPercents'] || []).find((percent: any) => percent['currencyName'] === t) ||
+															{})['percent']
 													)}
 													%
 												</RedLightText>
@@ -209,8 +209,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<RedLightText>
 													{formatNumber(
 														((treasuryData['treasuryPercents'] || []).find(
-															(percent: any) => percent['CURRENCY_NAME'] === t
-														) || {})['PERCENT']
+															(percent: any) => percent['currencyName'] === t
+														) || {})['percent']
 													)}
 													%
 												</RedLightText>
@@ -250,8 +250,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 												<RedLightText>
 													{formatNumber(
 														((retailData['retailPercents'] || []).find(
-															(percent: any) => percent['CURRENCY_NAME'] === t
-														) || {})['PERCENT']
+															(percent: any) => percent['currencyName'] === t
+														) || {})['percent']
 													)}
 													%
 												</RedLightText>
@@ -484,8 +484,8 @@ const FcrbTable: React.FC<FcrbTableProps> = ({ rows = {} }) => {
 											<RedLightText>
 												{formatNumber(
 													((portfolioData['fundingAvgRatePercents'] || []).find(
-														(percent: any) => percent['CURRENCY_NAME'] === t
-													) || {})['PERCENT']
+														(percent: any) => percent['currencyName'] === t
+													) || {})['percent']
 												)}
 												%
 											</RedLightText>

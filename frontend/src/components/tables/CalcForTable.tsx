@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
-import TableCap from '../UI/helpers/TableCap'
+import TableCap from '../helpers/TableCap'
 import { formatNumber, formatOneDate, mergeStyles } from '../../utils'
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined'
@@ -14,12 +14,12 @@ import ExpenditureDynamics from '../charts/CalcFor/ExpenditureDynamics'
 import { Grid, TableRow } from '@mui/material'
 import CorrespondentDynamics from '../charts/Dashboard/ForCharts/CorrespondentDynamic'
 import Deviation from '../charts/Dashboard/ForCharts/Deviation'
-import Alert from '../UI/Layout/Alert'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import Alert from '../layout/Alert'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { Variant } from '@mui/material/styles/createTypography'
-import Delayed from '../UI/helpers/Delayed'
+import Delayed from '../helpers/Delayed'
 import globalStyles from '../../styles/globalStyles'
 
 interface FormattedDataProps {
@@ -73,17 +73,17 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 		user: { role }
 	} = useTypedSelector(state => state.auth)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const forValues = rows.filter((r: any) => r['F_O_R'] !== 0)
-	const forSum = rows.reduce((acc: any, val: any) => (acc += val['F_O_R']), 0) / forValues.length
-	const consumptionSum = rows.reduce((acc: any, val: any) => (acc += val['AVG_CONSUMPTION']), 0)
-	const cbStandards = rows.filter((r: any) => r['CB_STANDARD'] !== 0)
+	const forValues = rows.filter((r: any) => r['forValue'] !== 0)
+	const forSum = rows.reduce((acc: any, val: any) => (acc += val['forValue']), 0) / forValues.length
+	const consumptionSum = rows.reduce((acc: any, val: any) => (acc += val['avgConsumption']), 0)
+	const cbStandards = rows.filter((r: any) => r['cbStandard'] !== 0)
 	const cbStandardAverage =
-		cbStandards.reduce((acc: any, val: any) => (acc += val['CB_STANDARD']), 0) / cbStandards.length
+		cbStandards.reduce((acc: any, val: any) => (acc += val['cbStandard']), 0) / cbStandards.length
 	const deviationSum = forSum - cbStandardAverage
-	const categories = rows.map((r: any) => r['DATE_VALUE'])
-	const expenditureSeries = rows.map((r: any) => r['AVG_CONSUMPTION'])
-	const correspondentSeries = rows.map((r: any) => r['F_O_R'])
-	const deviationSeries = rows.map((r: any) => r['ST_DEVIATION'])
+	const categories = rows.map((r: any) => r['date'])
+	const expenditureSeries = rows.map((r: any) => r['avgConsumption'])
+	const correspondentSeries = rows.map((r: any) => r['forValue'])
+	const deviationSeries = rows.map((r: any) => r['stDeviation'])
 	if (forDashboard) {
 		return (
 			<Fragment>
@@ -176,14 +176,14 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 						<TableBody>
 							{rows.map((row: any, i: number) => (
 								<TableRow hover key={i}>
-									<TableCell align="center">{row.DATE_VALUE}</TableCell>
-									<TableCell align="center">{formatNumber(row.F_O_R, 'e')}</TableCell>
-									<TableCell align="center">{formatNumber(row.CB_STANDARD, 'e')}</TableCell>
+									<TableCell align="center">{row.date}</TableCell>
+									<TableCell align="center">{formatNumber(row.forValue, 'e')}</TableCell>
+									<TableCell align="center">{formatNumber(row.cbStandard, 'e')}</TableCell>
 									<TableCell align="center">
-										<FormattedData number={row.ST_DEVIATION} />
+										<FormattedData number={row.stDeviation} />
 									</TableCell>
 									<TableCell align="left">
-										<FormattedData number={row.AVG_CONSUMPTION} />
+										<FormattedData number={row.avgConsumption} />
 									</TableCell>
 								</TableRow>
 							))}

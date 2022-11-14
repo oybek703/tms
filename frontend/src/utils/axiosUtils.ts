@@ -25,7 +25,7 @@ axios.interceptors.response.use(
 	function (error) {
 		const { response = {} } = error
 		const { status } = response
-		if (status === 440) {
+		if (status === 440 || status === 401) {
 			localStorage.clear()
 			window.location.reload()
 		}
@@ -52,12 +52,10 @@ export const checkCacheOrFetch = (route: ApiRoutesType) => {
 			if (Boolean(cacheData) && date === cacheData.date) {
 				return cacheData.data
 			} else {
-				const {
-					data: { rows }
-				} = await axios.get(`/api/${route}?date=${date}`, withToken())
-				const newCashData = { date: date, data: rows }
+				const { data } = await axios.get(`/api/${route}?date=${date}`, withToken())
+				const newCashData = { date: date, data }
 				localStorage.setItem(route, JSON.stringify(newCashData))
-				return rows
+				return data
 			}
 		} catch (e) {
 			const message = getErrorMessage(e)
@@ -69,10 +67,8 @@ export const checkCacheOrFetch = (route: ApiRoutesType) => {
 export const fetchWithoutCache = (prefix: string, route: ApiRoutesType) => {
 	return createAsyncThunk<any, undefined, { state: RootState }>(prefix, async function (_, thunkAPI) {
 		try {
-			const {
-				data: { rows }
-			} = await axios.get(route, withToken())
-			return rows
+			const { data } = await axios.get(route, withToken())
+			return data
 		} catch (e) {
 			const message = getErrorMessage(e)
 			return thunkAPI.rejectWithValue(message)

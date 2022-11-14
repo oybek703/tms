@@ -8,15 +8,15 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber } from '../../utils'
 import { v4 as uuid } from 'uuid'
-import PaginatedTable from '../UI/helpers/PaginatedTable'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import PaginatedTable from '../helpers/PaginatedTable'
+import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
 
 const columns = ['До 7 дней', ...new Array(12).fill('').map((v, i) => `${i + 1} месяц`), '1-2 года', 'свыше 2 лет']
 
 const ReportLiabilitiesTable: React.FC<{ rows: any }> = function ({ rows = [] }) {
 	const bodyColumns = Object.keys([...rows].pop() || {}).filter(
-		(v, i) => v !== 'NAME' && v !== 'CURRENCY' && v !== 'ACCOUNT_CODE'
+		(v, i) => v !== 'name' && v !== 'currency' && v !== 'accountCode'
 	)
 	const [page, setPage] = useState(0)
 	const [rowsPerPage, setRowsPerPage] = useState(20)
@@ -74,9 +74,9 @@ const ReportLiabilitiesTable: React.FC<{ rows: any }> = function ({ rows = [] })
 								{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, i: number) => (
 									<TableRow hover key={uuid()}>
 										<TableCell>{i + 1}</TableCell>
-										<TableCell sx={globalStyles.noWrap}>{row['NAME']}</TableCell>
-										<TableCell sx={globalStyles.noWrap}>{row['ACCOUNT_CODE']}</TableCell>
-										<TableCell align="center">{row['CURRENCY'] === '0' ? '000' : row['CURRENCY']}</TableCell>
+										<TableCell sx={globalStyles.noWrap}>{row['name']}</TableCell>
+										<TableCell sx={globalStyles.noWrap}>{row['accountCode']}</TableCell>
+										<TableCell align="center">{row['currency'] === '0' ? '000' : row['currency']}</TableCell>
 										{bodyColumns.map(col => (
 											<TableCell key={uuid()} sx={globalStyles.noWrap} align="center">
 												{formatNumber(row[`${col}`], true)}

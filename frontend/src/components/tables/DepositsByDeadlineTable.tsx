@@ -7,8 +7,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatNumber, formatOneDate } from '../../utils'
-import ExportButton from '../UI/Layout/ExportButton'
-import BoldWithColor from '../UI/helpers/BoldWithColor'
+import ExportButton from '../layout/ExportButton'
+import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
@@ -57,24 +57,24 @@ function DepositsByDeadlineTable({ rows = [] }) {
 				<TableBody>
 					{rows.map((row: any, index: number) => (
 						<TableRow hover key={index}>
-							<TableCell>{<b>{row['STATE']}</b>}</TableCell>
+							<TableCell>{<b>{row['indicatorName']}</b>}</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['TD_NAT'], 'e')}
+								{formatNumber(row['tdNat'], 'e')}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['TD_FOR'], 'e')}
+								{formatNumber(row['tdFor'], 'e')}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['DC_NAT'], 'e')}
+								{formatNumber(row['dcNat'], 'e')}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['DC_FOR'], 'e')}
+								{formatNumber(row['dcFor'], 'e')}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['SD_NAT'], 'e')}
+								{formatNumber(row['sdNat'], 'e')}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{formatNumber(row['SD_FOR'], 'e')}
+								{formatNumber(row['sdFor'], 'e')}
 							</TableCell>
 						</TableRow>
 					))}
