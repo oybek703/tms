@@ -1,16 +1,14 @@
-import React, { Fragment, memo, useState } from 'react'
-import { GridColDef, GridRowApi, GridRowSelectionCheckboxParams } from '@mui/x-data-grid'
+import React, { Fragment, memo } from 'react'
+import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
-import StyledDataGrid from '../UI/Layout/StyledDataGrid'
-import { Box, Paper } from '@mui/material'
+import { Paper } from '@mui/material'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TableCap from '../UI/helpers/TableCap'
 import TableRow from '@mui/material/TableRow'
-import globalStyles from '../../styles/globalStyles'
+import StyledDataGrid from '../layout/StyledDataGrid'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {
