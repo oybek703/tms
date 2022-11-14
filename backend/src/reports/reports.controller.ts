@@ -70,7 +70,7 @@ export class ReportsController {
     return await this.reportsService.liquidity(date)
   }
 
-  @ReportWithoutDate('Bank liquidity', ReportsPaths.liquidityCurrentState)
+  @ReportWithoutDate('Bank liquidity', ReportsPaths.liquidityCurrentState, true)
   async liquidityCurrent() {
     return await this.reportsService.liquidityCurrent()
   }
@@ -81,7 +81,7 @@ export class ReportsController {
     return await this.reportsService.correspondent(date)
   }
 
-  @ReportWithoutDate('Bank liquidity', ReportsPaths.correspondentCurrentState)
+  @ReportWithoutDate('Bank liquidity', ReportsPaths.correspondentCurrentState, true)
   async correspondentCurrent() {
     return await this.reportsService.correspondentCurrent()
   }

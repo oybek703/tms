@@ -1,7 +1,7 @@
-import 'colors'
 import { Injectable, InternalServerErrorException, OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import * as oracledb from 'oracledb'
+import { ORACLE_CONNECTION_SUCCESS } from './oracle.constants'
 
 @Injectable()
 export class OracleService implements OnModuleInit {
@@ -28,7 +28,7 @@ export class OracleService implements OnModuleInit {
       const dbConnection = await oracledb.getConnection(this.connection)
       await dbConnection.execute(`SELECT * FROM DUAL`)
       await dbConnection.release()
-      console.log(`Successfully connected to database!`.blue.underline)
+      console.log(ORACLE_CONNECTION_SUCCESS)
     } catch (e) {
       if (e instanceof Error) {
         console.log(e.message)

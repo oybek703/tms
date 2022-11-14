@@ -1,14 +1,11 @@
 import React, { Fragment, memo } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
-import { Paper } from '@mui/material'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import StyledDataGrid from '../layout/StyledDataGrid'
+import { IFcrbTableRow } from '../../interfaces/tables.interfaces'
+import { Table, TableContainer, TableRow, TableHead, TableBody, TableCell, Paper } from '@mui/material'
+import globalStyles from '../../styles/globalStyles'
+import BoldWithColor from '../helpers/BoldWithColor'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {
@@ -62,136 +59,164 @@ const columns: GridColDef[] = [
 	generateCellAttrs({ field: 'benefitInMonth', headerName: 'Прибыль за месяц', minWidth: 160 })
 ]
 
-interface total_indicator {
-	name: string
-	deposit202: number
-	deposit204: number
-	deposit206: number
-	totalLoan: number
-	issuedLoans: number
-	par30: number
-	par60: number
-	par90: number
-	npl: number
-	nplPercent: number
-	accruedInterest: number
-	roa: number
-	roe: number
-	resourceDebt: number
-	benefitInMonth: number
+const RowsInitialState: IFcrbTableRow = {
+	npl: 0,
+	roe: 0,
+	roa: 0,
+	totalLoan: 0,
+	accruedInterest: 0,
+	benefitInMonth: 0,
+	deposit202: 0,
+	deposit204: 0,
+	deposit206: 0,
+	par60: 0,
+	par90: 0,
+	par30: 0,
+	issuedLoans: 0,
+	nplPercent: 0,
+	resourceDebt: 0,
+	mfo: '',
+	filialName: ''
 }
 
-const FilialEffectivenessTable: React.FC<{ rows: total_indicator[] }> = function ({ rows = [] }) {
-	// итого
+function calcTotal(rows: IFcrbTableRow[]): IFcrbTableRow | undefined {
+	if (rows.length !== 0) {
+		return rows.reduce((previousValue, currentValue) => {
+			previousValue.npl += currentValue.npl
+			previousValue.totalLoan += currentValue.totalLoan
+			previousValue.issuedLoans += currentValue.issuedLoans
+			previousValue.par60 += currentValue.par60
+			previousValue.par90 += currentValue.par90
+			previousValue.par30 += currentValue.par30
+			previousValue.totalLoan += currentValue.totalLoan
+			previousValue.roe += currentValue.roe
+			previousValue.roa += currentValue.roa
+			previousValue.nplPercent += currentValue.nplPercent
+			previousValue.deposit202 += currentValue.deposit202
+			previousValue.deposit204 += currentValue.deposit204
+			previousValue.deposit206 += currentValue.deposit206
+			previousValue.resourceDebt += currentValue.resourceDebt
+			previousValue.benefitInMonth += currentValue.benefitInMonth
+			previousValue.accruedInterest += currentValue.accruedInterest
+			previousValue.filialName = 'Итого'
+			return previousValue
+		}, RowsInitialState)
+	}
+}
 
-	const total_deposit202: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.deposit202
-		return previousValue
-	}, 0)
-
-	const total_deposit204: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.deposit204
-		return previousValue
-	}, 0)
-
-	const total_deposit206: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.deposit206
-		return previousValue
-	}, 0)
-	const total_Loan: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.totalLoan
-		return previousValue
-	}, 0)
-
-	const total_issuedLoans: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.issuedLoans
-		return previousValue
-	}, 0)
-
-	const total_par30: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.par30
-		return previousValue
-	}, 0)
-
-	const total_par60: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.par60
-		return previousValue
-	}, 0)
-
-	const total_par90: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.par90
-		return previousValue
-	}, 0)
-
-	const total_npl: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.npl
-		return previousValue
-	}, 0)
-
-	const total_nplPercent: number = (100 * total_npl) / total_Loan
-
-	const total_accruedInterest: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.accruedInterest
-		return previousValue
-	}, 0)
-
-	const total_resourceDebt: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.resourceDebt
-		return previousValue
-	}, 0)
-
-	const total_benefitInMonth: number = rows.reduce((previousValue: number, row) => {
-		previousValue += row.benefitInMonth
-		return previousValue
-	}, 0)
-
+const FilialEffectivenessTable: React.FC<{ rows: IFcrbTableRow[] }> = function ({ rows = [] }) {
+	const totalData: IFcrbTableRow | undefined = calcTotal(rows)
 	return (
 		<Fragment>
-			<TableContainer sx={{ marginTop: '20px', marginBottom: '30px' }} component={Paper}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell></TableCell>
-							<TableCell>Депозиты довостребования</TableCell>
-							<TableCell>Сберегательные депозиты</TableCell>
-							<TableCell>Срочные депозиты клиентов</TableCell>
-							<TableCell>Кредитний портфель</TableCell>
-							<TableCell>Всего проблеманые кредиты</TableCell>
-							<TableCell>PAR 30</TableCell>
-							<TableCell>PAR 60</TableCell>
-							<TableCell>PAR 90</TableCell>
-							<TableCell>NPL 90</TableCell>
-							<TableCell>NPL %</TableCell>
-							<TableCell>Начисленные проценты</TableCell>
-							<TableCell>ROA</TableCell>
-							<TableCell>ROE</TableCell>
-							<TableCell>Задолженность по ресурсам перед ГО</TableCell>
-							<TableCell>Прибыль за месяц</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						<TableRow>
-							<TableCell>Итого</TableCell>
-							<TableCell>{total_deposit202}</TableCell>
-							<TableCell>{total_deposit204}</TableCell>
-							<TableCell>{total_deposit206}</TableCell>
-							<TableCell>{total_Loan}</TableCell>
-							<TableCell>{total_issuedLoans}</TableCell>
-							<TableCell>{total_par30.toFixed(2)}</TableCell>
-							<TableCell>{total_par60.toFixed(2)}</TableCell>
-							<TableCell>{total_par90.toFixed(2)}</TableCell>
-							<TableCell>{total_npl}</TableCell>
-							<TableCell>{total_nplPercent.toFixed(2)}</TableCell>
-							<TableCell>{total_accruedInterest.toFixed(2)}</TableCell>
-							<TableCell>0</TableCell>
-							<TableCell>0</TableCell>
-							<TableCell>{total_resourceDebt.toFixed(2)}</TableCell>
-							<TableCell>{total_benefitInMonth.toFixed(2)}</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
 			<StyledDataGrid hideFooter columns={columns} rows={rows} />
+			{totalData && (
+				<TableContainer component={Paper} sx={{ mb: '5px', pb: 0, overflow: 'auto', mt: 2 }}>
+					<Table size="small">
+						<TableHead sx={globalStyles.stickyTableHead}>
+							<TableRow>
+								<TableCell colSpan={3} />
+								<TableCell align="center">
+									<BoldWithColor>Депозиты довостребования</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Сберегательные депозиты</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Срочные депозиты клиентов</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Кредитний портфель</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Всего проблеманые кредиты</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>PAR {'<'} 30</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>PAR {'<'} 60</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>PAR {'<'} 90</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>NPL {'>'} 90</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>NPL (%)</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Начисленные проценты</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>ROA</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>ROE</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Задолженность по ресурсам перед ГО</BoldWithColor>
+								</TableCell>
+								<TableCell align="center">
+									<BoldWithColor>Прибыль за месяц</BoldWithColor>
+								</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							<TableRow>
+								<TableCell colSpan={3} align="center" sx={{ fontWeight: 'bold' }}>
+									{totalData.filialName}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.deposit202)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.deposit204)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.deposit206)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.totalLoan)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.issuedLoans)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.par30)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.par60)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.par90)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.npl)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.nplPercent)}%
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.accruedInterest)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									0{/* {formatNumber(totalData.roa)} */}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									0{/* {formatNumber(totalData.roe)} */}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.resourceDebt)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{formatNumber(totalData.benefitInMonth)}
+								</TableCell>
+							</TableRow>
+						</TableBody>
+					</Table>
+				</TableContainer>
+			)}
 		</Fragment>
 	)
 }

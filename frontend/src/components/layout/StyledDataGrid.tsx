@@ -45,6 +45,7 @@ const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, colu
 				rows={rows.map((row: any, i: number) => ({ ...row, index: i + 1 }))}
 				sx={styles}
 				columns={columns}
+				hideFooter={false}
 				rowsPerPageOptions={[30, 50, 100]}
 				getRowId={(row: any) => row.index}
 				{...props}

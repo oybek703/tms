@@ -52,7 +52,15 @@ export function ReportLastUpdate(tagName: string, routeName: ReportsPaths) {
   )
 }
 
-export function ReportWithoutDate(tagName: string, routeName: ReportsPaths) {
+export function ReportWithoutDate(tagName: string, routeName: ReportsPaths, enable = false) {
+  if (enable) {
+    return applyDecorators(
+      ApiTags(tagName),
+      UseGuards(JwtAuthGuard),
+      ApiBearerAuth(),
+      Get(routeName)
+    )
+  }
   return applyDecorators(
     ApiTags(tagName),
     UseGuards(JwtAuthGuard, ReportGuard),

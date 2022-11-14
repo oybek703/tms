@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from '../src/app.module'
 
-describe('AppController (e2e)', () => {
+describe('Oracle Service (e2e)', () => {
   let app: INestApplication
 
   beforeEach(async () => {
@@ -15,7 +15,8 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!')
+  it('/operDays (GET)', async () => {
+    const { body } = await request(app.getHttpServer()).get('/operDays').expect(200)
+    expect(body.dates).toBeDefined()
   })
 })
