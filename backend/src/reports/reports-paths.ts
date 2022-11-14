@@ -22,6 +22,7 @@ export enum ReportsPaths {
   timeDeposits = 'timeDeposits',
   depositsByDeadline = 'depositsByDeadline',
   reportLiabilities = 'reportLiabilities',
+  competitiveAnalysis = 'competitiveAnalysis',
   filialEffectiveness = 'filialEffectiveness',
   gm = 'gm',
   gap = 'gap',

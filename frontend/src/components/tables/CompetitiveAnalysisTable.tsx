@@ -23,7 +23,6 @@ interface CompetitiveAnalysisProps {
 
 const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	console.log(rows)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`competitive-analysis-${formatOneDate(reportDate)}`} />

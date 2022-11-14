@@ -159,6 +159,12 @@ export class ReportsController {
     return await this.reportsService.filialEffectiveness(date)
   }
 
+  @Report('Actives, passives', ReportsPaths.competitiveAnalysis)
+  async competitiveAnalysis(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.competitiveAnalysis(date)
+  }
+
   @Report('Actives, passives', ReportsPaths.gm)
   async gm(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException

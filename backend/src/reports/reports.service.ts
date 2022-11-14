@@ -30,6 +30,7 @@ import getDashboardData, {
 } from '../core/dashboard'
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from '@nestjs/axios'
+import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
 
 @Injectable()
 export class ReportsService {
@@ -210,5 +211,9 @@ export class ReportsService {
 
   async dashboardMonthly(firstDate: Date, secondDate: Date) {
     return await getDashboardMonthlyData(firstDate, secondDate, this.oracleService)
+  }
+
+  async competitiveAnalysis(date: Date) {
+    return await getCompetitiveAnalysisData(date, this.oracleService)
   }
 }
