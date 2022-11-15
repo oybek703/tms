@@ -29,7 +29,7 @@ export abstract class Base {
     if (whereQuery) {
       query = this.formatQuery(whereQuery)
     } else {
-      query = ownQuery(this.date)
+      query = ownQuery()
     }
     if (inStream)
       return (await this.oracleService.executeQueryInStream<T>(query)) as K extends true ? T[] : T
