@@ -44,7 +44,7 @@ const CurrencyRateLine: React.FC<CurrencyRateLineProps> = ({ last90Rates = {} })
 					{currencyOrder.map(v => (
 						<FormControlLabel
 							key={uuid()}
-							value={v.toLowerCase()}
+							value={v}
 							control={<Radio color="primary" />}
 							label={v}
 							labelPlacement="bottom"
