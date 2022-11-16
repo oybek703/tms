@@ -8,7 +8,7 @@ const initialState = {
 	operDaysError: undefined,
 	operDays: [],
 	lastUpdateLoading: false,
-	lastUpdateError: null,
+	lastUpdateError: undefined,
 	lastUpdate: null
 }
 
@@ -48,6 +48,7 @@ const operDaysSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(getOperDays.pending, state => {
 			state.operDaysLoading = true
+			state.operDaysError = undefined
 		})
 		builder.addCase(getOperDays.fulfilled, (state, action: PayloadAction<any>) => {
 			state.operDays = action.payload
@@ -59,6 +60,7 @@ const operDaysSlice = createSlice({
 		})
 		builder.addCase(getDashBoardLastUpdate.pending, state => {
 			state.lastUpdateLoading = true
+			state.lastUpdateError = undefined
 		})
 		builder.addCase(getDashBoardLastUpdate.fulfilled, (state, action: PayloadAction<any>) => {
 			state.lastUpdateLoading = false

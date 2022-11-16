@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	fcrb: [],
-	error: null
+	error: undefined
 }
 
 export const fetchFcrb = checkCacheOrFetch(APIRoutes.fcrb)
@@ -17,6 +17,7 @@ const fcrbSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchFcrb.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchFcrb.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

@@ -8,7 +8,7 @@ const initialState = {
 		allRows: [],
 		tableSumData: []
 	},
-	error: null
+	error: undefined
 }
 
 export const fetchCurrencyPosition = checkCacheOrFetch(APIRoutes.currencyPosition)
@@ -20,6 +20,7 @@ const currencyPositionSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchCurrencyPosition.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchCurrencyPosition.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

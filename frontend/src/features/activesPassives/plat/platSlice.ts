@@ -8,7 +8,7 @@ const initialState = {
 		involvedFunds: [],
 		placedFunds: []
 	},
-	error: null
+	error: undefined
 }
 
 export const fetchPlat = checkCacheOrFetch(APIRoutes.placedAttracted)
@@ -20,6 +20,7 @@ const platSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchPlat.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchPlat.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

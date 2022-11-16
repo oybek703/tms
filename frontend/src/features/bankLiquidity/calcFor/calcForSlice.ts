@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	calcFor: [],
-	error: null
+	error: undefined
 }
 
 export const fetchCalcFor = checkCacheOrFetch(APIRoutes.calcFor)
@@ -17,6 +17,7 @@ const calcForSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchCalcFor.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchCalcFor.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

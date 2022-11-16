@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { checkCacheOrFetch, withToken } from '../../utils/axiosUtils'
-import { APIRoutes } from '../../interfaces/apiRoutes.interface'
+import { withToken } from '../../utils/axiosUtils'
 import { getErrorMessage } from '../../utils'
 import axios from 'axios'
 
 const initialState = {
 	usersLoading: false,
-	usersError: null,
+	usersError: undefined,
 	users: [],
 	singleUser: undefined,
 	singleUserLoading: false,
@@ -53,6 +52,7 @@ const fcrbSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchUsers.pending, state => {
 			state.usersLoading = true
+			state.usersError = undefined
 		})
 		builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<any>) => {
 			state.usersLoading = false
@@ -64,6 +64,7 @@ const fcrbSlice = createSlice({
 		})
 		builder.addCase(fetchSingleUser.pending, state => {
 			state.singleUserLoading = true
+			state.singleUserError = undefined
 		})
 		builder.addCase(fetchSingleUser.fulfilled, (state, action: PayloadAction<any>) => {
 			state.singleUserLoading = false

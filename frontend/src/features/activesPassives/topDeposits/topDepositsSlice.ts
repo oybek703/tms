@@ -17,6 +17,7 @@ const topDepositsSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchTopDeposits.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchTopDeposits.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

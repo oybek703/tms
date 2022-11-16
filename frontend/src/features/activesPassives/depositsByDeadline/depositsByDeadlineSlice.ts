@@ -17,6 +17,7 @@ const depositsByDeadlineSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchDepositsByDeadline.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchDepositsByDeadline.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

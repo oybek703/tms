@@ -9,7 +9,7 @@ const initialState = {
 		totalCash: [],
 		interbankDeposits: []
 	},
-	error: null,
+	error: undefined,
 	currentState: false,
 	currentCorrespondentLoading: false,
 	currentCorrespondent: {
@@ -38,6 +38,7 @@ const correspondentSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchCorrespondent.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchCorrespondent.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false
@@ -49,6 +50,7 @@ const correspondentSlice = createSlice({
 		})
 		builder.addCase(fetchCorrespondentCurrent.pending, state => {
 			state.currentCorrespondentLoading = true
+			state.currentCorrespondentError = undefined
 		})
 		builder.addCase(fetchCorrespondentCurrent.fulfilled, (state, action: PayloadAction<any>) => {
 			state.currentCorrespondentLoading = false

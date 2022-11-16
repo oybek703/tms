@@ -60,6 +60,7 @@ const gapSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchGap.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchGap.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false
@@ -71,6 +72,7 @@ const gapSlice = createSlice({
 		})
 		builder.addCase(fetchLastGapUpdateTime.pending, state => {
 			state.lastUpdateLoading = true
+			state.lastUpdateError = undefined
 		})
 		builder.addCase(fetchLastGapUpdateTime.fulfilled, (state, action: PayloadAction<any>) => {
 			state.lastUpdateLoading = false
@@ -83,6 +85,7 @@ const gapSlice = createSlice({
 		})
 		builder.addCase(fetchGapSimulation.pending, state => {
 			state.gapSimulationLoading = true
+			state.gapSimulationError = undefined
 		})
 		builder.addCase(fetchGapSimulation.fulfilled, (state, action: PayloadAction<any>) => {
 			state.gapSimulationLoading = false

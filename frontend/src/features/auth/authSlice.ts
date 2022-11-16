@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const initialState = {
 	loading: false,
-	error: null,
+	error: undefined,
 	user: JSON.parse(localStorage.getItem('user') || '{}')
 }
 
@@ -36,6 +36,7 @@ const authSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(login.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

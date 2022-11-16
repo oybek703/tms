@@ -1,1 +1,0 @@
-export const IGNORE_CACHING = 'IGNORE_CACHING'

@@ -17,6 +17,7 @@ const vlaBufferSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchVlaBuffer.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchVlaBuffer.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

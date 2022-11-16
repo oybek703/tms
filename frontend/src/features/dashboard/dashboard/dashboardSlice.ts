@@ -37,6 +37,7 @@ const dashboardSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchDashboard.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchDashboard.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

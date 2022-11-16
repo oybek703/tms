@@ -17,6 +17,7 @@ const timeDepoClientsSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchTimeDepoClients.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchTimeDepoClients.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

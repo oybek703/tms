@@ -21,6 +21,7 @@ const creditDataSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchDashboardCreditData.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchDashboardCreditData.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

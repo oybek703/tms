@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	profitAndLost: [],
-	error: null
+	error: undefined
 }
 
 export const fetchProfitAndLost = checkCacheOrFetch(APIRoutes.profitAndLost)
@@ -17,6 +17,7 @@ const profitAndLostSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchProfitAndLost.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchProfitAndLost.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

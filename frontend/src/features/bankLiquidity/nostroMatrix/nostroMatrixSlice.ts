@@ -35,6 +35,7 @@ const nostroMatrixSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchNostroMatrix.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchNostroMatrix.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

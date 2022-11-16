@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	mainIndicators: [],
-	error: null
+	error: undefined
 }
 
 export const fetchMainIndicators = checkCacheOrFetch(APIRoutes.mainIndicators)
@@ -17,6 +17,7 @@ const mainIndicatorsSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchMainIndicators.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchMainIndicators.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

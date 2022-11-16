@@ -10,7 +10,7 @@ const initialState = {
 		fullBorrowData: [],
 		fullLandData: []
 	},
-	error: null
+	error: undefined
 }
 
 export const fetchInterbankDeposits = checkCacheOrFetch(APIRoutes.interbankDeposits)
@@ -22,6 +22,7 @@ const interbankDepositsSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchInterbankDeposits.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchInterbankDeposits.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

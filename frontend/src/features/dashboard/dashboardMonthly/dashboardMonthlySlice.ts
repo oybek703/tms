@@ -6,7 +6,7 @@ import { withToken } from '../../../utils/axiosUtils'
 const initialState = {
 	loading: false,
 	dashboardMonthly: [],
-	error: null
+	error: undefined
 }
 
 interface DashboardMonthlyOptions {
@@ -36,6 +36,7 @@ const dashboardMonthlySlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchDashboardMonthly.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchDashboardMonthly.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

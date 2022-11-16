@@ -9,7 +9,7 @@ const initialState = {
 		currentBalance: [],
 		balanceInMonthBegin: []
 	},
-	error: null
+	error: undefined
 }
 
 export const fetchTimeDeposits = checkCacheOrFetch(APIRoutes.timeDeposits)
@@ -21,6 +21,7 @@ const timeDepositsSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchTimeDeposits.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchTimeDeposits.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

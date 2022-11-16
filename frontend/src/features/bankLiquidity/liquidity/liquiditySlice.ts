@@ -8,7 +8,7 @@ const initialState = {
 		liquidityAssets: [],
 		obligations: []
 	},
-	error: null,
+	error: undefined,
 	currentState: false,
 	currentLiquidityLoading: false,
 	currentLiquidity: {
@@ -33,6 +33,7 @@ const liquiditySlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchLiquidity.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchLiquidity.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false
@@ -44,6 +45,7 @@ const liquiditySlice = createSlice({
 		})
 		builder.addCase(fetchLiquidityCurrent.pending, state => {
 			state.currentLiquidityLoading = true
+			state.currentLiquidityError = undefined
 		})
 		builder.addCase(fetchLiquidityCurrent.fulfilled, (state, action: PayloadAction<any>) => {
 			state.currentLiquidityLoading = false

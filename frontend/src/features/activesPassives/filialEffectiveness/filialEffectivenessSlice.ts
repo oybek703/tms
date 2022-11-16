@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	filialEffectiveness: [],
-	error: null
+	error: undefined
 }
 
 export const fetchFilialEffectiveness = checkCacheOrFetch(APIRoutes.filialEffectiveness)
@@ -17,6 +17,7 @@ const filialEffectivenessSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchFilialEffectiveness.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchFilialEffectiveness.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

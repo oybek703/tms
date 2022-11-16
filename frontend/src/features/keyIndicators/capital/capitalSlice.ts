@@ -5,7 +5,7 @@ import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 const initialState = {
 	loading: false,
 	capital: [],
-	error: null
+	error: undefined
 }
 
 export const fetchCapital = checkCacheOrFetch(APIRoutes.capital)
@@ -17,6 +17,7 @@ const capitalSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchCapital.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchCapital.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

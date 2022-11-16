@@ -29,6 +29,7 @@ const competitiveAnalysisSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchCompetitiveAnalysis.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchCompetitiveAnalysis.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false

@@ -9,7 +9,7 @@ const initialState = {
 		accredetiv: {},
 		currRates: []
 	},
-	error: null
+	error: undefined
 }
 
 export const fetchGM = checkCacheOrFetch(APIRoutes.gm)
@@ -21,6 +21,7 @@ const gmSlice = createSlice({
 	extraReducers: builder => {
 		builder.addCase(fetchGM.pending, state => {
 			state.loading = true
+			state.error = undefined
 		})
 		builder.addCase(fetchGM.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false
