@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react'
+import React, { Fragment, memo, useMemo } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
@@ -83,7 +83,6 @@ function calcTotal(rows: IFcrbTableRow[]): IFcrbTableRow | undefined {
 	if (rows.length !== 0) {
 		return rows.reduce((previousValue, currentValue) => {
 			previousValue.npl += currentValue.npl
-			previousValue.totalLoan += currentValue.totalLoan
 			previousValue.issuedLoans += currentValue.issuedLoans
 			previousValue.par60 += currentValue.par60
 			previousValue.par90 += currentValue.par90
@@ -105,7 +104,7 @@ function calcTotal(rows: IFcrbTableRow[]): IFcrbTableRow | undefined {
 }
 
 const FilialEffectivenessTable: React.FC<{ rows: IFcrbTableRow[] }> = function ({ rows = [] }) {
-	const totalData: IFcrbTableRow | undefined = calcTotal(rows)
+	const totalData: IFcrbTableRow | undefined = useMemo(() => calcTotal(rows), [rows])
 	return (
 		<Fragment>
 			<StyledDataGrid hideFooter columns={columns} rows={rows} />
