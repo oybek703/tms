@@ -13,16 +13,33 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 import { TableBody, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
+import { ICompetitiveAnalysis } from '../../interfaces/ca.interface'
 
 interface CompetitiveAnalysisProps {
-	rows: {
-		quarterDates: string[]
-		totalData: { title: string; q1: number; q2: number; q3: number }[]
-	}
+	rows: ICompetitiveAnalysis
+}
+
+interface IndicatorNameCellProps {
+	indicatorName: string
+	tabbed?: boolean
+	redBold?: boolean
+}
+
+const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicatorName, redBold }) => {
+	const styles = { color: 'red', fontWeight: 'bold' }
+	return (
+		<TableCell sx={redBold ? styles : {}}>
+			{tabbed && <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>}
+			{indicatorName}
+		</TableCell>
+	)
 }
 
 const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { quarterDates, totalData } = rows
+	const tabbedIndexes = [2]
+	const redBoldIndexes = [2, 4]
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`competitive-analysis-${formatOneDate(reportDate)}`} />
@@ -46,13 +63,31 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				</TableHead>
 				<TableBody>
 					<TableRow>
-						<TableCell>Нац. вал. млн.</TableCell>
-						{rows.quarterDates.map(date => (
+						<TableCell>
+							<b>Нац. вал. млн.</b>
+						</TableCell>
+						{quarterDates.map(date => (
 							<TableCell key={uuid()} align="center">
-								{date}
+								<b>{date}</b>
 							</TableCell>
 						))}
 					</TableRow>
+					{Object.keys(totalData).map((value, index) => {
+						const { firstDate, secondDate, fourthDate, thirdDate, indicatorName } = totalData[value]
+						return (
+							<TableRow key={uuid()}>
+								<IndicatorNameCell
+									indicatorName={indicatorName}
+									tabbed={tabbedIndexes.includes(index + 1)}
+									redBold={redBoldIndexes.includes(index + 1)}
+								/>
+								<TableCell align="center">{formatNumber(firstDate)}</TableCell>
+								<TableCell align="center">{formatNumber(secondDate)}</TableCell>
+								<TableCell align="center">{formatNumber(thirdDate)}</TableCell>
+								<TableCell align="center">{formatNumber(fourthDate)}</TableCell>
+							</TableRow>
+						)
+					})}
 				</TableBody>
 			</Table>
 		</TableContainer>
