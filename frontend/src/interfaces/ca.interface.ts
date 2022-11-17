@@ -1,3 +1,13 @@
+export interface ICACorporateRetail {
+	corporate: [number, number, number, number]
+	retail: [number, number, number, number]
+}
+
+export interface ICANationalForeign {
+	national: [number, number, number, number]
+	foreign: [number, number, number, number]
+}
+
 export interface ICompetitiveAnalysis {
 	quarterDates: string[]
 	totalData: {
@@ -12,7 +22,9 @@ export interface ICompetitiveAnalysis {
 		}
 	}
 	chartData: {
-		creditPortfolioGrow: [number, number, number, number]
-		depositGrow: [number, number, number, number]
+		creditPortfolioGrow: ICACorporateRetail
+		depositGrow: ICACorporateRetail
+		actives: ICANationalForeign
+		liabilities: ICANationalForeign
 	}
 }

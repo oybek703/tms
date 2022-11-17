@@ -1,5 +1,6 @@
 import { Base } from '../../base'
 import {
+  ActivesCols,
   CASaldoQueries,
   ICADbData,
   ICARow,
@@ -24,7 +25,7 @@ export class CompetitiveAnalysis extends Base {
             DATE '${fourthDate}'`
   }
 
-  private getRowNums(data: ICARow): number[] {
+  private static getRowNums(data: ICARow): number[] {
     const nums = []
     for (const dataKey in data) {
       if (typeof data[dataKey] === 'number') {
@@ -57,21 +58,25 @@ export class CompetitiveAnalysis extends Base {
     }
   }
 
-  private activesQuery = () => {
-    return `SELECT ABS(TOTAL) as "value"
+  private activesQuery = (col: ActivesCols) => {
+    return () => {
+      return `SELECT ABS(${col}) as "value"
             FROM LIQUIDITY
             WHERE ROLE = 'T_A'
               AND OPER_DAY IN (${this.createDates()})
             ORDER BY OPER_DAY`
+    }
   }
 
-  private saldoQuery = (whereQuery: CASaldoQueries) => {
+  private saldoQuery = (whereQuery: CASaldoQueries, currency?: 'national' | 'foreign') => {
     return () => {
       return `SELECT ROUND(ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / POWER(10, 8)), 2) AS
                          "value"
               FROM IBS.SVOD_SALDO_DUMP@IABS
               WHERE DAT IN (${this.createDates()})
-                AND (${whereQuery})
+                AND (${whereQuery}) ${
+        currency ? (currency === 'foreign' ? `AND VAL!='000'` : `AND VAL='000'`) : ''
+      }
               GROUP BY DAT`
     }
   }
@@ -158,8 +163,8 @@ export class CompetitiveAnalysis extends Base {
     return await this.getOneRow(indicatorName, this.saldoQuery(query), options)
   } /* Корпоративный, Розничный */
 
-  private async actives() {
-    return await this.getOneRow('Активы', this.activesQuery, { redBold: true })
+  private async actives(col: ActivesCols) {
+    return await this.getOneRow('Активы', this.activesQuery(col), { redBold: true })
   } /* Активы */
 
   private async client_deposits(
@@ -174,8 +179,9 @@ export class CompetitiveAnalysis extends Base {
     return this.getOneRow('Кредитные линии', this.saldoQuery(CASaldoQueries.creditLines))
   } /* Кредитные линии */
 
-  private async liabilities() {
-    return await this.getOneRow('Обязательства', this.saldoQuery(CASaldoQueries.liabilities), {
+  private async liabilities(type: CASaldoQueries, currency?: 'foreign' | 'national') {
+    console.log(currency, this.saldoQuery(type, currency)())
+    return await this.getOneRow('Обязательства', this.saldoQuery(type, currency), {
       redBold: true
     })
   } /* Обязательства */
@@ -221,21 +227,25 @@ export class CompetitiveAnalysis extends Base {
       nsfr,
       roa,
       roe,
-      cir
+      cir,
+      activesNational,
+      activesForeign,
+      liabilitiesNational,
+      liabilitiesForeign
     ] = await Promise.all([
       this.risk_data('PFL_BALANCE', 'Кредитный портфель'),
       this.credit_types('Корпоративный', CASaldoQueries.corporateCredits, { tabbed: true }),
       this.credit_types('Розничный', CASaldoQueries.retailCredits, { tabbed: true }),
       this.risk_data('NPL_BALANCE', 'NPL', { tabbed: true, redBold: true }),
       this.risk_data('RES_BALANCE', 'Резервы'),
-      this.actives(),
+      this.actives('TOTAL'),
       this.client_deposits('Депозиты клиентов', CASaldoQueries.totalClientDeposits),
       this.client_deposits('Корпоративный', CASaldoQueries.corporateClientDeposits, {
         tabbed: true
       }),
       this.client_deposits('Розничный', CASaldoQueries.retailClientDeposits, { tabbed: true }),
       this.credit_lines(),
-      this.liabilities(),
+      this.liabilities(CASaldoQueries.liabilities),
       this.capital(),
       this.clean_profit(),
       this.liquidity('ВЛА', 'VLA'),
@@ -243,7 +253,11 @@ export class CompetitiveAnalysis extends Base {
       this.liquidity('NSFR', 'NSFR'),
       this.roa_roe(RoaRoeQueries.ROA),
       this.roa_roe(RoaRoeQueries.ROE),
-      this.cir()
+      this.cir(),
+      this.actives('NAT_CURR'),
+      this.actives('FOR_CURR'),
+      this.liabilities(CASaldoQueries.liabilities, 'national'),
+      this.liabilities(CASaldoQueries.liabilities, 'foreign')
     ])
     const totalData = {
       creditPortfolio,
@@ -268,12 +282,20 @@ export class CompetitiveAnalysis extends Base {
     }
     const chartData = {
       creditPortfolioGrow: {
-        corporate: this.getRowNums(corporate),
-        retail: this.getRowNums(retail)
+        corporate: CompetitiveAnalysis.getRowNums(corporate),
+        retail: CompetitiveAnalysis.getRowNums(retail)
       },
       depositGrow: {
-        corporate: this.getRowNums(corporateDeposits),
-        retail: this.getRowNums(retailDeposits)
+        corporate: CompetitiveAnalysis.getRowNums(corporateDeposits),
+        retail: CompetitiveAnalysis.getRowNums(retailDeposits)
+      },
+      actives: {
+        national: CompetitiveAnalysis.getRowNums(activesNational),
+        foreign: CompetitiveAnalysis.getRowNums(activesForeign)
+      },
+      liabilities: {
+        national: CompetitiveAnalysis.getRowNums(liabilitiesNational),
+        foreign: CompetitiveAnalysis.getRowNums(liabilitiesForeign)
       }
     }
     return [formattedQuarterDates, totalData, chartData]

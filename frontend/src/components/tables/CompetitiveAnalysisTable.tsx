@@ -14,8 +14,9 @@ import globalStyles from '../../styles/globalStyles'
 import { Grid, TableBody, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
 import { ICompetitiveAnalysis } from '../../interfaces/ca.interface'
-import CAChart from '../charts/competitiveAnalysis/ca-chart'
+import CorporateRetail from '../charts/competitiveAnalysis/corporateRetail'
 import { ISxStyles } from '../../interfaces/styles.interface'
+import ByCurrency from '../charts/competitiveAnalysis/byCurrency'
 
 const pageStyles: ISxStyles = {
 	main: {
@@ -130,7 +131,7 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				</TableContainer>
 			</Grid>
 			<Grid sx={pageStyles.chart1}>
-				<CAChart
+				<CorporateRetail
 					series={chartData['creditPortfolioGrow']}
 					categories={quarterDates}
 					title={'Рост кредитного портфеля'}
@@ -138,15 +139,15 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				/>
 			</Grid>
 			<Grid sx={pageStyles.chart2}>
-				<CAChart
-					series={chartData['creditPortfolioGrow']}
+				<ByCurrency
+					series={chartData['actives']}
 					categories={quarterDates}
 					title={'Рост активов'}
 					id={'ca_active_grow'}
 				/>
 			</Grid>
 			<Grid sx={pageStyles.chart3}>
-				<CAChart
+				<CorporateRetail
 					series={chartData['depositGrow']}
 					categories={quarterDates}
 					title={'Рост депозитов'}
@@ -154,8 +155,8 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				/>
 			</Grid>
 			<Grid sx={pageStyles.chart4}>
-				<CAChart
-					series={chartData['creditPortfolioGrow']}
+				<ByCurrency
+					series={chartData['liabilities']}
 					categories={quarterDates}
 					title={'Рост обязательств'}
 					id={'ca_liabilities_grow'}

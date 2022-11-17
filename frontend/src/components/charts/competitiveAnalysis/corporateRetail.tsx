@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import Card from '@mui/material/Card'
-import { CardContent } from '@mui/material'
 import { chartTitle, formatNumber } from '../../../utils'
 import rootColors from '../../../styles/palette'
+import { ICACorporateRetail } from '../../../interfaces/ca.interface'
 
-function renderOptions(series: any, categories: string[], title: string, id: string) {
+function renderOptions(series: ICACorporateRetail, categories: string[], title: string, id: string) {
 	const colors = [rootColors.primary, rootColors.lightBlue]
 	const options = {
 		series: [
@@ -22,7 +22,7 @@ function renderOptions(series: any, categories: string[], title: string, id: str
 		],
 		colors,
 		chart: {
-			height: 345,
+			height: 385,
 			type: 'line',
 			stacked: false,
 			toolbar: {
@@ -87,14 +87,14 @@ function renderOptions(series: any, categories: string[], title: string, id: str
 	chart.render()
 }
 
-interface CAChartProps {
-	series: any
+interface CorporateRetailProps {
+	series: ICACorporateRetail
 	categories: string[]
 	title: string
 	id: string
 }
 
-const CAChart: React.FC<CAChartProps> = ({ series = [], categories = [], title, id }) => {
+const CorporateRetail: React.FC<CorporateRetailProps> = ({ series, categories = [], title, id }) => {
 	useEffect(() => {
 		if (categories.length) {
 			document.querySelector(`#${id}`)!.innerHTML = ''
@@ -103,11 +103,11 @@ const CAChart: React.FC<CAChartProps> = ({ series = [], categories = [], title, 
 	}, [id, title, series, categories])
 	return (
 		<Card>
-			<CardContent>
+			<>
 				<div id={`${id}`} />
-			</CardContent>
+			</>
 		</Card>
 	)
 }
 
-export default CAChart
+export default CorporateRetail

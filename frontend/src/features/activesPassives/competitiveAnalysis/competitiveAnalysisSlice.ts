@@ -15,8 +15,22 @@ const initialState: IInitialState = {
 		quarterDates: [],
 		totalData: {},
 		chartData: {
-			creditPortfolioGrow: [0, 0, 0, 0],
-			depositGrow: [0, 0, 0, 0]
+			creditPortfolioGrow: {
+				corporate: [0, 0, 0, 0],
+				retail: [0, 0, 0, 0]
+			},
+			depositGrow: {
+				corporate: [0, 0, 0, 0],
+				retail: [0, 0, 0, 0]
+			},
+			actives: {
+				national: [0, 0, 0, 0],
+				foreign: [0, 0, 0, 0]
+			},
+			liabilities: {
+				national: [0, 0, 0, 0],
+				foreign: [0, 0, 0, 0]
+			}
 		}
 	},
 	error: undefined

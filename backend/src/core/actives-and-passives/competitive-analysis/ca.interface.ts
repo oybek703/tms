@@ -1,6 +1,6 @@
 export type Balances = 'npl' | 'pfl' | 'res'
 export type RiskBalances = `${Uppercase<Balances>}_BALANCE`
-
+export type ActivesCols = 'TOTAL' | 'NAT_CURR' | 'FOR_CURR'
 export type QuarterDatesArray = [string, string, string, string]
 
 export interface IQuarterDates {
@@ -36,6 +36,8 @@ export enum CASaldoQueries {
   retailClientDeposits = `BAL IN ('20206', '20406', '20606')`,
   creditLines = `SUBSTR(BAL, 1, 3) IN ('216', '220')`,
   liabilities = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%'`,
+  liabilitiesNational = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%' AND VAL = '000'`,
+  liabilitiesForeign = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%' AND VAL != '000'`,
   capital = `SUBSTR(BAL, 1, 1) IN ('3', '4', '5')`,
   cleanProfit = `SUBSTR(BAL, 1, 1) IN ('4','5') OR BAL = '31206'`
 }
