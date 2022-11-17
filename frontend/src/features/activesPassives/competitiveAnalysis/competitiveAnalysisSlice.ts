@@ -13,7 +13,11 @@ const initialState: IInitialState = {
 	loading: false,
 	competitiveAnalysis: {
 		quarterDates: [],
-		totalData: {}
+		totalData: {},
+		chartData: {
+			creditPortfolioGrow: [0, 0, 0, 0],
+			depositGrow: [0, 0, 0, 0]
+		}
 	},
 	error: undefined
 }

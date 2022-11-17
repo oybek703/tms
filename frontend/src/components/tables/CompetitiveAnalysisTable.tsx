@@ -64,7 +64,7 @@ const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicator
 
 const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const { quarterDates, totalData } = rows
+	const { quarterDates, totalData, chartData } = rows
 	return (
 		<Grid sx={pageStyles.main}>
 			<Grid sx={pageStyles.table}>
@@ -130,16 +130,36 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 				</TableContainer>
 			</Grid>
 			<Grid sx={pageStyles.chart1}>
-				<CAChart series={[]} categories={[]} title={'Рост кредитного портфеля'} id={'ca_credit_portfolio'} />
+				<CAChart
+					series={chartData['creditPortfolioGrow']}
+					categories={quarterDates}
+					title={'Рост кредитного портфеля'}
+					id={'ca_credit_portfolio'}
+				/>
 			</Grid>
 			<Grid sx={pageStyles.chart2}>
-				<CAChart series={[]} categories={[]} title={'Рост активов'} id={'ca_active_grow'} />
+				<CAChart
+					series={chartData['creditPortfolioGrow']}
+					categories={quarterDates}
+					title={'Рост активов'}
+					id={'ca_active_grow'}
+				/>
 			</Grid>
 			<Grid sx={pageStyles.chart3}>
-				<CAChart series={[]} categories={[]} title={'Рост депозитов'} id={'ca_deposit_grow'} />
+				<CAChart
+					series={chartData['depositGrow']}
+					categories={quarterDates}
+					title={'Рост депозитов'}
+					id={'ca_deposit_grow'}
+				/>
 			</Grid>
 			<Grid sx={pageStyles.chart4}>
-				<CAChart series={[]} categories={[]} title={'Рост обязательств'} id={'ca_liabilities_grow'} />
+				<CAChart
+					series={chartData['creditPortfolioGrow']}
+					categories={quarterDates}
+					title={'Рост обязательств'}
+					id={'ca_liabilities_grow'}
+				/>
 			</Grid>
 		</Grid>
 	)

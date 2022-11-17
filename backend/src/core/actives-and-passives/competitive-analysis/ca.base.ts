@@ -24,6 +24,16 @@ export class CompetitiveAnalysis extends Base {
             DATE '${fourthDate}'`
   }
 
+  private getRowNums(data: ICARow): number[] {
+    const nums = []
+    for (const dataKey in data) {
+      if (typeof data[dataKey] === 'number') {
+        nums.push(data[dataKey])
+      }
+    }
+    return nums
+  }
+
   protected formatQuery(): string {
     return `SELECT TO_CHAR(END_QUARTER, 'D mon YYYY', 'NLS_DATE_LANGUAGE = RUSSIAN') AS "quarterDates",
                    TO_CHAR(LAST_OPER_DAY_IN_QUARTER, 'YYYY-MM-DD')                   AS "date",
@@ -256,6 +266,16 @@ export class CompetitiveAnalysis extends Base {
       roe,
       cir
     }
-    return [formattedQuarterDates, totalData]
+    const chartData = {
+      creditPortfolioGrow: {
+        corporate: this.getRowNums(corporate),
+        retail: this.getRowNums(retail)
+      },
+      depositGrow: {
+        corporate: this.getRowNums(corporateDeposits),
+        retail: this.getRowNums(retailDeposits)
+      }
+    }
+    return [formattedQuarterDates, totalData, chartData]
   }
 }

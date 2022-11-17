@@ -2,22 +2,22 @@ import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 import Card from '@mui/material/Card'
 import { CardContent } from '@mui/material'
-import { chartTitle } from '../../../utils'
+import { chartTitle, formatNumber } from '../../../utils'
 import rootColors from '../../../styles/palette'
 
-function renderOptions(values: any, categories: any, title: string, id: string) {
+function renderOptions(series: any, categories: string[], title: string, id: string) {
 	const colors = [rootColors.primary, rootColors.lightBlue]
 	const options = {
 		series: [
 			{
-				name: 'Income',
+				name: 'Розничный',
 				type: 'column',
-				data: [1.4, 2, 2.5, 1.5]
+				data: series.retail
 			},
 			{
-				name: 'Cashflow',
+				name: 'Корпоративный',
 				type: 'column',
-				data: [1.1, 3, 3.1, 4]
+				data: series.corporate
 			}
 		],
 		colors,
@@ -51,7 +51,7 @@ function renderOptions(values: any, categories: any, title: string, id: string) 
 			}
 		},
 		xaxis: {
-			categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
+			categories
 		},
 		yaxis: [
 			{
@@ -60,11 +60,12 @@ function renderOptions(values: any, categories: any, title: string, id: string) 
 				},
 				tooltip: {
 					enabled: true
+				},
+				labels: {
+					formatter: function (val: number) {
+						return formatNumber(val)
+					}
 				}
-			},
-			{
-				seriesName: 'Income',
-				opposite: true
 			}
 		],
 		tooltip: {
@@ -77,7 +78,8 @@ function renderOptions(values: any, categories: any, title: string, id: string) 
 		},
 		legend: {
 			horizontalAlign: 'center',
-			offsetX: 40
+			offsetY: 8,
+			offsetX: 20
 		}
 	}
 
@@ -87,17 +89,17 @@ function renderOptions(values: any, categories: any, title: string, id: string) 
 
 interface CAChartProps {
 	series: any
-	categories: any
+	categories: string[]
 	title: string
 	id: string
 }
 
 const CAChart: React.FC<CAChartProps> = ({ series = [], categories = [], title, id }) => {
 	useEffect(() => {
-		// if (series.length) {
-		document.querySelector(`#${id}`)!.innerHTML = ''
-		renderOptions(series, categories, title, id)
-		// }
+		if (categories.length) {
+			document.querySelector(`#${id}`)!.innerHTML = ''
+			renderOptions(series, categories, title, id)
+		}
 	}, [id, title, series, categories])
 	return (
 		<Card>

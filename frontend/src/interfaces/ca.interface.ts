@@ -11,4 +11,8 @@ export interface ICompetitiveAnalysis {
 			redBold?: boolean
 		}
 	}
+	chartData: {
+		creditPortfolioGrow: [number, number, number, number]
+		depositGrow: [number, number, number, number]
+	}
 }
