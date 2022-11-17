@@ -54,14 +54,15 @@ export function chartTooltip(currency = '') {
 	}
 }
 
-export function chartTitle(text = '') {
+export function chartTitle(text = '', styles = {}) {
 	return {
 		text,
 		align: 'center',
 		style: {
 			fontSize: 17,
 			fontWeight: '400',
-			fontFamily: 'Poppins'
+			fontFamily: 'Poppins',
+			...styles
 		}
 	}
 }
