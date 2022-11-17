@@ -7,6 +7,8 @@ export interface ICompetitiveAnalysis {
 			secondDate: number
 			thirdDate: number
 			fourthDate: number
+			tabbed?: boolean
+			redBold?: boolean
 		}
 	}
 }

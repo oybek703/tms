@@ -38,8 +38,6 @@ const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicator
 const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { quarterDates, totalData } = rows
-	const tabbedIndexes = [2]
-	const redBoldIndexes = [2, 4]
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`competitive-analysis-${formatOneDate(reportDate)}`} />
@@ -73,14 +71,10 @@ const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({
 						))}
 					</TableRow>
 					{Object.keys(totalData).map((value, index) => {
-						const { firstDate, secondDate, fourthDate, thirdDate, indicatorName } = totalData[value]
+						const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, redBold, tabbed } = totalData[value]
 						return (
 							<TableRow key={uuid()}>
-								<IndicatorNameCell
-									indicatorName={indicatorName}
-									tabbed={tabbedIndexes.includes(index + 1)}
-									redBold={redBoldIndexes.includes(index + 1)}
-								/>
+								<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} redBold={redBold} />
 								<TableCell align="center">{formatNumber(firstDate)}</TableCell>
 								<TableCell align="center">{formatNumber(secondDate)}</TableCell>
 								<TableCell align="center">{formatNumber(thirdDate)}</TableCell>
