@@ -180,7 +180,6 @@ export class CompetitiveAnalysis extends Base {
   } /* Кредитные линии */
 
   private async liabilities(type: CASaldoQueries, currency?: 'foreign' | 'national') {
-    console.log(currency, this.saldoQuery(type, currency)())
     return await this.getOneRow('Обязательства', this.saldoQuery(type, currency), {
       redBold: true
     })
