@@ -60,11 +60,11 @@ export class CompetitiveAnalysis extends Base {
 
   private activesQuery = (col: ActivesCols) => {
     return () => {
-      return `SELECT ABS(${col}) as "value"
-            FROM LIQUIDITY
-            WHERE ROLE = 'T_A'
-              AND OPER_DAY IN (${this.createDates()})
-            ORDER BY OPER_DAY`
+      return `SELECT ABS(${col === 'FOR_CURR' ? `TOTAL-NAT_CURR` : col}) as "value"
+              FROM LIQUIDITY
+              WHERE ROLE = 'T_A'
+                AND OPER_DAY IN (${this.createDates()})
+              ORDER BY OPER_DAY`
     }
   }
 
