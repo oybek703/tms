@@ -7,7 +7,7 @@ import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined'
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 const getBackGroundColor = (type: string) => {
 	switch (type) {
@@ -42,10 +42,13 @@ interface AlertProps {
 }
 
 const Alert: React.FC<AlertProps> = props => {
-	const { push } = useHistory()
 	const { type = 'danger', message = 'Unexpected internal server error!', icon = true } = props
 	if (message === 'access_denied') return <Redirect to={'/403'} />
-	if (message === 'Session expired.') push('/login')
+	if (message === 'Unauthorized') {
+		localStorage.clear()
+		window.location.reload()
+		return null
+	}
 	return (
 		<List
 			disablePadding

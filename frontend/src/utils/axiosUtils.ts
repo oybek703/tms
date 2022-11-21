@@ -18,21 +18,6 @@ axios.interceptors.request.use(
 	}
 )
 
-axios.interceptors.response.use(
-	function (response) {
-		return response
-	},
-	function (error) {
-		const { response = {} } = error
-		const { status } = response
-		if (status === 440 || status === 401) {
-			localStorage.clear()
-			window.location.reload()
-		}
-		return Promise.reject(error)
-	}
-)
-
 export function withToken() {
 	const { token } = JSON.parse(localStorage.getItem('user') || '{}')
 	return {
