@@ -54,7 +54,7 @@ export default function EditUser() {
 		e.preventDefault()
 		try {
 			// @ts-ignore
-			await axios.put(`/api/auth/users/${singleUser!.id}`, { ...formData, allowedPages }, withToken())
+			await axios.put(`/api/users/${singleUser!.id}`, { ...formData, allowedPages }, withToken())
 			window.location.reload()
 		} catch (e) {
 			const message = getErrorMessage(e)
