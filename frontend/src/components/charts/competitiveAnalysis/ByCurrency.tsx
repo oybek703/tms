@@ -22,7 +22,7 @@ function renderOptions(series: ICANationalForeign, categories: string[], title: 
 		],
 		colors,
 		chart: {
-			height: 385,
+			height: 400,
 			type: 'line',
 			stacked: false,
 			toolbar: {

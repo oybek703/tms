@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
-import { ICompetitiveAnalysis } from '../../../interfaces/ca.interface'
+import { BanksInnerData, ICompetitiveAnalysis } from '../../../interfaces/ca.interface'
 
 interface IInitialState {
 	loading: boolean
@@ -9,29 +9,35 @@ interface IInitialState {
 	error: undefined
 }
 
+const banksInitialState: BanksInnerData = {
+	totalData: {},
+	chartData: {
+		creditPortfolioGrow: {
+			corporate: [0, 0, 0, 0],
+			retail: [0, 0, 0, 0]
+		},
+		depositGrow: {
+			corporate: [0, 0, 0, 0],
+			retail: [0, 0, 0, 0]
+		},
+		actives: {
+			national: [0, 0, 0, 0],
+			foreign: [0, 0, 0, 0]
+		},
+		liabilities: {
+			national: [0, 0, 0, 0],
+			foreign: [0, 0, 0, 0]
+		}
+	}
+}
+
 const initialState: IInitialState = {
 	loading: false,
 	competitiveAnalysis: {
 		quarterDates: [],
-		totalData: {},
-		chartData: {
-			creditPortfolioGrow: {
-				corporate: [0, 0, 0, 0],
-				retail: [0, 0, 0, 0]
-			},
-			depositGrow: {
-				corporate: [0, 0, 0, 0],
-				retail: [0, 0, 0, 0]
-			},
-			actives: {
-				national: [0, 0, 0, 0],
-				foreign: [0, 0, 0, 0]
-			},
-			liabilities: {
-				national: [0, 0, 0, 0],
-				foreign: [0, 0, 0, 0]
-			}
-		}
+		main: banksInitialState,
+		nbu: banksInitialState,
+		psb: banksInitialState
 	},
 	error: undefined
 }

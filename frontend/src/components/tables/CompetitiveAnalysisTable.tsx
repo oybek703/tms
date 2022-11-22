@@ -14,16 +14,17 @@ import globalStyles from '../../styles/globalStyles'
 import { Grid, TableBody, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
 import { ICompetitiveAnalysis } from '../../interfaces/ca.interface'
-import CorporateRetail from '../charts/competitiveAnalysis/corporateRetail'
+import CorporateRetail from '../charts/competitiveAnalysis/CorporateRetail'
 import { ISxStyles } from '../../interfaces/styles.interface'
-import ByCurrency from '../charts/competitiveAnalysis/byCurrency'
+import ByCurrency from '../charts/competitiveAnalysis/ByCurrency'
 
 const pageStyles: ISxStyles = {
 	main: {
 		display: 'grid',
 		gridTemplateRows: 'minmax(100px, auto) 1fr',
 		gridTemplateColumns: '2fr 1fr 1fr',
-		gap: '10px'
+		gap: '10px',
+		mb: 7
 	},
 	table: {
 		gridRow: '1/3',
@@ -65,104 +66,113 @@ const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicator
 
 const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const { quarterDates, totalData, chartData } = rows
+	const { quarterDates } = rows
+	const banks = [
+		{ bankName: 'Асакабанк', data: rows.main },
+		{ bankName: 'НБУ', data: rows.nbu },
+		{ bankName: 'ПСБ', data: rows.psb }
+	]
 	return (
-		<Grid sx={pageStyles.main}>
-			<Grid sx={pageStyles.table}>
-				<TableContainer sx={{ maxHeight: '100vh', pb: 0 }} component={Paper}>
-					<ExportButton id={`competitive-analysis-${formatOneDate(reportDate)}`} />
-					<Table
-						size="small"
-						id={`competitive-analysis-${formatOneDate(reportDate)}`}
-						tableexport-key={`competitive-analysis-${formatOneDate(reportDate)}`}
-						aria-label="a dense table"
-					>
-						<TableCap rows={5} text={'млн.сум'} />
-						<TableHead sx={globalStyles.stickyTableHead}>
-							<TableRow>
-								<TableCell colSpan={5}>
-									<BoldWithColor>
-										<Typography variant="h5" component="b" sx={{ fontWeight: 'bold' }}>
-											Асакабанк
-										</Typography>
-									</BoldWithColor>
-								</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							<TableRow>
-								<TableCell>
-									<b>Нац. вал. млн.</b>
-								</TableCell>
-								{quarterDates.map(date => (
-									<TableCell key={uuid()} align="center">
-										<b>{date}</b>
-									</TableCell>
-								))}
-							</TableRow>
-							{Object.keys(totalData).map((value, index, array) => {
-								const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, redBold, tabbed } =
-									totalData[value]
-								const percent = index > array.length - 7 ? ' %' : ''
-								return (
-									<TableRow key={uuid()}>
-										<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} redBold={redBold} />
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(firstDate)}
-											{percent}
-										</TableCell>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(secondDate)}
-											{percent}
-										</TableCell>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(thirdDate)}
-											{percent}
-										</TableCell>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(fourthDate)}
-											{percent}
+		<>
+			{banks.map(({ bankName, data }) => (
+				<Grid key={uuid()} sx={pageStyles.main}>
+					<Grid sx={pageStyles.table}>
+						<TableContainer sx={{ maxHeight: '100%', pb: 0 }} component={Paper}>
+							<ExportButton id={`competitive-analysis-${formatOneDate(reportDate)}`} />
+							<Table
+								size="small"
+								id={`competitive-analysis-${formatOneDate(reportDate)}`}
+								tableexport-key={`competitive-analysis-${formatOneDate(reportDate)}`}
+								aria-label="a dense table"
+							>
+								<TableCap rows={5} text={'млн.сум'} />
+								<TableHead sx={globalStyles.stickyTableHead}>
+									<TableRow>
+										<TableCell colSpan={5}>
+											<BoldWithColor>
+												<Typography variant="h5" component="b" sx={{ fontWeight: 'bold' }}>
+													{bankName}
+												</Typography>
+											</BoldWithColor>
 										</TableCell>
 									</TableRow>
-								)
-							})}
-						</TableBody>
-					</Table>
-				</TableContainer>
-			</Grid>
-			<Grid sx={pageStyles.chart1}>
-				<CorporateRetail
-					series={chartData['creditPortfolioGrow']}
-					categories={quarterDates}
-					title={'Рост кредитного портфеля'}
-					id={'ca_credit_portfolio'}
-				/>
-			</Grid>
-			<Grid sx={pageStyles.chart2}>
-				<ByCurrency
-					series={chartData['actives']}
-					categories={quarterDates}
-					title={'Рост активов'}
-					id={'ca_active_grow'}
-				/>
-			</Grid>
-			<Grid sx={pageStyles.chart3}>
-				<CorporateRetail
-					series={chartData['depositGrow']}
-					categories={quarterDates}
-					title={'Рост депозитов'}
-					id={'ca_deposit_grow'}
-				/>
-			</Grid>
-			<Grid sx={pageStyles.chart4}>
-				<ByCurrency
-					series={chartData['liabilities']}
-					categories={quarterDates}
-					title={'Рост обязательств'}
-					id={'ca_liabilities_grow'}
-				/>
-			</Grid>
-		</Grid>
+								</TableHead>
+								<TableBody>
+									<TableRow>
+										<TableCell>
+											<b>Нац. вал. млн.</b>
+										</TableCell>
+										{quarterDates.map(date => (
+											<TableCell key={uuid()} align="center">
+												<b>{date}</b>
+											</TableCell>
+										))}
+									</TableRow>
+									{Object.keys(data.totalData).map((value, index, array) => {
+										const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, redBold, tabbed } =
+											data.totalData[value]
+										const percent = index > array.length - 8 ? ' %' : ''
+										return (
+											<TableRow key={uuid()}>
+												<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} redBold={redBold} />
+												<TableCell sx={globalStyles.noWrap} align="center">
+													{formatNumber(firstDate)}
+													{percent}
+												</TableCell>
+												<TableCell sx={globalStyles.noWrap} align="center">
+													{formatNumber(secondDate)}
+													{percent}
+												</TableCell>
+												<TableCell sx={globalStyles.noWrap} align="center">
+													{formatNumber(thirdDate)}
+													{percent}
+												</TableCell>
+												<TableCell sx={globalStyles.noWrap} align="center">
+													{formatNumber(fourthDate)}
+													{percent}
+												</TableCell>
+											</TableRow>
+										)
+									})}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Grid>
+					<Grid sx={pageStyles.chart1}>
+						<CorporateRetail
+							series={data.chartData['creditPortfolioGrow']}
+							categories={quarterDates}
+							title={'Рост кредитного портфеля'}
+							id={`${bankName.toLowerCase()}_credit_portfolio`}
+						/>
+					</Grid>
+					<Grid sx={pageStyles.chart2}>
+						<ByCurrency
+							series={data.chartData['actives']}
+							categories={quarterDates}
+							title={'Рост активов'}
+							id={`${bankName.toLowerCase()}_active_grow`}
+						/>
+					</Grid>
+					<Grid sx={pageStyles.chart3}>
+						<CorporateRetail
+							series={data.chartData['depositGrow']}
+							categories={quarterDates}
+							title={'Рост депозитов'}
+							id={`${bankName.toLowerCase()}_deposit_grow`}
+						/>
+					</Grid>
+					<Grid sx={pageStyles.chart4}>
+						<ByCurrency
+							series={data.chartData['liabilities']}
+							categories={quarterDates}
+							title={'Рост обязательств'}
+							id={`${bankName.toLowerCase()}_liabilities_grow`}
+						/>
+					</Grid>
+				</Grid>
+			))}
+		</>
 	)
 }
 

@@ -13,6 +13,11 @@ export interface ICADbData {
   value: number
 }
 
+export interface ICAOtherBanksData {
+  value: number
+  indicatorName: string
+}
+
 export interface ICARow {
   indicatorName: string
   firstDate: number
@@ -36,8 +41,6 @@ export enum CASaldoQueries {
   retailClientDeposits = `BAL IN ('20206', '20406', '20606')`,
   creditLines = `SUBSTR(BAL, 1, 3) IN ('216', '220')`,
   liabilities = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%'`,
-  liabilitiesNational = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%' AND VAL = '000'`,
-  liabilitiesForeign = `(BAL LIKE '2%' AND BAL NOT LIKE '222%') OR BAL LIKE '175%' AND VAL != '000'`,
   capital = `SUBSTR(BAL, 1, 1) IN ('3', '4', '5')`,
   cleanProfit = `SUBSTR(BAL, 1, 1) IN ('4','5') OR BAL = '31206'`
 }
@@ -47,4 +50,14 @@ export type LiquidityRoles = 'VLA' | 'LCR' | 'NSFR'
 export enum RoaRoeQueries {
   ROA = `BAL LIKE '1%' AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175')`,
   ROE = `BAL LIKE '3%'`
+}
+
+export interface OtherBanksRolesAndProperties extends ICARowOptions {
+  role: string
+  chartRow?: boolean
+}
+
+export enum OtherBanksId {
+  NBU = 1,
+  PSB = 2
 }

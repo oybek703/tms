@@ -8,8 +8,7 @@ export interface ICANationalForeign {
 	foreign: [number, number, number, number]
 }
 
-export interface ICompetitiveAnalysis {
-	quarterDates: string[]
+export interface BanksInnerData {
 	totalData: {
 		[key: string]: {
 			indicatorName: string
@@ -27,4 +26,11 @@ export interface ICompetitiveAnalysis {
 		actives: ICANationalForeign
 		liabilities: ICANationalForeign
 	}
+}
+
+export interface ICompetitiveAnalysis {
+	main: BanksInnerData
+	nbu: BanksInnerData
+	psb: BanksInnerData
+	quarterDates: string[]
 }
