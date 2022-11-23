@@ -31,6 +31,7 @@ import getDashboardData, {
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
+import getCorrAccountsAnalyzeData from '../core/dealing-operations'
 
 @Injectable()
 export class ReportsService {
@@ -218,6 +219,6 @@ export class ReportsService {
   }
 
   async corrAccountsAnalyze() {
-    return ['await getCorrAccountsAnalyzeData(this.oracleService)']
+    return await getCorrAccountsAnalyzeData(this.oracleService)
   }
 }

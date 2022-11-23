@@ -28,17 +28,18 @@ import DepositsByDeadline from './pages/activesPassives/DepositsByDeadline'
 import ReportLiabilities from './pages/activesPassives/ReportLiabilities'
 import GM from './pages/activesPassives/GM'
 import GAP from './pages/gap/Gap'
-import GapSimulation from './pages/admin/GapSimulation'
+import GapSimulation from './pages/gap/gapSimulation'
 import NotFound from './pages/NotFound'
 import InProcess from './pages/inProcess/InProcess'
 import Forbidden from './pages/admin/Forbidden'
 import AdminRoute from './components/layout/Admin/AdminRoute'
-import Settings from './pages/admin/Settings'
+import Settings from './pages/admin/settings'
 import NostroMatrix from './pages/bankLiquidity/NostroMatrix'
 import VlaBuffer from './pages/bankLiquidity/VlaBuffer'
 import FilialEffectiveness from './pages/activesPassives/FilialEffectiviness'
 import CompetitiveAnalysis from './pages/activesPassives/CompetitiveAnalysis'
 import CorrAccountsAnalyze from './pages/dealingOperations/corrAccountsAnalyze'
+import CAAManual from './pages/dealingOperations/CAAManual'
 
 function App() {
 	const {
@@ -72,6 +73,7 @@ function App() {
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />
 							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />
 							<PrivateRoute component={CorrAccountsAnalyze} path="/corrAccountsAnalyze" />
+							<PrivateRoute component={CAAManual} path="/caaManual" />
 							<PrivateRoute component={GM} path="/gm" />
 							<PrivateRoute component={GAP} path="/gap" />
 							<PrivateRoute component={GapSimulation} path="/gapManual" />

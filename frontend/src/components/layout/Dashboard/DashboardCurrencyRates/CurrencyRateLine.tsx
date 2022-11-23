@@ -6,7 +6,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import { v4 as uuid } from 'uuid'
-import CurrencyLineChart from '../../../charts/Dashboard/CurrencyRate/CurrencyLineChart'
+import CurrencyLineChart from '../../../charts/dashboard/currencyRate/CurrencyLineChart'
 
 const currencyOrder = ['USD', 'EUR', 'RUB', 'GBP', 'CHF', 'JPY', 'KZT', 'CNY']
 

@@ -1,5 +1,5 @@
 import { LcrAndNsfrTable } from './index'
-import DeficitChart from '../../charts/GAP/DeficitChart'
+import DeficitChart from '../../charts/gap/DeficitChart'
 import { Grid } from '@mui/material'
 import React from 'react'
 

@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import CardContent from '@mui/material/CardContent'
 import { Typography } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
-import FormattedCell from '../../helpers/FormattedCell/FormattedCell'
+import FormattedCell from '../../helpers/formattedCell/FormattedCell'
 import { formatNumber } from '../../../utils'
 
 interface ValuteProps {

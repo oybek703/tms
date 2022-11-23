@@ -16,7 +16,7 @@ export class ReportsController {
   dateBadRequestException = new BadRequestException('Date is not provided in query params!')
   constructor(private readonly reportsService: ReportsService) {}
 
-  @ReportLastUpdate('Dashboard', ReportsPaths.dashboardLastUpdate)
+  @ReportLastUpdate('dashboard', ReportsPaths.dashboardLastUpdate)
   async dashboardLastUpdate() {
     return await this.reportsService.dashboardLastUpdate()
   }
@@ -26,25 +26,25 @@ export class ReportsController {
     return await this.reportsService.operDays()
   }
 
-  @Report('Dashboard', ReportsPaths.dashboard, true)
+  @Report('dashboard', ReportsPaths.dashboard, true)
   async dashboard(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.dashboard(date)
   }
 
-  @Report('Dashboard', ReportsPaths.fcrb, true)
+  @Report('dashboard', ReportsPaths.fcrb, true)
   async fcrb(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.fcrb(date)
   }
 
-  @Report('Dashboard', ReportsPaths.creditData, true)
+  @Report('dashboard', ReportsPaths.creditData, true)
   async creditData(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.creditData(date)
   }
 
-  @ReportBetweenDates('Dashboard', ReportsPaths.dashboardMonthly, true)
+  @ReportBetweenDates('dashboard', ReportsPaths.dashboardMonthly, true)
   async dashboardMonthly(@Query() query: { firstDate: Date; secondDate: Date }) {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')

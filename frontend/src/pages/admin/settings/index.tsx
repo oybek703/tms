@@ -19,7 +19,7 @@ const Settings = () => {
 						tabData: <CbnUpdate />
 					},
 					{
-						tabName: 'GM, UZ AUTO',
+						tabName: 'gm, UZ AUTO',
 						tabData: <MioGm />
 					}
 				]}

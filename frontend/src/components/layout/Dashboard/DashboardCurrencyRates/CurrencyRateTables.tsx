@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, TableBody, TableHead, TableRow } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
-import FormattedCell from '../../../helpers/FormattedCell/FormattedCell'
+import FormattedCell from '../../../helpers/formattedCell/FormattedCell'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../utils'
 import BoldWithColor from '../../../helpers/BoldWithColor'

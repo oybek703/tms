@@ -125,6 +125,11 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'dealing_operations'
 	},
 	{
+		title: 'Анализ корр.счетов - изм.',
+		route: '/caaManual',
+		group: 'dealing_operations'
+	},
+	{
 		title: 'Капитал',
 		route: '/in_process/n1',
 		group: 'prudential_standards'

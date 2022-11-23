@@ -4,8 +4,8 @@ import { v4 as uuid } from 'uuid'
 import Card from '@mui/material/Card'
 import { Typography } from '@mui/material'
 import { formatNumber, mergeStyles } from '../../../utils'
-import RWAPoints from '../../charts/Dashboard/Capital/RWAPoints'
-import CapitalPoints from '../../charts/Dashboard/Capital/CapitalPoints'
+import RWAPoints from '../../charts/dashboard/capital/RWAPoints'
+import CapitalPoints from '../../charts/dashboard/capital/CapitalPoints'
 import { ISxStyles } from '../../../interfaces/styles.interface'
 
 const styles: ISxStyles = {
