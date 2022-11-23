@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react'
 import Paper from '@mui/material/Paper'
-import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, DataGridProps, GridColDef, ruRU } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 import { ISxStyles } from '../../interfaces/styles.interface'
 
@@ -46,6 +46,7 @@ const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, colu
 				sx={styles}
 				columns={columns}
 				hideFooter={false}
+				localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
 				rowsPerPageOptions={[30, 50, 100]}
 				getRowId={(row: any) => row.index}
 				{...props}
