@@ -216,4 +216,8 @@ export class ReportsService {
   async competitiveAnalysis(date: Date) {
     return await getCompetitiveAnalysisData(date, this.oracleService)
   }
+
+  async corrAccountsAnalyze() {
+    return ['await getCorrAccountsAnalyzeData(this.oracleService)']
+  }
 }

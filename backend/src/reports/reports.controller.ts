@@ -4,7 +4,7 @@ import { UpdateGapDto } from './dto/update-gap.dto'
 import {
   Report,
   ReportBetweenDates,
-  ReportGapManual,
+  GapManual,
   ReportLastUpdate,
   ReportOperDays,
   ReportWithoutDate
@@ -19,6 +19,11 @@ export class ReportsController {
   @ReportLastUpdate('Dashboard', ReportsPaths.dashboardLastUpdate)
   async dashboardLastUpdate() {
     return await this.reportsService.dashboardLastUpdate()
+  }
+
+  @ReportOperDays()
+  async operDays() {
+    return await this.reportsService.operDays()
   }
 
   @Report('Dashboard', ReportsPaths.dashboard, true)
@@ -182,13 +187,13 @@ export class ReportsController {
     return await this.reportsService.gapManual(forEditing)
   }
 
-  @ReportGapManual(202)
+  @GapManual(202)
   @Post('gapManual')
   async updateGapManual(@Body() dto: UpdateGapDto) {
     return await this.reportsService.updateGapManual(dto)
   }
 
-  @ReportGapManual(200)
+  @GapManual(200)
   @Put('gapManual')
   async saveGapManualChanges() {
     return await this.reportsService.saveGapManualChanges()
@@ -199,8 +204,8 @@ export class ReportsController {
     return await this.reportsService.gapLastUpdate()
   }
 
-  @ReportOperDays()
-  async operDays() {
-    return await this.reportsService.operDays()
+  @ReportWithoutDate('Dealing operations', ReportsPaths.corrAccountsAnalyze)
+  async corrAccountsAnalyze() {
+    return await this.reportsService.corrAccountsAnalyze()
   }
 }

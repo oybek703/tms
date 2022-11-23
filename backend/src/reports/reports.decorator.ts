@@ -81,7 +81,7 @@ export function ReportOperDays() {
   )
 }
 
-export function ReportGapManual(httpCode) {
+export function GapManual(httpCode) {
   return applyDecorators(
     ApiTags('Gap analyze'),
     UseGuards(JwtAuthGuard, ReportGuard),

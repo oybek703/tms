@@ -38,6 +38,7 @@ import NostroMatrix from './pages/bankLiquidity/NostroMatrix'
 import VlaBuffer from './pages/bankLiquidity/VlaBuffer'
 import FilialEffectiveness from './pages/activesPassives/FilialEffectiviness'
 import CompetitiveAnalysis from './pages/activesPassives/CompetitiveAnalysis'
+import CorrAccountsAnalyze from './pages/dealingOperations/corrAccountsAnalyze'
 
 function App() {
 	const {
@@ -70,6 +71,7 @@ function App() {
 							<PrivateRoute component={VlaBuffer} path="/vlaBuffer" />
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />
 							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />
+							<PrivateRoute component={CorrAccountsAnalyze} path="/corrAccountsAnalyze" />
 							<PrivateRoute component={GM} path="/gm" />
 							<PrivateRoute component={GAP} path="/gap" />
 							<PrivateRoute component={GapSimulation} path="/gapManual" />

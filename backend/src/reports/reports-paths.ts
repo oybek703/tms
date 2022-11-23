@@ -24,6 +24,7 @@ export enum ReportsPaths {
   reportLiabilities = 'reportLiabilities',
   competitiveAnalysis = 'competitiveAnalysis',
   filialEffectiveness = 'filialEffectiveness',
+  corrAccountsAnalyze = 'corrAccountsAnalyze',
   gm = 'gm',
   gap = 'gap',
   gapManual = 'gapManual',

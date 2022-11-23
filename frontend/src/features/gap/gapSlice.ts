@@ -34,7 +34,7 @@ const initialState = {
 
 const prefix = 'gap'
 const lastUpdatePrefix = `${prefix}/lastUpdate`
-const gapSimulationPrefix = `${prefix}/simulation`
+const gapSimulationPrefix = `${prefix}/manual`
 
 export const fetchGap = fetchWithoutCache(prefix, APIRoutes.gap as unknown as typeof prefix)
 export const fetchLastGapUpdateTime = fetchWithoutCache(

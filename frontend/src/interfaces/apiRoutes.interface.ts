@@ -20,6 +20,7 @@ export enum APIRoutes {
 	depositsByDeadline = 'depositsByDeadline',
 	reportLiabilities = 'reportLiabilities',
 	filialEffectiveness = 'filialEffectiveness',
+	corrAccountsAnalyze = '/api/corrAccountsAnalyze',
 	gm = 'gm',
 	gap = '/api/gap',
 	gapLastUpdate = '/api/gap/lastUpdate',

@@ -18,6 +18,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AssessmentIcon from '@mui/icons-material/Assessment'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import globalStyles from '../../../styles/globalStyles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
@@ -118,6 +119,11 @@ export const baseRoutes: BaseRoute[] = [
 	{ title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
 	{ title: 'ГЭП', route: '/gap', group: 'gap' },
 	{ title: 'ГЭП симуляция', route: '/gapManual', group: 'gap' },
+	{
+		title: 'Анализ корр.счетов',
+		route: '/corrAccountsAnalyze',
+		group: 'dealing_operations'
+	},
 	{
 		title: 'Капитал',
 		route: '/in_process/n1',
@@ -224,6 +230,7 @@ function Header() {
 	const keyIndicatorsRoutes = groupRoutes(routes, 'key_indicators')
 	const liquidityIndicatorsRoutes = groupRoutes(routes, 'liquidity_indicators')
 	const activePassiveRoutes = groupRoutes(routes, 'active_passive')
+	const dealingOperationsRoutes = groupRoutes(routes, 'dealing_operations')
 	const prudentialStandardsRoutes = groupRoutes(routes, 'prudential_standards')
 	const gapRoutes = groupRoutes(routes, 'gap')
 	useEffect(() => {
@@ -284,6 +291,12 @@ function Header() {
 					/>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
+						Icon={MonetizationOnIcon}
+						routes={dealingOperationsRoutes}
+						title="Дилинговые операции"
+					/>
+					<GroupedRoutes
+						handleAnchorClose={handleAnchorClose}
 						Icon={FeaturedPlayListIcon}
 						routes={prudentialStandardsRoutes}
 						title="Пруденциальные нормативы"
@@ -297,7 +310,8 @@ function Header() {
 			keyIndicatorsRoutes,
 			activePassiveRoutes,
 			liquidityIndicatorsRoutes,
-			prudentialStandardsRoutes
+			prudentialStandardsRoutes,
+			dealingOperationsRoutes
 		]
 	)
 
