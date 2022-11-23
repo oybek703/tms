@@ -208,7 +208,7 @@ export class CompetitiveAnalysis extends Base {
   } /* ROA, ROE */
 
   protected async cir() {
-    return this.getOneRow('CIR(cost to income ratio)', this.manualDataQuery(3))
+    return this.getOneRow('CIR', this.manualDataQuery(3))
   } /* CIR */
 
   async getRows() {

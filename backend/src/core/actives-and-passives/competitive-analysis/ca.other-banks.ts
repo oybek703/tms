@@ -75,9 +75,9 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       this.getOtherBanksOneRow('A_T', { redBold: true }),
       this.getOtherBanksOneRow('C_D'),
       this.getOtherBanksOneRow('C_D_J', { tabbed: true }),
-      this.getOtherBanksOneRow('C_D_J', { tabbed: true }),
+      this.getOtherBanksOneRow('C_D_L', { tabbed: true }),
       this.getOtherBanksOneRow('C_L'),
-      this.getOtherBanksOneRow('N', { redBold: true }),
+      this.getOtherBanksOneRow('O', { redBold: true }),
       this.getOtherBanksOneRow('C'),
       this.getOtherBanksOneRow('N_P'),
       this.getOtherBanksOneRow('VLA', { redBold: true }),
@@ -89,8 +89,8 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       this.getOtherBanksOneRow('CIR'),
       this.getOtherBanksOneRow('A_N'),
       this.getOtherBanksOneRow('A_F'),
-      this.getOtherBanksOneRow('A_N'),
-      this.getOtherBanksOneRow('A_F')
+      this.getOtherBanksOneRow('O_N'),
+      this.getOtherBanksOneRow('O_F')
     ])
     const totalData = {
       creditPortfolio,
