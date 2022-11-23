@@ -72,7 +72,7 @@ function App() {
 							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />
 							<PrivateRoute component={GM} path="/gm" />
 							<PrivateRoute component={GAP} path="/gap" />
-							<PrivateRoute component={GapSimulation} path="/gapSimulation" />
+							<PrivateRoute component={GapSimulation} path="/gapManual" />
 							<AdminRoute component={Settings} path="/settings" />
 							<PrivateRoute component={Forbidden} path="/403" />
 							<PrivateRoute component={InProcess} path={'/in_process/:slug'} />

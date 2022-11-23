@@ -75,7 +75,7 @@ export class NostroMatrixBase extends Base {
                                )   AS
                                    TURNOVER_DEBIT
                         FROM IBS.ACCOUNTS@IABS AC
-                        WHERE CODE_COA = '10501'
+                        WHERE CODE_COA = '10501' AND CODE_FILIAL='00873'
                           AND CODE_CURRENCY = '${currencyCode}')
                   GROUP BY CODE_CURRENCY,
                            CLIENT_CODE) S
