@@ -90,13 +90,96 @@ export class GapManual extends GapBase {
       this.getGapSubOrDivideByMonth(index, vlaBalance, amountForVlaLcr, 'ПОКАЗАТЕЛЬ ВЛА', true)
     )
     const vlaLcrData = [vlaBalance, amountForVlaLcr, deficitAmount, vlaIndicator]
+
+    // LCR START
+    const outFlow = await this.outFlow()
+    const inFlow = await this.inFlow()
+    const rowKeys = Object.keys(outFlow).filter(key => key !== 'indicatorName')
+    // Чистий отток в последующие 30 дней
+    const cleanOutFlow = this.getLcrOrNsfrOneRow(
+      'Чистий отток в последующие 30 дней',
+      rowKeys.reduce((acc: any, val: any) => {
+        acc[val] = outFlow[val] - inFlow[val]
+        return acc
+      }, {})
+    )
+    // Высоколиквидные активы
+    const highLiqAssets: any = this.getLcrOrNsfrOneRow(
+      'Высоколиквидные активы',
+      (vlaLcrData[0] || [])[0]
+    )
+    // ПРОГНОЗ LCR
+    const lcrForecast = this.getLcrOrNsfrOneRow(
+      'ПРОГНОЗ LCR',
+      rowKeys.reduce((acc: any, val: any) => {
+        acc[val] = Math.trunc((highLiqAssets[val] * 100) / cleanOutFlow[val])
+        return acc
+      }, {})
+    )
+    const lcrData = [lcrForecast, highLiqAssets, cleanOutFlow, outFlow, inFlow]
+
+    // NSFR START
+    const [
+      stableFundingAvailableAmount,
+      ownCapital,
+      liabilitiesOver1Year,
+      otherPerpetualLiabilities30,
+      otherLiabilitiesLessThan1Year,
+      stableFundingRequiredAmount,
+      assetsOver1Year,
+      bankThings,
+      loanThings,
+      otherAssetsLessThan1Year30,
+      fromOffBalanceSheets15
+    ] = await Promise.all([
+      this.stable_funding_available_amount(),
+      this.own_capital(),
+      this.liabilities_over_1year(),
+      this.other_perpetual_liabilities30(),
+      this.other_liabilities_less_than_1year(),
+      this.stable_funding_required_amount(),
+      this.assets_over_1year(),
+      this.bank_things(),
+      this.loan_things(),
+      this.other_assets_less_than_1Year30(),
+      this.from_off_balance_sheets_15()
+    ])
+
+    // ПРОГНОЗ NSFR
+    const nsfrForecast = this.getLcrOrNsfrOneRow(
+      'ПРОГНОЗ NSFR',
+      rowKeys.reduce((acc: any, val: any) => {
+        acc[val] = Math.trunc(
+          (stableFundingAvailableAmount[val] * 100) / stableFundingRequiredAmount[val]
+        )
+        return acc
+      }, {})
+    )
+
+    const nsfrData = [
+      nsfrForecast,
+      stableFundingAvailableAmount,
+      ownCapital,
+      liabilitiesOver1Year,
+      otherPerpetualLiabilities30,
+      otherLiabilitiesLessThan1Year,
+      stableFundingRequiredAmount,
+      assetsOver1Year,
+      bankThings,
+      loanThings,
+      otherAssetsLessThan1Year30,
+      fromOffBalanceSheets15
+    ]
+
     return [
       months,
       sourceOfLiquidity,
       sourceOfLiquidityTotal,
       needsOfLiquidity,
       needsOfLiquidityTotal,
-      vlaLcrData
+      vlaLcrData,
+      lcrData,
+      nsfrData
     ]
   }
 }

@@ -23,7 +23,7 @@ interface ActionContentProps {
 
 const ActionContent: React.FC<ActionContentProps> = function ({ handleReset, handleSave }) {
 	return (
-		<Grid sx={{ padding: '5px 10px' }}>
+		<Grid sx={{ padding: '5px 10px' }} component={Paper}>
 			<Grid sx={{ marginBottom: '5px' }}>
 				<Button size="small" startIcon={<RotateLeftIcon />} variant="contained" color="primary" onClick={handleReset}>
 					Reset
@@ -57,7 +57,9 @@ const GapSimulation = () => {
 		sourceOfLiquidityTotal = [],
 		needsOfLiquidity = [],
 		needsOfLiquidityTotal = [],
-		vlaLcrData = []
+		vlaLcrData = [],
+		lcrData = [],
+		nsfrData = []
 	} = gapSimulation
 
 	function handleClose() {
@@ -144,7 +146,7 @@ const GapSimulation = () => {
 		e.returnValue = ''
 	}
 	return (
-		<Paper>
+		<>
 			{gapSimulationLoading ? (
 				<Loader />
 			) : gapSimulationError ? (
@@ -161,6 +163,8 @@ const GapSimulation = () => {
 							sourceOfLiquidity={sourceOfLiquidity}
 							needsOfLiquidityTotal={needsOfLiquidityTotal}
 							sourceOfLiquidityTotal={sourceOfLiquidityTotal}
+							nsfrData={nsfrData}
+							lcrData={lcrData}
 						/>
 					)}
 					<GapSimulationDialog
@@ -175,7 +179,7 @@ const GapSimulation = () => {
 					/>
 				</>
 			)}
-		</Paper>
+		</>
 	)
 }
 

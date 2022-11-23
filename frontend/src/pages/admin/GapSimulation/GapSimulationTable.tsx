@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
-import { Table, TableBody, TableContainer } from '@mui/material'
-import TableRow from '@mui/material/TableRow'
+import { Paper, Table, TableBody, TableContainer, TableRow } from '@mui/material'
 import { v4 as uuid } from 'uuid'
 import TableCell from '@mui/material/TableCell'
 import { GapTableHead, TotalOrBoldRow, VerticalColumn } from '../../../components/layout/GapHelpers'
 import { formatNumber, mergeStyles } from '../../../utils'
 import globalStyles from '../../../styles/globalStyles'
+import GapChartsPart from '../../../components/layout/GapHelpers/GapChartsPart'
 
 const colNames = [
 	{ propName: 'total', eqv: 'Итого(UZS екв.)' },
@@ -122,6 +122,8 @@ interface GapSimulationTableProps {
 	needsOfLiquidity: any
 	needsOfLiquidityTotal: any
 	vlaLcrData: any
+	lcrData: any
+	nsfrData: any
 	handleEditClick: (
 		event: React.MouseEvent<HTMLTableHeaderCellElement> | React.MouseEvent<HTMLTableDataCellElement>
 	) => void
@@ -134,11 +136,13 @@ const GapSimulationTable: React.FC<GapSimulationTableProps> = ({
 	needsOfLiquidity = [],
 	needsOfLiquidityTotal = [],
 	vlaLcrData = [],
-	handleEditClick = () => {}
+	handleEditClick = () => {},
+	nsfrData,
+	lcrData
 }) => {
 	return (
-		<Fragment>
-			<TableContainer>
+		<>
+			<TableContainer component={Paper}>
 				<Table size="small" aria-label="a dense table">
 					<GapTableHead months={months} />
 					<TableBody>
@@ -171,7 +175,8 @@ const GapSimulationTable: React.FC<GapSimulationTableProps> = ({
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</Fragment>
+			<GapChartsPart months={months} lcrData={lcrData} vlaLcrData={vlaLcrData} nsfrData={nsfrData} />
+		</>
 	)
 }
 

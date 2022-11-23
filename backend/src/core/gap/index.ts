@@ -32,7 +32,9 @@ export const getGapManualData = async (forEditing: boolean, oracleService: Oracl
     sourceOfLiquidityTotal,
     needsOfLiquidity,
     needsOfLiquidityTotal,
-    vlaLcrData
+    vlaLcrData,
+    lcrData,
+    nsfrData
   ] = await new GapManual(oracleService, forEditing).getRows()
   return {
     months,
@@ -40,7 +42,9 @@ export const getGapManualData = async (forEditing: boolean, oracleService: Oracl
     sourceOfLiquidityTotal,
     needsOfLiquidity,
     needsOfLiquidityTotal,
-    vlaLcrData
+    vlaLcrData,
+    lcrData,
+    nsfrData
   }
 }
 

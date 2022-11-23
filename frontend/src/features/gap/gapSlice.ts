@@ -24,7 +24,9 @@ const initialState = {
 		sourceOfLiquidityTotal: [],
 		needsOfLiquidity: [],
 		needsOfLiquidityTotal: [],
-		vlaLcrData: []
+		vlaLcrData: [],
+		lcrData: [],
+		nsfrData: []
 	},
 	gapSimulationLoading: false,
 	gapSimulationError: undefined
