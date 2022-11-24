@@ -223,7 +223,9 @@ export class ReportsController {
 
   @ReportWithoutDate('Dealing operations', ReportsPaths.caaManual)
   async corrAccountsAnalyzeManual() {
-    const corrAccountsAnalyzeData = await this.reportsService.corrAccountsAnalyze()
+    const corrAccountsAnalyze = await this.reportsService.corrAccountsAnalyze()
+    const caaUpdateHistory = await this.reportsService.caaUpdateHistory()
+    return { corrAccountsAnalyze, caaUpdateHistory }
   }
 
   @ReportUpdate('Dealing operations', HttpStatus.ACCEPTED)

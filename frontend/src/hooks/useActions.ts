@@ -36,7 +36,10 @@ import { fetchGap, fetchGapSimulation, fetchLastGapUpdateTime } from '../feature
 import { authActions, login } from '../features/auth/authSlice'
 import { deleteUserByName, fetchSingleUser, fetchUsers } from '../features/admin/adminSlice'
 import { fetchCompetitiveAnalysis } from '../features/activesPassives/competitiveAnalysis/competitiveAnalysisSlice'
-import { fetchCorrAccountsAnalyze } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
+import {
+	fetchCaaManual,
+	fetchCorrAccountsAnalyze
+} from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
 
 const actions = {
 	...operDaysActions,
@@ -69,6 +72,7 @@ const actions = {
 	fetchReportLiabilities,
 	fetchFilialEffectiveness,
 	fetchCorrAccountsAnalyze,
+	fetchCaaManual,
 	fetchCompetitiveAnalysis,
 	fetchGM,
 	fetchGap,

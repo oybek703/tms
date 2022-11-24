@@ -1,12 +1,12 @@
-import React, { ChangeEvent, Fragment, memo, PropsWithChildren, useState } from 'react'
+import React, { ChangeEvent, Fragment, memo, PropsWithChildren, useCallback, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
-import { CAABankData, ICorrAccountsAnalyze } from '../../interfaces/caa.interfaces'
+import { CAABankData, CAAChangeHistory, ICorrAccountsAnalyze } from '../../interfaces/caa.interfaces'
 import CorrAccountsHeadAnalyzeHead from '../helpers/corrAccountsAnalyze/CorrAccountsHeadAnalyzeHead'
 import { v4 as uuid } from 'uuid'
-import { FormControlLabel, Radio, RadioGroup, TableCell, TableRow, FormControl, FormLabel } from '@mui/material'
+import { FormControlLabel, Radio, RadioGroup, TableCell, TableRow, FormControl, FormLabel, Button } from '@mui/material'
 import globalStyles from '../../styles/globalStyles'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import useActions from '../../hooks/useActions'
@@ -14,9 +14,16 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { withToken } from '../../utils/axiosUtils'
 import palette from '../../styles/palette'
+import useTypedSelector from '../../hooks/useTypedSelector'
+import ButtonTabs from '../layout/Tabs/ButtonsTab'
+import { GridColDef } from '@mui/x-data-grid'
+import StyledDataGrid from '../layout/StyledDataGrid'
 
 interface CAAManualTableProps {
-	rows: ICorrAccountsAnalyze[]
+	rows: {
+		corrAccountsAnalyze: ICorrAccountsAnalyze[]
+		caaUpdateHistory: CAAChangeHistory[]
+	}
 }
 
 interface EditableCellProps {
@@ -25,12 +32,12 @@ interface EditableCellProps {
 }
 
 const EditableCell: React.FC<PropsWithChildren<EditableCellProps>> = ({ children, matrixId, colName }) => {
-	const { fetchCorrAccountsAnalyze } = useActions()
+	const { fetchCaaManual } = useActions()
 	async function handleClick() {
 		try {
 			const value = children === '1' ? null : 1
 			await axios.put('/api/caaManual', { matrixId, value, colName }, withToken())
-			fetchCorrAccountsAnalyze()
+			fetchCaaManual()
 		} catch (e) {
 			if (axios.isAxiosError(e)) {
 				toast.error(e.message)
@@ -59,7 +66,7 @@ const EditableCell: React.FC<PropsWithChildren<EditableCellProps>> = ({ children
 }
 
 const OptionEditableCell: React.FC<PropsWithChildren<EditableCellProps>> = ({ children, matrixId, colName }) => {
-	const { fetchCorrAccountsAnalyze } = useActions()
+	const { fetchCaaManual } = useActions()
 	const [editing, setEditing] = useState<boolean>(false)
 	const [status, setStatus] = useState<string>(typeof children === 'string' ? children : 'пустой')
 
@@ -69,7 +76,7 @@ const OptionEditableCell: React.FC<PropsWithChildren<EditableCellProps>> = ({ ch
 		try {
 			setStatus(newValue)
 			await axios.put('/api/caaManual', { matrixId, value, colName }, withToken())
-			fetchCorrAccountsAnalyze()
+			fetchCaaManual()
 		} catch (e) {
 			if (axios.isAxiosError(e)) {
 				toast.error(e.message)
@@ -122,82 +129,147 @@ const OptionEditableCell: React.FC<PropsWithChildren<EditableCellProps>> = ({ ch
 	)
 }
 
+const titles = [
+	{ title: 'Данные', code: 'data' },
+	{ title: 'История', code: 'history' }
+]
+
+function generateCellAttrs<T extends GridColDef>(colDef: T): T {
+	return {
+		type: 'string',
+		headerName: '№',
+		flex: 1,
+		valueFormatter: undefined,
+		align: 'center',
+		headerAlign: 'center',
+		disableColumnMenu: true,
+		sortable: true,
+		...colDef
+	}
+}
+
+const columns: GridColDef[] = [
+	generateCellAttrs({ field: 'index', sortable: false, flex: 0, maxWidth: 10 }),
+	generateCellAttrs({
+		field: 'userName',
+		headerName: 'Имя пользователя',
+		minWidth: 200
+	}),
+	generateCellAttrs({
+		field: 'dateModify',
+		headerName: 'Время изменение',
+		minWidth: 200
+	}),
+	generateCellAttrs({
+		field: 'bankName',
+		headerName: 'Наим.банка',
+		minWidth: 200
+	}),
+	generateCellAttrs({
+		field: 'colName',
+		headerName: 'Свойство',
+		minWidth: 200
+	}),
+	generateCellAttrs({
+		field: 'description',
+		headerName: 'Описание',
+		valueFormatter: function ({ value }) {
+			return value.replace(/null/g, 'пустой')
+		}
+	})
+]
+
 const CAAManualTable: React.FC<CAAManualTableProps> = ({ rows }) => {
+	const { corrAccountsAnalyze } = rows
+	const {
+		caaManual: { caaUpdateHistory }
+	} = useTypedSelector(state => state.corrAccountsAnalyze)
+	const [expanded, setExpanded] = useState<string>('data')
+	const handleChange = useCallback((code: string) => {
+		setExpanded(code)
+	}, [])
 	return (
-		<TableContainer component={Paper}>
-			<Table size="small" aria-label="a dense table">
-				<CorrAccountsHeadAnalyzeHead />
-				<TableBody>
-					{rows.map(({ codeCurrency, banks }) => (
-						<Fragment key={uuid()}>
-							<TableRow>
-								<TableCell colSpan={2} align="center">
-									<b>{codeCurrency}</b>
-								</TableCell>
-								<TableCell colSpan={17} />
-							</TableRow>
-							{banks.map((bank, index) => (
-								<TableRow key={uuid()}>
-									<TableCell align="center">{index + 1}</TableCell>
-									<TableCell sx={globalStyles.noWrap}>
-										<b>{bank.bankName}</b>
-									</TableCell>
-									<TableCell>{bank.countryCode}</TableCell>
-									<EditableCell colName={'imports'} matrixId={bank.id}>
-										{bank.imports}
-									</EditableCell>
-									<EditableCell colName={'exports'} matrixId={bank.id}>
-										{bank.exports}
-									</EditableCell>
-									<EditableCell colName={'tradingFin'} matrixId={bank.id}>
-										{bank.tradingFin}
-									</EditableCell>
-									<EditableCell colName={'mbd'} matrixId={bank.id}>
-										{bank.mbd}
-									</EditableCell>
-									<EditableCell colName={'fx'} matrixId={bank.id}>
-										{bank.fx}
-									</EditableCell>
-									<EditableCell colName={'creditLine'} matrixId={bank.id}>
-										{bank.creditLine}
-									</EditableCell>
-									<EditableCell colName={'vostro'} matrixId={bank.id}>
-										{bank.vostro}
-									</EditableCell>
-									<EditableCell colName={'otherOperations'} matrixId={bank.id}>
-										{bank.otherOperations}
-									</EditableCell>
-									<EditableCell colName={'corrAccounts'} matrixId={bank.id}>
-										{bank.corrAccounts}
-									</EditableCell>
-									<EditableCell colName={'genAgreement'} matrixId={bank.id}>
-										{bank.genAgreement}
-									</EditableCell>
-									<EditableCell colName={'isda'} matrixId={bank.id}>
-										{bank.isda}
-									</EditableCell>
-									<EditableCell colName={'otherAgreement'} matrixId={bank.id}>
-										{bank.otherAgreement}
-									</EditableCell>
-									<OptionEditableCell colName={'serviceSize'} matrixId={bank.id}>
-										{bank.serviceSize}
-									</OptionEditableCell>
-									<OptionEditableCell colName={'serviceSpeed'} matrixId={bank.id}>
-										{bank.serviceSpeed}
-									</OptionEditableCell>
-									<OptionEditableCell colName={'serviceQuality'} matrixId={bank.id}>
-										{bank.serviceQuality}
-									</OptionEditableCell>
-									<OptionEditableCell colName={'serviceCost'} matrixId={bank.id}>
-										{bank.serviceCost}
-									</OptionEditableCell>
-								</TableRow>
+		<>
+			<ButtonTabs handleChange={handleChange} active={expanded} titles={titles} />
+			{expanded === 'data' ? (
+				<TableContainer component={Paper}>
+					<Table size="small" aria-label="a dense table">
+						<CorrAccountsHeadAnalyzeHead />
+						<TableBody>
+							{corrAccountsAnalyze.map(({ codeCurrency, banks }) => (
+								<Fragment key={uuid()}>
+									<TableRow>
+										<TableCell colSpan={2} align="center">
+											<b>{codeCurrency}</b>
+										</TableCell>
+										<TableCell colSpan={17} />
+									</TableRow>
+									{banks.map((bank, index) => (
+										<TableRow key={uuid()}>
+											<TableCell align="center">{index + 1}</TableCell>
+											<TableCell sx={globalStyles.noWrap}>
+												<b>{bank.bankName}</b>
+											</TableCell>
+											<TableCell>{bank.countryCode}</TableCell>
+											<EditableCell colName={'imports'} matrixId={bank.id}>
+												{bank.imports}
+											</EditableCell>
+											<EditableCell colName={'exports'} matrixId={bank.id}>
+												{bank.exports}
+											</EditableCell>
+											<EditableCell colName={'tradingFin'} matrixId={bank.id}>
+												{bank.tradingFin}
+											</EditableCell>
+											<EditableCell colName={'mbd'} matrixId={bank.id}>
+												{bank.mbd}
+											</EditableCell>
+											<EditableCell colName={'fx'} matrixId={bank.id}>
+												{bank.fx}
+											</EditableCell>
+											<EditableCell colName={'creditLine'} matrixId={bank.id}>
+												{bank.creditLine}
+											</EditableCell>
+											<EditableCell colName={'vostro'} matrixId={bank.id}>
+												{bank.vostro}
+											</EditableCell>
+											<EditableCell colName={'otherOperations'} matrixId={bank.id}>
+												{bank.otherOperations}
+											</EditableCell>
+											<EditableCell colName={'corrAccounts'} matrixId={bank.id}>
+												{bank.corrAccounts}
+											</EditableCell>
+											<EditableCell colName={'genAgreement'} matrixId={bank.id}>
+												{bank.genAgreement}
+											</EditableCell>
+											<EditableCell colName={'isda'} matrixId={bank.id}>
+												{bank.isda}
+											</EditableCell>
+											<EditableCell colName={'otherAgreement'} matrixId={bank.id}>
+												{bank.otherAgreement}
+											</EditableCell>
+											<OptionEditableCell colName={'serviceSize'} matrixId={bank.id}>
+												{bank.serviceSize}
+											</OptionEditableCell>
+											<OptionEditableCell colName={'serviceSpeed'} matrixId={bank.id}>
+												{bank.serviceSpeed}
+											</OptionEditableCell>
+											<OptionEditableCell colName={'serviceQuality'} matrixId={bank.id}>
+												{bank.serviceQuality}
+											</OptionEditableCell>
+											<OptionEditableCell colName={'serviceCost'} matrixId={bank.id}>
+												{bank.serviceCost}
+											</OptionEditableCell>
+										</TableRow>
+									))}
+								</Fragment>
 							))}
-						</Fragment>
-					))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+						</TableBody>
+					</Table>
+				</TableContainer>
+			) : (
+				<StyledDataGrid rows={caaUpdateHistory} columns={columns} />
+			)}
+		</>
 	)
 }
 

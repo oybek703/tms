@@ -7,15 +7,15 @@ import useActions from '../../hooks/useActions'
 import CAAManualTable from '../../components/tables/CAAManualTable'
 
 const CAAManual = () => {
-	const { fetchCorrAccountsAnalyze } = useActions()
-	const { corrAccountsAnalyze, loading, error } = useTypedSelector(state => state.corrAccountsAnalyze)
+	const { fetchCaaManual } = useActions()
+	const { caaManual, manualLoading, manualError } = useTypedSelector(state => state.corrAccountsAnalyze)
 	useEffect(() => {
-		fetchCorrAccountsAnalyze()
-	}, [fetchCorrAccountsAnalyze])
+		fetchCaaManual()
+	}, [fetchCaaManual])
 	return (
 		<>
 			<PageTitle title="Анализ корр.счетов(матрица)" />
-			{loading ? <Loader /> : error ? <Alert message={error} /> : <CAAManualTable rows={corrAccountsAnalyze} />}
+			{manualLoading ? <Loader /> : manualError ? <Alert message={manualError} /> : <CAAManualTable rows={caaManual} />}
 		</>
 	)
 }

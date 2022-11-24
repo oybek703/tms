@@ -33,7 +33,7 @@ import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
 import getCorrAccountsAnalyzeData from '../core/dealing-operations'
 import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
-import { CAAColLabelNames } from './reports.interfaces'
+import { CAAChangeHistory, CAAColLabelNames } from './reports.interfaces'
 
 @Injectable()
 export class ReportsService {
@@ -234,8 +234,21 @@ export class ReportsService {
     return await getCorrAccountsAnalyzeData(this.oracleService)
   }
 
-  async corrAccountsAnalyzeUpdateHistory() {
-    const data = await this.oracleService.executeQuery(``)
+  async caaUpdateHistory() {
+    return await this.oracleService.executeQueryInStream<CAAChangeHistory>(`
+        SELECT USERNAME                               AS "userName",
+               TO_CHAR(DATE_MODIFY, 'fmDD-month, HH24:fmMI:SS',
+                       'NLS_DATE_LANGUAGE = RUSSIAN') AS "dateModify",
+               SHORT_NAME                             AS "bankName",
+               MODIFY_COLUMN                          AS "colName",
+               DESCRIPTIONS                           AS "description"
+        FROM MATRIX_CHANGE_HISTORY
+                 JOIN MATRIX_CORR_ACC MCA on MCA.ID = MATRIX_CHANGE_HISTORY.MATRIX_ROW_ID
+                 JOIN TRS_USERS ON TRS_USERS.ID = MATRIX_CHANGE_HISTORY.EDITOR_ID
+                 JOIN BANK_INFO_RATING BIR on BIR.ID = MCA.BANK_ID
+        WHERE ROWNUM < 300
+        ORDER BY DATE_MODIFY DESC
+    `)
   }
 
   async updateCorrAccountsAnalyze({ colName, value, matrixId }: UpdateCAADto, userId: number) {
@@ -243,10 +256,16 @@ export class ReportsService {
     const mappedColLabelName = CAAColLabelNames[colName]
     const updateQuery =
       value === null
-        ? `UPDATE MATRIX_CORR_ACC SET ${mappedColName}=${value} WHERE ID = ${matrixId}`
-        : `UPDATE MATRIX_CORR_ACC SET ${mappedColName}='${value}' WHERE ID = ${matrixId}`
+        ? `UPDATE MATRIX_CORR_ACC
+           SET ${mappedColName}=${value}
+           WHERE ID = ${matrixId}`
+        : `UPDATE MATRIX_CORR_ACC
+           SET ${mappedColName}='${value}'
+           WHERE ID = ${matrixId}`
     const { oldValue = null } = await this.oracleService.executeQuery<{ oldValue: string | null }>(
-      `SELECT ${mappedColName} AS "oldValue" FROM MATRIX_CORR_ACC WHERE ID=${matrixId}`
+      `SELECT ${mappedColName} AS "oldValue"
+       FROM MATRIX_CORR_ACC
+       WHERE ID = ${matrixId}`
     )
     await this.oracleService.executeQuery(updateQuery)
     const description = `${oldValue} => ${value}`

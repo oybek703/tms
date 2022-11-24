@@ -50,3 +50,11 @@ export enum CAAColLabelNames {
   serviceQuality = 'Качество обслуживание',
   serviceCost = 'Стоимость услуг(тарифы)'
 }
+
+export interface CAAChangeHistory {
+  userName: string
+  dateModify: string
+  bankName: string
+  colName: string
+  description: string
+}

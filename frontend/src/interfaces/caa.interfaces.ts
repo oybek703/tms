@@ -23,3 +23,11 @@ export interface ICorrAccountsAnalyze {
 	codeCurrency: string
 	banks: CAABankData[]
 }
+
+export interface CAAChangeHistory {
+	userName: string
+	dateModify: string
+	bankName: string
+	colName: string
+	description: string
+}
