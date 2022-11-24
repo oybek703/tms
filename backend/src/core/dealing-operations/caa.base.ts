@@ -1,6 +1,6 @@
 import { Base } from '../base'
 import { OracleService } from '../../oracle/oracle.service'
-import { BankData, ICorrAccountsAnalyze } from './caa.interface'
+import { CAABankData, ICorrAccountsAnalyze } from './caa.interface'
 
 export class CaaBase extends Base {
   constructor(oracleService: OracleService) {
@@ -8,7 +8,8 @@ export class CaaBase extends Base {
   }
 
   protected formatQuery(codeCurrency: string): string {
-    return `SELECT b.short_name       AS "bankName",
+    return `SELECT M.ID               AS "id",
+                   b.short_name       AS "bankName",
                    COUNTRY_CODE       AS "countryCode",
                    IMPORTS            AS "imports",
                    EXPORTS            AS "exports",
@@ -48,7 +49,7 @@ export class CaaBase extends Base {
     const currencyCodes = await this.getCodeCurrencies()
     return await Promise.all(
       currencyCodes.map(async ({ codeCurrency }) => {
-        const banks = await this.getDataInDates<BankData, true>(codeCurrency, undefined, true)
+        const banks = await this.getDataInDates<CAABankData, true>(codeCurrency, undefined, true)
         return { codeCurrency, banks }
       })
     )

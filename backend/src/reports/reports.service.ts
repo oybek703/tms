@@ -22,7 +22,7 @@ import getReportLiabilitiesData from '../core/actives-and-passives/report-liabil
 import getFilialEffectivenessData from '../core/actives-and-passives/filial-effectiveness'
 import getGmData from '../core/actives-and-passives/gm'
 import getGapData, { getGapManualData } from '../core/gap'
-import { colNames, UpdateGapDto } from './dto/update-gap.dto'
+import { GapColNames, UpdateGapDto } from './dto/update-gap.dto'
 import getDashboardData, {
   getCreditData,
   getDashboardMonthlyData,
@@ -32,6 +32,8 @@ import { ConfigService } from '@nestjs/config'
 import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
 import getCorrAccountsAnalyzeData from '../core/dealing-operations'
+import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
+import { CAAColLabelNames } from './reports.interfaces'
 
 @Injectable()
 export class ReportsService {
@@ -44,25 +46,33 @@ export class ReportsService {
   async operDays() {
     const res = await this.oracleService.executeQueryInStream<{
       operDay: Date
-    }>(`SELECT TO_CHAR(OPER_DAY, 'YYYY-MM-DD') AS "operDay" FROM IBS.DAY_OPERATIONAL@IABS
-                   WHERE OPER_DAY >= DATE '2006-01-01' ORDER BY OPER_DAY DESC`)
+    }>(`SELECT TO_CHAR(OPER_DAY, 'YYYY-MM-DD') AS "operDay"
+        FROM IBS.DAY_OPERATIONAL@IABS
+        WHERE OPER_DAY >= DATE '2006-01-01'
+        ORDER BY OPER_DAY DESC`)
     const dates = res.map(({ operDay }) => operDay)
     return { dates }
   }
 
   async dashboardLastUpdate() {
     const { lastUpdate } = await this.oracleService
-      .executeQuery<ILastUpdate>(`SELECT TO_CHAR(LOG_DATE, 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') AS "lastUpdate"
-      FROM (SELECT LOG_DATE FROM USER_SCHEDULER_JOB_LOG WHERE JOB_NAME = 'DASHBOARD_JOB'
-            ORDER BY LOG_DATE DESC)
-      WHERE ROWNUM = 1`)
+      .executeQuery<ILastUpdate>(`SELECT TO_CHAR(LOG_DATE, 'fmDD-month, HH24:fmMI:SS',
+                                                                                              'NLS_DATE_LANGUAGE = RUSSIAN') AS "lastUpdate"
+                                                                               FROM (SELECT LOG_DATE
+                                                                                     FROM USER_SCHEDULER_JOB_LOG
+                                                                                     WHERE JOB_NAME = 'DASHBOARD_JOB'
+                                                                                     ORDER BY LOG_DATE DESC)
+                                                                               WHERE ROWNUM = 1`)
     return { lastUpdate }
   }
 
   async gapLastUpdate() {
     const { lastUpdate } = await this.oracleService
-      .executeQuery<ILastUpdate>(`SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS', 'NLS_DATE_LANGUAGE = RUSSIAN') 
-              AS "lastUpdate" FROM   USER_SCHEDULER_JOBS WHERE  JOB_NAME = UPPER('GAP_Analysis')`)
+      .executeQuery<ILastUpdate>(`SELECT TO_CHAR(MAX(LAST_START_DATE), 'fmDD-month, HH24:fmMI:SS',
+                                                                                              'NLS_DATE_LANGUAGE = RUSSIAN')
+                                                                                          AS "lastUpdate"
+                                                                               FROM USER_SCHEDULER_JOBS
+                                                                               WHERE JOB_NAME = UPPER('GAP_Analysis')`)
     return { lastUpdate }
   }
 
@@ -164,20 +174,22 @@ export class ReportsService {
   }
 
   async updateGapManual({ date, role, newValue, source, colName }: UpdateGapDto) {
-    const tableColName = colNames[colName]
-    let updateQuery = `UPDATE GAP_SIMULATION_MANUAL SET ${tableColName}=${+newValue} 
-                       WHERE ROLE='${role}' AND OPER_DAY=${date}`
+    const tableColName = GapColNames[colName]
+    let updateQuery = `UPDATE GAP_SIMULATION_MANUAL
+                       SET ${tableColName}=${+newValue}
+                       WHERE ROLE = '${role}'
+                         AND OPER_DAY = ${date}`
     if (source === 'AUTO') {
       updateQuery = `UPDATE GAP_SIMULATION_AUTO
-                    SET ${tableColName}=${+newValue}
-                    WHERE ROLE = '${role}'
-                      AND OPER_DAY = (WITH CTE AS (SELECT OPER_DAY,
-                                                          ROW_NUMBER() OVER (ORDER BY OPER_DAY) AS ROW_NUMBER
-                                                   FROM (SELECT * FROM GAP_SIMULATION_AUTO ORDER BY OPER_DAY)
-                                                   WHERE ROLE = '${role}')
-                                      SELECT OPER_DAY
-                                      FROM CTE
-                                      WHERE ROW_NUMBER = ${date})`
+                     SET ${tableColName}=${+newValue}
+                     WHERE ROLE = '${role}'
+                       AND OPER_DAY = (WITH CTE AS (SELECT OPER_DAY,
+                                                           ROW_NUMBER() OVER (ORDER BY OPER_DAY) AS ROW_NUMBER
+                                                    FROM (SELECT * FROM GAP_SIMULATION_AUTO ORDER BY OPER_DAY)
+                                                    WHERE ROLE = '${role}')
+                                       SELECT OPER_DAY
+                                       FROM CTE
+                                       WHERE ROW_NUMBER = ${date})`
     }
     await this.oracleService.executeQuery(updateQuery)
     await this.oracleService.executeQuery(`BEGIN GAP_MANUAL_REWRITER(); END;`)
@@ -220,5 +232,27 @@ export class ReportsService {
 
   async corrAccountsAnalyze() {
     return await getCorrAccountsAnalyzeData(this.oracleService)
+  }
+
+  async corrAccountsAnalyzeUpdateHistory() {
+    const data = await this.oracleService.executeQuery(``)
+  }
+
+  async updateCorrAccountsAnalyze({ colName, value, matrixId }: UpdateCAADto, userId: number) {
+    const mappedColName = CAAColNames[colName]
+    const mappedColLabelName = CAAColLabelNames[colName]
+    const updateQuery =
+      value === null
+        ? `UPDATE MATRIX_CORR_ACC SET ${mappedColName}=${value} WHERE ID = ${matrixId}`
+        : `UPDATE MATRIX_CORR_ACC SET ${mappedColName}='${value}' WHERE ID = ${matrixId}`
+    const { oldValue = null } = await this.oracleService.executeQuery<{ oldValue: string | null }>(
+      `SELECT ${mappedColName} AS "oldValue" FROM MATRIX_CORR_ACC WHERE ID=${matrixId}`
+    )
+    await this.oracleService.executeQuery(updateQuery)
+    const description = `${oldValue} => ${value}`
+    await this.oracleService.executeQuery(`
+        INSERT INTO MATRIX_CHANGE_HISTORY (EDITOR_ID, DATE_MODIFY, MODIFY_COLUMN, MATRIX_ROW_ID, DESCRIPTIONS)
+        VALUES (${userId}, SYSDATE, '${mappedColLabelName}', ${matrixId}, '${description}')`)
+    return { updated: true }
   }
 }

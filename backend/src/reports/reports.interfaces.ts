@@ -25,8 +25,28 @@ export enum ReportsPaths {
   competitiveAnalysis = 'competitiveAnalysis',
   filialEffectiveness = 'filialEffectiveness',
   corrAccountsAnalyze = 'corrAccountsAnalyze',
+  caaManual = 'caaManual',
   gm = 'gm',
   gap = 'gap',
   gapManual = 'gapManual',
   gapLastUpdate = 'gap/lastUpdate'
+}
+
+export enum CAAColLabelNames {
+  imports = 'Импорт оплаты',
+  exports = 'Экс. поступ.',
+  tradingFin = 'Торг. фин',
+  mbd = 'МБД',
+  fx = 'FX',
+  creditLine = 'Кредитная линия',
+  vostro = 'Востро',
+  otherOperations = 'Прочие(виды операций)',
+  corrAccounts = 'Корр.счет',
+  genAgreement = 'Ген. соглашения',
+  isda = 'ISDA',
+  otherAgreement = 'Прочие(нал. соглашения)',
+  serviceSize = 'Обьем операции',
+  serviceSpeed = 'Скорость обслуживание',
+  serviceQuality = 'Качество обслуживание',
+  serviceCost = 'Стоимость услуг(тарифы)'
 }

@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export enum colNames {
+export enum GapColNames {
   nationalCurrency = 'NATIONAL_CURRENCY',
   usd = 'USD',
   eur = 'EUR'
 }
 
 export class UpdateGapDto {
-  @ApiProperty({ enum: colNames })
+  @ApiProperty({ enum: GapColNames })
   colName: string
 
   @ApiProperty()

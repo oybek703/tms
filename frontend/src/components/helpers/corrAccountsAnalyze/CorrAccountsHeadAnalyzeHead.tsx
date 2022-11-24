@@ -1,11 +1,11 @@
-import globalStyles from '../../styles/globalStyles'
+import globalStyles from '../../../styles/globalStyles'
 import TableRow from '@mui/material/TableRow'
 import { TableCell } from '@mui/material'
-import BoldWithColor from './BoldWithColor'
+import BoldWithColor from '../BoldWithColor'
 import TableHead from '@mui/material/TableHead'
 import React from 'react'
 
-const CorrAccountsHead = () => {
+const CorrAccountsHeadAnalyzeHead = () => {
 	return (
 		<TableHead sx={globalStyles.stickyTableHead}>
 			<TableRow>
@@ -85,4 +85,4 @@ const CorrAccountsHead = () => {
 	)
 }
 
-export default CorrAccountsHead
+export default CorrAccountsHeadAnalyzeHead

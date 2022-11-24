@@ -152,7 +152,7 @@ export const baseRoutes: BaseRoute[] = [
 	{
 		title: 'Связанниые лица',
 		route: '/in_process/n5',
-		group: 'prudential_standards'
+		group: 'prudential_standar-ds'
 	},
 	{
 		title: 'Инвестиции банка',

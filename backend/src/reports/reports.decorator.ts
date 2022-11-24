@@ -1,8 +1,8 @@
-import { applyDecorators, Get, HttpCode, UseGuards } from '@nestjs/common'
+import { applyDecorators, Get, HttpCode, HttpStatus, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { ReportGuard } from '../auth/report.guard'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { ReportsPaths } from './reports-paths'
+import { ReportsPaths } from './reports.interfaces'
 
 export function Report(tagName: string, routeName: ReportsPaths, forAll = false) {
   if (forAll) {
@@ -81,9 +81,9 @@ export function ReportOperDays() {
   )
 }
 
-export function GapManual(httpCode) {
+export function ReportUpdate(tagName: string, httpCode: HttpStatus) {
   return applyDecorators(
-    ApiTags('Gap analyze'),
+    ApiTags(tagName),
     UseGuards(JwtAuthGuard, ReportGuard),
     ApiBearerAuth(),
     HttpCode(httpCode)

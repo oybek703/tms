@@ -13,7 +13,6 @@ export class CaOtherBanks extends CompetitiveAnalysis {
                      VALUE          AS "value"
               FROM INDICATORS
                        JOIN INDICATOR_BANKS IB on INDICATORS.ID = IB.INDICATOR_ID
-                       JOIN BANKS B on B.ID = IB.BANK_ID
               WHERE BANK_ID = ${this.bankId}
                 AND ROLE = '${role}'
                 AND OPER_DAY IN (${this.createDates(this.monthFirstDates)})

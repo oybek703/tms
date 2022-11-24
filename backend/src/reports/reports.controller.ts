@@ -1,15 +1,27 @@
-import { BadRequestException, Body, Controller, Post, Put, Query } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpStatus,
+  Post,
+  Put,
+  Query,
+  Req
+} from '@nestjs/common'
 import { ReportsService } from './reports.service'
 import { UpdateGapDto } from './dto/update-gap.dto'
 import {
   Report,
   ReportBetweenDates,
-  GapManual,
   ReportLastUpdate,
   ReportOperDays,
+  ReportUpdate,
   ReportWithoutDate
 } from './reports.decorator'
-import { ReportsPaths } from './reports-paths'
+import { ReportsPaths } from './reports.interfaces'
+import { UpdateCAADto } from './dto/update-caa.dto'
+import { Request } from 'express'
+import { User } from '../auth/auth.interface'
 
 @Controller()
 export class ReportsController {
@@ -187,13 +199,13 @@ export class ReportsController {
     return await this.reportsService.gapManual(forEditing)
   }
 
-  @GapManual(202)
+  @ReportUpdate('Gap analyze', HttpStatus.OK)
   @Post('gapManual')
   async updateGapManual(@Body() dto: UpdateGapDto) {
     return await this.reportsService.updateGapManual(dto)
   }
 
-  @GapManual(200)
+  @ReportUpdate('Gap analyze', HttpStatus.OK)
   @Put('gapManual')
   async saveGapManualChanges() {
     return await this.reportsService.saveGapManualChanges()
@@ -207,5 +219,17 @@ export class ReportsController {
   @ReportWithoutDate('Dealing operations', ReportsPaths.corrAccountsAnalyze)
   async corrAccountsAnalyze() {
     return await this.reportsService.corrAccountsAnalyze()
+  }
+
+  @ReportWithoutDate('Dealing operations', ReportsPaths.caaManual)
+  async corrAccountsAnalyzeManual() {
+    const corrAccountsAnalyzeData = await this.reportsService.corrAccountsAnalyze()
+  }
+
+  @ReportUpdate('Dealing operations', HttpStatus.ACCEPTED)
+  @Put(ReportsPaths.caaManual)
+  async updateCorrAccountsAnalyze(@Body() dto: UpdateCAADto, @Req() req: Request) {
+    const user: User = req.user as User
+    return await this.reportsService.updateCorrAccountsAnalyze(dto, user.id)
   }
 }

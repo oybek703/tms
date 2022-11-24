@@ -1,4 +1,5 @@
-export interface BankData {
+export interface CAABankData {
+	id: number
 	bankName: string
 	countryCode: string | null
 	imports: string | null
@@ -20,5 +21,5 @@ export interface BankData {
 }
 export interface ICorrAccountsAnalyze {
 	codeCurrency: string
-	banks: BankData[]
+	banks: CAABankData[]
 }

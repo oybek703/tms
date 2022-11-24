@@ -96,7 +96,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 		if (pathname === '/') getDashBoardLastUpdate()
 	}, [getDashBoardLastUpdate, pathname])
 	useEffect(() => {
-		if (pathname !== '/gap' && pathname !== '/gapSimulation') getOperDays()
+		if (
+			pathname !== '/gap' &&
+			pathname !== '/gapSimulation' &&
+			pathname !== '/caaManual' &&
+			pathname !== '/corrAccountsAnalyze'
+		)
+			getOperDays()
 		//    eslint-disable-next-line
     }, [getOperDays])
 	return (
@@ -180,6 +186,8 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 									</>
 								) : (
 									pathname !== '/gap' &&
+									pathname !== '/caaManual' &&
+									pathname !== '/corrAccountsAnalyze' &&
 									pathname !== '/gapSimulation' &&
 									!pathname.includes('settings') && (
 										<DatePicker reportDate={reportDate} operDays={operDays} disabled={operDaysLoading} />

@@ -38,7 +38,7 @@ import NostroMatrix from './pages/bankLiquidity/NostroMatrix'
 import VlaBuffer from './pages/bankLiquidity/VlaBuffer'
 import FilialEffectiveness from './pages/activesPassives/FilialEffectiviness'
 import CompetitiveAnalysis from './pages/activesPassives/CompetitiveAnalysis'
-import CorrAccountsAnalyze from './pages/dealingOperations/corrAccountsAnalyze'
+import CorrAccountsAnalyze from './pages/dealingOperations/CorrAccountsAnalyze'
 import CAAManual from './pages/dealingOperations/CAAManual'
 
 function App() {
