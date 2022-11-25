@@ -142,14 +142,15 @@ function generateCellAttrs<T extends GridColDef>(colDef: T): T {
 		valueFormatter: undefined,
 		align: 'center',
 		headerAlign: 'center',
-		disableColumnMenu: true,
+		filterable: true,
+		disableColumnMenu: false,
 		sortable: true,
 		...colDef
 	}
 }
 
 const columns: GridColDef[] = [
-	generateCellAttrs({ field: 'index', sortable: false, flex: 0, maxWidth: 10 }),
+	generateCellAttrs({ field: 'index', sortable: false, flex: 0, maxWidth: 10, disableColumnMenu: true }),
 	generateCellAttrs({
 		field: 'userName',
 		headerName: 'Имя пользователя',
