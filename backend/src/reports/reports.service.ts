@@ -236,7 +236,7 @@ export class ReportsService {
 
   async caaUpdateHistory() {
     return await this.oracleService.executeQueryInStream<CAAChangeHistory>(`
-        SELECT USERNAME                               AS "userName",
+        SELECT FIRST_NAME || ' ' || LAST_NAME         AS "userName",
                TO_CHAR(DATE_MODIFY, 'fmDD-month, HH24:fmMI:SS',
                        'NLS_DATE_LANGUAGE = RUSSIAN') AS "dateModify",
                SHORT_NAME                             AS "bankName",

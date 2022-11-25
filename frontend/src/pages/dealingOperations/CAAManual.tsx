@@ -14,7 +14,7 @@ const CAAManual = () => {
 	}, [fetchCaaManual])
 	return (
 		<>
-			<PageTitle title="Анализ корр.счетов(матрица)" />
+			<PageTitle title="Анализ корр.счетов(матрица) - изм." />
 			{manualLoading ? <Loader /> : manualError ? <Alert message={manualError} /> : <CAAManualTable rows={caaManual} />}
 		</>
 	)

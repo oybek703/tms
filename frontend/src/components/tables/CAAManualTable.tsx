@@ -174,7 +174,7 @@ const columns: GridColDef[] = [
 		field: 'description',
 		headerName: 'Описание',
 		valueFormatter: function ({ value }) {
-			return value.replace(/null/g, 'пустой')
+			return `${value.replace(/null/g, '❌').replace(/1/g, '✅')}`
 		}
 	})
 ]
