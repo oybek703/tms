@@ -86,7 +86,7 @@ const LoginPage = () => {
 			<Grid item>
 				<Grid sx={{ marginTop: '-80px', marginBottom: '-60px' }}>
 					<Grid>
-						<img src={process.env.PUBLIC_URL + '/asakabank.jpg'} width="350" height="300" alt="Treasury Reports" />
+						<img src={process.env.PUBLIC_URL + '/asakabank.jpg'} width="300" height="300" alt="Treasury Reports" />
 					</Grid>
 				</Grid>
 				<br />

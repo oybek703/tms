@@ -27,14 +27,14 @@ const CorrAccountsAnalyzeTable: React.FC<CorrAccountsTableProps> = ({ rows }) =>
 				<TableBody>
 					{rows.map(({ codeCurrency, banks }) => (
 						<Fragment key={uuid()}>
-							<TableRow>
+							<TableRow hover>
 								<TableCell colSpan={2} align="center">
 									<b>{codeCurrency}</b>
 								</TableCell>
 								<TableCell colSpan={17} />
 							</TableRow>
 							{banks.map((bank, index) => (
-								<TableRow key={uuid()}>
+								<TableRow hover key={uuid()}>
 									<TableCell align="center">{index + 1}</TableCell>
 									<TableCell sx={globalStyles.noWrap}>
 										<b>{bank.bankName} </b>
