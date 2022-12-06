@@ -29,7 +29,7 @@ const getDashboardData = async (
       fundingStructure,
       currencyMBD
     ],
-    [vla, lcr, nsfr],
+    [vla, lcr, nsfr, il],
     [cbRate, legalEntitiesRates, individualsRates, last90Rates],
     [foreignBanks, localBanks]
   ] = await Promise.all([
@@ -55,6 +55,7 @@ const getDashboardData = async (
     vla,
     lcr,
     nsfr,
+    il,
     currencyRates,
     bankLimits
   }

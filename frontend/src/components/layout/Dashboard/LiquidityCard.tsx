@@ -7,32 +7,33 @@ import useTypedSelector from '../../../hooks/useTypedSelector'
 import globalStyles from '../../../styles/globalStyles'
 import { Typography } from '@mui/material'
 import { ISxStyles } from '../../../interfaces/styles.interface'
+import { DASHBOARD_VLA } from '../../../constants'
 
 const styles: ISxStyles = {
 	totalText: {
-		fontSize: '1.5em',
+		fontSize: '1.3em',
 		fontWeight: 550,
 		textAlign: 'left',
 		padding: 0
 	},
 	totalSecondaryText: {
-		fontSize: '1.5em',
+		fontSize: '1.25em',
 		textAlign: 'left',
 		padding: 0
 	},
 	totalValue: {
 		fontWeight: 500,
-		fontSize: '1.4em'
+		fontSize: '1.35em'
 	},
 	secondaryText: {
 		lineHeight: 0,
 		color: '#000',
-		fontSize: '0.8em',
+		fontSize: '0.75em',
 		fontWeight: 700,
 		marginTop: '5px'
 	},
 	natValue: {
-		fontSize: '1.3em',
+		fontSize: '1.2em',
 		fontWeight: 400
 	},
 	stateCard: {
@@ -49,6 +50,7 @@ const styles: ISxStyles = {
 interface LiquidityCardProps {
 	data: any
 	label: string
+	totalOnly?: boolean
 }
 
 function StateCard() {
@@ -59,7 +61,7 @@ function StateCard() {
 	)
 }
 
-const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛА' }) => {
+const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label, totalOnly = false }) => {
 	const [lastTotal, lastNat, lastForeign] = data
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const isToday = formatOneDate(reportDate) === formatOneDate(new Date().toString())
@@ -71,10 +73,20 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 			component={Paper}
 			variant="outlined"
 		>
-			<Grid container sx={{ position: 'relative' }} justifyContent="space-between" alignItems="center">
+			<Grid
+				container
+				sx={{ position: 'relative' }}
+				justifyContent={totalOnly ? 'center' : 'space-between'}
+				alignItems="center"
+			>
 				{isToday && label === 'ЮЛА (HQLA)' && <StateCard />}
 				<Grid item xs={6}>
-					<Grid container justifyContent="space-around" alignItems="baseline" sx={{ borderRight: '2px dashed #ddd' }}>
+					<Grid
+						container
+						justifyContent="space-around"
+						alignItems="baseline"
+						sx={{ borderRight: totalOnly ? '0' : '2px dashed #ddd' }}
+					>
 						<Grid item sx={{ transform: 'translateY(4px)' }}>
 							<Typography component="span" sx={styles.totalText}>
 								{splittedLabel[0]}
@@ -98,36 +110,38 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label = 'ВЛ�
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item xs={5}>
-					<Grid container spacing={1} justifyContent="space-between" alignItems="center">
-						<Grid item xs={6}>
-							{lastNat && (
-								<ListItemText
-									primary={
-										<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
-											{formatNumber(lastNat)}%
-										</Typography>
-									}
-									secondaryTypographyProps={{ sx: styles.secondaryText }}
-									secondary="нац.валюта"
-								/>
-							)}
-						</Grid>
-						<Grid item xs={6}>
-							{lastForeign && (
-								<ListItemText
-									primary={
-										<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
-											{formatNumber(lastForeign)}%
-										</Typography>
-									}
-									secondaryTypographyProps={{ sx: styles.secondaryText }}
-									secondary="ин.валюта"
-								/>
-							)}
+				{!totalOnly && (
+					<Grid item xs={5}>
+						<Grid container spacing={1} justifyContent="space-between" alignItems="center">
+							<Grid item xs={6}>
+								{lastNat && (
+									<ListItemText
+										primary={
+											<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
+												{formatNumber(lastNat)}%
+											</Typography>
+										}
+										secondaryTypographyProps={{ sx: styles.secondaryText }}
+										secondary="нац.валюта"
+									/>
+								)}
+							</Grid>
+							<Grid item xs={6}>
+								{lastForeign && (
+									<ListItemText
+										primary={
+											<Typography component="b" sx={mergeStyles(globalStyles.greens, styles.natValue)}>
+												{formatNumber(lastForeign)}%
+											</Typography>
+										}
+										secondaryTypographyProps={{ sx: styles.secondaryText }}
+										secondary="ин.валюта"
+									/>
+								)}
+							</Grid>
 						</Grid>
 					</Grid>
-				</Grid>
+				)}
 			</Grid>
 		</Grid>
 	)

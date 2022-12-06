@@ -1,23 +1,58 @@
 import { Base } from '../base'
 import { format } from 'date-fns'
-import { IDashboardLiquidity } from './dashboard.interface'
+import { IDashboardLiquidity, IDashboardLiquidityData } from './dashboard.interface'
 
 export class DashboardLiquidity extends Base {
-  protected formatQuery(whereQuery: string): string {
-    return ''
+  protected formatQuery(liquidityCategory: string): string {
+    return `SELECT SUBSTR(TRIM(INITCAP(TO_CHAR(OPER_DAY, 'month', 'NLS_DATE_LANGUAGE=RUSSIAN'))), 0,
+                          3) AS      "monthName",
+                   ROUND(PERCENT, 2) "percent"
+            FROM (SELECT * FROM DASHBOARD_LIQUIDITY ORDER BY OPER_DAY DESC)
+            WHERE ROLE = '${liquidityCategory}'
+              AND OPER_DAY <= DATE '${this.date}'
+              AND ROWNUM < 7
+            ORDER BY OPER_DAY`
   }
 
-  protected dashboardLiquidityQuery = (liquidityCategory: string) => {
-    return () => {
-      return `SELECT SUBSTR(TRIM(INITCAP(TO_CHAR(OPER_DAY, 'month', 'NLS_DATE_LANGUAGE=RUSSIAN'))), 0,
-                            3) AS      "monthName",
-                     ROUND(PERCENT, 2) "percent"
-              FROM (SELECT * FROM DASHBOARD_LIQUIDITY ORDER BY OPER_DAY DESC)
-              WHERE ROLE = '${liquidityCategory}'
-                AND OPER_DAY <= DATE '${this.date}'
-                AND ROWNUM < 7
-              ORDER BY OPER_DAY`
-    }
+  protected instantLiquidityQuery = () => {
+    return `WITH DATES AS
+                     (SELECT EXTRACT(MONTH FROM OPER_DAY) MONTH_NUM,
+                             MAX(OPER_DAY) AS             MAX_OPER_DAYS
+                      FROM IBS.DAY_OPERATIONAL@IABS
+                      WHERE OPER_DAY BETWEEN TRUNC(DATE '${this.date}', 'YYYY') AND DATE '${this.date}'
+                        AND DAY_STATUS = 1
+                      GROUP BY EXTRACT(MONTH FROM OPER_DAY),
+                               EXTRACT(YEAR FROM OPER_DAY)
+                      ORDER BY EXTRACT(MONTH FROM OPER_DAY) DESC
+                          FETCH FIRST 6 ROWS ONLY)
+            SELECT SUBSTR(TRIM(INITCAP(TO_CHAR(TRUNC(MAX_OPER_DAYS, 'MM'), 'month', 'NLS_DATE_LANGUAGE=RUSSIAN'))), 0,
+                          3)                                                 AS "monthName",
+                   ROUND((SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                          FROM IBS.SVOD_SALDO_DUMP@IABS
+                          WHERE (
+                                      BAL LIKE '101%'
+                                  OR (
+                                                  BAL LIKE '103%'
+                                              AND BAL != '10309')
+                                  OR BAL LIKE '107%')
+                            AND DAT = MAX_OPER_DAYS
+                            AND VAL = '000') / (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                                WHERE (BAL LIKE '202%'
+                                                    OR BAL IN ('21002', '21008', '22402', '22403', '22405', '22406', '22476')
+                                                    OR (BAL LIKE '226%' AND BAL NOT IN ('22602', '22628'))
+                                                    OR BAL LIKE '231%'
+                                                    OR (BAL LIKE '232%' AND BAL != '23206')
+                                                    OR BAL LIKE '234%'
+                                                    OR BAL LIKE '175%'
+                                                    OR BAL LIKE '235%'
+                                                    OR BAL LIKE '174%'
+                                                    OR (BAL LIKE '298%' AND
+                                                        BAL NOT IN ('29822', '29826', '29830', '29842', '29846')))
+                                                  AND DAT = MAX_OPER_DAYS
+                                                  AND VAL = '000') * 100, 2) AS "percent"
+            FROM DATES
+            ORDER BY MAX_OPER_DAYS`
   }
 
   protected vlaCurrentStateQuery = () => {
@@ -31,15 +66,10 @@ export class DashboardLiquidity extends Base {
             FROM CTE PIVOT (MAX(PERCENT) FOR ROLE IN ('VLA' AS VLA, 'VLA_NAT' AS VLA_NAT, 'VLA_FOR' AS VLA_FOR))`
   }
 
-  protected async liquidityByCategory<K extends boolean = false>(
-    liquidityCategory: string,
+  getCategoryAndMonthData<K extends boolean = false>(
+    res: IDashboardLiquidityData[],
     withCategory = false
-  ): Promise<K extends true ? number[] : { values: number[]; categories: string[] }> {
-    const res = await this.getDataInDates<{ monthName: string; percent: number }, true>(
-      undefined,
-      this.dashboardLiquidityQuery(liquidityCategory),
-      true
-    )
+  ): K extends true ? number[] : { values: number[]; categories: string[] } {
     const categories: string[] = []
     const values: number[] = []
     res.map(v => {
@@ -54,7 +84,25 @@ export class DashboardLiquidity extends Base {
     return values as K extends true ? number[] : { values: number[]; categories: string[] }
   }
 
-  protected async vlaCurrentState() {
+  protected async liquidity_by_category(liquidityCategory: string, withCategory = false) {
+    const res = await this.getDataInDates<IDashboardLiquidityData, true>(
+      liquidityCategory,
+      undefined,
+      true
+    )
+    return this.getCategoryAndMonthData(res, withCategory)
+  }
+
+  protected async instant_liquidity() {
+    const res = await this.getDataInDates<IDashboardLiquidityData, true>(
+      undefined,
+      this.instantLiquidityQuery,
+      true
+    )
+    return this.getCategoryAndMonthData(res, true)
+  }
+
+  protected async vla_current_state() {
     const [data] = await this.getDataInDates<IDashboardLiquidity, true>(
       undefined,
       this.vlaCurrentStateQuery,
@@ -64,16 +112,17 @@ export class DashboardLiquidity extends Base {
   }
 
   async getRows() {
-    const vlaTotal = await this.liquidityByCategory('VLA', true)
-    const vlaNat = await this.liquidityByCategory('VLA_NAT')
-    const vlaForeign = await this.liquidityByCategory('VLA_FOR')
-    const lcrTotal = await this.liquidityByCategory('LCR', true)
-    const lcrNat = await this.liquidityByCategory('LCR_NAT')
-    const lcrForeign = await this.liquidityByCategory('LCR_FOR')
-    const nsfrTotal = await this.liquidityByCategory('NSFR', true)
-    const nsfrNat = await this.liquidityByCategory('NSFR_NAT')
-    const nsfrForeign = await this.liquidityByCategory('NSFR_FOR')
-    const vlaCurrent = await this.vlaCurrentState()
+    const vlaTotal = await this.liquidity_by_category('VLA', true)
+    const vlaNat = await this.liquidity_by_category('VLA_NAT')
+    const vlaForeign = await this.liquidity_by_category('VLA_FOR')
+    const lcrTotal = await this.liquidity_by_category('LCR', true)
+    const lcrNat = await this.liquidity_by_category('LCR_NAT')
+    const lcrForeign = await this.liquidity_by_category('LCR_FOR')
+    const nsfrTotal = await this.liquidity_by_category('NSFR', true)
+    const nsfrNat = await this.liquidity_by_category('NSFR_NAT')
+    const nsfrForeign = await this.liquidity_by_category('NSFR_FOR')
+    const vlaCurrent = await this.vla_current_state()
+    const instantLiquidity = await this.instant_liquidity()
     const vla = {
       total: vlaTotal.values,
       nat: vlaNat,
@@ -93,6 +142,10 @@ export class DashboardLiquidity extends Base {
       foreign: nsfrForeign,
       categories: nsfrTotal.categories
     }
-    return [vla, lcr, nsfr]
+    const il = {
+      total: instantLiquidity.values,
+      categories: instantLiquidity.categories
+    }
+    return [vla, lcr, nsfr, il]
   }
 }

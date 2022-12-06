@@ -16,6 +16,11 @@ export interface IDashboardLiquidity {
   vlaFor: number
 }
 
+export interface IDashboardLiquidityData {
+  mothName: string
+  percent: number
+}
+
 export interface IDashboardCurrencyRate {
   code: string
   equival: number

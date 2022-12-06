@@ -33,6 +33,7 @@ const Dashboard = () => {
 		vla = {},
 		lcr = {},
 		nsfr = {},
+		il = {},
 		currencyRates,
 		bankLimits = {}
 	} = dashboard
@@ -60,6 +61,7 @@ const Dashboard = () => {
 										lcr={lcr}
 										nsfr={nsfr}
 										vla={vla}
+										il={il}
 										dashboardCurrencyPosition={dashboardCurrencyPosition}
 									/>
 								)

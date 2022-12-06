@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
+import { IL_ID } from '../../../../constants'
 
 function createLabels(id: string) {
-	const totalName = `Итого ${id === 'lcr' ? 'LCR' : id === 'nsfr' ? 'NSFR' : 'ВЛА'}`
+	const totalName = `Итого ${id === 'lcr' ? 'LCR' : id === 'nsfr' ? 'NSFR' : id === IL_ID ? 'МЛ' : 'ВЛА'}`
 	const nationalName = `Нац. вал ${id === 'lcr' ? 'LCR' : id === 'nsfr' ? 'NSFR' : 'ВЛА'}`
 	const foreignName = `Ин. вал ${id === 'lcr' ? 'LCR' : id === 'nsfr' ? 'NSFR' : 'ВЛА'}`
 	const normativeName = 'Норматив'
@@ -12,25 +13,30 @@ function createLabels(id: string) {
 async function renderOptions(series: any, categories: any, id: string, normative: number = 100) {
 	const { normativeName, totalName, nationalName, foreignName } = createLabels(id)
 	const { total = [], nat = [], foreign = [] } = series
+	let seriesData = [
+		{
+			name: normativeName,
+			data: new Array(categories.length).fill(normative)
+		},
+		{
+			name: totalName,
+			data: total
+		},
+		{
+			name: nationalName,
+			data: nat
+		},
+		{
+			name: foreignName,
+			data: foreign
+		}
+	]
+	if (id === IL_ID) {
+		seriesData = seriesData.filter((_, index) => index < 2)
+	}
+	console.log(seriesData)
 	const options = {
-		series: [
-			{
-				name: normativeName,
-				data: new Array(categories.length).fill(normative)
-			},
-			{
-				name: totalName,
-				data: total
-			},
-			{
-				name: nationalName,
-				data: nat
-			},
-			{
-				name: foreignName,
-				data: foreign
-			}
-		],
+		series: seriesData,
 		chart: {
 			height: 350,
 			type: 'line',

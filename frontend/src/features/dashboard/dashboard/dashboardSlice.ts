@@ -16,6 +16,7 @@ const initialState = {
 		vla: {},
 		lcr: {},
 		nsfr: {},
+		il: {},
 		currencyRates: [],
 		bankLimits: {}
 	},

@@ -1,0 +1,5 @@
+export const DASHBOARD_VLA = 'ВЛА (HQLA)'
+export const DASHBOARD_LCR = 'КПЛ (LCR)'
+export const DASHBOARD_NSFR = 'НЧСФ (NSFR)'
+export const DASHBOARD_IL = 'МЛ (IL)'
+export const IL_ID = 'il'

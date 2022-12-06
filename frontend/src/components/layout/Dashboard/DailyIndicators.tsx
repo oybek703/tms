@@ -11,6 +11,7 @@ import CurrencyPositionChart from '../../charts/dashboard/dailyIndicators/Curren
 import { getDashboardLiquidityIndicator, mergeStyles } from '../../../utils'
 import globalStyles from '../../../styles/globalStyles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
+import { DASHBOARD_IL, DASHBOARD_LCR, DASHBOARD_NSFR, DASHBOARD_VLA, IL_ID } from '../../../constants'
 
 const styles: ISxStyles = {
 	liqRate: {
@@ -27,6 +28,7 @@ interface DailyIndicatorsProps {
 	vla: any
 	lcr: any
 	nsfr: any
+	il: any
 }
 
 const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
@@ -34,9 +36,10 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 	dashboardCurrencyPosition = {},
 	vla = {},
 	lcr = {},
-	nsfr = {}
+	nsfr = {},
+	il = {}
 }) => {
-	const [lcrLastPointers, nsfrLastPointers] = [lcr, nsfr].map(getDashboardLiquidityIndicator)
+	const [lcrLastPointers, nsfrLastPointers, ilLastPointers] = [lcr, nsfr, il].map(getDashboardLiquidityIndicator)
 	const { vlaCurrent } = vla
 	const { currencyPosition = [], position = [] } = dashboardCurrencyPosition
 	return (
@@ -55,17 +58,18 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 				Показатели ликвидности
 			</Grid>
 			{/* VLA LCR NSFR*/}
-			<Grid sx={globalStyles.smallCardGrid} container>
+			<Grid sx={styles.liqRate} container>
 				{[
-					{ label: 'ЮЛА (HQLA)', data: vlaCurrent },
-					{ label: 'ЛКМК (LCR)', data: lcrLastPointers },
-					{ label: 'СБМК (NSFR)', data: nsfrLastPointers }
+					{ label: DASHBOARD_VLA, data: vlaCurrent },
+					{ label: DASHBOARD_LCR, data: lcrLastPointers },
+					{ label: DASHBOARD_NSFR, data: nsfrLastPointers },
+					{ label: DASHBOARD_IL, data: ilLastPointers }
 				].map(({ data, label }) => (
-					<LiquidityCard key={uuid()} data={data} label={label} />
+					<LiquidityCard totalOnly={label === DASHBOARD_IL} key={uuid()} data={data} label={label} />
 				))}
 			</Grid>
 			<FakeSuspense>
-				<Grid container sx={globalStyles.smallCardGrid}>
+				<Grid container sx={styles.liqRate}>
 					<Grid item component={Paper}>
 						<LiquidityPoints data={vla} id="vla" normative={10} />
 					</Grid>
@@ -74,6 +78,9 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 					</Grid>
 					<Grid item component={Paper}>
 						<LiquidityPoints data={nsfr} id="nsfr" />
+					</Grid>
+					<Grid item component={Paper}>
+						<LiquidityPoints normative={25} data={il} id={IL_ID} />
 					</Grid>
 				</Grid>
 			</FakeSuspense>
