@@ -204,7 +204,8 @@ export class CompetitiveAnalysis extends Base {
   } /* CAR */
 
   protected async roa_roe(query: RoaRoeQueries) {
-    return await this.getOneRow('ROA', this.roaRoeQuery(query), { redBold: true })
+    const indicatorName = query === RoaRoeQueries.ROA ? 'ROA' : 'ROE'
+    return await this.getOneRow(indicatorName, this.roaRoeQuery(query), { redBold: true })
   } /* ROA, ROE */
 
   protected async cir() {
