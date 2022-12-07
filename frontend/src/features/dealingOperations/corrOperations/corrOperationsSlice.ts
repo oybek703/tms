@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchWithoutCache, withToken } from '../../../utils/axiosUtils'
+import { withToken } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 import { ICorrOperations } from '../../../interfaces/corr-operations.interfaces'
 import axios from 'axios'
@@ -7,19 +7,29 @@ import { getErrorMessage } from '../../../utils'
 
 interface CAAInitialState {
 	loading: boolean
-	corrOperations: ICorrOperations[]
+	corrOperations: ICorrOperations
 	error: undefined
 }
 
 const initialState: CAAInitialState = {
 	loading: false,
-	corrOperations: [],
+	corrOperations: {
+		bankList: [],
+		volume: [],
+		fx: [],
+		physicalPayments: [],
+		legalPayments: [],
+		interbankOperations: [],
+		loroAccountsOperations: [],
+		accredetivOperations: []
+	},
 	error: undefined
 }
 
 interface ITwoDatesOption {
 	firstDate: string
 	secondDate: string
+	currencyCode: string
 }
 
 const prefix = 'corrOperations'
@@ -27,7 +37,7 @@ const prefix = 'corrOperations'
 export const fetchCorrOperations = createAsyncThunk(prefix, async (options: ITwoDatesOption, thunkApi) => {
 	try {
 		const { data } = await axios.get(
-			`/api/${APIRoutes.corrOperations}?firstDate=${options.firstDate}&secondDate=${options.secondDate}`,
+			`/api/${APIRoutes.corrOperations}?firstDate=${options.firstDate}&secondDate=${options.secondDate}&currencyCode=${options.currencyCode}`,
 			withToken()
 		)
 		return data
