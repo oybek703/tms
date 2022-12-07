@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
 import Loader from '../../components/layout/Loader'
 import Alert from '../../components/layout/Alert'
@@ -6,6 +6,8 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
 import useTwoDates from '../../hooks/useTwoDates'
 import {
+	AppBar,
+	Box,
 	Button,
 	FormControl,
 	Grid,
@@ -15,13 +17,16 @@ import {
 	ListSubheader,
 	MenuItem,
 	Paper,
-	Select
+	Select,
+	Tab,
+	Tabs
 } from '@mui/material'
 import InlineDatePicker from '../../components/layout/Pickers/InlineDatePicker'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import { v4 as uuid } from 'uuid'
 import palette from '../../styles/palette'
 import CorrOperationChart from '../../components/charts/dealingOperations/CorrOperationChart'
+import globalStyles from '../../styles/globalStyles'
 
 const pageStyles: ISxStyles = {
 	root: {
@@ -43,7 +48,6 @@ const pageStyles: ISxStyles = {
 	},
 	main: {
 		gridArea: 'main',
-		paddingTop: '20px',
 		maxHeight: '65vh',
 		overflowY: 'scroll'
 	},
@@ -72,12 +76,34 @@ const pageStyles: ISxStyles = {
 	}
 }
 
+interface TabPanelProps {
+	children?: React.ReactNode
+	index: number
+	value: number
+}
+
+function TabPanel(props: TabPanelProps) {
+	const { children, value, index, ...other } = props
+
+	return (
+		<div role="tabpanel" hidden={value !== index} {...other}>
+			{value === index && (
+				<Box sx={{ p: 3 }}>
+					<>{children}</>
+				</Box>
+			)}
+		</div>
+	)
+}
+
 const CorrOperations = () => {
 	const { fetchCorrOperations } = useActions()
 	const { corrOperations, loading, error } = useTypedSelector(state => state.corrOperations)
 	const { firstDate, secondDate, handleDateChange } = useTwoDates()
 	const [currencyCode, setCurrencyCode] = useState<string>('840')
 	const [bank, setBank] = useState<string | null>(null)
+	const [tab, setTab] = React.useState(0)
+
 	useEffect(() => {
 		if (firstDate && secondDate && firstDate !== secondDate) {
 			fetchCorrOperations({ firstDate, secondDate, currencyCode })
@@ -172,41 +198,68 @@ const CorrOperations = () => {
 					) : error ? (
 						<Alert message={error} />
 					) : (
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<CorrOperationChart id="volume" title="Обьем" data={volume} />
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart id="fx" title="FX транзакции" data={fx} />
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart id="physicalPayments" title="Платежи физ. лиц" data={physicalPayments} />
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart id="legalPayments" title="Платежи юр. лиц" data={legalPayments} />
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart
-									id="interbankOperations"
-									title="Межбанковские операции"
-									data={interbankOperations}
-								/>
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart
-									id="loroAccountsOperations"
-									title="Операции по лоро счётам"
-									data={loroAccountsOperations}
-								/>
-							</Grid>
-							<Grid item xs={4}>
-								<CorrOperationChart
-									id="accredetivOperations"
-									title="Операции по аккредитивам"
-									data={accredetivOperations}
-								/>
-							</Grid>
-						</Grid>
+						<Fragment>
+							{bank ? (
+								<Fragment>
+									<AppBar position="static" sx={globalStyles.blueBackground}>
+										<Tabs
+											TabIndicatorProps={{ sx: { height: '4px' } }}
+											value={tab}
+											onChange={(_, newValue) => setTab(newValue)}
+										>
+											<Tab label="Общая информация" />
+											<Tab label="Показатели" />
+											<Tab label="Контакты" />
+										</Tabs>
+									</AppBar>
+									<TabPanel value={tab} index={0}>
+										TOTAL INFORMATION
+									</TabPanel>
+									<TabPanel value={tab} index={1}>
+										INDICATORS
+									</TabPanel>
+									<TabPanel value={tab} index={2}>
+										CONTACTS
+									</TabPanel>
+								</Fragment>
+							) : (
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<CorrOperationChart id="volume" title="Обьем" data={volume} />
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart id="fx" title="FX транзакции" data={fx} />
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart id="physicalPayments" title="Платежи физ. лиц" data={physicalPayments} />
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart id="legalPayments" title="Платежи юр. лиц" data={legalPayments} />
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart
+											id="interbankOperations"
+											title="Межбанковские операции"
+											data={interbankOperations}
+										/>
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart
+											id="loroAccountsOperations"
+											title="Операции по лоро счётам"
+											data={loroAccountsOperations}
+										/>
+									</Grid>
+									<Grid item xs={4}>
+										<CorrOperationChart
+											id="accredetivOperations"
+											title="Операции по аккредитивам"
+											data={accredetivOperations}
+										/>
+									</Grid>
+								</Grid>
+							)}
+						</Fragment>
 					)}
 				</Grid>
 			</Paper>

@@ -89,8 +89,8 @@ interface ForeignCurrencyChartProps {
 }
 
 const CorrOperationChart: React.FC<ForeignCurrencyChartProps> = ({ data, title, id }) => {
-	const seriesData1 = data.map(({ debit }) => debit)
-	const seriesData2 = data.map(({ credit }) => credit)
+	const seriesData1 = data.map(({ debit }) => +debit.toFixed(2))
+	const seriesData2 = data.map(({ credit }) => +credit.toFixed(2))
 	const categories = data.map(({ bankName }) => bankName)
 	useEffect(() => {
 		if (seriesData1.length || seriesData2.length) {
