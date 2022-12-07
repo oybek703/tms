@@ -1,4 +1,4 @@
-import { OracleService } from '../../oracle/oracle.service'
+import { OracleService } from '../../../oracle/oracle.service'
 import { CaaBase } from './caa.base'
 
 const getCorrAccountsAnalyzeData = async (oracleService: OracleService) => {

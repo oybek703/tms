@@ -1,5 +1,5 @@
-import { Base } from '../base'
-import { OracleService } from '../../oracle/oracle.service'
+import { Base } from '../../base'
+import { OracleService } from '../../../oracle/oracle.service'
 import { CAABankData, ICorrAccountsAnalyze } from './caa.interface'
 
 export class CaaBase extends Base {

@@ -26,19 +26,22 @@ export class UsersController {
 
   @UsersGuard()
   @Post('addUser')
-  addUser(@Body() dto: AddUserDto) {
-    return this.usersService.addUser(dto)
+  async addUser(@Body() dto: AddUserDto) {
+    await this.usersService.addUser(dto)
+    return { success: true, message: 'User added successfully!' }
   }
 
   @UsersGuard()
   @Delete(':userId')
-  deleteUser(@Param('userId') userId: number) {
-    return this.usersService.deleteUser(userId)
+  async deleteUser(@Param('userId') userId: number) {
+    await this.usersService.deleteUser(userId)
+    return { success: true, message: `User with id of ${userId} deleted successfully!` }
   }
 
   @UsersGuard()
   @Put(':userId')
-  editUser(@Body() dto: EditUserDto, @Param('userId') userId: number) {
-    return this.usersService.editUser(dto, userId)
+  async editUser(@Body() dto: EditUserDto, @Param('userId') userId: number) {
+    await this.usersService.editUser(dto, userId)
+    return { success: true, message: 'User updated successfully.' }
   }
 }

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getErrorMessage } from '../../../utils'
 import axios from 'axios'
 import { withToken } from '../../../utils/axiosUtils'
+import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 
 const initialState = {
 	loading: false,
@@ -18,7 +19,7 @@ const prefix = 'nostroMatrix'
 export const fetchNostroMatrix = createAsyncThunk(prefix, async (options: NostroMatrixOptions, thunkApi) => {
 	try {
 		const { data } = await axios.get(
-			`/api/nostroMatrix?firstDate=${options.firstDate}&secondDate=${options.secondDate}`,
+			`/api/${APIRoutes.nostroMatrix}?firstDate=${options.firstDate}&secondDate=${options.secondDate}`,
 			withToken()
 		)
 		return data

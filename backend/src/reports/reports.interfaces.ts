@@ -26,10 +26,16 @@ export enum ReportsPaths {
   filialEffectiveness = 'filialEffectiveness',
   corrAccountsAnalyze = 'corrAccountsAnalyze',
   caaManual = 'caaManual',
+  corrOperations = 'corrOperations',
   gm = 'gm',
   gap = 'gap',
   gapManual = 'gapManual',
   gapLastUpdate = 'gap/lastUpdate'
+}
+
+export interface IReportTwoDates {
+  firstDate: Date
+  secondDate: Date
 }
 
 export enum CAAColLabelNames {

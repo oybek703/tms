@@ -21,7 +21,7 @@ export class UsersService {
     )
   }
 
-  async addUser({ userName = 'tms_admin', allowedPages, confirmPassword, password }: AddUserDto) {
+  async addUser({ userName, allowedPages, confirmPassword, password }: AddUserDto) {
     if (password !== confirmPassword) throw new BadRequestException('match_password')
     const existingUser = await this.oracleService.executeQuery(
       `SELECT * FROM TRS_USERS WHERE USERNAME='${userName}'`
@@ -34,14 +34,12 @@ export class UsersService {
                        VALUES ('${userName}', '${hashedPassword}', '${allowedPages}')`,
       true
     )
-    return { success: true, message: 'User added successfully!' }
   }
 
   async deleteUser(userId: number) {
     const user = await this.getUser(userId)
     if (!user) throw new NotFoundException('User not found!')
     await this.oracleService.executeQuery(`DELETE FROM TRS_USERS WHERE ID='${userId}'`)
-    return { success: true, message: `User with id of ${userId} deleted successfully!` }
   }
 
   async editUser(
@@ -67,6 +65,5 @@ export class UsersService {
         : user.allowedPages
     await this.oracleService.executeQuery(`UPDATE TRS_USERS SET USERNAME='${updatedUserName}', 
                      PASSWORD='${hashedPassword}', ALLOWED_PAGES='${ALLOWED_PAGES}' WHERE ID='${userId}'`)
-    return { success: true, message: 'User updated successfully.' }
   }
 }

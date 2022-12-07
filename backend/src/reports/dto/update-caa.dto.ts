@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { CAABankData } from '../../core/dealing-operations/caa.interface'
+import { CAABankData } from '../../core/dealing-operations/corr-accounts-anaylze/caa.interface'
 
 export enum CAAColNames {
   imports = 'IMPORTS',

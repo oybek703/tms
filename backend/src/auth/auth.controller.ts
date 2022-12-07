@@ -14,7 +14,8 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   @HttpCode(200)
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto)
+  async login(@Body() dto: LoginDto) {
+    const { token, user } = await this.authService.validateUser(dto)
+    return { token, userName: user.userName, role: user.role, pages: user.allowedPages }
   }
 }

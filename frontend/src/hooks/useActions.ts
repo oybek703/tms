@@ -40,6 +40,7 @@ import {
 	fetchCaaManual,
 	fetchCorrAccountsAnalyze
 } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
+import { fetchCorrOperations } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 
 const actions = {
 	...operDaysActions,
@@ -71,9 +72,10 @@ const actions = {
 	fetchDepositsByDeadline,
 	fetchReportLiabilities,
 	fetchFilialEffectiveness,
+	fetchCompetitiveAnalysis,
 	fetchCorrAccountsAnalyze,
 	fetchCaaManual,
-	fetchCompetitiveAnalysis,
+	fetchCorrOperations,
 	fetchGM,
 	fetchGap,
 	fetchLastGapUpdateTime,

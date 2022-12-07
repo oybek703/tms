@@ -14,7 +14,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async login({ userName, password }: LoginDto) {
+  async validateUser({ userName, password }: LoginDto) {
     const user = await this.oracleService
       .executeQuery<User>(`SELECT ID as "id", USERNAME AS "userName", ROLE AS "role", 
 								 ALLOWED_PAGES AS "allowedPages", PASSWORD as "password"
@@ -24,7 +24,7 @@ export class AuthService {
     const matchPassword = await compare(password, user.password)
     if (!matchPassword) throw new BadRequestException('Invalid password.')
     const token = await this.signToken(user)
-    return { token, userName: user.userName, role: user.role, pages: user.allowedPages }
+    return { token, user }
   }
 
   async signToken(user: User) {

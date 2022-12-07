@@ -31,9 +31,10 @@ import getDashboardData, {
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
-import getCorrAccountsAnalyzeData from '../core/dealing-operations'
+import getCorrAccountsAnalyzeData from '../core/dealing-operations/corr-accounts-anaylze'
 import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
 import { CAAChangeHistory, CAAColLabelNames } from './reports.interfaces'
+import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 
 @Injectable()
 export class ReportsService {
@@ -273,5 +274,9 @@ export class ReportsService {
         INSERT INTO MATRIX_CHANGE_HISTORY (EDITOR_ID, DATE_MODIFY, MODIFY_COLUMN, MATRIX_ROW_ID, DESCRIPTIONS)
         VALUES (${userId}, SYSDATE, '${mappedColLabelName}', ${matrixId}, '${description}')`)
     return { updated: true }
+  }
+
+  async corrOperations(firstDate: Date, secondDate: Date) {
+    return await getCorrOperationsData(firstDate, secondDate, this.oracleService)
   }
 }

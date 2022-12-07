@@ -189,6 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 									pathname !== '/caaManual' &&
 									pathname !== '/corrAccountsAnalyze' &&
 									pathname !== '/gapSimulation' &&
+									pathname !== '/corrOperations' &&
 									!pathname.includes('settings') && (
 										<DatePicker reportDate={reportDate} operDays={operDays} disabled={operDaysLoading} />
 									)

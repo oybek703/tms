@@ -27,6 +27,7 @@ import { adminReducer } from '../features/admin/adminSlice'
 import { authReducer } from '../features/auth/authSlice'
 import { competitiveAnalysisReducer } from '../features/activesPassives/competitiveAnalysis/competitiveAnalysisSlice'
 import { corrAccountsAnalyzeReducer } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
+import { corrOperationsActionsReducer } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -53,8 +54,9 @@ const rootReducer = combineReducers({
 	nostroMatrix: nostroMatrixReducer,
 	vlaBuffer: vlaBufferReducer,
 	filialEffectiveness: filialEffectivenessReducer,
-	corrAccountsAnalyze: corrAccountsAnalyzeReducer,
 	competitiveAnalysis: competitiveAnalysisReducer,
+	corrAccountsAnalyze: corrAccountsAnalyzeReducer,
+	corrOperations: corrOperationsActionsReducer,
 	gap: gapReducer,
 	admin: adminReducer
 })

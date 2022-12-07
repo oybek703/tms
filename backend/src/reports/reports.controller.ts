@@ -18,7 +18,7 @@ import {
   ReportUpdate,
   ReportWithoutDate
 } from './reports.decorator'
-import { ReportsPaths } from './reports.interfaces'
+import { IReportTwoDates, ReportsPaths } from './reports.interfaces'
 import { UpdateCAADto } from './dto/update-caa.dto'
 import { Request } from 'express'
 import { User } from '../auth/auth.interface'
@@ -57,7 +57,7 @@ export class ReportsController {
   }
 
   @ReportBetweenDates('dashboard', ReportsPaths.dashboardMonthly, true)
-  async dashboardMonthly(@Query() query: { firstDate: Date; secondDate: Date }) {
+  async dashboardMonthly(@Query() query: IReportTwoDates) {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')
     return await this.reportsService.dashboardMonthly(query.firstDate, query.secondDate)
@@ -116,7 +116,7 @@ export class ReportsController {
   }
 
   @ReportBetweenDates('Bank liquidity', ReportsPaths.nostroMatrix)
-  async nostroMatrix(@Query() query: { firstDate: Date; secondDate: Date }) {
+  async nostroMatrix(@Query() query: IReportTwoDates) {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')
     return await this.reportsService.nostroMatrix(query.firstDate, query.secondDate)
@@ -233,5 +233,12 @@ export class ReportsController {
   async updateCorrAccountsAnalyze(@Body() dto: UpdateCAADto, @Req() req: Request) {
     const user: User = req.user as User
     return await this.reportsService.updateCorrAccountsAnalyze(dto, user.id)
+  }
+
+  @ReportBetweenDates('Dealing operations', ReportsPaths.corrOperations)
+  async corrOperations(@Query() query: IReportTwoDates) {
+    if (!query.firstDate || !query.secondDate)
+      throw new BadRequestException('Two dates are required!')
+    return await this.reportsService.corrOperations(query.firstDate, query.secondDate)
   }
 }
