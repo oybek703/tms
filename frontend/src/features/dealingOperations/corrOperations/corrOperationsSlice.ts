@@ -21,7 +21,8 @@ const initialState: CAAInitialState = {
 		legalPayments: [],
 		interbankOperations: [],
 		loroAccountsOperations: [],
-		accredetivOperations: []
+		accredetivOperations: [],
+		remainder: []
 	},
 	error: undefined
 }

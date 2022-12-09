@@ -64,3 +64,8 @@ export interface CAAChangeHistory {
   colName: string
   description: string
 }
+
+export interface ICorrOperationsOptions extends IReportTwoDates {
+  currencyCode: string
+  clientCode?: string | undefined
+}

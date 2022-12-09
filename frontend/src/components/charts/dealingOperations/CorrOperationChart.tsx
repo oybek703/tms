@@ -47,7 +47,7 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 			style: {
 				fontSize: '13px'
 			},
-			formatter: function (val: number, opt: any) {
+			formatter: function (val: number) {
 				return formatNumber(val)
 			}
 		},
@@ -91,7 +91,7 @@ interface ForeignCurrencyChartProps {
 const CorrOperationChart: React.FC<ForeignCurrencyChartProps> = ({ data, title, id }) => {
 	const seriesData1 = data.map(({ debit }) => +debit.toFixed(2))
 	const seriesData2 = data.map(({ credit }) => +credit.toFixed(2))
-	const categories = data.map(({ bankName }) => bankName)
+	const categories = data.map(({ bankNameOrYear }) => bankNameOrYear)
 	useEffect(() => {
 		if (seriesData1.length || seriesData2.length) {
 			document.querySelector(`#${id}`)!.innerHTML = ''

@@ -241,11 +241,6 @@ export class ReportsController {
   ) {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')
-    return await this.reportsService.corrOperations(
-      query.firstDate,
-      query.secondDate,
-      query.currencyCode,
-      query.clientCode
-    )
+    return await this.reportsService.corrOperations(query)
   }
 }

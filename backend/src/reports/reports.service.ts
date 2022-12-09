@@ -33,7 +33,7 @@ import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
 import getCorrAccountsAnalyzeData from '../core/dealing-operations/corr-accounts-anaylze'
 import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
-import { CAAChangeHistory, CAAColLabelNames } from './reports.interfaces'
+import { CAAChangeHistory, CAAColLabelNames, ICorrOperationsOptions } from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 
 @Injectable()
@@ -276,18 +276,13 @@ export class ReportsService {
     return { updated: true }
   }
 
-  async corrOperations(
-    firstDate: Date,
-    secondDate: Date,
-    currencyCode: string,
-    clientCode?: string | undefined
-  ) {
+  async corrOperations(options: ICorrOperationsOptions) {
     return await getCorrOperationsData(
-      firstDate,
-      secondDate,
-      currencyCode,
+      options.firstDate,
+      options.secondDate,
+      options.currencyCode,
       this.oracleService,
-      clientCode
+      options.clientCode
     )
   }
 }

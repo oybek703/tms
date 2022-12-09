@@ -19,7 +19,8 @@ import {
 	Paper,
 	Select,
 	Tab,
-	Tabs
+	Tabs,
+	Typography
 } from '@mui/material'
 import InlineDatePicker from '../../components/layout/Pickers/InlineDatePicker'
 import { ISxStyles } from '../../interfaces/styles.interface'
@@ -27,6 +28,8 @@ import { v4 as uuid } from 'uuid'
 import palette from '../../styles/palette'
 import CorrOperationChart from '../../components/charts/dealingOperations/CorrOperationChart'
 import globalStyles from '../../styles/globalStyles'
+import { formatNumber } from '../../utils'
+import { format } from 'date-fns'
 
 const pageStyles: ISxStyles = {
 	root: {
@@ -87,7 +90,7 @@ function TabPanel(props: TabPanelProps) {
 
 	return (
 		<div role="tabpanel" hidden={value !== index} {...other}>
-			{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+			{value === index && <Box sx={{ p: '10px 0' }}>{children}</Box>}
 		</div>
 	)
 }
@@ -113,7 +116,8 @@ const CorrOperations = () => {
 		legalPayments,
 		interbankOperations,
 		loroAccountsOperations,
-		accredetivOperations
+		accredetivOperations,
+		remainder
 	} = corrOperations
 	return (
 		<>
@@ -212,7 +216,40 @@ const CorrOperations = () => {
 										TOTAL INFORMATION
 									</TabPanel>
 									<TabPanel value={tab} index={1}>
-										INDICATORS
+										<Box
+											sx={{
+												display: 'flex',
+												padding: 0,
+												border: '1px solid #000',
+												alignItems: 'center',
+												paddingRight: '20px'
+											}}
+										>
+											<Button
+												disabled
+												component="span"
+												sx={{
+													textTransform: 'none',
+													fontWeight: 'bold',
+													backgroundColor: palette.primary,
+													color: 'white !important',
+													borderRadius: 0,
+													marginRight: 3
+												}}
+											>
+												Остатки на {format(new Date(secondDate), 'dd.MM.yyyy')}
+											</Button>
+											{remainder.map(({ saldoOut, currencyName }, index, array) => (
+												<Typography key={uuid()}>
+													<Typography component="b" sx={{ fontWeight: 'bold' }}>
+														{currencyName} -{' '}
+													</Typography>
+													<Typography component="span" sx={{ marginRight: 2 }}>
+														{formatNumber(saldoOut)} ном. {index !== array.length - 1 && '|'}
+													</Typography>
+												</Typography>
+											))}
+										</Box>
 									</TabPanel>
 									<TabPanel value={tab} index={2}>
 										CONTACTS

@@ -3,7 +3,8 @@ import { OracleService } from '../../../oracle/oracle.service'
 import {
   CorrOperationsQueries,
   IBankList,
-  ICorrOperationsDbData
+  ICorrOperationsDbData,
+  IRemainderDbData
 } from './corr-operations.interface'
 
 export class CorrOperationsBase extends Base {
@@ -18,7 +19,7 @@ export class CorrOperationsBase extends Base {
   }
 
   protected formatQuery(whereQuery: CorrOperationsQueries) {
-    return `SELECT BI.SHORT_NAME                      AS "bankName",
+    return `SELECT BI.SHORT_NAME                                AS "bankNameOrYear",
                    ROUND(SUM(NVL(DEBIT, 0)) / POWER(10, 8), 2)  AS "debit",
                    ROUND(SUM(NVL(CREDIT, 0)) / POWER(10, 8), 2) AS "credit"
             FROM IBS.DWH_PERSONAL_ACCOUNTS@IABS
@@ -27,11 +28,12 @@ export class CorrOperationsBase extends Base {
             WHERE ACC_ID IN (SELECT ID
                              FROM IBS.ACCOUNTS@IABS
                              WHERE CODE_COA = '10501'
-                               AND CODE_FILIAL = '00873') AND ${whereQuery}
+                               AND CODE_FILIAL = '00873')
+              AND ${whereQuery}
               AND OPER_DAY BETWEEN DATE '${this.firstDate}' AND DATE '${this.secondDate}'
               AND CURRENCY_CODE = '${this.currencyCode}'
             GROUP BY SUBSTR(ACCOUNT_CODE, 10, 8),
-                BI.SHORT_NAME
+                     BI.SHORT_NAME
             ORDER BY "debit" DESC`
   }
 
@@ -44,6 +46,27 @@ export class CorrOperationsBase extends Base {
             WHERE AC.CODE_COA = '10501'
               AND AC.CONDITION = 'A'
               AND AC.CODE_FILIAL = '00873'`
+  }
+
+  protected remainderQuery = () => {
+    return `SELECT DECODE(CODE_CURRENCY, '392', 'JPY',
+                          '840', 'USD',
+                          '978', 'EUR',
+                          '398', 'KZT',
+                          '643', 'RUB',
+                          '756', 'CHF',
+                          '826', 'GBP',
+                          '156', 'CNY',
+                          CODE_CURRENCY)                                                         AS "currencyName",
+                   ROUND(ABS(SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/ SALDO_OUT
+                                  FROM IBS.SALDO@IABS S
+                                  WHERE S.ACCOUNT_CODE = AC.CODE
+                                    AND OPER_DAY <= DATE '${this.date}'
+                                    AND ROWNUM = 1))) / DECODE(CODE_CURRENCY, '392', 1, 100), 2) AS "saldoOut"
+            FROM IBS.ACCOUNTS@IABS AC
+            WHERE CLIENT_CODE = '${this.clientCode}'
+              AND CODE_COA = '10501'
+            GROUP BY CODE_CURRENCY`
   }
 
   protected async bank_list() {
@@ -106,6 +129,13 @@ export class CorrOperationsBase extends Base {
     )
   } /* Операции по аккредитивам */
 
+  protected async remainder() {
+    if (this.clientCode) {
+      return await this.getDataInDates<IRemainderDbData, true>(undefined, this.remainderQuery, true)
+    }
+    return []
+  }
+
   async getRows() {
     const [
       bankList,
@@ -115,7 +145,8 @@ export class CorrOperationsBase extends Base {
       legalPayments,
       interbankOperations,
       loroAccountsOperations,
-      accredetivOperations
+      accredetivOperations,
+      remainder
     ] = await Promise.all([
       this.bank_list(),
       this.volume(),
@@ -124,7 +155,8 @@ export class CorrOperationsBase extends Base {
       this.legal_payments(),
       this.interbank_operations(),
       this.loro_accounts_operations(),
-      this.accredetiv_operations()
+      this.accredetiv_operations(),
+      this.remainder()
     ])
     return [
       bankList,
@@ -134,7 +166,8 @@ export class CorrOperationsBase extends Base {
       legalPayments,
       interbankOperations,
       loroAccountsOperations,
-      accredetivOperations
+      accredetivOperations,
+      remainder
     ]
   }
 }

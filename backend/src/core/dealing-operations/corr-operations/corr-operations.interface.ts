@@ -4,9 +4,14 @@ export interface IBankList {
 }
 
 export interface ICorrOperationsDbData {
-  bankName: string
+  bankNameOrYear: string
   debit: number
   credit: number
+}
+
+export interface IRemainderDbData {
+  currencyName: string
+  saldoOut: number
 }
 
 export enum CorrOperationsQueries {

@@ -4,9 +4,14 @@ export interface IBankList {
 }
 
 export interface ITransactionData {
-	bankName: string
+	bankNameOrYear: string
 	debit: number
 	credit: number
+}
+
+export interface IRemainderData {
+	currencyName: string
+	saldoOut: number
 }
 
 export interface ICorrOperations {
@@ -18,4 +23,5 @@ export interface ICorrOperations {
 	interbankOperations: ITransactionData[]
 	loroAccountsOperations: ITransactionData[]
 	accredetivOperations: ITransactionData[]
+	remainder: IRemainderData[]
 }
