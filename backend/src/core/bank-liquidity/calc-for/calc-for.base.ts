@@ -55,10 +55,11 @@ export class CalcForBase extends Base {
   }
 
   private async getDates() {
-    const { fromDate, endDate } = await this.getDataInDates<{ fromDate: string; endDate: string }>(
-      '',
+    const res = await this.getDataInDates<{ fromDate: string; endDate: string }>(
+      undefined,
       this.startEndDateQuery
     )
+    const { fromDate, endDate } = res ?? {}
     return this.getDatesBetweenDates(fromDate, endDate)
   }
 

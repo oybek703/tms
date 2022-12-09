@@ -138,7 +138,15 @@ const FilialEffectivenessTable: React.FC<{ rows: IFcrbTableRow[] }> = function (
 	)
 	// eslint-disable-next-line
 	const totalData = useMemo(() => calcTotal(rows), [rows])
-	const newRows = [...rows, totalData]
+	const newRows = [
+		...rows,
+		{
+			...totalData,
+			nplPercent: ((totalData?.npl || 0) * 100) / (totalData?.totalLoan || 0),
+			roa: 0,
+			roe: 0
+		}
+	]
 	return <StyledDataGrid hideFooter columns={columns} rows={newRows} />
 }
 
