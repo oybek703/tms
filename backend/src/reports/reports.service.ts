@@ -276,7 +276,18 @@ export class ReportsService {
     return { updated: true }
   }
 
-  async corrOperations(firstDate: Date, secondDate: Date, currencyCode: string) {
-    return await getCorrOperationsData(firstDate, secondDate, currencyCode, this.oracleService)
+  async corrOperations(
+    firstDate: Date,
+    secondDate: Date,
+    currencyCode: string,
+    clientCode?: string | undefined
+  ) {
+    return await getCorrOperationsData(
+      firstDate,
+      secondDate,
+      currencyCode,
+      this.oracleService,
+      clientCode
+    )
   }
 }

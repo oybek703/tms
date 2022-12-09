@@ -5,7 +5,8 @@ export const getCorrOperationsData = async (
   firstDate: Date,
   secondDate: Date,
   currencyCode: string,
-  oracleService: OracleService
+  oracleService: OracleService,
+  clientCode?: string | undefined
 ) => {
   const [
     bankList,
@@ -16,7 +17,13 @@ export const getCorrOperationsData = async (
     interbankOperations,
     loroAccountsOperations,
     accredetivOperations
-  ] = await new CorrOperationsBase(firstDate, secondDate, currencyCode, oracleService).getRows()
+  ] = await new CorrOperationsBase(
+    firstDate,
+    secondDate,
+    currencyCode,
+    oracleService,
+    clientCode
+  ).getRows()
   return {
     bankList,
     volume,

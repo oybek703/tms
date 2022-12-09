@@ -87,11 +87,7 @@ function TabPanel(props: TabPanelProps) {
 
 	return (
 		<div role="tabpanel" hidden={value !== index} {...other}>
-			{value === index && (
-				<Box sx={{ p: 3 }}>
-					<>{children}</>
-				</Box>
-			)}
+			{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
 		</div>
 	)
 }
@@ -106,7 +102,7 @@ const CorrOperations = () => {
 
 	useEffect(() => {
 		if (firstDate && secondDate && firstDate !== secondDate) {
-			fetchCorrOperations({ firstDate, secondDate, currencyCode })
+			fetchCorrOperations({ firstDate, secondDate, currencyCode, clientCode: bank })
 		}
 	}, [fetchCorrOperations, secondDate, firstDate, currencyCode, bank])
 	const {

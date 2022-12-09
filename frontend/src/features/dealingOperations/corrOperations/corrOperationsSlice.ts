@@ -30,16 +30,17 @@ interface ITwoDatesOption {
 	firstDate: string
 	secondDate: string
 	currencyCode: string
+	clientCode?: string | null
 }
 
 const prefix = 'corrOperations'
 
 export const fetchCorrOperations = createAsyncThunk(prefix, async (options: ITwoDatesOption, thunkApi) => {
 	try {
-		const { data } = await axios.get(
-			`/api/${APIRoutes.corrOperations}?firstDate=${options.firstDate}&secondDate=${options.secondDate}&currencyCode=${options.currencyCode}`,
-			withToken()
-		)
+		const { data } = await axios.get(`/api/${APIRoutes.corrOperations}`, {
+			...withToken(),
+			params: options
+		})
 		return data
 	} catch (e) {
 		const message = getErrorMessage(e)

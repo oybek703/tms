@@ -18,7 +18,7 @@ axios.interceptors.request.use(
 	}
 )
 
-export function withToken() {
+export function withToken(): Pick<AxiosRequestConfig, 'headers'> {
 	const { token } = JSON.parse(localStorage.getItem('user') || '{}')
 	return {
 		headers: {

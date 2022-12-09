@@ -11,7 +11,8 @@ export class CorrOperationsBase extends Base {
     private readonly firstDate: Date,
     private readonly secondDate: Date,
     private readonly currencyCode: string,
-    oracleService: OracleService
+    oracleService: OracleService,
+    private readonly clientCode: string | undefined
   ) {
     super(firstDate, oracleService)
   }

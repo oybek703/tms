@@ -236,13 +236,16 @@ export class ReportsController {
   }
 
   @ReportBetweenDates('Dealing operations', ReportsPaths.corrOperations)
-  async corrOperations(@Query() query: IReportTwoDates & { currencyCode: string }) {
+  async corrOperations(
+    @Query() query: IReportTwoDates & { currencyCode: string; clientCode?: string | undefined }
+  ) {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')
     return await this.reportsService.corrOperations(
       query.firstDate,
       query.secondDate,
-      query.currencyCode
+      query.currencyCode,
+      query.clientCode
     )
   }
 }
