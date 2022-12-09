@@ -13,6 +13,11 @@ function createLabels(id: string) {
 async function renderOptions(series: any, categories: any, id: string, normative: number = 100) {
 	const { normativeName, totalName, nationalName, foreignName } = createLabels(id)
 	const { total = [], nat = [], foreign = [] } = series
+	const all = [...total, ...nat, ...foreign]
+	let max = 0
+	for (const val of all) {
+		if (val > max) max = val
+	}
 	let seriesData = [
 		{
 			name: normativeName,
@@ -34,7 +39,6 @@ async function renderOptions(series: any, categories: any, id: string, normative
 	if (id === IL_ID) {
 		seriesData = seriesData.filter((_, index) => index < 2)
 	}
-	console.log(seriesData)
 	const options = {
 		series: seriesData,
 		chart: {
@@ -102,10 +106,11 @@ async function renderOptions(series: any, categories: any, id: string, normative
 			size: 1
 		},
 		xaxis: {
-			categories: categories
+			categories
 		},
 		yaxis: {
 			min: normative,
+			max: id === IL_ID ? max + 80 : max,
 			labels: {
 				formatter: function (val: number) {
 					return (val || 0).toFixed(0)
