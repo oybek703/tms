@@ -9,6 +9,29 @@ export interface ITransactionData {
 	credit: number
 }
 
+export interface IBankData {
+	country: string
+	clientCode: string
+	swiftCode: string
+	dateOpen: string
+	volumeOperations: string
+	serviceSpeed: string
+	serviceQuality: string
+	serviceCost: string
+	corrAccounts: string
+	genAgreement: string
+	isda: string
+	otherAgrement: string
+	imports: string
+	exports: string
+	tradingFin: string
+	interbankDeposits: string
+	creditLine: string
+	conversionAccounts: string
+	vostro: string
+	otherOperations: string
+}
+
 export interface IRemainderData {
 	currencyName: string
 	saldoOut: number
@@ -23,5 +46,6 @@ export interface ICorrOperations {
 	interbankOperations: ITransactionData[]
 	loroAccountsOperations: ITransactionData[]
 	accredetivOperations: ITransactionData[]
+	bankData: IBankData
 	remainder: IRemainderData[]
 }

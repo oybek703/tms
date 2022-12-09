@@ -9,6 +9,9 @@ import {
 	AppBar,
 	Box,
 	Button,
+	Card,
+	CardContent,
+	Divider,
 	FormControl,
 	Grid,
 	List,
@@ -19,6 +22,11 @@ import {
 	Paper,
 	Select,
 	Tab,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
 	Tabs,
 	Typography
 } from '@mui/material'
@@ -117,7 +125,8 @@ const CorrOperations = () => {
 		interbankOperations,
 		loroAccountsOperations,
 		accredetivOperations,
-		remainder
+		remainder,
+		bankData
 	} = corrOperations
 	return (
 		<>
@@ -175,6 +184,7 @@ const CorrOperations = () => {
 									{bankList.map(({ bankName, clientCode }) => (
 										<ListItem sx={{ padding: '2px 5px' }} key={uuid()} onClick={() => setBank(clientCode)}>
 											<ListItemText
+												title={clientCode}
 												primaryTypographyProps={{
 													sx: {
 														...pageStyles.sideBarBankItem,
@@ -213,7 +223,78 @@ const CorrOperations = () => {
 										</Tabs>
 									</AppBar>
 									<TabPanel value={tab} index={0}>
-										TOTAL INFORMATION
+										<CardContent>
+											<Typography sx={{ fontWeight: '600' }} variant="h5">
+												Информация
+											</Typography>
+											<hr />
+											<Table size="small">
+												<TableHead>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>Страна, город</TableCell>
+														<TableCell sx={{ border: 'none' }}>Номер счета</TableCell>
+														<TableCell sx={{ border: 'none' }}>SWIFT</TableCell>
+														<TableCell sx={{ border: 'none' }}>Дата открытия</TableCell>
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>{bankData.country}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.clientCode}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.swiftCode}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.dateOpen}</TableCell>
+													</TableRow>
+												</TableBody>
+											</Table>
+										</CardContent>
+										<CardContent>
+											<Typography sx={{ fontWeight: '600' }} variant="h5">
+												Обслуживание
+											</Typography>
+											<hr />
+											<Table size="small">
+												<TableHead>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>Обьем операции</TableCell>
+														<TableCell sx={{ border: 'none' }}>Скорость обслуживание</TableCell>
+														<TableCell sx={{ border: 'none' }}>Качество обслуживание</TableCell>
+														<TableCell sx={{ border: 'none' }}>Стоимость услуг(тарифы)</TableCell>
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>{bankData.volumeOperations}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.serviceSpeed}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.serviceQuality}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.serviceCost}</TableCell>
+													</TableRow>
+												</TableBody>
+											</Table>
+										</CardContent>
+										<CardContent>
+											<Typography sx={{ fontWeight: '600' }} variant="h5">
+												Нал. соглашений
+											</Typography>
+											<hr />
+											<Table size="small">
+												<TableHead>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>Корр. счет</TableCell>
+														<TableCell sx={{ border: 'none' }}>Ген. соглашения</TableCell>
+														<TableCell sx={{ border: 'none' }}>ISDA</TableCell>
+														<TableCell sx={{ border: 'none' }}>Прочие</TableCell>
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>{bankData.corrAccounts}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.genAgreement}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.isda}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.otherAgrement}</TableCell>
+													</TableRow>
+												</TableBody>
+											</Table>
+										</CardContent>
 									</TabPanel>
 									<TabPanel value={tab} index={1}>
 										<Box

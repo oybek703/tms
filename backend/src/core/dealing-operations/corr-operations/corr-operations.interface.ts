@@ -9,6 +9,29 @@ export interface ICorrOperationsDbData {
   credit: number
 }
 
+export interface IBankDbData {
+  country: string
+  clientCode: string
+  swiftCode: string
+  dateOpen: string
+  volumeOperations: string
+  serviceSpeed: string
+  serviceQuality: string
+  serviceCost: string
+  corrAccounts: string
+  genAgreement: string
+  isda: string
+  otherAgrement: string
+  imports: string
+  exports: string
+  tradingFin: string
+  interbankDeposits: string
+  creditLine: string
+  conversionAccounts: string
+  vostro: string
+  otherOperations: string
+}
+
 export interface IRemainderDbData {
   currencyName: string
   saldoOut: number

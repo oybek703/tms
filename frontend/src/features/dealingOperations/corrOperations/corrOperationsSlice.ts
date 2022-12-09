@@ -5,6 +5,29 @@ import { ICorrOperations } from '../../../interfaces/corr-operations.interfaces'
 import axios from 'axios'
 import { getErrorMessage } from '../../../utils'
 
+const bankDataInitialState = {
+	country: '',
+	clientCode: '',
+	swiftCode: '',
+	dateOpen: '',
+	volumeOperations: '',
+	serviceSpeed: '',
+	serviceQuality: '',
+	serviceCost: '',
+	corrAccounts: '',
+	genAgreement: '',
+	isda: '',
+	otherAgrement: '',
+	imports: '',
+	exports: '',
+	tradingFin: '',
+	interbankDeposits: '',
+	creditLine: '',
+	conversionAccounts: '',
+	vostro: '',
+	otherOperations: ''
+}
+
 interface CAAInitialState {
 	loading: boolean
 	corrOperations: ICorrOperations
@@ -22,6 +45,7 @@ const initialState: CAAInitialState = {
 		interbankOperations: [],
 		loroAccountsOperations: [],
 		accredetivOperations: [],
+		bankData: bankDataInitialState,
 		remainder: []
 	},
 	error: undefined

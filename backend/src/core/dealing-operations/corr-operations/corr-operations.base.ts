@@ -2,6 +2,7 @@ import { Base } from '../../base'
 import { OracleService } from '../../../oracle/oracle.service'
 import {
   CorrOperationsQueries,
+  IBankDbData,
   IBankList,
   ICorrOperationsDbData,
   IRemainderDbData
@@ -46,6 +47,66 @@ export class CorrOperationsBase extends Base {
             WHERE AC.CODE_COA = '10501'
               AND AC.CONDITION = 'A'
               AND AC.CODE_FILIAL = '00873'`
+  }
+
+  protected bankDataQuery = () => {
+    return `SELECT 'COUNTRY'          AS "countryCode",
+                   CLIENT_CODE        AS "clientCode",
+                   SWIFT_CODE         AS "swiftCode",
+                   DATE_OPEN          AS "dateOpen",
+                   VOLUME_OPERATIONS  AS "volumeOperations",
+                   SERVICE_SPEED      AS "serviceSpeed",
+                   SERVICE_QUALITY    AS "serviceQuality",
+                   SERVICE_COST       AS "serviceCost",
+                   CORR_ACCOUNTS      AS "corrAccounts",
+                   GEN_AGREEMENT      AS "genAgreement",
+                   ISDA               AS "isda",
+                   OTHER_AGREEMENT    AS "otherAgrement",
+                   IMPORTS            AS "imports",
+                   EXPORTS            AS "exports",
+                   TRADING_FIN        AS "tradingFin",
+                   INTER_BANK_DEPOSIT AS "interbankDeposits",
+                   CREDIT_LINE        AS "creditLine",
+                   'CA'               AS "conversionAccounts",
+                   VOSTRO             AS "vostro",
+                   OTHER_OPERATIONS   AS "otherOperations"
+            FROM (SELECT SHORT_NAME,
+                         CLIENT_CODE,
+                         SWIFT_CODE,
+                         DATE_OPEN
+                  FROM BANK_INFO_RATING
+                  WHERE CLIENT_CODE = '${this.clientCode}'),
+                 (SELECT VOLUME_OPERATIONS,
+                         SERVICE_SPEED,
+                         SERVICE_QUALITY,
+                         SERVICE_COST
+                  FROM MATRIX_CORR_ACC
+                  WHERE BANK_ID = (SELECT ID
+                                   FROM BANK_INFO_RATING
+                                   WHERE CLIENT_CODE = '${this.clientCode}')
+                    AND CODE_CURRENCY = '${this.currencyCode}'),
+                 (SELECT CORR_ACCOUNTS,
+                         GEN_AGREEMENT,
+                         ISDA,
+                         OTHER_AGREEMENT
+                  FROM MATRIX_CORR_ACC
+                  WHERE BANK_ID = (SELECT ID
+                                   FROM BANK_INFO_RATING
+                                   WHERE CLIENT_CODE = '${this.clientCode}')
+                    AND CODE_CURRENCY = '${this.currencyCode}'),
+                 (SELECT IMPORTS,
+                         EXPORTS,
+                         TRADING_FIN,
+                         INTER_BANK_DEPOSIT,
+                         FX,
+                         CREDIT_LINE,
+                         VOSTRO,
+                         OTHER_OPERATIONS
+                  FROM MATRIX_CORR_ACC
+                  WHERE BANK_ID = (SELECT ID
+                                   FROM BANK_INFO_RATING
+                                   WHERE CLIENT_CODE = '${this.clientCode}')
+                    AND CODE_CURRENCY = '${this.currencyCode}')`
   }
 
   protected remainderQuery = () => {
@@ -129,6 +190,13 @@ export class CorrOperationsBase extends Base {
     )
   } /* Операции по аккредитивам */
 
+  protected async bank_data() {
+    if (this.clientCode) {
+      return await this.getDataInDates<IBankDbData>(undefined, this.bankDataQuery)
+    }
+    return {}
+  }
+
   protected async remainder() {
     if (this.clientCode) {
       return await this.getDataInDates<IRemainderDbData, true>(undefined, this.remainderQuery, true)
@@ -146,6 +214,7 @@ export class CorrOperationsBase extends Base {
       interbankOperations,
       loroAccountsOperations,
       accredetivOperations,
+      bankData,
       remainder
     ] = await Promise.all([
       this.bank_list(),
@@ -156,6 +225,7 @@ export class CorrOperationsBase extends Base {
       this.interbank_operations(),
       this.loro_accounts_operations(),
       this.accredetiv_operations(),
+      this.bank_data(),
       this.remainder()
     ])
     return [
@@ -167,6 +237,7 @@ export class CorrOperationsBase extends Base {
       interbankOperations,
       loroAccountsOperations,
       accredetivOperations,
+      bankData,
       remainder
     ]
   }
