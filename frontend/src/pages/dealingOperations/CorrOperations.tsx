@@ -9,9 +9,7 @@ import {
 	AppBar,
 	Box,
 	Button,
-	Card,
 	CardContent,
-	Divider,
 	FormControl,
 	Grid,
 	List,
@@ -231,16 +229,17 @@ const CorrOperations = () => {
 											<Table size="small">
 												<TableHead>
 													<TableRow>
-														<TableCell sx={{ border: 'none' }}>Страна, город</TableCell>
-														<TableCell sx={{ border: 'none' }}>Номер счета</TableCell>
-														<TableCell sx={{ border: 'none' }}>SWIFT</TableCell>
-														<TableCell sx={{ border: 'none' }}>Дата открытия</TableCell>
+														{['Страна, город', 'Номер счета', 'SWIFT', 'Дата открытия'].map(value => (
+															<TableCell sx={{ border: 'none' }} key={uuid()}>
+																{value}
+															</TableCell>
+														))}
 													</TableRow>
 												</TableHead>
 												<TableBody>
 													<TableRow>
 														<TableCell sx={{ border: 'none' }}>{bankData.country}</TableCell>
-														<TableCell sx={{ border: 'none' }}>{bankData.clientCode}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.clientCode || bank}</TableCell>
 														<TableCell sx={{ border: 'none' }}>{bankData.swiftCode}</TableCell>
 														<TableCell sx={{ border: 'none' }}>{bankData.dateOpen}</TableCell>
 													</TableRow>
@@ -255,10 +254,16 @@ const CorrOperations = () => {
 											<Table size="small">
 												<TableHead>
 													<TableRow>
-														<TableCell sx={{ border: 'none' }}>Обьем операции</TableCell>
-														<TableCell sx={{ border: 'none' }}>Скорость обслуживание</TableCell>
-														<TableCell sx={{ border: 'none' }}>Качество обслуживание</TableCell>
-														<TableCell sx={{ border: 'none' }}>Стоимость услуг(тарифы)</TableCell>
+														{[
+															'Обьем операции',
+															'Скорость обслуживание',
+															'Качество обслуживание',
+															'Стоимость услуг(тарифы)'
+														].map(value => (
+															<TableCell sx={{ border: 'none' }} key={uuid()}>
+																{value}
+															</TableCell>
+														))}
 													</TableRow>
 												</TableHead>
 												<TableBody>
@@ -279,18 +284,57 @@ const CorrOperations = () => {
 											<Table size="small">
 												<TableHead>
 													<TableRow>
-														<TableCell sx={{ border: 'none' }}>Корр. счет</TableCell>
-														<TableCell sx={{ border: 'none' }}>Ген. соглашения</TableCell>
-														<TableCell sx={{ border: 'none' }}>ISDA</TableCell>
-														<TableCell sx={{ border: 'none' }}>Прочие</TableCell>
+														{['Корр. счет', 'Ген. соглашения', 'ISDA', 'Прочие'].map(value => (
+															<TableCell sx={{ border: 'none' }} key={uuid()}>
+																{value}
+															</TableCell>
+														))}
 													</TableRow>
 												</TableHead>
 												<TableBody>
 													<TableRow>
-														<TableCell sx={{ border: 'none' }}>{bankData.corrAccounts}</TableCell>
-														<TableCell sx={{ border: 'none' }}>{bankData.genAgreement}</TableCell>
-														<TableCell sx={{ border: 'none' }}>{bankData.isda}</TableCell>
-														<TableCell sx={{ border: 'none' }}>{bankData.otherAgrement}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.corrAccounts && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.genAgreement && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.isda && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.otherAgrement && '✅'}</TableCell>
+													</TableRow>
+												</TableBody>
+											</Table>
+										</CardContent>
+										<CardContent>
+											<Typography sx={{ fontWeight: '600' }} variant="h5">
+												Виды операций
+											</Typography>
+											<hr />
+											<Table size="small">
+												<TableHead>
+													<TableRow>
+														{[
+															'Импорт оплаты',
+															'Экспорт поступление',
+															'Торг. фин',
+															'МБД',
+															'Кредитные линии',
+															'Конверсионные операции',
+															'Операции по востро',
+															'Прочие'
+														].map(value => (
+															<TableCell sx={{ border: 'none' }} key={uuid()}>
+																{value}
+															</TableCell>
+														))}
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													<TableRow>
+														<TableCell sx={{ border: 'none' }}>{bankData.imports && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.exports && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.tradingFin && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.interbankDeposits && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.creditLine && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.conversionAccounts && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.vostro && '✅'}</TableCell>
+														<TableCell sx={{ border: 'none' }}>{bankData.otherOperations && '✅'}</TableCell>
 													</TableRow>
 												</TableBody>
 											</Table>
@@ -333,7 +377,24 @@ const CorrOperations = () => {
 										</Box>
 									</TabPanel>
 									<TabPanel value={tab} index={2}>
-										CONTACTS
+										<CardContent>
+											<Typography sx={{ fontWeight: '600' }} variant="h5">
+												Контакты
+											</Typography>
+											<hr />
+											<Table size="small">
+												<TableHead>
+													<TableRow>
+														{['Имя', 'Номер телефона', 'Эл. почта', 'Сайт', 'Код дилинга'].map(value => (
+															<TableCell sx={{ border: 'none' }} key={uuid()}>
+																{value}
+															</TableCell>
+														))}
+													</TableRow>
+												</TableHead>
+												<TableBody></TableBody>
+											</Table>
+										</CardContent>
 									</TabPanel>
 								</Fragment>
 							) : (

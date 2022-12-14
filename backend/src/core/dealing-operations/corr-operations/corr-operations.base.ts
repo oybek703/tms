@@ -50,7 +50,7 @@ export class CorrOperationsBase extends Base {
   }
 
   protected bankDataQuery = () => {
-    return `SELECT 'COUNTRY'          AS "countryCode",
+    return `SELECT COUNTRY            AS "country",
                    CLIENT_CODE        AS "clientCode",
                    SWIFT_CODE         AS "swiftCode",
                    DATE_OPEN          AS "dateOpen",
@@ -67,14 +67,18 @@ export class CorrOperationsBase extends Base {
                    TRADING_FIN        AS "tradingFin",
                    INTER_BANK_DEPOSIT AS "interbankDeposits",
                    CREDIT_LINE        AS "creditLine",
-                   'CA'               AS "conversionAccounts",
+                   FX                 AS "conversionAccounts",
                    VOSTRO             AS "vostro",
                    OTHER_OPERATIONS   AS "otherOperations"
-            FROM (SELECT SHORT_NAME,
-                         CLIENT_CODE,
-                         SWIFT_CODE,
-                         DATE_OPEN
-                  FROM BANK_INFO_RATING
+            FROM (SELECT C.NAME AS country,
+                         BR.CLIENT_CODE,
+                         BR.SWIFT_CODE,
+                         BR.DATE_OPEN
+                  FROM BANK_INFO_RATING BR
+                           JOIN IBS.CLIENT_CURRENT@IABS CC
+                                ON CC.CODE = BR.CLIENT_CODE
+                           JOIN S_COUNTRYS C
+                                ON C.CODE = CC.COUNTRY_CODE
                   WHERE CLIENT_CODE = '${this.clientCode}'),
                  (SELECT VOLUME_OPERATIONS,
                          SERVICE_SPEED,
@@ -106,7 +110,7 @@ export class CorrOperationsBase extends Base {
                   WHERE BANK_ID = (SELECT ID
                                    FROM BANK_INFO_RATING
                                    WHERE CLIENT_CODE = '${this.clientCode}')
-                    AND CODE_CURRENCY = '${this.currencyCode}')`
+                    AND CODE_CURRENCY = '${this.currencyCode}') `
   }
 
   protected remainderQuery = () => {
@@ -192,7 +196,9 @@ export class CorrOperationsBase extends Base {
 
   protected async bank_data() {
     if (this.clientCode) {
-      return await this.getDataInDates<IBankDbData>(undefined, this.bankDataQuery)
+      const bankData = await this.getDataInDates<IBankDbData>(undefined, this.bankDataQuery)
+      if (!bankData) return {}
+      return bankData
     }
     return {}
   }

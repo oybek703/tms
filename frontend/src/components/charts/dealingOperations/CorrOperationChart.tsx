@@ -45,10 +45,18 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 		dataLabels: {
 			enabled: true,
 			style: {
-				fontSize: '13px'
+				fontSize: '13px',
+				fontWeight: 'bold'
 			},
-			formatter: function (val: number) {
-				return formatNumber(val)
+			offsetX: -5,
+			background: {
+				enabled: true,
+				foreColor: '#000',
+				borderRadius: 2,
+				padding: 2,
+				opacity: 0.4,
+				borderWidth: 1,
+				borderColor: palette.primary
 			}
 		},
 		stroke: {
@@ -71,7 +79,6 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 				formatter: function (val: number) {
 					return `${val.toFixed(2)}`
 				},
-				offsetX: 100,
 				style: {
 					fontWeight: '600'
 				}
