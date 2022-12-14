@@ -4,7 +4,31 @@ import axios from 'axios'
 import { withToken } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 
-const initialState = {
+interface RowData {
+	code: string
+	title: string
+	data: {
+		name: string
+		moreOperations: string
+		quick: string
+		safe: string
+		expensiveOrCheap: string
+		saldoOut: number
+		turnoverDebit: number
+		percentDebit: number
+		turnoverCredit: number
+		percentCredit: number
+		import: string
+		export: string
+		accredetiv: string
+		interbankDeposit: string
+		forex: string
+		creditLine: string
+		vostro: string
+		useForPayment: string
+	}[]
+}
+const initialState: { loading: boolean; error: undefined; nostroMatrix: RowData[] } = {
 	loading: false,
 	nostroMatrix: [],
 	error: undefined

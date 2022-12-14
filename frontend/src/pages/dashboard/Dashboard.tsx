@@ -1,6 +1,4 @@
-import React, { Fragment, memo, useEffect } from 'react'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
+import React, { memo, useEffect } from 'react'
 import DashboardMonthly from '../../components/layout/DashboardMonthly'
 import PlacedAndAttracted from '../activesPassives/PlacedAttracted'
 import CalcFor from '../bankLiquidity/CalcFor'
@@ -17,6 +15,7 @@ import CreditPortfolioTab from '../../components/layout/Dashboard/CreditPortfoli
 import useTypedSelector from '../../hooks/useTypedSelector'
 import DashboardTabs from '../../components/layout/Tabs/DashboardTabs'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const Dashboard = () => {
 	const { fetchDashboard } = useActions()
@@ -44,87 +43,79 @@ const Dashboard = () => {
 		window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
 	}, [])
 	return (
-		<Fragment>
-			{loading ? (
-				<Loader />
-			) : error ? (
-				<Alert message={error} />
-			) : (
-				<>
-					<DashboardTabs
-						tabs={[
-							{
-								name: 'Eжедневные показатели',
-								panel: (
-									<DailyIndicators
-										dashboardCorrespondent={dashboardCorrespondent}
-										lcr={lcr}
-										nsfr={nsfr}
-										vla={vla}
-										il={il}
-										dashboardCurrencyPosition={dashboardCurrencyPosition}
-									/>
-								)
-							},
-							{
-								name: 'Курсы валют',
-								panel: <CurrencyRatesTab currencyRates={currencyRates} />
-							},
-							{ name: 'ЦРБ', panel: <Fcrb /> },
-							{
-								name: 'Лимиты',
-								panel: <BankLimits bankLimits={bankLimits as any} />
-							},
-							{
-								name: 'ФОР',
-								panel: (
-									<WithDetailsButton link={'/calcfor'}>
-										<CalcFor forDashboard />
-									</WithDetailsButton>
-								)
-							},
-							{
-								name: 'Активы и пассивы',
-								panel: (
-									<WithDetailsButton link="/plat">
-										<PlacedAndAttracted forDashboard />
-									</WithDetailsButton>
-								)
-							},
-							{
-								name: 'Капитал',
-								panel: <CapitalTab vla={vla} />
-							},
-							{
-								name: 'Фондирование',
-								panel: (
-									<FundingTab
-										currencyMBD={currencyMBD}
-										currencyMfi={currencyMfi}
-										currencyTimeDeposits={currencyTimeDeposits}
-										interbankDeposits={interbankDeposits}
-										timeDeposits={timeDeposits}
-									/>
-								)
-							},
-							{
-								name: 'Нормативы',
-								panel: <Normatives />
-							},
-							{
-								name: 'Ковенанты',
-								panel: <Covenants />
-							},
-							{
-								name: 'Кредитный портфель',
-								panel: <CreditPortfolioTab />
-							},
-							{ name: 'dashboard', panel: <DashboardMonthly /> }
-						]}
-					/>
-				</>
-			)}
-		</Fragment>
+		<LoaderWrapper loading={loading} error={error}>
+			<DashboardTabs
+				tabs={[
+					{
+						name: 'Eжедневные показатели',
+						panel: (
+							<DailyIndicators
+								dashboardCorrespondent={dashboardCorrespondent}
+								lcr={lcr}
+								nsfr={nsfr}
+								vla={vla}
+								il={il}
+								dashboardCurrencyPosition={dashboardCurrencyPosition}
+							/>
+						)
+					},
+					{
+						name: 'Курсы валют',
+						panel: <CurrencyRatesTab currencyRates={currencyRates} />
+					},
+					{ name: 'ЦРБ', panel: <Fcrb /> },
+					{
+						name: 'Лимиты',
+						panel: <BankLimits bankLimits={bankLimits as any} />
+					},
+					{
+						name: 'ФОР',
+						panel: (
+							<WithDetailsButton link={'/calcfor'}>
+								<CalcFor forDashboard />
+							</WithDetailsButton>
+						)
+					},
+					{
+						name: 'Активы и пассивы',
+						panel: (
+							<WithDetailsButton link="/plat">
+								<PlacedAndAttracted forDashboard />
+							</WithDetailsButton>
+						)
+					},
+					{
+						name: 'Капитал',
+						panel: <CapitalTab vla={vla} />
+					},
+					{
+						name: 'Фондирование',
+						panel: (
+							<FundingTab
+								currencyMBD={currencyMBD}
+								currencyMfi={currencyMfi}
+								currencyTimeDeposits={currencyTimeDeposits}
+								interbankDeposits={interbankDeposits}
+								timeDeposits={timeDeposits}
+							/>
+						)
+					},
+					{
+						name: 'Нормативы',
+						panel: <Normatives />
+					},
+					{
+						name: 'Ковенанты',
+						panel: <Covenants />
+					},
+					{
+						name: 'Кредитный портфель',
+						panel: <CreditPortfolioTab />
+					},
+					{ name: 'dashboard', panel: <DashboardMonthly /> }
+				]}
+			/>
+		</LoaderWrapper>
 	)
 }
 

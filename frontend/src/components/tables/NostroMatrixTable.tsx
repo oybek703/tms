@@ -10,34 +10,9 @@ import { TableCell } from '@mui/material'
 import BoldWithColor from '../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
 import globalStyles from '../../styles/globalStyles'
-
-interface RowData {
-	code: string
-	title: string
-	data: {
-		name: string
-		moreOperations: string
-		quick: string
-		safe: string
-		expensiveOrCheap: string
-		saldoOut: number
-		turnoverDebit: number
-		percentDebit: number
-		turnoverCredit: number
-		percentCredit: number
-		import: string
-		export: string
-		accredetiv: string
-		interbankDeposit: string
-		forex: string
-		creditLine: string
-		vostro: string
-		useForPayment: string
-	}[]
-}
+import useTypedSelector from '../../hooks/useTypedSelector'
 
 interface NostroMatrixTableProps {
-	rows: RowData[]
 	noData?: boolean
 }
 
@@ -57,7 +32,8 @@ function RowTitle({ title = '', colSpan = 1 }) {
 	)
 }
 
-const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, noData }) {
+const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ noData }) {
+	const { nostroMatrix } = useTypedSelector(state => state.nostroMatrix)
 	if (noData) return <Fragment />
 	return (
 		<TableContainer component={Paper}>
@@ -106,8 +82,8 @@ const NostroMatrixTable: React.FC<NostroMatrixTableProps> = function ({ rows, no
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows &&
-						rows.map((row, _index) => (
+					{nostroMatrix &&
+						nostroMatrix.map((row, _index) => (
 							<Fragment key={uuid()}>
 								<TableRow hover>
 									<RowTitle title={row.title} colSpan={2} />

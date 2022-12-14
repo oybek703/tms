@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import CorrespondentTable from '../../components/tables/CorrespondentTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const Correspondent = () => {
 	const { fetchCorrespondent, fetchCorrespondentCurrent } = useActions()
@@ -46,13 +45,12 @@ const Correspondent = () => {
 	return (
 		<>
 			<PageTitle title="Информация о ликвидных средствах банка" />
-			{loading || (currentCorrespondentLoading && currentState) ? (
-				<Loader />
-			) : error || currentCorrespondentError ? (
-				<Alert message={error || currentCorrespondentError} />
-			) : (
-				<CorrespondentTable currentState={currentState} rows={correspondentData} />
-			)}
+			<LoaderWrapper
+				loading={loading || (currentCorrespondentLoading && currentState)}
+				error={error || currentCorrespondentError}
+			>
+				<CorrespondentTable rows={correspondentData} currentState={currentState} />
+			</LoaderWrapper>
 		</>
 	)
 }

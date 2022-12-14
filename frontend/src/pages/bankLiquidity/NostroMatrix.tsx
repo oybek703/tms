@@ -1,17 +1,16 @@
 import React, { Fragment, useEffect } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import NostroMatrixTable from '../../components/tables/NostroMatrixTable'
 import InlineDatePicker from '../../components/layout/Pickers/InlineDatePicker'
 import { Grid } from '@mui/material'
 import useActions from '../../hooks/useActions'
 import useTwoDates from '../../hooks/useTwoDates'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const NostroMatrix = () => {
 	const { fetchNostroMatrix } = useActions()
-	const { nostroMatrix, loading, error } = useTypedSelector(state => state.nostroMatrix)
+	const { loading, error } = useTypedSelector(state => state.nostroMatrix)
 	const { firstDate, secondDate, handleDateChange } = useTwoDates()
 	useEffect(() => {
 		if (firstDate && secondDate && firstDate !== secondDate) {
@@ -40,13 +39,9 @@ const NostroMatrix = () => {
 				</Grid>
 			</fieldset>
 			<br />
-			{loading ? (
-				<Loader />
-			) : error ? (
-				<Alert message={error} />
-			) : (
-				<NostroMatrixTable noData={Boolean(!firstDate && !secondDate)} rows={nostroMatrix} />
-			)}
+			<LoaderWrapper loading={loading} error={error}>
+				<NostroMatrixTable noData={Boolean(!firstDate && !secondDate)} />
+			</LoaderWrapper>
 		</Fragment>
 	)
 }

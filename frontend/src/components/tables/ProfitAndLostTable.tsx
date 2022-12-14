@@ -11,14 +11,12 @@ import TableCap from '../helpers/TableCap'
 import ExportButton from '../layout/ExportButton'
 import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
-interface ProfitAndLostTableProps {
-	pickedDate: string
-	rows: any
-}
-
-const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, rows }) => {
-	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
+const ProfitAndLostTable = () => {
+	const { profitAndLost } = useTypedSelector(state => state.profitAndLost)
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(reportDate)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`profit-and-lost-${selectedDate}`} />
@@ -50,7 +48,7 @@ const ProfitAndLostTable: React.FC<ProfitAndLostTableProps> = ({ pickedDate, row
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row: any, index: number) => (
+					{profitAndLost.map((row: any, index: number) => (
 						<TableRow hover key={index}>
 							<TableCell align="center">
 								<b>{row['count']}</b>

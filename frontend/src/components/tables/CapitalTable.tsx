@@ -13,8 +13,9 @@ import TableRow from '@mui/material/TableRow'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
-const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
+const CapitalTable = function () {
 	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { capital } = useTypedSelector(state => state.capital)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`capital-${formatOneDate(reportDate)}`} />
@@ -43,7 +44,7 @@ const CapitalTable: React.FC<{ rows: any }> = function ({ rows }) {
 							{''}
 						</TableCell>
 					</TableRow>
-					{rows.map((row: any) => (
+					{capital.map((row: any) => (
 						<TableRow hover key={row.indicatorName}>
 							<TableCell component="th" align="center" scope="row">
 								{row.isTableHead ? <b>{row.count}</b> : row.count}

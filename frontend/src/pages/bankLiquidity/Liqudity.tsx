@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
 import LiqPointersTable from '../../components/tables/LiqPointersTable'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const LiqPointers = () => {
 	const { fetchLiquidity, fetchLiquidityCurrent } = useActions()
@@ -33,13 +32,12 @@ const LiqPointers = () => {
 	return (
 		<>
 			<PageTitle title="Информация о состоянии баланса и мгновенной ликвидности банка" />
-			{loading || (currentLiquidityLoading && currentState) ? (
-				<Loader />
-			) : error || currentLiquidityError ? (
-				<Alert message={error || currentLiquidityError} />
-			) : (
+			<LoaderWrapper
+				loading={loading || (currentLiquidityLoading && currentState)}
+				error={error || currentLiquidityError}
+			>
 				<LiqPointersTable rows={liquidityData} currentState={currentState} />
-			)}
+			</LoaderWrapper>
 		</>
 	)
 }

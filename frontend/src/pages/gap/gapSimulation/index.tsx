@@ -7,14 +7,13 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 import SaveIcon from '@mui/icons-material/Save'
 import Paper from '@mui/material/Paper'
 import { getErrorMessage } from '../../../utils'
-import Loader from '../../../components/layout/Loader'
-import Alert from '../../../components/layout/Alert'
 import GapSimulationTable from './GapSimulationTable'
 import GapSimulationDialog from './GapSimulationDialog'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import useActions from '../../../hooks/useActions'
 import axios from 'axios'
 import { Grid } from '@mui/material'
+import { LoaderWrapper } from '../../../components/helpers/LoaderWrapper'
 
 interface ActionContentProps {
 	handleReset: () => void
@@ -146,40 +145,32 @@ const GapSimulation = () => {
 		e.returnValue = ''
 	}
 	return (
-		<>
-			{gapSimulationLoading ? (
-				<Loader />
-			) : gapSimulationError ? (
-				<Alert message={gapSimulationError} />
-			) : (
-				<>
-					<ActionContent handleReset={handleReset} handleSave={handleSave} />
-					{!dialog && (
-						<GapSimulationTable
-							handleEditClick={handleEditClick}
-							months={months}
-							needsOfLiquidity={needsOfLiquidity}
-							vlaLcrData={vlaLcrData}
-							sourceOfLiquidity={sourceOfLiquidity}
-							needsOfLiquidityTotal={needsOfLiquidityTotal}
-							sourceOfLiquidityTotal={sourceOfLiquidityTotal}
-							nsfrData={nsfrData}
-							lcrData={lcrData}
-						/>
-					)}
-					<GapSimulationDialog
-						dialog={dialog}
-						editingCell={editingCell}
-						setNewValue={setNewValue}
-						handleClose={handleClose}
-						setDialog={setDialog}
-						handleEdit={handleEdit}
-						handleNewValueChange={handleNewValueChange}
-						newValue={newValue}
-					/>
-				</>
+		<LoaderWrapper loading={gapSimulationLoading} error={gapSimulationError}>
+			<ActionContent handleReset={handleReset} handleSave={handleSave} />
+			{!dialog && (
+				<GapSimulationTable
+					handleEditClick={handleEditClick}
+					months={months}
+					needsOfLiquidity={needsOfLiquidity}
+					vlaLcrData={vlaLcrData}
+					sourceOfLiquidity={sourceOfLiquidity}
+					needsOfLiquidityTotal={needsOfLiquidityTotal}
+					sourceOfLiquidityTotal={sourceOfLiquidityTotal}
+					nsfrData={nsfrData}
+					lcrData={lcrData}
+				/>
 			)}
-		</>
+			<GapSimulationDialog
+				dialog={dialog}
+				editingCell={editingCell}
+				setNewValue={setNewValue}
+				handleClose={handleClose}
+				setDialog={setDialog}
+				handleEdit={handleEdit}
+				handleNewValueChange={handleNewValueChange}
+				newValue={newValue}
+			/>
+		</LoaderWrapper>
 	)
 }
 

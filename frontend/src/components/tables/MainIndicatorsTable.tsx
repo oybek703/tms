@@ -12,14 +12,12 @@ import { Typography } from '@mui/material'
 import ExportButton from '../layout/ExportButton'
 import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
-interface MainIndicatorsTableProps {
-	pickedDate: string
-	rows: any
-}
-
-const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, rows }) => {
-	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
+const MainIndicatorsTable = () => {
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(reportDate)
+	const { mainIndicators } = useTypedSelector(state => state.mainIndicators)
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`main-indicators-${selectedDate}`} />
@@ -51,7 +49,7 @@ const MainIndicatorsTable: React.FC<MainIndicatorsTableProps> = ({ pickedDate, r
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row: any, index: number) => (
+					{mainIndicators.map((row: any, index: number) => (
 						<TableRow hover key={index}>
 							<TableCell align="center">
 								<b>{row.count}</b>
