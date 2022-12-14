@@ -12,7 +12,8 @@ import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
-function DepositsByDeadlineTable({ rows = [] }) {
+function DepositsByDeadlineTable() {
+	const { depositsByDeadline } = useTypedSelector(state => state.depositsByDeadline)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper}>
@@ -55,7 +56,7 @@ function DepositsByDeadlineTable({ rows = [] }) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row: any, index: number) => (
+					{depositsByDeadline.map((row: any, index: number) => (
 						<TableRow hover key={index}>
 							<TableCell>{<b>{row['indicatorName']}</b>}</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">

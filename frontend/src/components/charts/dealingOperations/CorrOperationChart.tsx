@@ -48,13 +48,13 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 				fontSize: '13px',
 				fontWeight: 'bold'
 			},
-			offsetX: -5,
+			offsetX: 45,
 			background: {
 				enabled: true,
 				foreColor: '#000',
 				borderRadius: 2,
 				padding: 2,
-				opacity: 0.4,
+				opacity: 0,
 				borderWidth: 1,
 				borderColor: palette.primary
 			}

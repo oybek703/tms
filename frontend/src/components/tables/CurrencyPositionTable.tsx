@@ -13,8 +13,9 @@ import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 
-const CurrencyPositionTable: React.FC<{ rows: any }> = function ({ rows }) {
-	const { allRows = [], tableSumData = [] } = rows
+const CurrencyPositionTable = function () {
+	const { currencyPosition } = useTypedSelector(state => state.currencyPosition)
+	const { allRows = [], tableSumData = [] } = currencyPosition
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	return (
 		<TableContainer component={Paper}>

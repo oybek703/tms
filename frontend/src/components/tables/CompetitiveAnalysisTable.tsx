@@ -13,7 +13,6 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import globalStyles from '../../styles/globalStyles'
 import { Grid, TableBody, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
-import { ICompetitiveAnalysis } from '../../interfaces/ca.interface'
 import CorporateRetail from '../charts/competitiveAnalysis/CorporateRetail'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import ByCurrency from '../charts/competitiveAnalysis/ByCurrency'
@@ -44,10 +43,6 @@ const pageStyles: ISxStyles = {
 	}
 }
 
-interface CompetitiveAnalysisProps {
-	rows: ICompetitiveAnalysis
-}
-
 interface IndicatorNameCellProps {
 	indicatorName: string
 	tabbed?: boolean
@@ -64,13 +59,15 @@ const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicator
 	)
 }
 
-const CompetitiveAnalysisTable: React.FC<CompetitiveAnalysisProps> = function ({ rows }) {
+const CompetitiveAnalysisTable = function () {
+	const {
+		competitiveAnalysis: { quarterDates, nbu, psb, main }
+	} = useTypedSelector(state => state.competitiveAnalysis)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const { quarterDates } = rows
 	const banks = [
-		{ bankName: 'Асакабанк', data: rows.main },
-		{ bankName: 'НБУ', data: rows.nbu },
-		{ bankName: 'ПСБ', data: rows.psb }
+		{ bankName: 'Асакабанк', data: main },
+		{ bankName: 'НБУ', data: nbu },
+		{ bankName: 'ПСБ', data: psb }
 	]
 	return (
 		<>

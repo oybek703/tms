@@ -4,6 +4,7 @@ import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
 import { IFcrbTableRow } from '../../interfaces/tables.interfaces'
 import palette from '../../styles/palette'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
 const pageStyles = {
 	totalRow: {
@@ -87,7 +88,8 @@ const columns: GridColDef[] = [
 	generateCellAttrs({ field: 'benefitInMonth', headerName: 'Прибыль за месяц', minWidth: 160 })
 ]
 
-const FilialEffectivenessTable: React.FC<{ rows: IFcrbTableRow[] }> = function ({ rows = [] }) {
+const FilialEffectivenessTable = function () {
+	const { filialEffectiveness } = useTypedSelector(state => state.filialEffectiveness)
 	const RowsInitialState: IFcrbTableRow = useMemo(
 		() => ({
 			npl: 0,
@@ -137,9 +139,9 @@ const FilialEffectivenessTable: React.FC<{ rows: IFcrbTableRow[] }> = function (
 		[RowsInitialState]
 	)
 	// eslint-disable-next-line
-	const totalData = useMemo(() => calcTotal(rows), [rows])
+	const totalData = useMemo(() => calcTotal(filialEffectiveness), [filialEffectiveness])
 	const newRows = [
-		...rows,
+		...filialEffectiveness,
 		{
 			...totalData,
 			nplPercent: ((totalData?.npl || 0) * 100) / (totalData?.totalLoan || 0),

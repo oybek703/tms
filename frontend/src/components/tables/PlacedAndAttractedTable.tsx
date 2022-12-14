@@ -29,13 +29,13 @@ function getFundCategoryAndSeries(fundData: any = []) {
 }
 
 interface PlacedAndAttractedTableProps {
-	rows: any
 	forDashboard: boolean
 }
 
-const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ rows = {}, forDashboard = false }) => {
+const PlacedAndAttractedTable: React.FC<PlacedAndAttractedTableProps> = ({ forDashboard = false }) => {
+	const { plat } = useTypedSelector(state => state.plat)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const { involvedFunds = [], placedFunds = [] } = rows
+	const { involvedFunds = [], placedFunds = [] } = plat
 	const [involvedCategories, involvedSeries] = getFundCategoryAndSeries(involvedFunds)
 	const [placedCategories, placedSeries] = getFundCategoryAndSeries(placedFunds)
 	if (forDashboard) {

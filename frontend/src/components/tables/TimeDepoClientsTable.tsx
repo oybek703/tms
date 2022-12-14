@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
 const columns: GridColDef[] = [
 	{
@@ -106,9 +107,10 @@ const columns: GridColDef[] = [
 	}
 ]
 
-const TimeDepoClientsTable: React.FC<{ rows: unknown[] }> = function ({ rows = [] }) {
+const TimeDepoClientsTable = function () {
+	const { timeDepoClients } = useTypedSelector(state => state.timeDepoClients)
 	const [pageSize, setPageSize] = useState(30)
-	return <StyledDataGrid onPageSizeChange={setPageSize} pageSize={pageSize} columns={columns} rows={rows} />
+	return <StyledDataGrid onPageSizeChange={setPageSize} pageSize={pageSize} columns={columns} rows={timeDepoClients} />
 }
 
 export default memo(TimeDepoClientsTable)

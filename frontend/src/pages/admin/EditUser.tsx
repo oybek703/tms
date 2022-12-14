@@ -4,13 +4,12 @@ import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import AllowedPages from '../../components/layout/Navigation/AllowedPages'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import globalStyles from '../../styles/globalStyles'
 import axios from 'axios'
 import { withToken } from '../../utils/axiosUtils'
 import { getErrorMessage } from '../../utils'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 export default function EditUser() {
 	const [allowedPages, setAllowedPages] = useState<string[]>([])
@@ -98,77 +97,62 @@ export default function EditUser() {
 	}, [singleUser])
 
 	return (
-		<>
-			{' '}
-			{error ? (
-				<Loader />
-			) : error ? (
-				<Alert message={error} />
-			) : (
-				<>
-					<Typography align="center" component="h1" variant="h5">
-						<b>EDIT USER</b>
-					</Typography>
-					<Grid component="form" sx={globalStyles.userForm} noValidate onSubmit={handleEditUser}>
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<TextField
-									error={!!userNameHelperText}
-									helperText={userNameHelperText}
-									variant="outlined"
-									fullWidth
-									value={formData.newUsername}
-									onChange={handleChange}
-									id="username"
-									label="Username"
-									name="newUsername"
-									autoComplete="off"
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									error={!!passwordHelperText}
-									helperText={passwordHelperText}
-									variant="outlined"
-									fullWidth
-									value={formData.newPassword}
-									onChange={handleChange}
-									id="password"
-									type="password"
-									label="Password"
-									name="newPassword"
-									autoComplete="off"
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									error={!!confirmPasswordHelperText}
-									helperText={confirmPasswordHelperText}
-									variant="outlined"
-									fullWidth
-									value={formData.confirmNewPassword}
-									onChange={handleChange}
-									name="confirmNewPassword"
-									label="Confirm Password"
-									type="password"
-									id="confirm_password"
-									autoComplete="off"
-								/>
-							</Grid>
-							<AllowedPages pages={allowedPages} setPages={handleAddPage} />
-						</Grid>
-						<Button
-							disabled={btnDisabled}
-							type="submit"
+		<LoaderWrapper loading={singleUserLoading} error={error}>
+			<Typography align="center" component="h1" variant="h5">
+				<b>EDIT USER</b>
+			</Typography>
+			<Grid component="form" sx={globalStyles.userForm} noValidate onSubmit={handleEditUser}>
+				<Grid container spacing={2}>
+					<Grid item xs={12}>
+						<TextField
+							error={!!userNameHelperText}
+							helperText={userNameHelperText}
 							variant="outlined"
-							color="primary"
-							sx={globalStyles.usetSubmitBtn}
-						>
-							Save
-						</Button>
+							fullWidth
+							value={formData.newUsername}
+							onChange={handleChange}
+							id="username"
+							label="Username"
+							name="newUsername"
+							autoComplete="off"
+						/>
 					</Grid>
-				</>
-			)}
-		</>
+					<Grid item xs={12}>
+						<TextField
+							error={!!passwordHelperText}
+							helperText={passwordHelperText}
+							variant="outlined"
+							fullWidth
+							value={formData.newPassword}
+							onChange={handleChange}
+							id="password"
+							type="password"
+							label="Password"
+							name="newPassword"
+							autoComplete="off"
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							error={!!confirmPasswordHelperText}
+							helperText={confirmPasswordHelperText}
+							variant="outlined"
+							fullWidth
+							value={formData.confirmNewPassword}
+							onChange={handleChange}
+							name="confirmNewPassword"
+							label="Confirm Password"
+							type="password"
+							id="confirm_password"
+							autoComplete="off"
+						/>
+					</Grid>
+					<AllowedPages pages={allowedPages} setPages={handleAddPage} />
+				</Grid>
+				<Button disabled={btnDisabled} type="submit" variant="outlined" color="primary" sx={globalStyles.usetSubmitBtn}>
+					Save
+				</Button>
+			</Grid>
+		</LoaderWrapper>
 	)
 }

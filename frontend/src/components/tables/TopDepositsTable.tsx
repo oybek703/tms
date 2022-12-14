@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 import { Grid } from '@mui/material'
 import TopDepositsTab from '../layout/Tabs/TopDepositsTab'
 import Card from '@mui/material/Card'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
 function matchTitle(code: string) {
 	switch (code) {
@@ -61,7 +62,8 @@ function matchActiveTabCode(activeTabIndex: number) {
 	}
 }
 
-const TopDepositsTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
+const TopDepositsTable = function () {
+	const { topDeposits } = useTypedSelector(state => state.topDeposits)
 	const [expanded, setExpanded] = useState<string>('20200')
 	const [activeTabIndex, setActiveTabIndex] = useState<number>(1)
 	const accountCodes = []
@@ -74,7 +76,7 @@ const TopDepositsTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 		setExpanded(matchActiveTabCode(activeTabIndex))
 	}, [])
 
-	for (const rowsKey in rows) {
+	for (const rowsKey in topDeposits) {
 		accountCodes.push({ code: rowsKey, title: memoizedMatchTitle(rowsKey) })
 	}
 	return (
@@ -85,7 +87,7 @@ const TopDepositsTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
 					<Card>
 						{expanded === code && (
 							<Grid container spacing={2} justifyContent="center">
-								{rows[expanded].map((card: any, cardIndex: number) => (
+								{topDeposits[expanded].map((card: any, cardIndex: number) => (
 									<Grid key={uuid()} item xs={4}>
 										<TopDepositCard
 											title={memoizedMatchTitle(code)}

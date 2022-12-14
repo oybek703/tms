@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import InterbankDepositsTable from '../../components/tables/InterbankDepositsTable'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const InterBankDeposits = () => {
 	const { fetchInterbankDeposits } = useActions()
-	const { interbankDeposits, loading, error } = useTypedSelector(state => state.interbankDeposits)
+	const { loading, error } = useTypedSelector(state => state.interbankDeposits)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {
 		fetchInterbankDeposits()
@@ -16,7 +15,9 @@ const InterBankDeposits = () => {
 	return (
 		<>
 			<PageTitle title="Информация о межбанковских депозитах банка" />
-			{loading ? <Loader /> : error ? <Alert message={error} /> : <InterbankDepositsTable rows={interbankDeposits} />}
+			<LoaderWrapper loading={loading} error={error}>
+				<InterbankDepositsTable />
+			</LoaderWrapper>
 		</>
 	)
 }

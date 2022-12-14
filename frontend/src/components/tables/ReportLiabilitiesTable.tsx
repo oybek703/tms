@@ -11,11 +11,13 @@ import { v4 as uuid } from 'uuid'
 import PaginatedTable from '../helpers/PaginatedTable'
 import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
 const columns = ['До 7 дней', ...new Array(12).fill('').map((v, i) => `${i + 1} месяц`), '1-2 года', 'свыше 2 лет']
 
-const ReportLiabilitiesTable: React.FC<{ rows: any }> = function ({ rows = [] }) {
-	const bodyColumns = Object.keys([...rows].pop() || {}).filter(
+const ReportLiabilitiesTable = function () {
+	const { reportLiabilities } = useTypedSelector(state => state.reportLiabilities)
+	const bodyColumns = Object.keys([...reportLiabilities].pop() || {}).filter(
 		(v, i) => v !== 'name' && v !== 'currency' && v !== 'accountCode'
 	)
 	const [page, setPage] = useState(0)
@@ -27,7 +29,7 @@ const ReportLiabilitiesTable: React.FC<{ rows: any }> = function ({ rows = [] })
 				rowsPerPage={rowsPerPage}
 				setPage={setPage}
 				setRowsPerPage={setRowsPerPage}
-				rows={rows}
+				rows={reportLiabilities}
 				TableData={
 					<TableContainer component={Paper}>
 						<Table size="small" aria-label="a dense table">
@@ -71,19 +73,21 @@ const ReportLiabilitiesTable: React.FC<{ rows: any }> = function ({ rows = [] })
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, i: number) => (
-									<TableRow hover key={uuid()}>
-										<TableCell>{i + 1}</TableCell>
-										<TableCell sx={globalStyles.noWrap}>{row['name']}</TableCell>
-										<TableCell sx={globalStyles.noWrap}>{row['accountCode']}</TableCell>
-										<TableCell align="center">{row['currency'] === '0' ? '000' : row['currency']}</TableCell>
-										{bodyColumns.map(col => (
-											<TableCell key={uuid()} sx={globalStyles.noWrap} align="center">
-												{formatNumber(row[`${col}`], true)}
-											</TableCell>
-										))}
-									</TableRow>
-								))}
+								{reportLiabilities
+									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+									.map((row: any, i: number) => (
+										<TableRow hover key={uuid()}>
+											<TableCell>{i + 1}</TableCell>
+											<TableCell sx={globalStyles.noWrap}>{row['name']}</TableCell>
+											<TableCell sx={globalStyles.noWrap}>{row['accountCode']}</TableCell>
+											<TableCell align="center">{row['currency'] === '0' ? '000' : row['currency']}</TableCell>
+											{bodyColumns.map(col => (
+												<TableCell key={uuid()} sx={globalStyles.noWrap} align="center">
+													{formatNumber(row[`${col}`], true)}
+												</TableCell>
+											))}
+										</TableRow>
+									))}
 							</TableBody>
 						</Table>
 					</TableContainer>

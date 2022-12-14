@@ -37,9 +37,10 @@ function sumByCode(array = [], code = '') {
 	return [usd, eur, rub, uzs].map(n => +(n / Math.pow(10, 6)).toFixed(1))
 }
 
-const GMTable: React.FC<{ rows: any }> = function ({ rows = {} }) {
+const GMTable = function () {
+	const { gm } = useTypedSelector(state => state.gm)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const { tableData = [], accredetiv = { acs: [], others: [] }, currRates = [] } = rows
+	const { tableData = [], accredetiv = { acs: [], others: [] }, currRates = [] } = gm as any
 	let uzsSum = 0
 	let usdSum = 0
 	let eurSum = 0

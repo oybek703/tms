@@ -5,6 +5,7 @@ import Alert from '../../components/layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import CalcForTable from '../../components/tables/CalcForTable'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 interface CalcForProps {
 	forDashboard: boolean
@@ -27,13 +28,9 @@ const CalcFor: React.FC<CalcForProps> = ({ forDashboard = false }) => {
 			{!forDashboard && (
 				<PageTitle title={`РАСЧЕТ ФОР ${loading || !(startDate && endDate) ? '' : `C ${startDate} - ${endDate}`}`} />
 			)}
-			{loading ? (
-				<Loader />
-			) : error ? (
-				<Alert message={error} />
-			) : (
-				<CalcForTable forDashboard={forDashboard} rows={calcFor} />
-			)}
+			<LoaderWrapper loading={loading} error={error}>
+				<CalcForTable forDashboard={forDashboard} />
+			</LoaderWrapper>
 		</>
 	)
 }

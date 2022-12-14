@@ -64,31 +64,31 @@ const WarningAlert: React.FC<WarningDataInterface> = ({ rows, role }) => {
 }
 
 interface CalcForTableProps {
-	rows: any
 	forDashboard: boolean
 }
 
-const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = false }) => {
+const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => {
 	const {
 		user: { role }
 	} = useTypedSelector(state => state.auth)
+	const { calcFor = [] } = useTypedSelector(state => state.calcFor)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const forValues = rows.filter((r: any) => r['forValue'] !== 0)
-	const forSum = rows.reduce((acc: any, val: any) => (acc += val['forValue']), 0) / forValues.length
-	const consumptionSum = rows.reduce((acc: any, val: any) => (acc += val['avgConsumption']), 0)
-	const cbStandards = rows.filter((r: any) => r['cbStandard'] !== 0)
+	const forValues = calcFor.filter((r: any) => r['forValue'] !== 0)
+	const forSum = calcFor.reduce((acc: any, val: any) => (acc += val['forValue']), 0) / forValues.length
+	const consumptionSum = calcFor.reduce((acc: any, val: any) => (acc += val['avgConsumption']), 0)
+	const cbStandards = calcFor.filter((r: any) => r['cbStandard'] !== 0)
 	const cbStandardAverage =
 		cbStandards.reduce((acc: any, val: any) => (acc += val['cbStandard']), 0) / cbStandards.length
 	const deviationSum = forSum - cbStandardAverage
-	const categories = rows.map((r: any) => r['date'])
-	const expenditureSeries = rows.map((r: any) => r['avgConsumption'])
-	const correspondentSeries = rows.map((r: any) => r['forValue'])
-	const deviationSeries = rows.map((r: any) => r['stDeviation'])
+	const categories = calcFor.map((r: any) => r['date'])
+	const expenditureSeries = calcFor.map((r: any) => r['avgConsumption'])
+	const correspondentSeries = calcFor.map((r: any) => r['forValue'])
+	const deviationSeries = calcFor.map((r: any) => r['stDeviation'])
 	if (forDashboard) {
 		return (
 			<Fragment>
-				<WarningAlert rows={rows} role={role} />
-				{rows.length && (
+				<WarningAlert rows={calcFor} role={role} />
+				{calcFor.length && (
 					<Fragment>
 						<CorrespondentDynamics series={correspondentSeries} categories={categories} />
 						<br />
@@ -101,7 +101,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 	return (
 		<Fragment>
 			<Delayed waitBeforeShow={1000}>
-				<WarningAlert role={role} rows={rows} />
+				<WarningAlert role={role} rows={calcFor} />
 			</Delayed>
 			<Fragment>
 				<TableContainer component={Paper} sx={mergeStyles(globalStyles.marginBottom10, globalStyles.paddingBottom0)}>
@@ -174,7 +174,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ rows = [], forDashboard = f
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{rows.map((row: any, i: number) => (
+							{calcFor.map((row: any, i: number) => (
 								<TableRow hover key={i}>
 									<TableCell align="center">{row.date}</TableCell>
 									<TableCell align="center">{formatNumber(row.forValue, 'e')}</TableCell>

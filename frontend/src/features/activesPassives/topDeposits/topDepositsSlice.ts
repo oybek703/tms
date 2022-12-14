@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 
-const initialState = {
+const initialState: { loading: boolean; error: undefined; topDeposits: any } = {
 	loading: false,
 	topDeposits: {},
 	error: undefined

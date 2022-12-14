@@ -16,15 +16,13 @@ import TimeDepositsChange from '../charts/timeDeposits/TimeDepositsChange'
 import ExportButton from '../layout/ExportButton'
 import BoldWithColor from '../helpers/BoldWithColor'
 import globalStyles from '../../styles/globalStyles'
+import useTypedSelector from '../../hooks/useTypedSelector'
 
-interface TimeDepositsTableProps {
-	rows: any
-	pickedDate: string
-}
-
-const TimeDepositsTable: React.FC<TimeDepositsTableProps> = function ({ rows = {}, pickedDate }) {
-	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(pickedDate)
-	const { tableData = [], currentBalance = [], balanceInMonthBegin = [] } = rows
+const TimeDepositsTable = function () {
+	const { reportDate } = useTypedSelector(state => state.operDays)
+	const { timeDeposits } = useTypedSelector(state => state.timeDeposits)
+	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(reportDate)
+	const { tableData = [], currentBalance = [], balanceInMonthBegin = [] } = timeDeposits as any
 	const changeData = currentBalance.map((v: any, i: number) => currentBalance[i] - balanceInMonthBegin[i])
 	return (
 		<Fragment>

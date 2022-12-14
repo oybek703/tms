@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
-import Loader from '../../components/layout/Loader'
-import Alert from '../../components/layout/Alert'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import CurrencyPositionTable from '../../components/tables/CurrencyPositionTable'
 import useActions from '../../hooks/useActions'
+import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const CurrencyPosition = () => {
 	const { fetchCurrencyPosition } = useActions()
-	const { currencyPosition, loading, error } = useTypedSelector(state => state.currencyPosition)
+	const { loading, error } = useTypedSelector(state => state.currencyPosition)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	useEffect(() => {
 		fetchCurrencyPosition()
@@ -16,7 +15,9 @@ const CurrencyPosition = () => {
 	return (
 		<>
 			<PageTitle title="Сведения об открытых валютных позициях банка" />
-			{loading ? <Loader /> : error ? <Alert message={error} /> : <CurrencyPositionTable rows={currencyPosition} />}
+			<LoaderWrapper loading={loading} error={error}>
+				<CurrencyPositionTable />
+			</LoaderWrapper>
 		</>
 	)
 }
