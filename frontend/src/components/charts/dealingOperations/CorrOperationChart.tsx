@@ -44,9 +44,13 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 		},
 		dataLabels: {
 			enabled: true,
+			formatter: function (val: number) {
+				return val === 0 ? '' : val
+			},
 			style: {
 				fontSize: '13px',
-				fontWeight: 'bold'
+				fontWeight: 'bold',
+				marginTop: '20px'
 			},
 			offsetX: 45,
 			background: {

@@ -385,6 +385,34 @@ const CorrOperations = () => {
 											</Typography>
 										))}
 									</Box>
+									<Grid container spacing={2}>
+										<Grid item xs={4}>
+											<CorrOperationChart id="volume_by_bank" title="Обьем" data={volume} />
+										</Grid>
+										<Grid item xs={4}>
+											<CorrOperationChart id="payments_count" title="Количество платежей" data={[]} />
+										</Grid>
+										<Grid item xs={4}>
+											<CorrOperationChart id="fx_by_bank" title="Платежи по FX" data={fx} />
+										</Grid>
+										<Grid item xs={4}>
+											<CorrOperationChart
+												id="physicalPayments_by_bank"
+												title="Платежи физ. лиц"
+												data={physicalPayments}
+											/>
+										</Grid>
+										<Grid item xs={4}>
+											<CorrOperationChart id="legalPayments_by_bank" title="Платежи юр. лиц" data={legalPayments} />
+										</Grid>
+										<Grid item xs={4}>
+											<CorrOperationChart
+												id="interbankOperations_by_bank"
+												title="Межбанковские операции"
+												data={interbankOperations}
+											/>
+										</Grid>
+									</Grid>
 								</TabPanel>
 								<TabPanel value={tab} index={2}>
 									<InfoCard
