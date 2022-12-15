@@ -18,7 +18,8 @@ export const getCorrOperationsData = async (
     loroAccountsOperations,
     accredetivOperations,
     bankData,
-    remainder
+    remainder,
+    paymentCount
   ] = await new CorrOperationsBase(
     firstDate,
     secondDate,
@@ -36,6 +37,7 @@ export const getCorrOperationsData = async (
     loroAccountsOperations,
     accredetivOperations,
     bankData,
-    remainder
+    remainder,
+    paymentCount
   }
 }

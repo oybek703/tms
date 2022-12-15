@@ -48,4 +48,5 @@ export interface ICorrOperations {
 	accredetivOperations: ITransactionData[]
 	bankData: IBankData
 	remainder: IRemainderData[]
+	paymentCount: ITransactionData[]
 }

@@ -34,7 +34,7 @@ import CorrOperationChart from '../../components/charts/dealingOperations/CorrOp
 import globalStyles from '../../styles/globalStyles'
 import { formatNumber } from '../../utils'
 import { format } from 'date-fns'
-import { IBankData } from '../../interfaces/corr-operations.interfaces'
+import { IBankData } from '../../interfaces/corrOperations.interfaces'
 import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 
 const pageStyles: ISxStyles = {
@@ -65,6 +65,7 @@ const pageStyles: ISxStyles = {
 		maxWidth: 'auto',
 		maxHeight: '100%',
 		overflow: 'auto',
+		position: 'relative',
 		'& ul': { padding: 0 }
 	},
 	sideBarHeader: {
@@ -78,9 +79,10 @@ const pageStyles: ISxStyles = {
 		cursor: 'pointer',
 		textTransform: 'uppercase',
 		'&:hover': {
-			backgroundColor: palette.primary,
-			color: '#fff',
-			fontWeight: 'bold'
+			backgroundColor: palette.darkGray,
+			color: '#000',
+			fontWeight: 'bold',
+			borderRadius: '5px'
 		}
 	},
 	remainderBox: {
@@ -89,7 +91,8 @@ const pageStyles: ISxStyles = {
 		padding: 0,
 		border: '1px solid #000',
 		alignItems: 'center',
-		paddingRight: '20px'
+		paddingRight: '20px',
+		mr: 1
 	},
 	remainderButton: {
 		textTransform: 'none',
@@ -287,30 +290,34 @@ function SideBar({ bank, setBank }: Pick<ITopBarProps, 'bank' | 'setBank'>) {
 	} = useTypedSelector(state => state.corrOperations)
 	return (
 		<Grid sx={pageStyles.sideBar}>
-			<List sx={pageStyles.sideBarBankList} subheader={<li />}>
-				<li key={uuid()}>
-					<ul>
-						<ListSubheader sx={pageStyles.sideBarHeader}>По банку</ListSubheader>
-						<>
-							{bankList.map(({ bankName, clientCode }) => (
-								<ListItem sx={{ padding: '2px 5px' }} key={uuid()} onClick={() => setBank(clientCode)}>
-									<ListItemText
-										title={clientCode}
-										primaryTypographyProps={{
-											sx: {
-												...pageStyles.sideBarBankItem,
-												backgroundColor: bank === clientCode ? palette.lightGreen : 'transparent',
-												color: bank === clientCode ? '#fff' : '#000',
-												fontWeight: bank === clientCode ? 'bold' : '400'
-											}
-										}}
-										primary={bankName}
-									/>
-								</ListItem>
-							))}
-						</>
-					</ul>
-				</li>
+			<List component="ul" sx={pageStyles.sideBarBankList} subheader={<li />}>
+				<ListSubheader sx={pageStyles.sideBarHeader}>По банку</ListSubheader>
+				{bankList.map(({ bankName, clientCode }) => (
+					<ListItem
+						sx={{
+							padding: '2px 5px',
+							position: bank === clientCode ? 'sticky' : 'static',
+							top: bank === clientCode ? 0 : 'auto',
+							zIndex: 999
+						}}
+						key={uuid()}
+						onClick={() => setBank(clientCode)}
+					>
+						<ListItemText
+							title={clientCode}
+							primaryTypographyProps={{
+								sx: {
+									...pageStyles.sideBarBankItem,
+									backgroundColor: bank === clientCode ? palette.lightGreen : 'transparent',
+									color: bank === clientCode ? '#fff' : '#000',
+									fontWeight: bank === clientCode ? 'bold' : '400',
+									borderRadius: '5px'
+								}
+							}}
+							primary={bankName}
+						/>
+					</ListItem>
+				))}
 			</List>
 		</Grid>
 	)
@@ -336,7 +343,8 @@ const CorrOperations = () => {
 		interbankOperations,
 		loroAccountsOperations,
 		accredetivOperations,
-		remainder
+		remainder,
+		paymentCount
 	} = corrOperations
 	return (
 		<>
@@ -353,7 +361,7 @@ const CorrOperations = () => {
 				<Grid sx={pageStyles.main}>
 					{bank ? (
 						<>
-							<AppBar position="static" sx={globalStyles.blueBackground}>
+							<AppBar position="sticky" sx={{ ...globalStyles.blueBackground, mb: 1 }}>
 								<Tabs
 									sx={{ zIndex: 10000 }}
 									TabIndicatorProps={{ sx: { height: '4px' } }}
@@ -374,40 +382,41 @@ const CorrOperations = () => {
 										<Button disabled component="span" sx={pageStyles.remainderButton}>
 											Остатки на {format(new Date(secondDate), 'dd.MM.yyyy')}
 										</Button>
-										{remainder.map(({ saldoOut, currencyName }, index, array) => (
-											<Typography key={uuid()}>
-												<Typography component="b" sx={{ fontWeight: 'bold' }}>
-													{currencyName} -{' '}
+										{remainder.length !== 0 &&
+											remainder.map(({ saldoOut, currencyName }, index, array) => (
+												<Typography key={uuid()}>
+													<Typography component="b" sx={{ fontWeight: 'bold' }}>
+														{currencyName} -{' '}
+													</Typography>
+													<Typography component="span" sx={{ marginRight: 2 }}>
+														{formatNumber(saldoOut)} ном. {index !== array.length - 1 && '|'}
+													</Typography>
 												</Typography>
-												<Typography component="span" sx={{ marginRight: 2 }}>
-													{formatNumber(saldoOut)} ном. {index !== array.length - 1 && '|'}
-												</Typography>
-											</Typography>
-										))}
+											))}
 									</Box>
 									<Grid container spacing={2}>
 										<Grid item xs={4}>
-											<CorrOperationChart id="volume_by_bank" title="Обьем" data={volume} />
+											<CorrOperationChart id="volumeByBank" title="Обьем" data={volume} />
 										</Grid>
 										<Grid item xs={4}>
-											<CorrOperationChart id="payments_count" title="Количество платежей" data={[]} />
+											<CorrOperationChart vertical id="paymentsCount" title="Количество платежей" data={paymentCount} />
 										</Grid>
 										<Grid item xs={4}>
-											<CorrOperationChart id="fx_by_bank" title="Платежи по FX" data={fx} />
+											<CorrOperationChart id="fxByBank" title="Платежи по FX" data={fx} />
 										</Grid>
 										<Grid item xs={4}>
 											<CorrOperationChart
-												id="physicalPayments_by_bank"
+												id="physicalPaymentsByBank"
 												title="Платежи физ. лиц"
 												data={physicalPayments}
 											/>
 										</Grid>
 										<Grid item xs={4}>
-											<CorrOperationChart id="legalPayments_by_bank" title="Платежи юр. лиц" data={legalPayments} />
+											<CorrOperationChart id="legalPaymentsByBank" title="Платежи юр. лиц" data={legalPayments} />
 										</Grid>
 										<Grid item xs={4}>
 											<CorrOperationChart
-												id="interbankOperations_by_bank"
+												id="interbankOperationsByBank"
 												title="Межбанковские операции"
 												data={interbankOperations}
 											/>

@@ -20,6 +20,28 @@ export class CorrOperationsBase extends Base {
   }
 
   protected formatQuery(whereQuery: CorrOperationsQueries) {
+    if (this.clientCode) {
+      return `SELECT YEAR   AS "bankNameOrYear",
+                     DEBIT  AS "debit",
+                     CREDIT AS "credit"
+              FROM (SELECT EXTRACT(YEAR FROM OPER_DAY) AS YEAR,
+                           DC_SIGN,
+                           COUNT(*)                    AS COUNTER
+                    FROM IBS.DWH_PERSONAL_ACCOUNTS@IABS
+                    WHERE ACC_ID IN
+                          (SELECT ID
+                           FROM IBS.ACCOUNTS@IABS
+                           WHERE CLIENT_CODE = '${this.clientCode}'
+                             AND CODE_COA = '10501'
+                             AND CODE_CURRENCY = '${this.currencyCode}')
+                      AND ${whereQuery} AND OPER_DAY < DATE '${this.date}'
+                    GROUP BY EXTRACT(YEAR FROM OPER_DAY),
+                             DC_SIGN
+                    ORDER BY YEAR DESC
+                        FETCH FIRST 4 ROW ONLY) PIVOT (SUM(COUNTER) FOR DC_SIGN IN (1 AS DEBIT,
+                  4 AS CREDIT ) )
+              ORDER BY YEAR`
+    }
     return `SELECT BI.SHORT_NAME                                AS "bankNameOrYear",
                    ROUND(SUM(NVL(DEBIT, 0)) / POWER(10, 8), 2)  AS "debit",
                    ROUND(SUM(NVL(CREDIT, 0)) / POWER(10, 8), 2) AS "credit"
@@ -134,6 +156,29 @@ export class CorrOperationsBase extends Base {
             GROUP BY CODE_CURRENCY`
   }
 
+  protected paymentCountQuery = () => {
+    return `SELECT YEAR   AS "bankNameOrYear",
+                   DEBIT  AS "debit",
+                   CREDIT AS "credit"
+            FROM (SELECT EXTRACT(YEAR FROM OPER_DAY) AS YEAR,
+                         DC_SIGN,
+                         COUNT(*)                    AS COUNTER
+                  FROM IBS.DWH_PERSONAL_ACCOUNTS@IABS
+                  WHERE ACC_ID IN
+                        (SELECT ID
+                         FROM IBS.ACCOUNTS@IABS
+                         WHERE CLIENT_CODE = '${this.clientCode}'
+                           AND CODE_COA = '10501'
+                           AND CODE_CURRENCY = '${this.currencyCode}')
+                    AND OPER_DAY < DATE '${this.date}'
+                  GROUP BY EXTRACT(YEAR FROM OPER_DAY),
+                           DC_SIGN
+                  ORDER BY YEAR DESC
+                      FETCH FIRST 4 ROW ONLY) PIVOT (SUM(COUNTER) FOR DC_SIGN IN (1 AS DEBIT,
+                4 AS CREDIT ) )
+            ORDER BY YEAR`
+  }
+
   protected async bank_list() {
     return this.getDataInDates<IBankList, true>(undefined, this.bankListQuery, true)
   }
@@ -210,6 +255,17 @@ export class CorrOperationsBase extends Base {
     return []
   }
 
+  protected async payment_count() {
+    if (this.clientCode) {
+      return await this.getDataInDates<ICorrOperationsDbData, true>(
+        undefined,
+        this.paymentCountQuery,
+        true
+      )
+    }
+    return []
+  }
+
   async getRows() {
     const [
       bankList,
@@ -221,7 +277,8 @@ export class CorrOperationsBase extends Base {
       loroAccountsOperations,
       accredetivOperations,
       bankData,
-      remainder
+      remainder,
+      paymentCount
     ] = await Promise.all([
       this.bank_list(),
       this.volume(),
@@ -232,7 +289,8 @@ export class CorrOperationsBase extends Base {
       this.loro_accounts_operations(),
       this.accredetiv_operations(),
       this.bank_data(),
-      this.remainder()
+      this.remainder(),
+      this.payment_count()
     ])
     return [
       bankList,
@@ -244,7 +302,8 @@ export class CorrOperationsBase extends Base {
       loroAccountsOperations,
       accredetivOperations,
       bankData,
-      remainder
+      remainder,
+      paymentCount
     ]
   }
 }

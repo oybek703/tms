@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import { ITransactionData } from '../../../interfaces/corr-operations.interfaces'
+import { ITransactionData } from '../../../interfaces/corrOperations.interfaces'
 import { chartTitle, formatNumber } from '../../../utils'
 import palette from '../../../styles/palette'
 import { Card } from '@mui/material'
 
-function renderOptions(data1: number[], data2: number[], categories: any, title: string, id: string) {
+function renderOptions(
+	data1: number[],
+	data2: number[],
+	categories: any,
+	title: string,
+	id: string,
+	vertical?: boolean
+) {
 	const options = {
 		series: [
 			{
@@ -36,7 +43,7 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 		},
 		plotOptions: {
 			bar: {
-				horizontal: true,
+				horizontal: !vertical,
 				dataLabels: {
 					position: 'top'
 				}
@@ -45,14 +52,15 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 		dataLabels: {
 			enabled: true,
 			formatter: function (val: number) {
-				return val === 0 ? '' : val
+				return val === 0 ? '' : formatNumber(val)
 			},
 			style: {
 				fontSize: '13px',
 				fontWeight: 'bold',
 				marginTop: '20px'
 			},
-			offsetX: 45,
+			offsetX: vertical ? 0 : 45,
+			offsetY: vertical ? 45 : 0,
 			background: {
 				enabled: true,
 				foreColor: '#000',
@@ -81,7 +89,7 @@ function renderOptions(data1: number[], data2: number[], categories: any, title:
 			categories: categories,
 			labels: {
 				formatter: function (val: number) {
-					return `${val.toFixed(2)}`
+					return vertical ? val : `${val.toFixed(2)}`
 				},
 				style: {
 					fontWeight: '600'
@@ -97,20 +105,23 @@ interface ForeignCurrencyChartProps {
 	data: ITransactionData[]
 	id: string
 	title: string
+	vertical?: boolean
 }
 
-const CorrOperationChart: React.FC<ForeignCurrencyChartProps> = ({ data, title, id }) => {
-	const seriesData1 = data.map(({ debit }) => +debit.toFixed(2))
-	const seriesData2 = data.map(({ credit }) => +credit.toFixed(2))
+const CorrOperationChart: React.FC<ForeignCurrencyChartProps> = ({ data, title, id, vertical }) => {
+	const seriesData1 = data.map(({ debit }) => +(debit || 0).toFixed(2))
+	const seriesData2 = data.map(({ credit }) => +(credit || 0).toFixed(2))
 	const categories = data.map(({ bankNameOrYear }) => bankNameOrYear)
+	const isReadyToRender = seriesData1.length || seriesData2.length
 	useEffect(() => {
-		if (seriesData1.length || seriesData2.length) {
+		if (isReadyToRender) {
 			document.querySelector(`#${id}`)!.innerHTML = ''
-			renderOptions(seriesData1, seriesData2, categories, title, id)
+			renderOptions(seriesData1, seriesData2, categories, title, id, vertical)
 		}
-	}, [id, title, data, seriesData2, seriesData1, categories])
+	}, [vertical, isReadyToRender, id, title, data, seriesData2, seriesData1, categories])
 	return (
-		<Card>
+		<Card sx={{ border: '1px solid #000', mt: 1, mr: 1 }}>
+			{!isReadyToRender ? title : ''}
 			<div id={`${id}`} />
 		</Card>
 	)

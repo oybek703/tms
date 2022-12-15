@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { withToken } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
-import { ICorrOperations } from '../../../interfaces/corr-operations.interfaces'
+import { ICorrOperations } from '../../../interfaces/corrOperations.interfaces'
 import axios from 'axios'
 import { getErrorMessage } from '../../../utils'
 
@@ -46,7 +46,8 @@ const initialState: CAAInitialState = {
 		loroAccountsOperations: [],
 		accredetivOperations: [],
 		bankData: bankDataInitialState,
-		remainder: []
+		remainder: [],
+		paymentCount: []
 	},
 	error: undefined
 }
