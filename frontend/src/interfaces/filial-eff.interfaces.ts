@@ -1,4 +1,4 @@
-export interface IFcrbTableRow {
+export interface IFililiaEffRow {
 	accruedInterest: number
 	benefitInMonth: number
 	deposit202: number
@@ -16,6 +16,12 @@ export interface IFcrbTableRow {
 	roa: number
 	roe: number
 	totalLoan: number
+}
+
+export interface IFilialEffData {
+	allData: IFililiaEffRow[]
+	roaTotal: number
+	roeTotal: number
 }
 
 export enum FilialEffProperties {

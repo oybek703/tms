@@ -17,3 +17,7 @@ export interface IFilialEffectivenessData {
   resourceDebt: number
   benefitInMonth: number
 }
+
+export interface IRoaRoeTotal {
+  total: number
+}

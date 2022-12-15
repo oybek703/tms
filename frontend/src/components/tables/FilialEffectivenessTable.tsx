@@ -2,7 +2,7 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
-import { FilialEffProperties, IFcrbTableRow } from '../../interfaces/filial-eff.interfaces'
+import { FilialEffProperties, IFililiaEffRow } from '../../interfaces/filial-eff.interfaces'
 import palette from '../../styles/palette'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { FormControl, InputLabel, MenuItem, Paper, Select, Tooltip } from '@mui/material'
@@ -102,9 +102,11 @@ const columns: GridColDef[] = [
 ]
 
 const FilialEffectivenessTable = function () {
-	const [key, setKey] = useState<keyof Omit<IFcrbTableRow, 'mfo' | 'filialName'>>('deposit202')
-	const { filialEffectiveness } = useTypedSelector(state => state.filialEffectiveness)
-	const RowsInitialState: IFcrbTableRow = useMemo(
+	const [key, setKey] = useState<keyof Omit<IFililiaEffRow, 'mfo' | 'filialName'>>('deposit202')
+	const {
+		filialEffectiveness: { allData, roeTotal, roaTotal }
+	} = useTypedSelector(state => state.filialEffectiveness)
+	const RowsInitialState: IFililiaEffRow = useMemo(
 		() => ({
 			npl: 0,
 			roe: 0,
@@ -127,7 +129,7 @@ const FilialEffectivenessTable = function () {
 		[]
 	)
 	const calcTotal = useCallback(
-		(rows: IFcrbTableRow[]): IFcrbTableRow | undefined => {
+		(rows: IFililiaEffRow[]): IFililiaEffRow | undefined => {
 			if (rows.length !== 0) {
 				return rows.reduce((previousValue, currentValue) => {
 					previousValue.npl += currentValue.npl
@@ -153,16 +155,16 @@ const FilialEffectivenessTable = function () {
 		[RowsInitialState]
 	)
 	// eslint-disable-next-line
-	const totalData = useMemo(() => calcTotal(filialEffectiveness), [filialEffectiveness])
+	const totalData = useMemo(() => calcTotal(allData), [allData])
 	const updatedTotalData = {
 		...totalData,
 		nplPercent: ((totalData?.npl || 0) * 100) / (totalData?.totalLoan || 0),
-		roa: 0,
-		roe: 0
+		roa: roaTotal,
+		roe: roeTotal
 	}
-	const newRows = [...filialEffectiveness, updatedTotalData]
-	const categories = filialEffectiveness.map(({ filialName }) => filialName.replace('ФИЛИАЛИ', ''))
-	const filialData = filialEffectiveness.map(value => value[key])
+	const newRows = [...allData, updatedTotalData]
+	const categories = allData.map(({ filialName }) => filialName.replace('ФИЛИАЛИ', ''))
+	const filialData = allData.map(value => value[key])
 	return (
 		<>
 			<StyledDataGrid hideFooter columns={columns} rows={newRows} />
