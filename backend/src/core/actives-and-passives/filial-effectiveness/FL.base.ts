@@ -1,5 +1,8 @@
+import { OwnQuery } from 'core/core.interface'
+import { async } from 'rxjs'
 import { Base } from '../../base'
 import { IFilialEffectivenessData } from './FL.interface'
+// import { totalRoeandRoA } from './FL.interface'
 
 export class FilialEffectivenessBase extends Base {
   protected formatQuery() {
@@ -136,8 +139,61 @@ export class FilialEffectivenessBase extends Base {
 																		 ON ASSETS.MFO = CREDIT_PART.FILIAL_CODE`
   }
 
+  protected totalRoaQuery = () => {
+    return `SELECT (SELECT  ROUND((SELECT SUM(SALDO_ACTIVE + SALDO_PASSIVE)
+					   FROM IBS.SVOD_SALDO_DUMP@IABS
+					   WHERE DAT = OPER_DAY
+						 AND (BAL LIKE '4%'
+						   OR BAL LIKE '5%'
+						   OR BAL = '31206')) *
+					  (365 / TO_NUMBER(OPER_DAY - TRUNC(OPER_DAY, 'YYYY'))) /
+					  (SELECT SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)
+					   FROM IBS.SVOD_SALDO_DUMP@IABS
+					   WHERE DAT = OPER_DAY
+						 AND (BAL LIKE '1%' AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))) * 100,
+					  2)
+	 FROM DUAL) AS "roa"
+FROM IBS.DAY_OPERATIONAL@IABS
+WHERE DAY_STATUS = 1
+AND (OPER_DAY = DATE '${this.date}')
+ORDER BY OPER_DAY
+`
+  }
+
+  protected totalRoeQuery = () => {
+    return `SELECT (SELECT ROUND((SELECT SUM(SALDO_ACTIVE + SALDO_PASSIVE)
+					   FROM IBS.SVOD_SALDO_DUMP@IABS
+					   WHERE DAT = OPER_DAY
+						 AND (BAL LIKE '4%'
+						   OR BAL LIKE '5%'
+						   OR BAL = '31206')) *
+					  (365 / TO_NUMBER(OPER_DAY - TRUNC(OPER_DAY, 'YYYY'))) /
+					  (SELECT SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)
+					   FROM IBS.SVOD_SALDO_DUMP@IABS
+					   WHERE DAT = OPER_DAY
+						 AND (BAL LIKE '3%')) * 100, 2)
+	 FROM DUAL) AS "roe"
+FROM IBS.DAY_OPERATIONAL@IABS
+WHERE DAY_STATUS = 1
+AND (OPER_DAY =DATE'${this.date}')
+ORDER BY OPER_DAY
+`
+  }
+
+  getRoa = async () => {
+    await this.getBeforeDate()
+
+    return await this.getDataInDates(undefined, this.totalRoaQuery)
+  }
+
+  getRoe = async () => {
+    await this.getBeforeDate()
+    return await this.getDataInDates(undefined, this.totalRoeQuery)
+  }
+
   async getRows(): Promise<IFilialEffectivenessData[]> {
     await this.getBeforeDate()
+
     return await this.getDataInDates<IFilialEffectivenessData, true>('true', undefined, true)
   }
 }
