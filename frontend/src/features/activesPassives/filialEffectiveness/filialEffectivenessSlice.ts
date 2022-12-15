@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { IFcrbTableRow } from '../../../interfaces/filial-eff.interfaces'
 
-const initialState = {
+const initialState: { loading: boolean; filialEffectiveness: IFcrbTableRow[]; error: undefined } = {
 	loading: false,
 	filialEffectiveness: [],
 	error: undefined

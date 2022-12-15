@@ -1,11 +1,13 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
-import { IFcrbTableRow } from '../../interfaces/tables.interfaces'
+import { FilialEffProperties, IFcrbTableRow } from '../../interfaces/filial-eff.interfaces'
 import palette from '../../styles/palette'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import { Tooltip } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Paper, Select, Tooltip } from '@mui/material'
+import FEChart from '../charts/filialEffectiveness/FEChart'
+import { v4 as uuid } from 'uuid'
 
 const pageStyles = {
 	totalRow: {
@@ -66,10 +68,10 @@ const columns: GridColDef[] = [
 		disableColumnMenu: true,
 		sortable: false
 	}),
-	generateCellAttrs({ field: 'mfo', headerName: 'МФО', minWidth: 80, valueFormatter: undefined }),
+	generateCellAttrs({ field: 'mfo', headerName: FilialEffProperties.mfo, minWidth: 80, valueFormatter: undefined }),
 	generateCellAttrs({
 		field: 'filialName',
-		headerName: 'Наименование филиалов',
+		headerName: FilialEffProperties.filialName,
 		minWidth: 220,
 		sortable: false,
 		editable: false,
@@ -82,24 +84,25 @@ const columns: GridColDef[] = [
 			)
 		}
 	}),
-	generateCellAttrs({ field: 'deposit202', headerName: 'Депозиты довостребования' }),
-	generateCellAttrs({ field: 'deposit204', headerName: 'Сберегательные депозиты' }),
-	generateCellAttrs({ field: 'deposit206', headerName: 'Срочные депозиты клиентов' }),
-	generateCellAttrs({ field: 'totalLoan', headerName: 'Кредитний портфель', minWidth: 160 }),
-	generateCellAttrs({ field: 'issuedLoans', headerName: 'Всего проблеманые кредиты' }),
-	generateCellAttrs({ field: 'par30', headerName: 'PAR < 30' }),
-	generateCellAttrs({ field: 'par60', headerName: 'PAR < 60' }),
-	generateCellAttrs({ field: 'par90', headerName: 'PAR < 90' }),
-	generateCellAttrs({ field: 'npl', headerName: 'NPL > 90' }),
-	generateCellAttrs({ field: 'nplPercent', headerName: 'NPL (%)' }, true),
-	generateCellAttrs({ field: 'accruedInterest', headerName: 'Начисленные проценты' }),
-	generateCellAttrs({ field: 'roa', headerName: 'ROA' }, true),
-	generateCellAttrs({ field: 'roe', headerName: 'ROE' }, true),
-	generateCellAttrs({ field: 'resourceDebt', headerName: 'Задолженность по ресурсам перед ГО', minWidth: 160 }),
-	generateCellAttrs({ field: 'benefitInMonth', headerName: 'Прибыль за месяц', minWidth: 160 })
+	generateCellAttrs({ field: 'deposit202', headerName: FilialEffProperties.deposit202 }),
+	generateCellAttrs({ field: 'deposit204', headerName: FilialEffProperties.deposit204 }),
+	generateCellAttrs({ field: 'deposit206', headerName: FilialEffProperties.deposit206 }),
+	generateCellAttrs({ field: 'totalLoan', headerName: FilialEffProperties.totalLoan, minWidth: 160 }),
+	generateCellAttrs({ field: 'issuedLoans', headerName: FilialEffProperties.issuedLoans }),
+	generateCellAttrs({ field: 'par30', headerName: FilialEffProperties.par30 }),
+	generateCellAttrs({ field: 'par60', headerName: FilialEffProperties.par60 }),
+	generateCellAttrs({ field: 'par90', headerName: FilialEffProperties.par90 }),
+	generateCellAttrs({ field: 'npl', headerName: FilialEffProperties.npl }),
+	generateCellAttrs({ field: 'nplPercent', headerName: FilialEffProperties.nplPercent }, true),
+	generateCellAttrs({ field: 'accruedInterest', headerName: FilialEffProperties.accruedInterest }),
+	generateCellAttrs({ field: 'roa', headerName: FilialEffProperties.roa }, true),
+	generateCellAttrs({ field: 'roe', headerName: FilialEffProperties.roe }, true),
+	generateCellAttrs({ field: 'resourceDebt', headerName: FilialEffProperties.resourceDebt, minWidth: 160 }),
+	generateCellAttrs({ field: 'benefitInMonth', headerName: FilialEffProperties.benefitInMonth, minWidth: 160 })
 ]
 
 const FilialEffectivenessTable = function () {
+	const [key, setKey] = useState<keyof Omit<IFcrbTableRow, 'mfo' | 'filialName'>>('deposit202')
 	const { filialEffectiveness } = useTypedSelector(state => state.filialEffectiveness)
 	const RowsInitialState: IFcrbTableRow = useMemo(
 		() => ({
@@ -151,16 +154,43 @@ const FilialEffectivenessTable = function () {
 	)
 	// eslint-disable-next-line
 	const totalData = useMemo(() => calcTotal(filialEffectiveness), [filialEffectiveness])
-	const newRows = [
-		...filialEffectiveness,
-		{
-			...totalData,
-			nplPercent: ((totalData?.npl || 0) * 100) / (totalData?.totalLoan || 0),
-			roa: 0,
-			roe: 0
-		}
-	]
-	return <StyledDataGrid hideFooter columns={columns} rows={newRows} />
+	const updatedTotalData = {
+		...totalData,
+		nplPercent: ((totalData?.npl || 0) * 100) / (totalData?.totalLoan || 0),
+		roa: 0,
+		roe: 0
+	}
+	const newRows = [...filialEffectiveness, updatedTotalData]
+	const categories = filialEffectiveness.map(({ filialName }) => filialName.replace('ФИЛИАЛИ', ''))
+	const filialData = filialEffectiveness.map(value => value[key])
+	return (
+		<>
+			<StyledDataGrid hideFooter columns={columns} rows={newRows} />
+			<Paper sx={{ my: 1, pt: 1 }}>
+				<FormControl sx={{ m: 1, minWidth: 220 }} size="small">
+					<InputLabel id="demo-select-small">Категория</InputLabel>
+					<Select value={key} label="Категория" onChange={({ target: { value } }) => setKey(value as typeof key)}>
+						{Object.entries(FilialEffProperties).map(([localKey, title]) => {
+							if (![FilialEffProperties.mfo, FilialEffProperties.filialName].includes(title)) {
+								return (
+									<MenuItem key={uuid()} value={localKey}>
+										{title}
+									</MenuItem>
+								)
+							}
+						})}
+					</Select>
+				</FormControl>
+				<FEChart
+					totalData={totalData ? totalData[key] : 0}
+					filialData={filialData}
+					propertyName={FilialEffProperties[key]}
+					categories={categories}
+					id="fe_chart"
+				/>
+			</Paper>
+		</>
+	)
 }
 
 export default memo(FilialEffectivenessTable)
