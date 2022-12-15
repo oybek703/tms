@@ -1,10 +1,11 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
 import { IFcrbTableRow } from '../../interfaces/tables.interfaces'
 import palette from '../../styles/palette'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import { Tooltip } from '@mui/material'
 
 const pageStyles = {
 	totalRow: {
@@ -29,12 +30,18 @@ function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolea
 		editable: false,
 		align: 'center',
 		headerAlign: 'center',
-		renderCell: function ({ value, id, field }) {
+		renderCell: function ({ value, id, field, row: { filialName } }) {
 			if (id === 23) {
 				if (field === 'index') return <span style={pageStyles.totalRow}>ИТОГО</span>
 			}
 			if (field !== 'index' && id === 23)
 				return <span style={pageStyles.totalRow}>{withPercent ? `${formatNumber(value)} %` : formatNumber(value)}</span>
+			if (!['index', 'mfo'].includes(field))
+				return (
+					<Tooltip style={{ cursor: 'pointer' }} title={filialName} arrow disableInteractive>
+						<span>{withPercent ? `${formatNumber(value)} %` : formatNumber(value)}</span>
+					</Tooltip>
+				)
 		},
 		colSpan: function ({ id, field }) {
 			if (id === 23 && field === 'index') {
@@ -68,7 +75,11 @@ const columns: GridColDef[] = [
 		editable: false,
 		type: 'string',
 		renderCell: function ({ value }) {
-			return <span style={{ fontWeight: 'bold' }}>{value}</span>
+			return (
+				<span className="filialName" style={{ fontWeight: 'bold' }}>
+					{value}
+				</span>
+			)
 		}
 	}),
 	generateCellAttrs({ field: 'deposit202', headerName: 'Депозиты довостребования' }),

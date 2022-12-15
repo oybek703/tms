@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper'
 import { DataGrid, DataGridProps, GridColDef, ruRU } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 import { ISxStyles } from '../../interfaces/styles.interface'
+import palette from '../../styles/palette'
 
 interface StyledDataGridProps extends DataGridProps {
 	rows: unknown[]
@@ -18,7 +19,9 @@ const styles: ISxStyles = {
 		color: '#fff',
 		fontWeight: 'bold',
 		minHeight: '10px !important',
-		height: '40px'
+		height: '40px',
+		position: 'relative',
+		marginBottom: '-56px'
 	},
 	'.MuiDataGrid-cell': {
 		border: '0.1px solid #eee',
@@ -43,7 +46,7 @@ const StyledDataGrid: FC<PropsWithChildren<StyledDataGridProps>> = ({ rows, colu
 		<Box component={Paper} sx={{ height: '75vh', width: '100%' }}>
 			<DataGrid
 				rows={rows.map((row: any, i: number) => ({ ...row, index: i + 1 }))}
-				sx={styles}
+				sx={{ ...styles, overflowX: 'scroll' }}
 				columns={columns}
 				hideFooter={false}
 				localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
