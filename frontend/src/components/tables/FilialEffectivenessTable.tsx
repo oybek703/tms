@@ -4,10 +4,11 @@ import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
 import { FilialEffProperties, IFililiaEffRow } from '../../interfaces/filialEff.interfaces'
 import useTypedSelector from '../../hooks/useTypedSelector'
-import { FormControl, InputLabel, MenuItem, Paper, Select, Tooltip } from '@mui/material'
+import { FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tooltip } from '@mui/material'
 import FEChart from '../charts/filialEffectiveness/FEChart'
 import { v4 as uuid } from 'uuid'
 import globalStyles from '../../styles/globalStyles'
+import TableCap from '../helpers/TableCap'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {
@@ -156,6 +157,9 @@ const FilialEffectivenessTable = function () {
 	const filialData = allData.map(value => value[key])
 	return (
 		<>
+			<Grid sx={{ mb: -1 }} component={Paper} container justifyContent="flex-end">
+				<TableCap rows={1} text="тисяч.сум" />
+			</Grid>
 			<StyledDataGrid hideFooter columns={columns} rows={newRows} />
 			<Paper sx={{ my: 1, pt: 1 }}>
 				<FormControl sx={{ m: 1, minWidth: 220 }} size="small">

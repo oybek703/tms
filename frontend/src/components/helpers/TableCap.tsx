@@ -15,7 +15,7 @@ const Wrapper: React.FC<PropsWithChildren<WrapperProps>> = ({ children, isHead =
 }
 
 interface TableCapProps {
-	rows: any
+	rows: number
 	text: string
 	redBack?: boolean
 	isGrey?: boolean
