@@ -41,6 +41,7 @@ import {
 	fetchCorrAccountsAnalyze
 } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
 import { fetchCorrOperations } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
+import { fetchFilialCp } from '../features/dealingOperations/filialCp/filialCpSlice'
 
 const actions = {
 	...operDaysActions,
@@ -76,6 +77,7 @@ const actions = {
 	fetchCorrAccountsAnalyze,
 	fetchCaaManual,
 	fetchCorrOperations,
+	fetchFilialCp,
 	fetchGM,
 	fetchGap,
 	fetchLastGapUpdateTime,

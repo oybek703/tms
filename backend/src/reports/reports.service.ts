@@ -35,6 +35,7 @@ import getCorrAccountsAnalyzeData from '../core/dealing-operations/corr-accounts
 import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
 import { CAAChangeHistory, CAAColLabelNames, ICorrOperationsOptions } from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
+import { getFilialCpData } from '../core/dealing-operations/filial-cp'
 
 @Injectable()
 export class ReportsService {
@@ -283,6 +284,15 @@ export class ReportsService {
       options.currencyCode,
       this.oracleService,
       options.clientCode
+    )
+  }
+
+  async filialCp(options: ICorrOperationsOptions) {
+    return await getFilialCpData(
+      options.firstDate,
+      options.secondDate,
+      options.currencyCode,
+      this.oracleService
     )
   }
 }

@@ -149,7 +149,7 @@ export class FilialEffectivenessBase extends Base {
                                   FROM IBS.SVOD_SALDO_DUMP@IABS
                                   WHERE DAT = OPER_DAY
                                     AND (BAL LIKE '1%' AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))) * 100,
-                                 2)
+                                 2) * -1
                     FROM DUAL) AS "total"
             FROM IBS.DAY_OPERATIONAL@IABS
             WHERE DAY_STATUS = 1

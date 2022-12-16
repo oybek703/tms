@@ -243,4 +243,11 @@ export class ReportsController {
       throw new BadRequestException('Two dates are required!')
     return await this.reportsService.corrOperations(query)
   }
+
+  @ReportBetweenDates('Dealing operations', ReportsPaths.filialCp)
+  async filialCp(@Query() query: IReportTwoDates & { currencyCode: string }) {
+    if (!query.firstDate || !query.secondDate)
+      throw new BadRequestException('Two dates are required!')
+    return await this.reportsService.filialCp(query)
+  }
 }

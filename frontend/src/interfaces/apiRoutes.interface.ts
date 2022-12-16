@@ -24,6 +24,7 @@ export enum APIRoutes {
 	corrAccountsAnalyze = '/api/corrAccountsAnalyze',
 	caaManual = '/api/caaManual',
 	corrOperations = 'corrOperations',
+	filialCp = 'filialCp',
 	gm = 'gm',
 	gap = '/api/gap',
 	gapLastUpdate = '/api/gap/lastUpdate',

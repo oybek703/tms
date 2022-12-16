@@ -41,6 +41,7 @@ import CompetitiveAnalysis from './pages/activesPassives/CompetitiveAnalysis'
 import CorrAccountsAnalyze from './pages/dealingOperations/CorrAccountsAnalyze'
 import CAAManual from './pages/dealingOperations/CAAManual'
 import CorrOperations from './pages/dealingOperations/CorrOperations'
+import FilialCp from './pages/dealingOperations/FilialCp'
 
 function App() {
 	const {
@@ -76,6 +77,7 @@ function App() {
 							<PrivateRoute component={CorrAccountsAnalyze} path="/corrAccountsAnalyze" />
 							<PrivateRoute component={CAAManual} path="/caaManual" />
 							<PrivateRoute component={CorrOperations} path="/corrOperations" />
+							<PrivateRoute component={FilialCp} path="/filialCp" />
 							<PrivateRoute component={GM} path="/gm" />
 							<PrivateRoute component={GAP} path="/gap" />
 							<PrivateRoute component={GapSimulation} path="/gapManual" />

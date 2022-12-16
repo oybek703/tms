@@ -185,11 +185,14 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
 										)}
 									</>
 								) : (
-									pathname !== '/gap' &&
-									pathname !== '/caaManual' &&
-									pathname !== '/corrAccountsAnalyze' &&
-									pathname !== '/gapSimulation' &&
-									pathname !== '/corrOperations' &&
+									![
+										'/gap',
+										'/caaManual',
+										'/corrAccountsAnalyze',
+										'/gapSimulation',
+										'/corrOperations',
+										'/filialCp'
+									].includes(pathname) &&
 									!pathname.includes('settings') && (
 										<DatePicker reportDate={reportDate} operDays={operDays} disabled={operDaysLoading} />
 									)

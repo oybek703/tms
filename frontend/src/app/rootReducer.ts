@@ -28,6 +28,7 @@ import { authReducer } from '../features/auth/authSlice'
 import { competitiveAnalysisReducer } from '../features/activesPassives/competitiveAnalysis/competitiveAnalysisSlice'
 import { corrAccountsAnalyzeReducer } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
 import { corrOperationsActionsReducer } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
+import { filialCpActionsReducer } from '../features/dealingOperations/filialCp/filialCpSlice'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
 	competitiveAnalysis: competitiveAnalysisReducer,
 	corrAccountsAnalyze: corrAccountsAnalyzeReducer,
 	corrOperations: corrOperationsActionsReducer,
+	filialCp: filialCpActionsReducer,
 	gap: gapReducer,
 	admin: adminReducer
 })

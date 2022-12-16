@@ -180,10 +180,9 @@ const columns: GridColDef[] = [
 	})
 ]
 
-const CAAManualTable: React.FC<CAAManualTableProps> = ({ rows }) => {
-	const { corrAccountsAnalyze } = rows
+const CAAManualTable = () => {
 	const {
-		caaManual: { caaUpdateHistory }
+		caaManual: { caaUpdateHistory, corrAccountsAnalyze }
 	} = useTypedSelector(state => state.corrAccountsAnalyze)
 	const [expanded, setExpanded] = useState<string>('data')
 	const handleChange = useCallback((code: string) => {

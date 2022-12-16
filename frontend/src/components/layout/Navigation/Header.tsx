@@ -130,8 +130,13 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'dealing_operations'
 	},
 	{
-		title: 'Дешбоард по корр.операциям',
+		title: 'Дешбоард по корр.опер',
 		route: '/corrOperations',
+		group: 'dealing_operations'
+	},
+	{
+		title: 'Вал. поз. филиалов',
+		route: '/filialCp',
 		group: 'dealing_operations'
 	},
 	{

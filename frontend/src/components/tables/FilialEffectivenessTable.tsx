@@ -3,26 +3,11 @@ import { GridColDef } from '@mui/x-data-grid'
 import { formatNumber } from '../../utils'
 import StyledDataGrid from '../layout/StyledDataGrid'
 import { FilialEffProperties, IFililiaEffRow } from '../../interfaces/filialEff.interfaces'
-import palette from '../../styles/palette'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { FormControl, InputLabel, MenuItem, Paper, Select, Tooltip } from '@mui/material'
 import FEChart from '../charts/filialEffectiveness/FEChart'
 import { v4 as uuid } from 'uuid'
-
-const pageStyles = {
-	totalRow: {
-		display: 'grid',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: palette.primary,
-		fontWeight: 'bold',
-		color: '#fff',
-		width: 'calc(100% + 20px)',
-		height: '100%',
-		transform: 'translateX(-10px)',
-		marginRight: '-20px'
-	}
-}
+import globalStyles from '../../styles/globalStyles'
 
 function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolean): T {
 	return {
@@ -34,10 +19,14 @@ function generateCellAttrs<T extends GridColDef>(colDef: T, withPercent?: boolea
 		headerAlign: 'center',
 		renderCell: function ({ value, id, field, row: { filialName } }) {
 			if (id === 23) {
-				if (field === 'index') return <span style={pageStyles.totalRow}>ИТОГО</span>
+				if (field === 'index') return <span style={globalStyles.dataGridTotalRow as any}>ИТОГО</span>
 			}
 			if (field !== 'index' && id === 23)
-				return <span style={pageStyles.totalRow}>{withPercent ? `${formatNumber(value)} %` : formatNumber(value)}</span>
+				return (
+					<span style={globalStyles.dataGridTotalRow as any}>
+						{withPercent ? `${formatNumber(value)} %` : formatNumber(value)}
+					</span>
+				)
 			if (!['index', 'mfo'].includes(field))
 				return (
 					<Tooltip style={{ cursor: 'pointer' }} title={filialName} arrow disableInteractive>

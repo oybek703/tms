@@ -27,6 +27,7 @@ export enum ReportsPaths {
   corrAccountsAnalyze = 'corrAccountsAnalyze',
   caaManual = 'caaManual',
   corrOperations = 'corrOperations',
+  filialCp = 'filialCp',
   gm = 'gm',
   gap = 'gap',
   gapManual = 'gapManual',

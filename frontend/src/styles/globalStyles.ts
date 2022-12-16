@@ -1,5 +1,6 @@
 import rootColors from './palette'
 import { ISxStyles } from '../interfaces/styles.interface'
+import palette from './palette'
 
 const globalStyles: ISxStyles = {
 	userForm: {
@@ -124,6 +125,18 @@ const globalStyles: ISxStyles = {
 	inlinePickerCell: {
 		minWidth: 140,
 		maxWidth: 150
+	},
+	dataGridTotalRow: {
+		display: 'grid',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: palette.primary,
+		fontWeight: 'bold',
+		color: '#fff',
+		width: 'calc(100% + 20px)',
+		height: '100%',
+		transform: 'translateX(-10px)',
+		marginRight: '-20px'
 	}
 }
 
