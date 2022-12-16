@@ -52,7 +52,7 @@ function renderOptions(
 		dataLabels: {
 			enabled: true,
 			formatter: function (val: number) {
-				return val === 0 ? '' : formatNumber(val)
+				return val === 0 ? '' : vertical ? val : formatNumber(val)
 			},
 			style: {
 				fontSize: '13px',
@@ -93,6 +93,13 @@ function renderOptions(
 				},
 				style: {
 					fontWeight: '600'
+				}
+			}
+		},
+		yaxis: {
+			labels: {
+				formatter: function (val: unknown) {
+					return val
 				}
 			}
 		}

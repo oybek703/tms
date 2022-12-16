@@ -16,31 +16,26 @@ export class CorrOperationsBase extends Base {
     oracleService: OracleService,
     private readonly clientCode: string | undefined
   ) {
-    super(firstDate, oracleService)
+    super(secondDate, oracleService)
   }
 
   protected formatQuery(whereQuery: CorrOperationsQueries) {
     if (this.clientCode) {
-      return `SELECT YEAR   AS "bankNameOrYear",
-                     DEBIT  AS "debit",
-                     CREDIT AS "credit"
-              FROM (SELECT EXTRACT(YEAR FROM OPER_DAY) AS YEAR,
-                           DC_SIGN,
-                           COUNT(*)                    AS COUNTER
-                    FROM IBS.DWH_PERSONAL_ACCOUNTS@IABS
-                    WHERE ACC_ID IN
-                          (SELECT ID
-                           FROM IBS.ACCOUNTS@IABS
-                           WHERE CLIENT_CODE = '${this.clientCode}'
-                             AND CODE_COA = '10501'
-                             AND CODE_CURRENCY = '${this.currencyCode}')
-                      AND ${whereQuery} AND OPER_DAY < DATE '${this.date}'
-                    GROUP BY EXTRACT(YEAR FROM OPER_DAY),
-                             DC_SIGN
-                    ORDER BY YEAR DESC
-                        FETCH FIRST 4 ROW ONLY) PIVOT (SUM(COUNTER) FOR DC_SIGN IN (1 AS DEBIT,
-                  4 AS CREDIT ) )
-              ORDER BY YEAR`
+      return `SELECT EXTRACT(YEAR FROM OPER_DAY)        AS "bankNameOrYear",
+                     SUM(NVL(DEBIT, 0)) / POWER(10, 8)  AS "debit",
+                     SUM(NVL(CREDIT, 0)) / POWER(10, 8) AS "credit"
+              FROM IBS.DWH_PERSONAL_ACCOUNTS@IABS
+              WHERE ACC_ID IN
+                    (SELECT ID
+                     FROM IBS.ACCOUNTS@IABS
+                     WHERE CLIENT_CODE = '${this.clientCode}'
+                       AND CODE_COA = '10501'
+                       AND CODE_CURRENCY = '${this.currencyCode}')
+                AND ${whereQuery}
+                AND OPER_DAY < DATE '${this.date}'
+              GROUP BY EXTRACT(YEAR FROM OPER_DAY)
+              ORDER BY "bankNameOrYear" DESC
+                  FETCH FIRST 4 ROW ONLY`
     }
     return `SELECT BI.SHORT_NAME                                AS "bankNameOrYear",
                    ROUND(SUM(NVL(DEBIT, 0)) / POWER(10, 8), 2)  AS "debit",
@@ -246,14 +241,14 @@ export class CorrOperationsBase extends Base {
       return bankData
     }
     return {}
-  }
+  } /* Общая информация банка */
 
   protected async remainder() {
     if (this.clientCode) {
       return await this.getDataInDates<IRemainderDbData, true>(undefined, this.remainderQuery, true)
     }
     return []
-  }
+  } /* Остатки */
 
   protected async payment_count() {
     if (this.clientCode) {
@@ -264,7 +259,7 @@ export class CorrOperationsBase extends Base {
       )
     }
     return []
-  }
+  } /* Количество платежей */
 
   async getRows() {
     const [
