@@ -1,6 +1,7 @@
+import { ConsoleLogger } from '@nestjs/common'
 import { Base } from '../../base'
 import { OwnQuery } from '../../core.interface'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 import { ICapitalDbData, ICapitalRow } from './capital.interface'
 
 export class CapitalBase extends Base {
@@ -189,92 +190,11 @@ export class CapitalBase extends Base {
   }
 
   private currentYearProfitQuery = () => {
-    return !format(new Date(this.date), 'dd.mm.yyyy').includes('31.12')
-      ? `SELECT decode(sign(summ), 1, summ, 0) SALDO_EQ_OUT
-           FROM (SELECT nvl(col1, 0)+nvl(col2, 0)+nvl(col3, 0) AS summ
-                 FROM (SELECT
-                  (SELECT sum(saldo_equival_out)
-                           FROM
-                               (SELECT
-                                    (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                            saldo_equival_out
-                                     FROM ibs.saldo@iabs sl
-                                     WHERE sl.account_code=ac.code
-                                       AND sl.oper_day<date '${this.date}'
-                                       AND rownum =1 ) AS saldo_equival_out
-                                FROM ibs.accounts@iabs AC
-                                WHERE code_coa='30907' )) AS col1,
-                  (SELECT sum(saldo_equival_out)
-                   FROM
-                       (SELECT
-                            (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                    saldo_equival_out
-                             FROM ibs.saldo@iabs sl
-                             WHERE sl.account_code=ac.code
-                               AND sl.oper_day<date '${this.date}'
-                               AND rownum =1 ) AS saldo_equival_out
-                        FROM ibs.accounts@iabs AC
-                        WHERE code_coa='30909' )) AS col2,
-                  (SELECT col2+col1  FROM  (SELECT
-                                    (SELECT sum(saldo_equival_out) FROM (SELECT
-                                              (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                      saldo_equival_out  FROM ibs.saldo@iabs sl WHERE sl.account_code=ac.code
-                                                 AND sl.oper_day<date'${this.date}'
-                                                 AND rownum =1 ) AS saldo_equival_out
-                                          FROM ibs.accounts@iabs AC
-                                          WHERE code_coa like '4%' )) AS col1,
-                                    (SELECT sum(saldo_equival_out)
-                                     FROM
-                                         (SELECT
-                                              (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                      saldo_equival_out
-                                               FROM ibs.saldo@iabs sl
-                                               WHERE sl.account_code=ac.code
-                                                 AND sl.oper_day<date '${this.date}'
-                                                 AND rownum =1 ) AS saldo_equival_out
-                                          FROM ibs.accounts@iabs AC
-                                          WHERE code_coa like '5%' )) AS col2
-                                FROM ibs.saldo@iabs s,
-                                     ibs.accounts@iabs a
-                                WHERE s.account_code=a.code
-                                  AND rownum=1 )) AS col3  
-             FROM ibs.saldo@iabs s, ibs.accounts@iabs a WHERE s.account_code=a.code AND rownum=1))`
-      : `SELECT decode(sign(summ), 1, summ, 0) SALDO_EQ_OUT
-                FROM (SELECT nvl(col1, 0)+nvl(col2, 0)+nvl(col3, 0) AS summ FROM (SELECT
-                  (SELECT sum(saldo_equival_out)
-                   FROM
-                       (SELECT
-                            (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                    saldo_equival_out
-                             FROM ibs.saldo@iabs sl
-                             WHERE sl.account_code=ac.code
-                               AND sl.oper_day<date'${this.date}'
-                               AND rownum =1 ) AS saldo_equival_out
-                        FROM ibs.accounts@iabs AC
-                        WHERE code_coa='30907' )) AS col1,
-                  (SELECT sum(saldo_equival_out)
-                   FROM
-                       (SELECT
-                            (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                    saldo_equival_out
-                             FROM ibs.saldo@iabs sl
-                             WHERE sl.account_code=ac.code
-                               AND sl.oper_day<date '${this.date}'
-                               AND rownum =1 ) AS saldo_equival_out
-                        FROM ibs.accounts@iabs AC
-                        WHERE code_coa='30909' )) AS col2,
-                  (SELECT sum(saldo_equival_out)
-               FROM
-                   (SELECT
-                        (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                saldo_equival_out
-                         FROM ibs.saldo@iabs sl
-                         WHERE sl.account_code=ac.code
-                           AND sl.oper_day<date '${this.date}'
-                           AND rownum =1 ) AS saldo_equival_out
-                    FROM ibs.accounts@iabs AC
-                    WHERE code_coa='31206' )) AS col3  
-            FROM ibs.saldo@iabs s, ibs.accounts@iabs a WHERE s.account_code=a.code AND rownum=1 ))`
+    return `select  case  when sum(saldo_active_eq+saldo_passive_eq)/100<0 then 0 
+    else sum(saldo_active_eq+saldo_passive_eq)/power(10,2) end  AS "saldoEquivalOut" from ibs.svod_saldo_dump@iabs
+    where dat= date '${this.date}'
+    and (bal in('30907','30909','31206') or substr(bal,1,1) in('4','5'))
+    `
   }
 
   private createData = (
@@ -555,12 +475,16 @@ export class CapitalBase extends Base {
   } /* КАПИТАЛ УРОВНЯ II */
 
   private async current_year_profit() {
-    return await this.getOneRow(
+    const currentDate = this.date
+    await this.getBeforeDate()
+    const currentProfitRow = await this.getOneRow(
       '3.1.',
       'Прибыль за текущий год (при подтверждении аудиторами - 100%, в противном случае 50% от суммы)',
       undefined,
       this.currentYearProfitQuery
     )
+    this.date = currentDate
+    return currentProfitRow
   } /* Прибыль за текущий год (при подтверждении аудиторами - 100%, в противном случае 50% от суммы) */
 
   private async provisions_for_loans() {
@@ -606,7 +530,7 @@ export class CapitalBase extends Base {
     return {
       count: '3.6.',
       indicatorName: 'Вычеты превышения Капитала Уровня II над Капиталом Уровня I',
-      value: 0
+      value: 2
     }
   } /* Вычеты превышения Капитала Уровня II над Капиталом Уровня I  */
 
@@ -624,6 +548,7 @@ export class CapitalBase extends Base {
   } /* СКОРРЕКТИРОВАННЫЙ КАПИТАЛ УРОВНЯ II */
 
   private total_regular_capital(...args: ICapitalRow[]) {
+    this.createData('V', 'ВСЕГО РЕГУЛЯТИВНЫЙ КАПИТАЛ', this.getTotal(...args), true)
     return this.createData('V', 'ВСЕГО РЕГУЛЯТИВНЫЙ КАПИТАЛ', this.getTotal(...args), true)
   } /* ВСЕГО РЕГУЛЯТИВНЫЙ КАПИТАЛ */
 
@@ -723,11 +648,19 @@ export class CapitalBase extends Base {
       subordinatedDebt,
       deductionsOfExcess
     )
+    // console.log('currentYearProfit', currentYearProfit)
+    // console.log('provisionForLoans', provisionForLoans)
+    // console.log('surplusOverCost', surplusOverCost)
+    // console.log('otherCapitalInstruments', otherCapitalInstruments)
+    // console.log('subordinatedDebt', subordinatedDebt)
+    // console.log('deductionsOfExcess', deductionsOfExcess)
+
     const correctedCapitalLevel2 = this.corrected_capital_level2(totalCapitalLevel2)
     const totalRegularCapital = this.total_regular_capital(
       totalAdjustedCapitalLevel1,
       totalCapitalLevel2
     )
+
     return [
       ordinaryShares,
       fullPaidShares,
