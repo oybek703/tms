@@ -27,7 +27,7 @@ const PercentIndicator: React.FC<PercentIndicatorProps> = ({ number, alignText =
 			) : (number >= 5 && number < 8) || (number > -8 && number <= -5) ? (
 				<StopIcon sx={{ color: '#ecd100' }} />
 			) : (
-				(number <= -8 || number <= 8) && <StopIcon color="error" />
+				(number <= -8 || number >= 8) && <StopIcon color="error" />
 			)}
 			{
 				<Typography variant="caption" sx={{ color: '#000' }}>
