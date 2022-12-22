@@ -196,6 +196,38 @@ export class CapitalBase extends Base {
     and (bal in('30907','30909','31206') or substr(bal,1,1) in('4','5'))
     `
   }
+  private subordinatedDebtQuery = () => {
+    return `SELECT Round(SUM(Decode(Floor(( Min(( ds.date_validate )) - DATE '${this.date}' )
+    / 365),
+0, 0,
+1,
+    0.2 *
+        saldo_equival_out,
+2,
+    0.4 *
+        saldo_equival_out,
+3,
+    0.6 *
+        saldo_equival_out,
+4,
+    0.8 *
+        saldo_equival_out,
+saldo_equival_out) / Power(10, 5)), 1) AS "saldoEquivalOut"
+FROM   ibs.dep_accounts@iabs dep_acc
+join ibs.accounts@iabs ac
+ON dep_acc.acc_id = ac.id
+join ibs.dep_schedules_forecast@iabs ds
+ON ds.contract_id = dep_acc.contract_id
+WHERE  ac.code_coa = '23702'
+AND condition = 'A'
+AND ds.TYPE = 1
+AND ds.date_validate > DATE'${this.date}'
+GROUP  BY ac.name,
+ac.code,
+dep_acc.contract_id,
+saldo_equival_out
+   `
+  }
 
   private createData = (
     count: string,
@@ -519,18 +551,19 @@ export class CapitalBase extends Base {
   } /* Другие инструменты капитала (не более 1/3 части капитала 1 уровня после вычетов) */
 
   private async subordinated_debt() {
-    const res = await this.getOneRow('3.5.', 'Субординированный долг', `CODE_COA='23702'`)
-    return {
-      ...res,
-      value: 0.2 * res.value
-    }
+    return await this.getOneRow(
+      '3.5.',
+      'Субординированный долг',
+      undefined,
+      this.subordinatedDebtQuery
+    )
   } /* Субординированный долг */
 
   private deductions_of_excess() {
     return {
       count: '3.6.',
       indicatorName: 'Вычеты превышения Капитала Уровня II над Капиталом Уровня I',
-      value: 2
+      value: 0
     }
   } /* Вычеты превышения Капитала Уровня II над Капиталом Уровня I  */
 
