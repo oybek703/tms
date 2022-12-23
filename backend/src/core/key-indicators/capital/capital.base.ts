@@ -1,7 +1,5 @@
-import { ConsoleLogger } from '@nestjs/common'
 import { Base } from '../../base'
 import { OwnQuery } from '../../core.interface'
-// import { format } from 'date-fns'
 import { ICapitalDbData, ICapitalRow } from './capital.interface'
 
 export class CapitalBase extends Base {
@@ -18,215 +16,194 @@ export class CapitalBase extends Base {
   }
 
   private fullPaidSharesQuery = () => {
-    return `SELECT ROUND((NVL(col1, 0) + NVL(col2, 0) - NVL(col3, 0)) / POWER(10, 5), 2) AS "saldoEquivalOut"
-                FROM  (SELECT (SELECT SUM(saldo_equival_out)
-               FROM  (SELECT AC.code,
-                             (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                     saldo_equival_out
-                              FROM   ibs.saldo@iabs sl
-                              WHERE  sl.account_code = ac.code
-                                AND sl.oper_day < DATE '${this.date}'
-                                AND ROWNUM = 1) AS saldo_equival_out
-                      FROM   ibs.accounts@iabs AC
-                      WHERE  code_coa = '30312')) AS col1,
-              (SELECT SUM(saldo_equival_out)
-               FROM  (SELECT AC.code,
-                             (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                     oper_day
-                              FROM   ibs.saldo@iabs sl
-                              WHERE  sl.account_code = ac.code
-                                AND sl.oper_day < DATE '${this.date}'
-                                AND ROWNUM = 1) AS oper_day,
-                             (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                     saldo_equival_out
-                              FROM   ibs.saldo@iabs sl
-                              WHERE  sl.account_code = ac.code
-                                AND sl.oper_day < DATE '${this.date}'
-                                AND ROWNUM = 1) AS saldo_equival_out
-                      FROM   ibs.accounts@iabs AC
-                      WHERE  code_coa = '30318')) AS col2,
-              (SELECT SUM(saldo_equival_out)
-               FROM  (SELECT AC.code,
-                             (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                     oper_day
-                              FROM   ibs.saldo@iabs sl
-                              WHERE  sl.account_code = ac.code
-                                AND sl.oper_day < DATE '${this.date}'
-                                AND ROWNUM = 1) AS oper_day,
-                             (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                     saldo_equival_out
-                              FROM   ibs.saldo@iabs sl
-                              WHERE  sl.account_code = ac.code
-                                AND sl.oper_day < DATE '${this.date}'
-                                AND ROWNUM = 1) AS saldo_equival_out
-                      FROM   ibs.accounts@iabs AC
-                      WHERE  code_coa = '30306')) AS col3
-       FROM   ibs.saldo@iabs s,
-              ibs.accounts@iabs a
-       WHERE  a.code = s.account_code
-         AND ROWNUM = 1)`
+    return `SELECT ROUND((NVL(COL1, 0) + NVL(COL2, 0) - NVL(COL3, 0)) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM (SELECT (SELECT SUM(SALDO_EQUIVAL_OUT)
+                          FROM (SELECT AC.CODE,
+                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                               SALDO_EQUIVAL_OUT
+                                        FROM IBS.SALDO@IABS SL
+                                        WHERE SL.ACCOUNT_CODE = AC.CODE
+                                          AND SL.OPER_DAY < DATE '${this.date}'
+                                          AND ROWNUM = 1) AS saldo_equival_out
+                                FROM IBS.ACCOUNTS@IABS AC
+                                WHERE CODE_COA = '30312')) AS col1,
+                         (SELECT SUM(SALDO_EQUIVAL_OUT)
+                          FROM (SELECT AC.CODE,
+                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                               OPER_DAY
+                                        FROM IBS.SALDO@IABS SL
+                                        WHERE SL.ACCOUNT_CODE = AC.CODE
+                                          AND SL.OPER_DAY < DATE '${this.date}'
+                                          AND ROWNUM = 1) AS oper_day,
+                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                               SALDO_EQUIVAL_OUT
+                                        FROM IBS.SALDO@IABS SL
+                                        WHERE SL.ACCOUNT_CODE = AC.CODE
+                                          AND SL.OPER_DAY < DATE '${this.date}'
+                                          AND ROWNUM = 1) AS saldo_equival_out
+                                FROM IBS.ACCOUNTS@IABS AC
+                                WHERE CODE_COA = '30318')) AS col2,
+                         (SELECT SUM(SALDO_EQUIVAL_OUT)
+                          FROM (SELECT AC.CODE,
+                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                               OPER_DAY
+                                        FROM IBS.SALDO@IABS SL
+                                        WHERE SL.ACCOUNT_CODE = AC.CODE
+                                          AND SL.OPER_DAY < DATE '${this.date}'
+                                          AND ROWNUM = 1) AS oper_day,
+                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                               SALDO_EQUIVAL_OUT
+                                        FROM IBS.SALDO@IABS SL
+                                        WHERE SL.ACCOUNT_CODE = AC.CODE
+                                          AND SL.OPER_DAY < DATE '${this.date}'
+                                          AND ROWNUM = 1) AS saldo_equival_out
+                                FROM IBS.ACCOUNTS@IABS AC
+                                WHERE CODE_COA = '30306')) AS col3
+                  FROM IBS.SALDO@IABS S,
+                       IBS.ACCOUNTS@IABS A
+                  WHERE A.CODE = S.ACCOUNT_CODE
+                    AND ROWNUM = 1)`
   }
 
   private reversePurchasedQuery = () => {
-    return `select round(nvl(sum(saldo_equival_out),0) / power(10, 5), 2) AS "saldoEquivalOut" from(
-                select 
-                (select --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                saldo_equival_out
-                from ibs.saldo@iabs sl 
-                where
-                sl.account_code=ac.code
-                and sl.oper_day< DATE '${this.date}'
-                and rownum =1)
-                as saldo_equival_out
-                from ibs.accounts@iabs  AC
-                where code_coa='30324')`
+    return `SELECT ROUND(NVL(SUM(SALDO_EQUIVAL_OUT), 0) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                 SALDO_EQUIVAL_OUT
+                          FROM IBS.SALDO@IABS SL
+                          WHERE SL.ACCOUNT_CODE = AC.CODE
+                            AND SL.OPER_DAY < DATE '${this.date}'
+                            AND ROWNUM = 1) AS saldo_equival_out
+                  FROM IBS.ACCOUNTS@IABS AC
+                  WHERE CODE_COA = '30324')`
   }
 
   private pastPeriodsQuery = () => {
-    return `SELECT 
-       round(decode(sign(sum(saldo_equival_out)), -1, sum(saldo_equival_out), 0) / power(10,5), 2) AS "saldoEquivalOut"
-                FROM
-                    (SELECT
-                         (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                 saldo_equival_out
-                          FROM ibs.saldo@iabs sl
-                          WHERE sl.account_code=ac.code
-                            AND sl.oper_day<date '${this.date}'
-                            AND rownum =1) AS saldo_equival_out
-                     FROM ibs.accounts@iabs AC
-                     WHERE code_coa='31203')`
+    return `SELECT ROUND(DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, SUM(SALDO_EQUIVAL_OUT), 0) / POWER(10, 5), 2)
+                       AS "saldoEquivalOut"
+            FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                 SALDO_EQUIVAL_OUT
+                          FROM IBS.SALDO@IABS SL
+                          WHERE SL.ACCOUNT_CODE = AC.CODE
+                            AND SL.OPER_DAY < DATE '${this.date}'
+                            AND ROWNUM = 1) AS saldo_equival_out
+                  FROM IBS.ACCOUNTS@IABS AC
+                  WHERE CODE_COA = '31203')`
   }
 
   private currentYearQuery = () => {
-    return `SELECT
-                    ROUND(DECODE(SUM_31206, 0, SUM_4_5, SUM_31206) / POWER(10, 5), 2) AS "saldoEquivalOut"
-                FROM (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, SUM(SALDO_EQUIVAL_OUT),
-                                    0) AS SUM_31206
-                      FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                           SALDO_EQUIVAL_OUT
-                                    FROM IBS.SALDO@IABS SL
-                                    WHERE SL.ACCOUNT_CODE = AC.CODE
-                                      AND SL.OPER_DAY < DATE '${this.date}'
-                                      AND ROWNUM = 1) AS saldo_equival_out
-                            FROM IBS.ACCOUNTS@IABS AC
-                            WHERE CODE_COA = '31206')), (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, ABS(SUM(SALDO_EQUIVAL_OUT)),
-                                                                       0) AS SUM_4_5
-                                                         FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                              SALDO_EQUIVAL_OUT
-                                                                       FROM IBS.SALDO@IABS SL
-                                                                       WHERE SL.ACCOUNT_CODE = AC.CODE
-                                                                         AND SL.OPER_DAY < DATE '${this.date}'
-                                                                         AND ROWNUM = 1) AS saldo_equival_out
-                                                               FROM IBS.ACCOUNTS@IABS AC
-                                                               WHERE CODE_COA LIKE '4%'
-                                                                  OR CODE_COA LIKE '5%'))`
+    return `SELECT ROUND(DECODE(SUM_31206, 0, SUM_4_5, SUM_31206) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, SUM(SALDO_EQUIVAL_OUT),
+                                0) AS SUM_31206
+                  FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                       SALDO_EQUIVAL_OUT
+                                FROM IBS.SALDO@IABS SL
+                                WHERE SL.ACCOUNT_CODE = AC.CODE
+                                  AND SL.OPER_DAY < DATE '${this.date}'
+                                  AND ROWNUM = 1) AS saldo_equival_out
+                        FROM IBS.ACCOUNTS@IABS AC
+                        WHERE CODE_COA = '31206')),
+                 (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, ABS(SUM(SALDO_EQUIVAL_OUT)),
+                                0) AS SUM_4_5
+                  FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                       SALDO_EQUIVAL_OUT
+                                FROM IBS.SALDO@IABS SL
+                                WHERE SL.ACCOUNT_CODE = AC.CODE
+                                  AND SL.OPER_DAY < DATE '${this.date}'
+                                  AND ROWNUM = 1) AS saldo_equival_out
+                        FROM IBS.ACCOUNTS@IABS AC
+                        WHERE CODE_COA LIKE '4%'
+                           OR CODE_COA LIKE '5%'))`
   }
 
   private fullyPaidSharesQuery = () => {
-    return `SELECT
-                round(nvl(((SELECT sum(saldo_equival_out)
-                            FROM
-                                (SELECT
-                                     (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                             saldo_equival_out
-                                      FROM ibs.saldo@iabs sl
-                                      WHERE sl.account_code=ac.code
-                                        AND sl.oper_day<date '${this.date}'
-                                        AND rownum =1 ) AS saldo_equival_out
-                                 FROM ibs.accounts@iabs AC
-                                 WHERE code_coa in ('30315', '30309')))-(SELECT sum(saldo_equival_out)
-                                                                         FROM
-                                                                             (SELECT
-                                                                                  (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                                          saldo_equival_out
-                                                                                   FROM ibs.saldo@iabs sl
-                                                                                   WHERE sl.account_code=ac.code
-                                                                                     AND sl.oper_day<date '${this.date}'
-                                                                                     AND rownum =1 ) AS saldo_equival_out
-                                                                              FROM ibs.accounts@iabs AC
-                                                                              WHERE code_coa='30303'))), 0) / power(10, 5), 2) AS "saldoEquivalOut"
-        FROM dual`
+    return `SELECT ROUND(NVL(((SELECT SUM(SALDO_EQUIVAL_OUT)
+                               FROM (SELECT (SELECT
+                                                 --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                                 SALDO_EQUIVAL_OUT
+                                             FROM IBS.SALDO@IABS SL
+                                             WHERE SL.ACCOUNT_CODE = AC.CODE
+                                               AND SL.OPER_DAY < DATE '${this.date}'
+                                               AND ROWNUM = 1) AS saldo_equival_out
+                                     FROM IBS.ACCOUNTS@IABS AC
+                                     WHERE CODE_COA IN ('30315', '30309')))
+        - (SELECT SUM(SALDO_EQUIVAL_OUT)
+           FROM (SELECT (SELECT
+                             --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                             SALDO_EQUIVAL_OUT
+                         FROM IBS.SALDO@IABS SL
+                         WHERE SL.ACCOUNT_CODE = AC.CODE
+                           AND SL.OPER_DAY < DATE
+                                 '${this.date}'
+                           AND ROWNUM = 1) AS
+                            saldo_equival_out
+                 FROM IBS.ACCOUNTS@IABS AC
+                 WHERE CODE_COA = '30303'))), 0) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM DUAL`
   }
 
   private totalCapitalInvestmentQuery = () => {
-    return `SELECT
-                    ROUND(((SELECT sum(saldo_equival_out)
-                            FROM (SELECT
-                                      (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                              saldo_equival_out
-                                       FROM ibs.saldo@iabs sl
-                                       WHERE sl.account_code=ac.code
-                                         AND sl.oper_day<date '${this.date}'
-                                         AND rownum =1 ) AS saldo_equival_out
-                                  FROM ibs.accounts@iabs AC
-                                  WHERE code_coa in ('10711',
-                                                     '10719',
-                                                     '10779',
-                                                     '10821',
-                                                     '10813',
-                                                     '10823',
-                                                     '10825',
-                                                     '10879',
-                                                     '10899')
-                                     OR code_coa like '158%'
-                                     OR code_coa like '159%'))-(SELECT sum(saldo_equival_out)
-                                                                FROM
-                                                                    (SELECT
-                                                                         (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                                 saldo_equival_out
-                                                                          FROM ibs.saldo@iabs sl
-                                                                          WHERE sl.account_code=ac.code
-                                                                            AND sl.oper_day<date'${this.date}'
-                                                                            AND rownum =1 ) AS saldo_equival_out
-                                                                     FROM ibs.accounts@iabs AC
-                                                                     WHERE code_coa in ('10723',
-                                                                                        '10725',
-                                                                                        '10799',
-                                                                                        '10823',
-                                                                                        '10825',
-                                                                                        '15913',
-                                                                                        '10899')))) / POWER(10, 5), 2) AS "saldoEquivalOut"
-                FROM dual`
+    return `SELECT ROUND(((SELECT SUM(SALDO_EQUIVAL_OUT)
+                           FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                                SALDO_EQUIVAL_OUT
+                                         FROM IBS.SALDO@IABS SL
+                                         WHERE SL.ACCOUNT_CODE = AC.CODE
+                                           AND SL.OPER_DAY < DATE '${this.date}'
+                                           AND ROWNUM = 1) AS saldo_equival_out
+                                 FROM IBS.ACCOUNTS@IABS AC
+                                 WHERE CODE_COA IN ('10711', '10719', '10779', '10821',
+                                                    '10813', '10823', '10825', '10879',
+                                                    '10899')
+                                    OR CODE_COA LIKE '158%'
+                                    OR CODE_COA LIKE '159%')) - (SELECT SUM(SALDO_EQUIVAL_OUT)
+                                                                 FROM (SELECT (SELECT
+                                                                                   --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
+                                                                                   SALDO_EQUIVAL_OUT
+                                                                               FROM IBS.SALDO@IABS SL
+                                                                               WHERE SL.ACCOUNT_CODE = AC.CODE
+                                                                                 AND SL.OPER_DAY < DATE '${this.date}'
+                                                                                 AND ROWNUM = 1) AS
+                                                                                  saldo_equival_out
+                                                                       FROM IBS.ACCOUNTS@IABS AC
+                                                                       WHERE CODE_COA IN
+                                                                             ('10723', '10725',
+                                                                              '10799', '10823',
+                                                                              '10825', '15913',
+                                                                              '10899')))) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM DUAL`
   }
 
   private currentYearProfitQuery = () => {
-    return `select  case  when sum(saldo_active_eq+saldo_passive_eq)/100<0 then 0 
-    else sum(saldo_active_eq+saldo_passive_eq)/power(10,2) end  AS "saldoEquivalOut" from ibs.svod_saldo_dump@iabs
-    where dat= date '${this.date}'
-    and (bal in('30907','30909','31206') or substr(bal,1,1) in('4','5'))
-    `
+    return `SELECT CASE
+                       WHEN SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / 100 < 0 THEN 0
+                       ELSE SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / POWER(10, 2)
+                       END AS "saldoEquivalOut"
+            FROM IBS.SVOD_SALDO_DUMP@IABS
+            WHERE DAT = DATE '${this.date}'
+              AND (BAL IN ('30907', '30909', '31206')
+                OR SUBSTR(BAL, 1, 1) IN ('4', '5'))`
   }
+
   private subordinatedDebtQuery = () => {
-    return `SELECT Round(SUM(Decode(Floor(( Min(( ds.date_validate )) - DATE '${this.date}' )
-    / 365),
-0, 0,
-1,
-    0.2 *
-        saldo_equival_out,
-2,
-    0.4 *
-        saldo_equival_out,
-3,
-    0.6 *
-        saldo_equival_out,
-4,
-    0.8 *
-        saldo_equival_out,
-saldo_equival_out) / Power(10, 5)), 1) AS "saldoEquivalOut"
-FROM   ibs.dep_accounts@iabs dep_acc
-join ibs.accounts@iabs ac
-ON dep_acc.acc_id = ac.id
-join ibs.dep_schedules_forecast@iabs ds
-ON ds.contract_id = dep_acc.contract_id
-WHERE  ac.code_coa = '23702'
-AND condition = 'A'
-AND ds.TYPE = 1
-AND ds.date_validate > DATE'${this.date}'
-GROUP  BY ac.name,
-ac.code,
-dep_acc.contract_id,
-saldo_equival_out
-   `
+    return `SELECT ROUND(SUM(DECODE(FLOOR((MIN((DS.DATE_VALIDATE)) - DATE '${this.date}') / 365),
+                                    0, 0,
+                                    1, 0.2 * SALDO_EQUIVAL_OUT,
+                                    2, 0.4 * SALDO_EQUIVAL_OUT,
+                                    3, 0.6 * SALDO_EQUIVAL_OUT,
+                                    4, 0.8 * SALDO_EQUIVAL_OUT,
+                                    SALDO_EQUIVAL_OUT) / POWER(10, 5)), 1) AS "saldoEquivalOut"
+            FROM IBS.DEP_ACCOUNTS@IABS DEP_ACC
+                     JOIN IBS.ACCOUNTS@IABS AC
+                          ON DEP_ACC.ACC_ID = AC.ID
+                     JOIN IBS.DEP_SCHEDULES_FORECAST@IABS DS
+                          ON DS.CONTRACT_ID = DEP_ACC.CONTRACT_ID
+            WHERE AC.CODE_COA = '23702'
+              AND CONDITION = 'A'
+              AND DS.TYPE = 1
+              AND DS.DATE_VALIDATE > DATE '${this.date}'
+            GROUP BY AC.NAME,
+                     AC.CODE,
+                     DEP_ACC.CONTRACT_ID,
+                     SALDO_EQUIVAL_OUT`
   }
 
   private createData = (
@@ -681,13 +658,6 @@ saldo_equival_out
       subordinatedDebt,
       deductionsOfExcess
     )
-    // console.log('currentYearProfit', currentYearProfit)
-    // console.log('provisionForLoans', provisionForLoans)
-    // console.log('surplusOverCost', surplusOverCost)
-    // console.log('otherCapitalInstruments', otherCapitalInstruments)
-    // console.log('subordinatedDebt', subordinatedDebt)
-    // console.log('deductionsOfExcess', deductionsOfExcess)
-
     const correctedCapitalLevel2 = this.corrected_capital_level2(totalCapitalLevel2)
     const totalRegularCapital = this.total_regular_capital(
       totalAdjustedCapitalLevel1,
