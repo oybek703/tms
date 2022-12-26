@@ -129,12 +129,6 @@ export class LiquidityAssetsCurrent extends LiquidityAssets {
   } /* Всего активы (чистые) */
 
   protected async government_bills() {
-    return await this.getOneRow(
-      '2',
-      'Гос . ценные бумаги',
-      `CODE_COA LIKE '107%' AND CODE_COA != '10793'`,
-      undefined,
-      true
-    )
+    return await this.getOneRow('2', 'Гос . ценные бумаги', `CODE_COA LIKE '107%'`, undefined, true)
   } /* Гос . ценные бумаги */
 }
