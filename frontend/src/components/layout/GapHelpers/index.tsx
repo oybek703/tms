@@ -220,20 +220,35 @@ function LcrAndNsfrTable({ data = [], month = '' }) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{data.map((row, index) =>
+					{data.map((row, index, array) =>
 						index === 0 ? (
 							<RedRow key={uuid()} row={row} />
 						) : (
 							<TableRow hover key={uuid()}>
-								<TableCell>{row['indicatorName']}</TableCell>
-								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['total'])}
+								{/* TODO remove them later */}
+								<TableCell>
+									{[1, 6].includes(index) && array.length > 5 ? <b>{row['indicatorName']}</b> : row['indicatorName']}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['nationalCurrency'])}
+									{[1, 6].includes(index) && array.length > 5 ? (
+										<b>{formatNumber(row['total'])}</b>
+									) : (
+										formatNumber(row['total'])
+									)}
 								</TableCell>
 								<TableCell align="center" sx={globalStyles.noWrap}>
-									{formatNumber(row['foreignCurrency'])}
+									{[1, 6].includes(index) && array.length > 5 ? (
+										<b>{formatNumber(row['nationalCurrency'])}</b>
+									) : (
+										formatNumber(row['nationalCurrency'])
+									)}
+								</TableCell>
+								<TableCell align="center" sx={globalStyles.noWrap}>
+									{[1, 6].includes(index) && array.length > 5 ? (
+										<b>{formatNumber(row['foreignCurrency'])}</b>
+									) : (
+										formatNumber(row['foreignCurrency'])
+									)}
 								</TableCell>
 							</TableRow>
 						)
