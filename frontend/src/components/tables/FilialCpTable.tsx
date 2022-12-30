@@ -43,10 +43,10 @@ const FilialCpTable = () => {
 						{colNames.map(() => (
 							<Fragment key={uuid()}>
 								<TableCell align="center">
-									<BoldWithColor>Покупка</BoldWithColor>
+									<BoldWithColor>Продажа</BoldWithColor>
 								</TableCell>
 								<TableCell align="center">
-									<BoldWithColor>Продажа</BoldWithColor>
+									<BoldWithColor>Покупка</BoldWithColor>
 								</TableCell>
 							</Fragment>
 						))}

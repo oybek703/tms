@@ -26,7 +26,7 @@ function renderOptions(
 		],
 		colors: [palette.primary, palette.lightBlue],
 		chart: {
-			height: 500,
+			height: 620,
 			width: '100%',
 			type: 'bar',
 			toolbar: {
