@@ -19,7 +19,7 @@ export class DashboardLiquidity extends Base {
                      (SELECT EXTRACT(MONTH FROM OPER_DAY) MONTH_NUM,
                              MAX(OPER_DAY) AS             MAX_OPER_DAYS
                       FROM IBS.DAY_OPERATIONAL@IABS
-                      WHERE OPER_DAY BETWEEN TRUNC(DATE '${this.date}', 'YYYY') AND DATE '${this.date}'
+                      WHERE OPER_DAY BETWEEN TRUNC(DATE '2022-12-30', 'YYYY') AND DATE '2022-12-30'
                         AND DAY_STATUS = 1
                       GROUP BY EXTRACT(MONTH FROM OPER_DAY),
                                EXTRACT(YEAR FROM OPER_DAY)
