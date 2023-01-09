@@ -17,6 +17,11 @@ const CurrencyPositionTable = function () {
 	const { currencyPosition } = useTypedSelector(state => state.currencyPosition)
 	const { allRows = [], tableSumData = [] } = currencyPosition
 	const { reportDate } = useTypedSelector(state => state.operDays)
+
+	// allRows.map((row: any) => {
+	// 	console.log(row)
+	// })
+
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`currency-position-${formatOneDate(reportDate)}`} />
@@ -223,7 +228,7 @@ const CurrencyPositionTable = function () {
 								{row.isTableHead ? <b>{formatNumber(row.zero8, true)}</b> : formatNumber(row.zero8, true)}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
-								{row.isTableHead ? <b>{formatNumber(row.opedCurRate, true)}</b> : formatNumber(row.opedCurRate, true)}
+								{row.isTableHead ? <b>{formatNumber(row.openCurRate, true)}</b> : formatNumber(row.openCurRate, true)}
 							</TableCell>
 							<TableCell sx={globalStyles.noWrap} align="center">
 								{row.isTableHead ? <b>{formatNumber(row.forCurrRate, true)}</b> : formatNumber(row.forCurrRate, true)}

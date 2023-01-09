@@ -43,7 +43,7 @@ const columns: GridColDef[] = [
 		headerAlign: 'center'
 	},
 	{
-		field: 'dateEnd',
+		field: 'dateBegin',
 		headerName: 'Дата размещения по договору',
 		type: 'string',
 		width: 220,
@@ -52,7 +52,7 @@ const columns: GridColDef[] = [
 		headerAlign: 'center'
 	},
 	{
-		field: 'dateBegin',
+		field: 'dateEnd',
 		headerName: 'Дата погашения по договору',
 		type: 'string',
 		width: 220,
@@ -60,6 +60,7 @@ const columns: GridColDef[] = [
 		align: 'center',
 		headerAlign: 'center'
 	},
+
 	{
 		field: 'currencyCode',
 		headerName: 'Валюта счета',
