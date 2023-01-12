@@ -32,7 +32,7 @@ const Position = ({ position = [] }) => {
 							<BoldWithColor>Валюта</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
-							<BoldWithColor>Позиция</BoldWithColor>
+							<BoldWithColor>Позиция в номинале</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
 							<BoldWithColor>Позиция в сумовом эквиваленте</BoldWithColor>
