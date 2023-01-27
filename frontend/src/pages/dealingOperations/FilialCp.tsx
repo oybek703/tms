@@ -37,7 +37,7 @@ const FilialCp = () => {
 						handleDateChange={handleDateChange('second_date')}
 					/>
 					&nbsp;&nbsp;
-					<span>млн.</span>
+					{/* <span>млн.</span> */}
 					&nbsp;&nbsp;
 					<FormControl size="small">
 						<Select
@@ -62,3 +62,4 @@ const FilialCp = () => {
 }
 
 export default FilialCp
+43333
