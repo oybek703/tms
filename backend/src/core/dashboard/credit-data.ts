@@ -30,14 +30,18 @@ export class CreditData extends Base {
               AND TERM_LOAN_TYPE = ${termType}`
   }
 
-  private issuedCreditsQuery = (codeCurrency: string) => {
+  private getMaxOperDayQuery = () => {
+    return `SELECT TO_CHAR(DECODE((DATE '${this.date}'), TRUNC(SYSDATE, 'DD'),
+                                  (SELECT MAX(OPER_DAY) FROM IBS.DAY_OPERATIONAL@IABS WHERE DAY_STATUS = 1),
+                                  DATE '${this.date}'), 'YYYY-MM-DD') AS "maxOperDay"
+            FROM DUAL`
+  }
+
+  private issuedCreditsQuery = (codeCurrency: string, maxOperDay: Date) => {
     const power = codeCurrency === '000' ? 9 : 10
     return `SELECT ROUND(NVL(SUM(DEBIT_EQUIVAL) / POWER(10, ${power}), 0), 2) AS "sum"
             FROM CR.LOANS_ISSUED_DWH@RISK
-            WHERE OPER_DAY = (SELECT DECODE((DATE '${this.date}'), TRUNC(SYSDATE, 'DD'),
-                                            (SELECT MAX(OPER_DAY) FROM CR.DAY_OPERATIONAL@RISK WHERE DAY_STATUS=1),
-                                            DATE '${this.date}')
-                              FROM DUAL)
+            WHERE OPER_DAY = DATE '${maxOperDay}'
               AND CODE_CURRENCY = ${codeCurrency}`
   }
 
@@ -47,8 +51,14 @@ export class CreditData extends Base {
   }
 
   private async issued_credits() {
+    const { maxOperDay } = await this.getDataInDates<{ maxOperDay: Date }>(
+      undefined,
+      this.getMaxOperDayQuery
+    )
     return await Promise.all(
-      this.currencyCodes.map(c => this.getOneRow(undefined, this.issuedCreditsQuery.bind(this, c)))
+      this.currencyCodes.map(c =>
+        this.getOneRow(undefined, this.issuedCreditsQuery.bind(this, c, maxOperDay))
+      )
     )
   } /* Выдача кредитов */
 
