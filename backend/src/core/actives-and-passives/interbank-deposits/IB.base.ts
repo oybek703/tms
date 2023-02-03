@@ -51,7 +51,7 @@ export class InterbankDepositsBase extends Base {
       return b
     })
     const percents = allMappedBanks.map(
-      b => +((b['saldoOut'] * b['percentShare']) / mappedBanksSum).toFixed(1)
+      b => +((b['saldoOut'] * b['percentRate']) / mappedBanksSum).toFixed(1)
     )
     const percentSum = +[...percents].reduce((a, b) => a + b, 0).toFixed(1)
     const forDaySum = +[...allMappedBanks]

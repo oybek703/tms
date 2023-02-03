@@ -32,7 +32,10 @@ const Position = ({ position = [] }) => {
 							<BoldWithColor>Валюта</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
-							<BoldWithColor>Позиция</BoldWithColor>
+							<BoldWithColor>Позиция в номинале</BoldWithColor>
+						</TableCell>
+						<TableCell align="center">
+							<BoldWithColor>Позиция в сумовом эквиваленте</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
 							<BoldWithColor>%</BoldWithColor>
@@ -46,15 +49,19 @@ const Position = ({ position = [] }) => {
 							<TableCell sx={{ color: '#009c34' }} align="center">
 								{formatNumber(row['equival'])}
 							</TableCell>
+							<TableCell sx={{ color: '#009c34' }} align="center">
+								{formatNumber(row['sumEquival'])}
+							</TableCell>
 							<TableCell align="center">
 								<PercentIndicator number={row['percent']} />
 							</TableCell>
 						</TableRow>
 					))}
 					<TableRow hover>
-						<TableCell align="center">
+						<TableCell align="center" colSpan={2}>
 							<b>Суммарная величина позиций</b>
 						</TableCell>
+						{/* <TableCell align="center" sx={{ ...globalStyles.noWrap, color: '#009c34' }}></TableCell> */}
 						<TableCell align="center" sx={{ ...globalStyles.noWrap, color: '#009c34' }}>
 							<b>{formatNumber(totalSumEquivalent())}</b>
 						</TableCell>

@@ -156,6 +156,7 @@ export class CurrencyPositionBase extends Base {
         currency['longVal'] = currency['longVal'] * 100
         currency['shortVal'] = currency['shortVal'] * 100
       }
+
       return currency
     })
     const shortTotal = allRows.reduce((acc, val) => {

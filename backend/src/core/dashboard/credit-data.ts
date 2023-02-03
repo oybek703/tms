@@ -35,7 +35,7 @@ export class CreditData extends Base {
     return `SELECT ROUND(NVL(SUM(DEBIT_EQUIVAL) / POWER(10, ${power}), 0), 2) AS "sum"
             FROM CR.LOANS_ISSUED_DWH@RISK
             WHERE OPER_DAY = (SELECT DECODE((DATE '${this.date}'), TRUNC(SYSDATE, 'DD'),
-                                            (SELECT MAX(OPER_DAY) FROM CR.LOANS_ISSUED_DWH@RISK),
+                                            (SELECT MAX(OPER_DAY) FROM CR.DAY_OPERATIONAL@RISK WHERE DAY_STATUS=1),
                                             DATE '${this.date}')
                               FROM DUAL)
               AND CODE_CURRENCY = ${codeCurrency}`

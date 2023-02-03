@@ -16,43 +16,44 @@ export class DashboardLiquidity extends Base {
 
   protected instantLiquidityQuery = () => {
     return `WITH DATES AS
-                     (SELECT EXTRACT(MONTH FROM OPER_DAY) MONTH_NUM,
-                             MAX(OPER_DAY) AS             MAX_OPER_DAYS
-                      FROM IBS.DAY_OPERATIONAL@IABS
-                      WHERE OPER_DAY BETWEEN TRUNC(DATE '${this.date}', 'YYYY') AND DATE '${this.date}'
-                        AND DAY_STATUS = 1
-                      GROUP BY EXTRACT(MONTH FROM OPER_DAY),
-                               EXTRACT(YEAR FROM OPER_DAY)
-                      ORDER BY EXTRACT(MONTH FROM OPER_DAY) DESC
-                          FETCH FIRST 6 ROWS ONLY)
-            SELECT SUBSTR(TRIM(INITCAP(TO_CHAR(TRUNC(MAX_OPER_DAYS, 'MM'), 'month', 'NLS_DATE_LANGUAGE=RUSSIAN'))), 0,
-                          3)                                                 AS "monthName",
-                   ROUND((SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
-                          FROM IBS.SVOD_SALDO_DUMP@IABS
-                          WHERE (
-                                      BAL LIKE '101%'
-                                  OR (
-                                                  BAL LIKE '103%'
-                                              AND BAL != '10309')
-                                  OR BAL LIKE '107%')
-                            AND DAT = MAX_OPER_DAYS
-                            AND VAL = '000') / (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
-                                                FROM IBS.SVOD_SALDO_DUMP@IABS
-                                                WHERE (BAL LIKE '202%'
-                                                    OR BAL IN ('21002', '21008', '22402', '22403', '22405', '22406', '22476')
-                                                    OR (BAL LIKE '226%' AND BAL NOT IN ('22602', '22628'))
-                                                    OR BAL LIKE '231%'
-                                                    OR (BAL LIKE '232%' AND BAL != '23206')
-                                                    OR BAL LIKE '234%'
-                                                    OR BAL LIKE '175%'
-                                                    OR BAL LIKE '235%'
-                                                    OR BAL LIKE '174%'
-                                                    OR (BAL LIKE '298%' AND
-                                                        BAL NOT IN ('29822', '29826', '29830', '29842', '29846')))
-                                                  AND DAT = MAX_OPER_DAYS
-                                                  AND VAL = '000') * 100, 2) AS "percent"
-            FROM DATES
-            ORDER BY MAX_OPER_DAYS`
+    (    SELECT EXTRACT(MONTH FROM OPER_DAY) MONTH_NUM,
+            MAX(OPER_DAY) AS             MAX_OPER_DAYS
+     FROM IBS.DAY_OPERATIONAL@IABS
+     WHERE OPER_DAY BETWEEN ADD_MONTHS(DATE '${this.date}',-6) AND DATE '${this.date}'
+       AND DAY_STATUS = 1
+     GROUP BY EXTRACT(MONTH FROM OPER_DAY),
+              EXTRACT(YEAR FROM OPER_DAY)
+     ORDER BY EXTRACT(YEAR FROM OPER_DAY) DESC,EXTRACT(MONTH FROM OPER_DAY) DESC
+         FETCH FIRST 6 ROWS ONLY
+)
+SELECT SUBSTR(TRIM(INITCAP(TO_CHAR(TRUNC(MAX_OPER_DAYS, 'MM'), 'month', 'NLS_DATE_LANGUAGE=RUSSIAN'))), 0,
+         3)                                                 AS "monthName",
+  ROUND((SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+         FROM IBS.SVOD_SALDO_DUMP@IABS
+         WHERE (
+                     BAL LIKE '101%'
+                 OR (
+                                 BAL LIKE '103%'
+                             AND BAL != '10309')
+                 OR BAL LIKE '107%')
+           AND DAT = MAX_OPER_DAYS
+           AND VAL = '000') / (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                               FROM IBS.SVOD_SALDO_DUMP@IABS
+                               WHERE (BAL LIKE '202%'
+                                   OR BAL IN ('21002', '21008', '22402', '22403', '22405', '22406', '22476')
+                                   OR (BAL LIKE '226%' AND BAL NOT IN ('22602', '22628'))
+                                   OR BAL LIKE '231%'
+                                   OR (BAL LIKE '232%' AND BAL != '23206')
+                                   OR BAL LIKE '234%'
+                                   OR BAL LIKE '175%'
+                                   OR BAL LIKE '235%'
+                                   OR BAL LIKE '174%'
+                                   OR (BAL LIKE '298%' AND
+                                       BAL NOT IN ('29822', '29826', '29830', '29842', '29846')))
+                                 AND DAT = MAX_OPER_DAYS
+                                 AND VAL = '000') * 100, 2) AS "percent"
+FROM DATES
+ORDER BY MAX_OPER_DAYS`
   }
 
   protected vlaCurrentStateQuery = () => {

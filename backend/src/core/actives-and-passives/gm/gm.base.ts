@@ -9,7 +9,7 @@ export class GmBase extends Base {
     { checkAccount: '20214', operationType: 'Депозиты до востребования', codeCurrency: '000' },
     {
       checkAccount: '20414',
-      operationType: 'Сберегательный счет (залоговые сред.)',
+      operationType: 'Сберегательный счет',
       codeCurrency: '840'
     },
     {
@@ -151,14 +151,14 @@ export class GmBase extends Base {
 
   private autoCreditQuery = () => {
     return `SELECT '20414'                            AS "checkAccount",
-                   'Сберегательный счет (Автокредит)' AS "operationType",
+                   'Сберегательный счет' AS "operationType",
                    SALDO_OUT                          AS "parValue",
                    '000'                              AS "codeCurrency"
             FROM (SELECT * FROM GM ORDER BY OPER_DAY DESC)
             WHERE ROLE = 'C'
               AND OPER_DAY < DATE '${this.date}'
               AND ROWNUM = 1`
-  } /* Сберегательный счет (Автокредит) */
+  } /* Сберегательный счет*/
 
   private mioQuery = () => {
     return `SELECT SALDO_OUT AS "saldoOut"

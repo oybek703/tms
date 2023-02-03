@@ -407,7 +407,11 @@ const CorrOperations = () => {
 										<Grid item xs={4}>
 											<CorrOperationChart
 												id="physicalPaymentsByBank"
-												title="Платежи физ. лиц"
+												title={
+													physicalPayments === null
+														? 'Платежи физ. лиц За выбранный период операции по данному виду не проводились.'
+														: 'Платежи физ. лиц'
+												}
 												data={physicalPayments}
 											/>
 										</Grid>
