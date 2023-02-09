@@ -25,13 +25,6 @@ interface IVlaBufferRowData {
 	foreign: number
 }
 
-interface VLaBufferTableProps {
-	rows: {
-		liquidityAssets: IVlaBufferRowData[]
-		liabilitiesOnDemand: IVlaBufferRowData[]
-	}
-}
-
 function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
 	return (
 		<TableBody>

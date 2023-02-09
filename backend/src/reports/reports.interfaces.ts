@@ -12,6 +12,7 @@ export enum ReportsPaths {
   correspondent = 'correspondent',
   correspondentCurrentState = 'correspondent/currentState',
   calcFor = 'calcFor',
+  calcForUpdateCbn = '/calcFor/updateCbn',
   currencyPosition = 'currencyPosition',
   nostroMatrix = 'nostroMatrix',
   vlaBuffer = 'vlaBuffer',
@@ -43,7 +44,6 @@ export enum CAAColLabelNames {
   imports = 'Импорт оплаты',
   exports = 'Экс. поступ.',
   tradingFin = 'Торг. фин',
-  mbd = 'МБД',
   fx = 'FX',
   creditLine = 'Кредитная линия',
   vostro = 'Востро',
@@ -51,8 +51,6 @@ export enum CAAColLabelNames {
   corrAccounts = 'Корр.счет',
   genAgreement = 'Ген. соглашения',
   isda = 'ISDA',
-  otherAgreement = 'Прочие(нал. соглашения)',
-  serviceSize = 'Обьем операции',
   serviceSpeed = 'Скорость обслуживание',
   serviceQuality = 'Качество обслуживание',
   serviceCost = 'Стоимость услуг(тарифы)'
@@ -69,4 +67,10 @@ export interface CAAChangeHistory {
 export interface ICorrOperationsOptions extends IReportTwoDates {
   currencyCode: string
   clientCode?: string | undefined
+}
+
+export interface ICbnUpdateBody {
+  fromDate: Date
+  toDate: Date
+  cbNorm: number
 }

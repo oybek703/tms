@@ -4,6 +4,7 @@ export enum APIRoutes {
 	fcrb = 'fcrb',
 	mainIndicators = 'mainIndicators',
 	calcFor = 'calcFor',
+	calcForUpdateCbn = '/api/calcFor/updateCbn',
 	capital = 'capital',
 	profitAndLost = 'profitAndLost',
 	liquidity = 'liquidity',
