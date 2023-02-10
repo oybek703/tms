@@ -18,10 +18,6 @@ const CurrencyPositionTable = function () {
 	const { allRows = [], tableSumData = [] } = currencyPosition
 	const { reportDate } = useTypedSelector(state => state.operDays)
 
-	// allRows.map((row: any) => {
-	// 	console.log(row)
-	// })
-
 	return (
 		<TableContainer component={Paper}>
 			<ExportButton id={`currency-position-${formatOneDate(reportDate)}`} />
