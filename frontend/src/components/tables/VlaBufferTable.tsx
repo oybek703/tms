@@ -16,6 +16,7 @@ import { IVlaBufferRowData } from '../../interfaces/vlaBuffer.interfaces'
 import { Grid, Typography } from '@mui/material'
 import palette from '../../styles/palette'
 import { ISxStyles } from '../../interfaces/styles.interface'
+import VlaBufferChart from '../charts/vlaBuffer/VlaBufferChart'
 
 interface IIncomeRowProps {
 	income: IVlaBufferRowData
@@ -123,7 +124,7 @@ const VLaBufferTable = () => {
 	const { incomes, incomeBringing, nonProfits, nonProfitable, highLiquidityAssets } = vlaBuffer
 	return (
 		<Fragment>
-			<TableContainer component={Paper}>
+			<TableContainer sx={{ padding: 0, marginBottom: '20px' }} component={Paper}>
 				<Table size="small" aria-label="a dense table">
 					<TableCap rows={13} text={'млн.'} />
 					<TableHead sx={globalStyles.stickyTableHead}>
@@ -187,6 +188,7 @@ const VLaBufferTable = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<VlaBufferChart series={[1, 2]} labelText="ALL" />
 		</Fragment>
 	)
 }
