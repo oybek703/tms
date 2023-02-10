@@ -1,9 +1,12 @@
 export interface IVlaBufferDbData {
   indicatorName: string
-  totalPercent: number
-  total: number
-  uzsPercent: number
-  uzs: number
-  foreignPercent: number
-  foreign: number
+  percentVlaTotal: number
+  percentTotal: number
+  saldoTotal: number
+  percentVlaUzs: number
+  percentUzs: number
+  saldoUzs: number
+  percentVlaUsd: number
+  percentUsd: number
+  saldoUsd: number
 }

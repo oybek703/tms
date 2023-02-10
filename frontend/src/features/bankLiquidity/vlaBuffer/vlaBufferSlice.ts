@@ -1,10 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { IVlaBufferRowData } from '../../../interfaces/vlaBuffer.interfaces'
 
-const initialState = {
+interface IVlaBufferInitialState {
+	loading: boolean
+	vlaBuffer: {
+		incomes: IVlaBufferRowData[]
+		incomeBringing: IVlaBufferRowData
+		nonProfits: IVlaBufferRowData[]
+		nonProfitable: IVlaBufferRowData
+		highLiquidityAssets: IVlaBufferRowData
+	}
+	error: undefined
+}
+
+const initialState: IVlaBufferInitialState = {
 	loading: false,
-	vlaBuffer: {},
+	vlaBuffer: {
+		incomes: [],
+		incomeBringing: {} as IVlaBufferRowData,
+		nonProfits: [],
+		nonProfitable: {} as IVlaBufferRowData,
+		highLiquidityAssets: {} as IVlaBufferRowData
+	},
 	error: undefined
 }
 

@@ -31,8 +31,9 @@ export abstract class Base {
     } else {
       query = ownQuery()
     }
-    if (inStream)
+    if (inStream) {
       return (await this.oracleService.executeQueryInStream<T>(query)) as K extends true ? T[] : T
+    }
     return (await this.oracleService.executeQuery<T>(query)) as K extends true ? T[] : T
   }
 
