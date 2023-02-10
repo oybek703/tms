@@ -13,37 +13,83 @@ import { v4 as uuid } from 'uuid'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
 import { IVlaBufferRowData } from '../../interfaces/vlaBuffer.interfaces'
+import { Typography } from '@mui/material'
+import palette from '../../styles/palette'
 
-function SimpleTableRow({ income }: { income: IVlaBufferRowData }) {
+interface IIncomeRowProps {
+	income: IVlaBufferRowData
+}
+
+function SimpleTableRow({ income }: IIncomeRowProps) {
 	return (
-		<TableRow hover key={uuid()}>
+		<TableRow hover>
 			<TableCell>{income.indicatorName}</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentVlaTotal, 'e')}
+				{income.percentVlaTotal ? formatNumber(income.percentVlaTotal) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentTotal, 'e')}
+				{income.percentTotal ? formatNumber(income.percentTotal) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
 				{formatNumber(income.saldoTotal, 'e')}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentVlaUzs, 'e')}
+				{income.percentVlaUzs ? formatNumber(income.percentVlaUzs) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentUzs, 'e')}
+				{income.percentUzs ? formatNumber(income.percentUzs) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
 				{formatNumber(income.saldoUzs, 'e')}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentVlaUsd, 'e')}
+				{income.percentVlaUsd ? formatNumber(income.percentVlaUsd) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
-				{formatNumber(income.percentUsd, 'e')}
+				{income.percentUsd ? formatNumber(income.percentUsd) + '%' : ''}
 			</TableCell>
 			<TableCell align="center" sx={globalStyles.noWrap}>
 				{formatNumber(income.saldoUsd, 'e')}
+			</TableCell>
+		</TableRow>
+	)
+}
+
+function HeadTableRow({ income, bg }: IIncomeRowProps & { bg?: string }) {
+	return (
+		<TableRow sx={{ backgroundColor: bg }}>
+			<TableCell
+				align={bg ? 'center' : 'left'}
+				sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }}
+			>
+				<b>{income.indicatorName}</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentVlaTotal)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentTotal)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.saldoTotal)}</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentVlaUzs)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentUzs)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.saldoUzs)}</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentVlaUsd)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.percentUsd)}%</b>
+			</TableCell>
+			<TableCell sx={{ ...globalStyles.noWrap, color: bg ? palette.black : palette.red }} align="center">
+				<b>{formatNumber(income.saldoUsd)}</b>
 			</TableCell>
 		</TableRow>
 	)
@@ -60,7 +106,7 @@ const VLaBufferTable = () => {
 					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
-								<BoldWithColor>ВЛА</BoldWithColor>
+								<Typography sx={{ fontSize: 60, color: '#fff', fontWeight: 'bold' }}>ВЛА</Typography>
 							</TableCell>
 							<TableCell align="center">
 								<BoldWithColor>Доля в ВЛА общий(100%)</BoldWithColor>
@@ -95,14 +141,22 @@ const VLaBufferTable = () => {
 						{[
 							[incomeBringing, ...incomes],
 							[nonProfitable, ...nonProfits]
-						].map(item => (
+						].map((item, itemIndex) => (
 							<Fragment key={uuid()}>
-								{item.map(income => (
-									<SimpleTableRow key={uuid()} income={income} />
-								))}
+								{item.map((income, incomeIndex) =>
+									incomeIndex === 0 ? (
+										<HeadTableRow
+											bg={itemIndex === 0 ? palette.lightGreen : palette.primary}
+											income={income}
+											key={uuid()}
+										/>
+									) : (
+										<SimpleTableRow key={uuid()} income={income} />
+									)
+								)}
 							</Fragment>
 						))}
-						<SimpleTableRow income={highLiquidityAssets} />
+						<HeadTableRow income={highLiquidityAssets} />
 					</TableBody>
 				</Table>
 			</TableContainer>

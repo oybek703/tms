@@ -15,13 +15,6 @@ import { Grid } from '@mui/material'
 import { ISxStyles } from '../../../interfaces/styles.interface'
 
 const styles: ISxStyles = {
-	verticalText: {
-		writingMode: 'vertical-rl',
-		transform: 'rotate(180deg)',
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		fontSize: '1.8em'
-	},
 	darkBackground: {
 		backgroundColor: '#eeeeee',
 		fontWeight: 'bold'
@@ -120,7 +113,7 @@ const VerticalColumn: React.FC<{ data: []; text: string }> = function ({ data = 
 	return (
 		<TableRow hover>
 			<TableCell align="center" sx={{ borderRight: '2px solid #7794aa' }} rowSpan={data.length + 1}>
-				<Grid sx={styles.verticalText}>{text}</Grid>
+				<Grid sx={globalStyles.verticalText}>{text}</Grid>
 			</TableCell>
 		</TableRow>
 	)

@@ -130,7 +130,7 @@ export class VlaBufferBase extends Base {
     ])
     let nonProfitable = this.non_profitable(nonProfits)
     let highLiquidityAssets = this.high_liquidity_assets(incomeBringing, nonProfitable)
-    // Calculate vla percent
+    // Calculate vla percentages
     incomes.forEach(income => {
       income.percentVlaTotal = (income.saldoTotal * 100) / highLiquidityAssets.saldoTotal
       income.percentVlaUzs = (income.saldoUzs * 100) / highLiquidityAssets.saldoUzs

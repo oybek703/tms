@@ -1,10 +1,9 @@
 import React, { PropsWithChildren } from 'react'
 import { Typography } from '@mui/material'
-import { ISxStyles } from '../../interfaces/styles.interface'
 
-const BoldWithColor: React.FC<PropsWithChildren<{ sx?: ISxStyles }>> = ({ children, sx }) => {
+const BoldWithColor: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 	return (
-		<Typography variant="body2" sx={{ color: '#fff', ...sx }}>
+		<Typography variant="body2" sx={{ color: '#fff' }}>
 			<b>{children}</b>
 		</Typography>
 	)

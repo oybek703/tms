@@ -41,7 +41,7 @@ const Footer = () => {
 			<Grid item>
 				<Typography variant="body1" align="center">
 					{' '}
-					Asakabank - © 2022
+					Asakabank - © 2023
 				</Typography>
 			</Grid>
 		</Paper>
