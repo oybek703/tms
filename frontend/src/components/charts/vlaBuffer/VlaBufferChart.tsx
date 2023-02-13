@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import { CardContent } from '@mui/material'
-import Card from '@mui/material/Card'
 import { chartTooltip } from '../../../utils'
+import palette from '../../../styles/palette'
 
-function renderOptions(series: number[], labelText = 'ALL') {
+function renderOptions(series: number[], id: string, labelText = 'ALL') {
 	const colors = ['#4CB9E1', '#00B050']
 	const options = {
 		tooltip: { ...chartTooltip() },
@@ -17,6 +16,7 @@ function renderOptions(series: number[], labelText = 'ALL') {
 		legend: {
 			show: false
 		},
+		labels: ['Доходнеприносяюший', 'Доходприносяюший'],
 		fill: {
 			colors
 		},
@@ -27,7 +27,7 @@ function renderOptions(series: number[], labelText = 'ALL') {
 						show: true,
 						total: {
 							show: true,
-							showAlways: false,
+							showAlways: true,
 							label: labelText,
 							fontSize: '45px',
 							fontWeight: 550,
@@ -39,8 +39,13 @@ function renderOptions(series: number[], labelText = 'ALL') {
 		},
 		dataLabels: {
 			enabled: true,
-			offsetX: 50,
-			offsetY: 50
+			formatter: function (value: number, { w, seriesIndex }: any) {
+				return `${w.config.series[seriesIndex].toFixed(2)}%`
+			},
+			style: {
+				fontSize: '20px',
+				colors: [palette.black]
+			}
 		},
 		responsive: [
 			{
@@ -56,8 +61,7 @@ function renderOptions(series: number[], labelText = 'ALL') {
 			}
 		]
 	}
-
-	const chart = new ApexCharts(document.querySelector('#vla_buffer'), options)
+	const chart = new ApexCharts(document.querySelector(`#${id}`), options)
 	chart.render()
 }
 
@@ -67,19 +71,14 @@ interface CurrencyMFIProps {
 }
 
 const VlaBufferChart: React.FC<CurrencyMFIProps> = ({ series, labelText }) => {
+	const id = `vla_buffer_${labelText?.toLowerCase()}`
 	useEffect(() => {
-		if (series.length) {
-			document.querySelector('#vla_buffer')!.innerHTML = ''
-			renderOptions(series, labelText)
+		if (series.filter(Boolean).length && series.length) {
+			document.querySelector(`#${id}`)!.innerHTML = ''
+			renderOptions(series, id, labelText)
 		}
-	}, [series, labelText])
-	return (
-		<Card>
-			<CardContent>
-				<div id="vla_buffer" />
-			</CardContent>
-		</Card>
-	)
+	}, [id, series, labelText])
+	return <div id={`${id}`} />
 }
 
 export default VlaBufferChart

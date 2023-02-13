@@ -23,6 +23,10 @@ interface IIncomeRowProps {
 }
 
 const styles: ISxStyles = {
+	tableContainer: {
+		padding: 0,
+		marginBottom: '20px'
+	},
 	verticalCellGridStyles: {
 		...globalStyles.verticalText,
 		transform: 'rotate(0) translateY(-40px)',
@@ -32,6 +36,21 @@ const styles: ISxStyles = {
 	verticalCellStyles: {
 		backgroundColor: palette.darkGray,
 		border: '0'
+	},
+	titleTextStyles: {
+		fontSize: 60,
+		color: '#fff',
+		fontWeight: 'bold'
+	},
+	bottomContainer: {
+		display: 'grid',
+		gridAutoFlow: 'column',
+		gridTemplateColumns: 'minmax(1fr, auto)'
+	},
+	chartsContainer: {
+		display: 'grid',
+		gridAutoFlow: 'column',
+		gridTemplateColumns: 'repeat(3, 1fr)'
 	}
 }
 
@@ -122,15 +141,18 @@ function HeadTableRow({ income, bg, allSpan }: IIncomeRowProps & { bg?: string; 
 const VLaBufferTable = () => {
 	const { vlaBuffer } = useTypedSelector(state => state.vlaBuffer)
 	const { incomes, incomeBringing, nonProfits, nonProfitable, highLiquidityAssets } = vlaBuffer
+	const allPercents = [nonProfitable.percentTotal, incomeBringing.percentTotal]
+	const uzsPercents = [nonProfitable.percentUzs, incomeBringing.percentUzs]
+	const usdPercents = [nonProfitable.percentUsd, incomeBringing.percentUsd]
 	return (
 		<Fragment>
-			<TableContainer sx={{ padding: 0, marginBottom: '20px' }} component={Paper}>
+			<TableContainer sx={styles.tableContainer} component={Paper}>
 				<Table size="small" aria-label="a dense table">
 					<TableCap rows={13} text={'млн.'} />
 					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
-								<Typography sx={{ fontSize: 60, color: '#fff', fontWeight: 'bold' }}>ВЛА</Typography>
+								<Typography sx={styles.titleTextStyles}>ВЛА</Typography>
 							</TableCell>
 							<TableCell sx={styles.verticalCellStyles} />
 							<TableCell align="center">
@@ -188,7 +210,37 @@ const VLaBufferTable = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<VlaBufferChart series={[1, 2]} labelText="ALL" />
+			<Grid component={Paper} sx={styles.bottomContainer}>
+				<Grid sx={{ display: 'flex', flexDirection: 'column' }}>
+					<Typography
+						align="center"
+						sx={{
+							...styles.titleTextStyles,
+							backgroundColor: palette.lightGreen,
+							padding: '10px 20px',
+							marginTop: '35px'
+						}}
+					>
+						Доход
+					</Typography>
+					<Typography
+						align="center"
+						sx={{
+							...styles.titleTextStyles,
+							backgroundColor: palette.lightBlue,
+							padding: '10px 20px',
+							marginTop: '35px'
+						}}
+					>
+						Недоход
+					</Typography>
+				</Grid>
+				<Grid sx={styles.chartsContainer}>
+					<VlaBufferChart series={allPercents} labelText="ALL" />
+					<VlaBufferChart series={uzsPercents} labelText="UZS" />
+					<VlaBufferChart series={usdPercents} labelText="USD" />
+				</Grid>
+			</Grid>
 		</Fragment>
 	)
 }
