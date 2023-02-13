@@ -1,5 +1,6 @@
 import { Base } from '../../base'
 import { IVlaBufferDbData } from './vla-buffer.interface'
+import { OwnQuery } from '../../core.interface'
 
 export class VlaBufferBase extends Base {
   protected formatQuery(whereQuery: string): string {
@@ -49,6 +50,172 @@ export class VlaBufferBase extends Base {
                         WHERE (${whereQuery})))`
   }
 
+  protected nostroQuery = () => {
+    return `SELECT 'INDICATOR_NAME' AS "indicatorName",
+                   0                AS "percentVlaTotal",
+                   PERCENT_TOTAL    AS "percentTotal",
+                   NOMINAL_TOTAL    AS "saldoTotal",
+                   0                AS "percentVlaUzs",
+                   0                AS "percentUzs",
+                   0                AS "saldoUzs",
+                   0                AS "percentVlaUsd",
+                   PERCENT_USD      AS "percentUsd",
+                   NOMINAL_USD      AS "saldoUsd"
+            FROM (SELECT ROUND(100 * (SALDO_10501 - SALDO_21002) / TOTAL_ACTIVE, 2) AS PERCENT_TOTAL,
+                         ROUND((SALDO_10501 - SALDO_21002) / POWER(10, 8), 2)       AS NOMINAL_TOTAL
+                  FROM (SELECT (SELECT ABS(SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                    SALDO_EQUIVAL_OUT
+                                                FROM IBS.SALDO@IABS S
+                                                WHERE S.ACCOUNT_CODE = AC.CODE
+                                                  AND OPER_DAY <= DATE '${this.date}'
+                                                  AND ROWNUM = 1))) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN BANK_INFO_RATING BR
+                                              ON AC.CLIENT_CODE = BR.CLIENT_CODE
+                                WHERE (CODE_COA IN ('10501'))
+                                  AND BR.RATING_STATUS = '1')                     AS SALDO_10501,
+                               (SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                SALDO_EQUIVAL_OUT
+                                            FROM IBS.SALDO@IABS S
+                                            WHERE S.ACCOUNT_CODE = AC.CODE
+                                              AND OPER_DAY <= DATE '${this.date}'
+                                              AND ROWNUM = 1)) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN IBS.CLIENT_CURRENT@IABS CC
+                                              ON AC.CLIENT_CODE = CC.CODE
+                                WHERE (CODE_COA IN ('21002')))                    AS SALDO_21002,
+                               (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                WHERE DAT = DATE '${this.date}'
+                                  AND (BAL LIKE '1%'
+                                    AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))) AS TOTAL_ACTIVE
+                        FROM DUAL)),
+                 (SELECT NVL(ROUND(SUM(SALDO_EQUIVAL_OUT) * 100 / AVG(TOTAL_ASSETS), 2), 0) AS PERCENT_UZS,
+                         ABS(NVL(ROUND(SUM(SALDO_EQUIVAL_OUT) / POWER(10, 8), 2), 0))       AS SALDO_UZS
+                  FROM (SELECT BAL,
+                               SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ              AS SALDO_EQUIVAL_OUT,
+                               SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) OVER () AS TOTAL_ASSETS
+                        FROM IBS.SVOD_SALDO_DUMP@IABS
+                        WHERE DAT = DATE '${this.date}'
+                          AND (BAL LIKE '1%' AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))
+                          AND VAL = '000')
+                  WHERE (BAL LIKE '101%')),
+                 (SELECT ROUND(100 * (SALDO_10501 - SALDO_21002) / TOTAL_ACTIVE, 2)      AS PERCENT_USD,
+                         ROUND((SALDO_10501 - SALDO_21002) / (S_RATE * POWER(10, 8)), 2) AS NOMINAL_USD
+                  FROM (SELECT (SELECT ABS(SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                    SALDO_EQUIVAL_OUT
+                                                FROM IBS.SALDO@IABS S
+                                                WHERE S.ACCOUNT_CODE = AC.CODE
+                                                  AND OPER_DAY <= DATE '${this.date}'
+                                                  AND ROWNUM = 1))) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN BANK_INFO_RATING BR
+                                              ON AC.CLIENT_CODE = BR.CLIENT_CODE
+                                WHERE (CODE_COA IN ('10501'))
+                                  AND AC.CODE_CURRENCY != '000'
+                                  AND BR.RATING_STATUS = '1')    AS SALDO_10501,
+                               (SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                SALDO_EQUIVAL_OUT
+                                            FROM IBS.SALDO@IABS S
+                                            WHERE S.ACCOUNT_CODE = AC.CODE
+                                              AND OPER_DAY <= DATE '${this.date}'
+                                              AND ROWNUM = 1)) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN IBS.CLIENT_CURRENT@IABS CC
+                                              ON AC.CLIENT_CODE = CC.CODE
+                                WHERE (CODE_COA IN ('21002'))
+                                  AND AC.CODE_CURRENCY != '000') AS SALDO_21002,
+                               (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                WHERE DAT = DATE '${this.date}'
+                                  AND (BAL LIKE '1%'
+                                    AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))
+                                  AND VAL != '000')              AS TOTAL_ACTIVE,
+                               (SELECT EQUIVAL
+                                FROM IBS.S_RATE_CUR@IABS
+                                WHERE DATE_CROSS = DATE '${this.date}'
+                                  AND CODE = '840')              AS S_RATE
+                        FROM DUAL))`
+  }
+
+  protected vostroQuery = () => {
+    return `SELECT 'INDICATOR_NAME' AS "indicatorName",
+                   0                AS "percentVlaTotal",
+                   PERCENT_TOTAL    AS "percentTotal",
+                   NOMINAL_TOTAL    AS "saldoTotal",
+                   0                AS "percentVlaUzs",
+                   PERCENT_UZS      AS "percentUzs",
+                   NOMINAL_UZS      AS "saldoUzs",
+                   0                AS "percentVlaUsd",
+                   PERCENT_USD      AS "percentUsd",
+                   NOMINAL_USD      AS "saldoUsd"
+            FROM (SELECT ROUND(100 * NOMINAL / TOTAL_ACTIVE, 2) AS PERCENT_TOTAL,
+                         ROUND(NOMINAL / (POWER(10, 8)), 2)     AS NOMINAL_TOTAL
+                  FROM (SELECT (SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                SALDO_EQUIVAL_OUT
+                                            FROM IBS.SALDO@IABS S
+                                            WHERE S.ACCOUNT_CODE = AC.CODE
+                                              AND OPER_DAY <= DATE '${this.date}'
+                                              AND ROWNUM = 1)) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN IBS.CLIENT_CURRENT@IABS CC
+                                              ON AC.CLIENT_CODE = CC.CODE
+                                WHERE (CODE_COA IN ('21002'))
+                                  AND CC.COUNTRY_CODE = '860')                    AS NOMINAL,
+                               (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                WHERE DAT = DATE '${this.date}'
+                                  AND (BAL LIKE '1%'
+                                    AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))) AS TOTAL_ACTIVE
+                        FROM DUAL)),
+                 (SELECT ROUND(100 * NOMINAL / TOTAL_ACTIVE, 2) AS PERCENT_UZS,
+                         ROUND(NOMINAL / ((POWER(10, 8))), 2)   AS NOMINAL_UZS
+                  FROM (SELECT (SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                SALDO_EQUIVAL_OUT
+                                            FROM IBS.SALDO@IABS S
+                                            WHERE S.ACCOUNT_CODE = AC.CODE
+                                              AND OPER_DAY <= DATE '${this.date}'
+                                              AND ROWNUM = 1)) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN IBS.CLIENT_CURRENT@IABS CC
+                                              ON AC.CLIENT_CODE = CC.CODE
+                                WHERE (CODE_COA IN ('21002'))
+                                  AND AC.CODE_CURRENCY = '000'
+                                  AND CC.COUNTRY_CODE = '860') AS NOMINAL,
+                               (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                WHERE DAT = DATE '${this.date}'
+                                  AND (BAL LIKE '1%'
+                                    AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))
+                                  AND VAL = '000')             AS TOTAL_ACTIVE
+                        FROM DUAL)),
+                 (SELECT ROUND(100 * NOMINAL / TOTAL_ACTIVE, 2)        AS PERCENT_USD,
+                         ROUND(NOMINAL / (S_RATE * (POWER(10, 8))), 2) AS NOMINAL_USD
+                  FROM (SELECT (SELECT SUM((SELECT /*+index_desc(s UK_SALDO_ACCOUNT_DAY)*/
+                                                SALDO_EQUIVAL_OUT
+                                            FROM IBS.SALDO@IABS S
+                                            WHERE S.ACCOUNT_CODE = AC.CODE
+                                              AND OPER_DAY <= DATE '${this.date}'
+                                              AND ROWNUM = 1)) AS SALDO_EQUIVAL_OUT
+                                FROM IBS.ACCOUNTS@IABS AC
+                                         JOIN IBS.CLIENT_CURRENT@IABS CC
+                                              ON AC.CLIENT_CODE = CC.CODE
+                                WHERE (CODE_COA IN ('21002'))
+                                  AND AC.CODE_CURRENCY != '000'
+                                  AND CC.COUNTRY_CODE = '860') AS NOMINAL,
+                               (SELECT ABS(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ))
+                                FROM IBS.SVOD_SALDO_DUMP@IABS
+                                WHERE DAT = DATE '${this.date}'
+                                  AND (BAL LIKE '1%'
+                                    AND SUBSTR(BAL, 1, 3) NOT IN ('161', '175'))
+                                  AND VAL != '000')            AS TOTAL_ACTIVE,
+                               (SELECT EQUIVAL
+                                FROM IBS.S_RATE_CUR@IABS
+                                WHERE DATE_CROSS = DATE '${this.date}'
+                                  AND CODE = '840')            AS S_RATE
+                        FROM DUAL))`
+  }
+
   addValuesByProperty(indicatorName: string, ...args: IVlaBufferDbData[]) {
     const data = args.reduce((acc: IVlaBufferDbData, val: IVlaBufferDbData) => {
       for (const valKey in val) {
@@ -65,9 +232,15 @@ export class VlaBufferBase extends Base {
     }
   }
 
-  private async getOneRow(whereQuery: string, indicatorName: string) {
+  private async getOneRow(
+    whereQuery: string,
+    indicatorName: string,
+    ownQuery?: OwnQuery | undefined
+  ) {
     await this.getBeforeDate()
-    const res = await this.getDataInDates<IVlaBufferDbData>(whereQuery)
+    const res = ownQuery
+      ? await this.getDataInDates<IVlaBufferDbData>(undefined, ownQuery)
+      : await this.getDataInDates<IVlaBufferDbData>(whereQuery)
     return { ...res, indicatorName }
   }
 
@@ -99,9 +272,13 @@ export class VlaBufferBase extends Base {
     return await this.getOneRow(`BAL='10315'`, 'Клиринг ЦБ')
   } /* Клиринг ЦБ */
 
-  // TODO Ностро(-востро)
+  private async nostro() {
+    return await this.getOneRow(undefined, 'Ностро(-востро)', this.nostroQuery)
+  } /* Ностро(-востро) */
 
-  // TODO Востро(локальных банки)
+  private async vostro() {
+    return await this.getOneRow(undefined, 'Востро(локальных банки)', this.vostroQuery)
+  } /* Востро(локальных банки) */
 
   private async cash() {
     return await this.getOneRow(`BAL LIKE '101%'`, 'Касса')
@@ -126,6 +303,8 @@ export class VlaBufferBase extends Base {
       this.nostro_in_cb(),
       this.receivable_funds(),
       this.cliring_in_cb(),
+      this.nostro(),
+      this.vostro(),
       this.cash()
     ])
     let nonProfitable = this.non_profitable(nonProfits)
