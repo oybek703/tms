@@ -33,25 +33,25 @@ const Normatives = () => {
 							count: '1.1',
 							title: 'Коэф. достат. Капитала',
 							min: 'мин 13%',
-							min_percent: '17.41%'
+							min_percent: '16.98%'
 						},
 						{
 							count: '1.2',
 							title: 'Коэф. достат. капитала – 1',
 							min: 'мин 10%',
-							min_percent: '13.58%'
+							min_percent: '13.45%'
 						},
 						{
 							count: '1.3',
 							title: 'Коэффициент достат. основ. капитала – 1',
 							min: 'мин 8%',
-							min_percent: '13.57%'
+							min_percent: '13.44%'
 						},
 						{
 							count: '1.4',
 							title: 'Левераж',
 							min: 'мин 6%',
-							min_percent: '8.94%'
+							min_percent: '9.42%'
 						}
 					].map(row => (
 						<TableRow hover key={uuid()}>
@@ -78,7 +78,7 @@ const Normatives = () => {
 							Доля высоколиквидных активов во всего активах <span style={{ color: 'red' }}>(ВЛА)</span>
 						</TableCell>
 						<TableCell align="center">мин 10%</TableCell>
-						<TableCell align="center">15.43%</TableCell>
+						<TableCell align="center">13.73%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell rowSpan={4} align="center">
@@ -91,17 +91,17 @@ const Normatives = () => {
 					<TableRow hover>
 						<TableCell>Всего</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">180.19%</TableCell>
+						<TableCell align="center">158.58%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>нац. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">170.93%</TableCell>
+						<TableCell align="center">147.36%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>ин. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">176.13%</TableCell>
+						<TableCell align="center">164.46%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell rowSpan={4} align="center">
@@ -114,17 +114,17 @@ const Normatives = () => {
 					<TableRow hover>
 						<TableCell>Всего</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">117.24%</TableCell>
+						<TableCell align="center">113.08%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>нац. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">130.87%</TableCell>
+						<TableCell align="center">117.82%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>ин. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">110.04%</TableCell>
+						<TableCell align="center">110.35%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -141,7 +141,7 @@ const Normatives = () => {
 							Макс. размер риска на одного или группу
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">21.4%</TableCell>
+						<TableCell align="center">22.32%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">3.2</TableCell>
@@ -149,7 +149,7 @@ const Normatives = () => {
 							Макс. размер риска на один банк или группу
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">0.00%</TableCell>
+						<TableCell align="center">14.50%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">3.3</TableCell>
@@ -165,7 +165,7 @@ const Normatives = () => {
 							Совокупная сумма всех крупных рисков
 						</TableCell>
 						<TableCell align="center">макс 500%</TableCell>
-						<TableCell align="center">164.18%</TableCell>
+						<TableCell align="center">174.38%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -182,7 +182,7 @@ const Normatives = () => {
 							Макс. размер инвестиций одного юр. лица
 						</TableCell>
 						<TableCell align="center">макс 15%</TableCell>
-						<TableCell align="center">0.00%</TableCell>
+						<TableCell align="center">11.81%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">4.2</TableCell>
@@ -190,7 +190,7 @@ const Normatives = () => {
 							Макс. общий размер инвестиций в ценные бумаги
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">0.33%</TableCell>
+						<TableCell align="center">0.32%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">4.3</TableCell>
@@ -198,7 +198,7 @@ const Normatives = () => {
 							Макс. общий размер инвестиций всех эмитентов
 						</TableCell>
 						<TableCell align="center">макс 50%</TableCell>
-						<TableCell align="center">21.39%</TableCell>
+						<TableCell align="center">21.11%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -215,7 +215,7 @@ const Normatives = () => {
 							Макс. размер риска на одного связанного с банком лица
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">11.97%</TableCell>
+						<TableCell align="center">11.81%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">5.2</TableCell>
@@ -223,7 +223,7 @@ const Normatives = () => {
 							Макс. размер риска по всем связанным с банком лицам
 						</TableCell>
 						<TableCell align="center">макс 50%</TableCell>
-						<TableCell align="center">26.45%</TableCell>
+						<TableCell align="center">25.99%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -240,7 +240,7 @@ const Normatives = () => {
 							Норматив по инвестициям банка в недвижимость
 						</TableCell>
 						<TableCell align="center">макс 100%</TableCell>
-						<TableCell align="center">0.0%</TableCell>
+						<TableCell align="center">0.00%</TableCell>
 					</TableRow>
 				</TableBody>
 			</Table>
