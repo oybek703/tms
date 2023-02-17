@@ -56,7 +56,7 @@ export class IncomeAnalysisBase extends Base {
     return { title, data }
   }
 
-  getIncomes = async () => {
+  getIncome = async () => {
     //Прочие процентные доходы
     const otherPercentIncomes = await this.getChartData(
       IIncomeQueryCodes.otherPercentIncomes,
@@ -97,19 +97,126 @@ export class IncomeAnalysisBase extends Base {
     ]
   }
 
+  getIncomeNoPercent = async () => {
+    //Резервы по кредитам
+    const creditReserve = await this.getChartData(
+      IIncomeQueryCodes.creditReserve,
+      'Резервы по кредитам'
+    )
+    //СПОТ (продажа)
+    const spotSell = await this.getChartData(IIncomeQueryCodes.spotSell, 'СПОТ (продажа)')
+    //СПОТ (переоценка)
+    const spotRemark = await this.getChartData(IIncomeQueryCodes.spotRemark, 'СПОТ (переоценка)')
+    //Дебетовые обороты
+    const debitTurnOvers = await this.getChartData(
+      IIncomeQueryCodes.debitTurnOvers,
+      'Дебетовые обороты'
+    )
+    //Услуги по аккредитивам
+    const accredetivServices = await this.getChartData(
+      IIncomeQueryCodes.accredetivServices,
+      'Услуги по аккредитивам'
+    )
+
+    //Денежные переводы
+    const moneyTransfers = await this.getChartData(
+      IIncomeQueryCodes.moneyTransfers,
+      'Денежные переводы'
+    )
+    return [creditReserve, spotSell, spotRemark, debitTurnOvers, accredetivServices, moneyTransfers]
+  }
+
+  getConsumption = async () => {
+    //Прочие процентные расходы (Ресурсы)
+    const otherPercentConsumptions = await this.getChartData(
+      IIncomeQueryCodes.otherPercentConsumptions,
+      'Прочие процентные расходы (Ресурсы)'
+    )
+    //Долгосрочным кредитам
+    const longTermLoans = await this.getChartData(
+      IIncomeQueryCodes.longTermLoans,
+      'Долгосрочным кредитам'
+    )
+    //Срочным депозитам
+    const termDeposits = await this.getChartData(
+      IIncomeQueryCodes.termDeposits,
+      'Срочным депозитам'
+    )
+    //Краткосрочным кредитам
+    const shortTermLoans = await this.getChartData(
+      IIncomeQueryCodes.shortTermLoans,
+      'Краткосрочным кредитам'
+    )
+    //Выпущенным ценным бумагам
+    const issuedSecurities = await this.getChartData(
+      IIncomeQueryCodes.issuedSecurities,
+      'Выпущенным ценным бумагам'
+    )
+
+    //Сберегательным депозитам
+    const savingDeposits = await this.getChartData(
+      IIncomeQueryCodes.savingDeposits,
+      'Сберегательным депозитам'
+    )
+    return [
+      otherPercentConsumptions,
+      longTermLoans,
+      termDeposits,
+      shortTermLoans,
+      issuedSecurities,
+      savingDeposits
+    ]
+  }
+
+  getConsumptionNoPercent = async () => {
+    //Зароботная плата и другие расходы на сотрудников
+    const employeeExpenses = await this.getChartData(
+      IIncomeQueryCodes.employeeExpenses,
+      'Зароботная плата и другие расходы на сотрудников'
+    )
+    //Оценка возможных убытков
+    const possibleLosses = await this.getChartData(
+      IIncomeQueryCodes.possibleLosses,
+      'Оценка возможных убытков'
+    )
+    //Административные расходы
+    const administrativeExpenses = await this.getChartData(
+      IIncomeQueryCodes.administrativeExpenses,
+      'Административные расходы'
+    )
+    //Командировочные и транспортные расходы
+    const travelExpenses = await this.getChartData(
+      IIncomeQueryCodes.travelExpenses,
+      'Командировочные и транспортные расходы'
+    )
+    //Расходы на износ
+    const wearCosts = await this.getChartData(IIncomeQueryCodes.wearCosts, 'Расходы на износ')
+
+    //Аренда и содержания
+    const rentAndMaintenance = await this.getChartData(
+      IIncomeQueryCodes.rentAndMaintenance,
+      'Аренда и содержания'
+    )
+    return [
+      employeeExpenses,
+      possibleLosses,
+      administrativeExpenses,
+      travelExpenses,
+      wearCosts,
+      rentAndMaintenance
+    ]
+  }
+
   async getRows() {
     await this.getDates()
     // АНАЛИЗ ПРОЦЕНТНОГО ДОХОДА
-    const income = await this.getIncomes()
-    return [income]
+    const income = await this.getIncome()
+    // АНАЛИЗ БЕСПРОЦЕНТНОГО ДОХОДА
+    const incomeNoPercent = await this.getIncomeNoPercent()
+    // АНАЛИЗ ПРОЦЕНТНОГО РАСХОДА
+    const consumption = await this.getConsumption()
+    // АНАЛИЗ БЕСПРОЦЕНТНОГО РАСХОДА
+    const consumptionNoPercent = await this.getConsumptionNoPercent()
+    return [income, incomeNoPercent, consumption, consumptionNoPercent]
   }
 }
-
-// DATE '2022-07-29',
-// DATE '2022-08-31',
-// DATE '2022-09-30',
-// DATE '2022-10-31',
-// DATE '2022-11-30',
-// DATE '2022-12-30',
-// DATE '2023-01-23'
-// SUBSTR(BAL, 1, 3) IN ('449', '447', '450', '451')
