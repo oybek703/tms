@@ -1,10 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { IIncomeData } from '../../../interfaces/IncomeAnalysis.interfaces'
 
-const initialState = {
+interface IIncomeAnalysisInitialState {
+	loading: boolean
+	incomeAnalysis: {
+		income: IIncomeData[]
+		incomeNoPercent: IIncomeData[]
+		consumption: IIncomeData[]
+		consumptionNoPercent: IIncomeData[]
+	}
+	error: undefined
+}
+
+const initialState: IIncomeAnalysisInitialState = {
 	loading: false,
-	incomeAnalysis: [],
+	incomeAnalysis: {
+		income: [],
+		incomeNoPercent: [],
+		consumption: [],
+		consumptionNoPercent: []
+	},
 	error: undefined
 }
 

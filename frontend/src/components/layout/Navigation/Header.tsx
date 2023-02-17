@@ -31,7 +31,7 @@ interface BaseRoute {
 }
 
 export const baseRoutes: BaseRoute[] = [
-	{ title: 'Анализ дох. и рпс.', route: '/incomeAnalysis', group: 'key_indicators' },
+	{ title: 'Анализ дох. и рос.', route: '/incomeAnalysis', group: 'key_indicators' },
 	{
 		title: 'Основные показатели',
 		route: '/mainIndicators',
