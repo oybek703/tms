@@ -23,7 +23,6 @@ import { UpdateCAADto } from './dto/update-caa.dto'
 import { Request } from 'express'
 import { User } from '../auth/auth.interface'
 import { AdminUserGuard } from '../users/users.decorator'
-import { ApiTags } from '@nestjs/swagger'
 
 @Controller()
 export class ReportsController {
@@ -63,6 +62,12 @@ export class ReportsController {
     if (!query.firstDate || !query.secondDate)
       throw new BadRequestException('Two dates are required!')
     return await this.reportsService.dashboardMonthly(query.firstDate, query.secondDate)
+  }
+
+  @Report('Key indicators', ReportsPaths.incomeAnalysis)
+  async incomeAnalysis(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.incomeAnalysis(date)
   }
 
   @Report('Key indicators', ReportsPaths.mainIndicators)

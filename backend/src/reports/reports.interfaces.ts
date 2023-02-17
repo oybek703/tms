@@ -26,6 +26,7 @@ export enum ReportsPaths {
   competitiveAnalysis = 'competitiveAnalysis',
   filialEffectiveness = 'filialEffectiveness',
   corrAccountsAnalyze = 'corrAccountsAnalyze',
+  incomeAnalysis = 'incomeAnalysis',
   caaManual = 'caaManual',
   corrOperations = 'corrOperations',
   filialCp = 'filialCp',

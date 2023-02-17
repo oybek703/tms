@@ -41,6 +41,7 @@ import {
 } from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
+import getIncomeAnalysisData from '../core/key-indicators/income-analysis'
 
 @Injectable()
 export class ReportsService {
@@ -81,6 +82,10 @@ export class ReportsService {
                                                                                FROM USER_SCHEDULER_JOBS
                                                                                WHERE JOB_NAME = UPPER('GAP_Analysis')`)
     return { lastUpdate }
+  }
+
+  async incomeAnalysis(date: Date) {
+    return await getIncomeAnalysisData(date, this.oracleService)
   }
 
   async mainIndicators(date: Date) {

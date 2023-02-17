@@ -23,6 +23,7 @@ export enum APIRoutes {
 	reportLiabilities = 'reportLiabilities',
 	filialEffectiveness = 'filialEffectiveness',
 	corrAccountsAnalyze = '/api/corrAccountsAnalyze',
+	incomeAnalysis = 'incomeAnalysis',
 	caaManual = '/api/caaManual',
 	corrOperations = 'corrOperations',
 	filialCp = 'filialCp',
