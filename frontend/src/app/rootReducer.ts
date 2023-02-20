@@ -29,7 +29,7 @@ import { competitiveAnalysisReducer } from '../features/activesPassives/competit
 import { corrAccountsAnalyzeReducer } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
 import { corrOperationsActionsReducer } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 import { filialCpActionsReducer } from '../features/dealingOperations/filialCp/filialCpSlice'
-import { incomeAnalysisReducer } from '../features/keyIndicators/incomeAnalysis/incomeAnalysisSlice'
+import { incomeAnalysisReducer } from '../features/activesPassives/incomeAnalysis/incomeAnalysisSlice'
 
 const rootReducer = combineReducers({
 	auth: authReducer,

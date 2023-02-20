@@ -41,7 +41,7 @@ import {
 } from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
-import getIncomeAnalysisData from '../core/key-indicators/income-analysis'
+import getIncomeAnalysisData from '../core/actives-and-passives/income-analysis'
 
 @Injectable()
 export class ReportsService {

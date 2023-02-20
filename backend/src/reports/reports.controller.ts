@@ -64,12 +64,6 @@ export class ReportsController {
     return await this.reportsService.dashboardMonthly(query.firstDate, query.secondDate)
   }
 
-  @Report('Key indicators', ReportsPaths.incomeAnalysis)
-  async incomeAnalysis(@Query('date') date: Date) {
-    if (!date) throw this.dateBadRequestException
-    return await this.reportsService.incomeAnalysis(date)
-  }
-
   @Report('Key indicators', ReportsPaths.mainIndicators)
   async mainIndicators(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
@@ -199,6 +193,12 @@ export class ReportsController {
   async gm(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.gm(date)
+  }
+
+  @Report('Actives, passives', ReportsPaths.incomeAnalysis)
+  async incomeAnalysis(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.incomeAnalysis(date)
   }
 
   @ReportWithoutDate('Gap analyze', ReportsPaths.gap)
