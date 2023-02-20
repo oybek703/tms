@@ -137,6 +137,13 @@ const globalStyles: ISxStyles = {
 		height: '100%',
 		transform: 'translateX(-10px)',
 		marginRight: '-20px'
+	},
+	verticalText: {
+		writingMode: 'vertical-rl',
+		transform: 'rotate(180deg)',
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		fontSize: '1.8em'
 	}
 }
 

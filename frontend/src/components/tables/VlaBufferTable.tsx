@@ -6,80 +6,167 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { formatNumber, formatOneDate } from '../../utils'
-import ExportButton from '../layout/ExportButton'
+import { formatNumber } from '../../utils'
 import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import { v4 as uuid } from 'uuid'
-import Grid from '@mui/material/Grid'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
+import { IVlaBufferRowData } from '../../interfaces/vlaBuffer.interfaces'
+import { Grid, Typography } from '@mui/material'
+import palette from '../../styles/palette'
+import { ISxStyles } from '../../interfaces/styles.interface'
+import VlaBufferChart from '../charts/vlaBuffer/VlaBufferChart'
 
-interface IVlaBufferRowData {
-	indicatorName: string
-	totalPercent: number
-	total: number
-	uzsPercent: number
-	uzs: number
-	foreignPercent: number
-	foreign: number
+interface IIncomeRowProps {
+	income: IVlaBufferRowData
 }
 
-interface VLaBufferTableProps {
-	rows: {
-		liquidityAssets: IVlaBufferRowData[]
-		liabilitiesOnDemand: IVlaBufferRowData[]
+const styles: ISxStyles = {
+	tableContainer: {
+		padding: 0,
+		marginBottom: '20px'
+	},
+	verticalCellGridStyles: {
+		...globalStyles.verticalText,
+		transform: 'rotate(0) translateY(-40px)',
+		writingMode: 'vertical-rl',
+		textOrientation: 'upright'
+	},
+	verticalCellStyles: {
+		backgroundColor: palette.darkGray,
+		border: '0'
+	},
+	titleTextStyles: {
+		fontSize: 60,
+		color: '#fff',
+		fontWeight: 'bold'
+	},
+	bottomContainer: {
+		display: 'grid',
+		gridAutoFlow: 'column',
+		gridTemplateColumns: 'minmax(1fr, auto)'
+	},
+	chartsContainer: {
+		display: 'grid',
+		gridAutoFlow: 'column',
+		gridTemplateColumns: 'repeat(3, 1fr)'
 	}
 }
 
-function VlaBufferTableBody({ rows = [] }: { rows: IVlaBufferRowData[] }) {
+function VerticalCell({ text = 'ALL' }: { text?: string }) {
 	return (
-		<TableBody>
-			{rows.map((row: IVlaBufferRowData) => (
-				<TableRow key={uuid()}>
-					<TableCell>
-						<b>{row['indicatorName']}</b>
-					</TableCell>
-					<TableCell align="center">{row['totalPercent'] && `${formatNumber(row['totalPercent'])} %`}</TableCell>
-					<TableCell align="center" sx={globalStyles.noWrap}>
-						{formatNumber(row['total'])}
-					</TableCell>
-					<TableCell align="center">{row['uzsPercent'] && `${formatNumber(row['uzsPercent'])} %`}</TableCell>
-					<TableCell align="center" sx={globalStyles.noWrap}>
-						{formatNumber(row['uzs'])}
-					</TableCell>
-					<TableCell align="center">{row['foreignPercent'] && `${formatNumber(row['foreignPercent'])} %`}</TableCell>
-					<TableCell align="center" sx={globalStyles.noWrap}>
-						{formatNumber(row['foreign'])}
-					</TableCell>
-				</TableRow>
-			))}
-		</TableBody>
+		<TableCell rowSpan={0} sx={styles.verticalCellStyles}>
+			<Grid sx={styles.verticalCellGridStyles}>{text}</Grid>
+		</TableCell>
+	)
+}
+
+function SimpleTableRow({ income }: IIncomeRowProps) {
+	return (
+		<TableRow hover>
+			<TableCell>{income.indicatorName}</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentVlaTotal ? formatNumber(income.percentVlaTotal) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentTotal ? formatNumber(income.percentTotal) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{formatNumber(income.saldoTotal, 'e')}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentVlaUzs ? formatNumber(income.percentVlaUzs) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentUzs ? formatNumber(income.percentUzs) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{formatNumber(income.saldoUzs, 'e')}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentVlaUsd ? formatNumber(income.percentVlaUsd) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{income.percentUsd ? formatNumber(income.percentUsd) + '%' : ''}
+			</TableCell>
+			<TableCell align="center" sx={globalStyles.noWrap}>
+				{formatNumber(income.saldoUsd, 'e')}
+			</TableCell>
+		</TableRow>
+	)
+}
+
+function HeadTableRow({ income, bg, allSpan }: IIncomeRowProps & { bg?: string; allSpan?: boolean }) {
+	const rowSxStyles = { ...globalStyles.noWrap, color: bg ? palette.black : palette.red }
+	return (
+		<TableRow sx={{ backgroundColor: bg }}>
+			<TableCell align={bg ? 'center' : 'left'} sx={rowSxStyles}>
+				<b>{income.indicatorName}</b>
+			</TableCell>
+			{allSpan && <VerticalCell />}
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentVlaTotal)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentTotal)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.saldoTotal)}</b>
+			</TableCell>
+			{allSpan && <VerticalCell text="UZS" />}
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentVlaUzs)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentUzs)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.saldoUzs)}</b>
+			</TableCell>
+			{allSpan && <VerticalCell text="USD" />}
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentVlaUsd)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.percentUsd)}%</b>
+			</TableCell>
+			<TableCell sx={rowSxStyles} align="center">
+				<b>{formatNumber(income.saldoUsd)}</b>
+			</TableCell>
+		</TableRow>
 	)
 }
 
 const VLaBufferTable = () => {
 	const { vlaBuffer } = useTypedSelector(state => state.vlaBuffer)
-	const { liquidityAssets = [], liabilitiesOnDemand = [] } = vlaBuffer as any
-	const { reportDate } = useTypedSelector(state => state.operDays)
-	const forFOR = (liabilitiesOnDemand[0] || {}).total * 0.7
-	const forDemandDeposits = (liquidityAssets[0] || {}).total - forFOR
+	const { incomes, incomeBringing, nonProfits, nonProfitable, highLiquidityAssets } = vlaBuffer
+	const allPercents = [nonProfitable.percentTotal, incomeBringing.percentTotal]
+	const uzsPercents = [nonProfitable.percentUzs, incomeBringing.percentUzs]
+	const usdPercents = [nonProfitable.percentUsd, incomeBringing.percentUsd]
 	return (
 		<Fragment>
-			<TableContainer component={Paper}>
-				<ExportButton id={`liquidity-assets-${formatOneDate(reportDate)}`} />
-				<Table id={`liquidity-assets-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
-					<TableCap rows={7} text={'сум. экв.'} />
+			<TableContainer sx={styles.tableContainer} component={Paper}>
+				<Table size="small" aria-label="a dense table">
+					<TableCap rows={13} text={'млн.'} />
 					<TableHead sx={globalStyles.stickyTableHead}>
 						<TableRow>
 							<TableCell align="center">
-								<BoldWithColor>ЛИКВИДНЫЕ АКТЫВЫ</BoldWithColor>
+								<Typography sx={styles.titleTextStyles}>ВЛА</Typography>
+							</TableCell>
+							<TableCell sx={styles.verticalCellStyles} />
+							<TableCell align="center">
+								<BoldWithColor>Доля в ВЛА общий(100%)</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном активе</BoldWithColor>
+								<BoldWithColor>Доля в активе ОБЩИЙ</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
 								<BoldWithColor>Итого</BoldWithColor>
+							</TableCell>
+							<TableCell sx={styles.verticalCellStyles} />
+							<TableCell align="center">
+								<BoldWithColor>Доля в ВЛА в нац. вал.</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
 								<BoldWithColor>Доля в совокупном активе в нац. валюте</BoldWithColor>
@@ -87,75 +174,72 @@ const VLaBufferTable = () => {
 							<TableCell align="center">
 								<BoldWithColor>Национальная валюта</BoldWithColor>
 							</TableCell>
+							<TableCell sx={styles.verticalCellStyles} />
 							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном активе в иност. валюте</BoldWithColor>
+								<BoldWithColor>Доля в ВЛА в ин. вал.</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
-								<BoldWithColor>Иностранном валюте</BoldWithColor>
+								<BoldWithColor>Доля в совокупном активе в ин. валюте</BoldWithColor>
 							</TableCell>
-						</TableRow>
-					</TableHead>
-					<VlaBufferTableBody rows={liquidityAssets} />
-				</Table>
-			</TableContainer>
-			<Grid sx={{ margin: '20px 0' }} />
-			<TableContainer component={Paper}>
-				<ExportButton id={`liabilities-on-demand-${formatOneDate(reportDate)}`} />
-				<Table id={`liabilities-on-demand-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
-					<TableCap rows={7} text={'сум. экв.'} />
-					<TableHead sx={globalStyles.stickyTableHead}>
-						<TableRow>
-							<TableCell align="center">
-								<BoldWithColor>ОБЯЗАТЕЛСТВА ДО ВОСТРЕБОВАНИЯ</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном пассиве</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Итого</BoldWithColor>
-							</TableCell>
-							<TableCell align="center" />
-							<TableCell align="center">
-								<BoldWithColor>Национальная валюта</BoldWithColor>
-							</TableCell>
-							<TableCell align="center" />
 							<TableCell align="center">
 								<BoldWithColor>Иностранном валюте(долл.США)</BoldWithColor>
 							</TableCell>
 						</TableRow>
 					</TableHead>
-					<VlaBufferTableBody rows={liabilitiesOnDemand} />
+					<TableBody>
+						{[
+							[incomeBringing, ...incomes],
+							[nonProfitable, ...nonProfits]
+						].map((item, itemIndex) => (
+							<Fragment key={uuid()}>
+								{item.map((income, incomeIndex) =>
+									incomeIndex === 0 ? (
+										<HeadTableRow
+											allSpan={itemIndex === 0 && incomeIndex === 0}
+											bg={itemIndex === 0 ? palette.lightGreen : palette.primary}
+											income={income}
+											key={uuid()}
+										/>
+									) : (
+										<SimpleTableRow key={uuid()} income={income} />
+									)
+								)}
+							</Fragment>
+						))}
+						<HeadTableRow income={highLiquidityAssets} />
+					</TableBody>
 				</Table>
 			</TableContainer>
-			<Grid sx={{ margin: '20px 0', maxWidth: '40%' }}>
-				<Table size="small">
-					<TableHead sx={globalStyles.stickyTableHead}>
-						<TableRow>
-							<TableCell align="left">
-								<BoldWithColor>
-									<i>Для довостребовние (70% кор.счет)</i>
-								</BoldWithColor>
-							</TableCell>
-							<TableCell align="right">
-								<BoldWithColor>
-									<i>{formatNumber(forFOR)}</i>
-								</BoldWithColor>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell align="left">
-								<BoldWithColor>
-									<i>Для ФОР</i>
-								</BoldWithColor>
-							</TableCell>
-							<TableCell align="right">
-								<BoldWithColor>
-									<i>{formatNumber(forDemandDeposits)}</i>
-								</BoldWithColor>
-							</TableCell>
-						</TableRow>
-					</TableHead>
-				</Table>
+			<Grid component={Paper} sx={styles.bottomContainer}>
+				<Grid sx={{ display: 'flex', flexDirection: 'column' }}>
+					<Typography
+						align="center"
+						sx={{
+							...styles.titleTextStyles,
+							backgroundColor: palette.lightGreen,
+							padding: '10px 20px',
+							marginTop: '35px'
+						}}
+					>
+						Доход
+					</Typography>
+					<Typography
+						align="center"
+						sx={{
+							...styles.titleTextStyles,
+							backgroundColor: palette.lightBlue,
+							padding: '10px 20px',
+							marginTop: '35px'
+						}}
+					>
+						Недоход
+					</Typography>
+				</Grid>
+				<Grid sx={styles.chartsContainer}>
+					<VlaBufferChart series={allPercents} labelText="ALL" />
+					<VlaBufferChart series={uzsPercents} labelText="UZS" />
+					<VlaBufferChart series={usdPercents} labelText="USD" />
+				</Grid>
 			</Grid>
 		</Fragment>
 	)

@@ -18,10 +18,11 @@ import {
   ReportUpdate,
   ReportWithoutDate
 } from './reports.decorator'
-import { IReportTwoDates, ReportsPaths } from './reports.interfaces'
+import { ICbnUpdateBody, IReportTwoDates, ReportsPaths } from './reports.interfaces'
 import { UpdateCAADto } from './dto/update-caa.dto'
 import { Request } from 'express'
 import { User } from '../auth/auth.interface'
+import { AdminUserGuard } from '../users/users.decorator'
 
 @Controller()
 export class ReportsController {
@@ -109,6 +110,12 @@ export class ReportsController {
     return await this.reportsService.calcFor(date)
   }
 
+  @AdminUserGuard()
+  @Put(ReportsPaths.calcForUpdateCbn)
+  async calcForUpdateCbn(@Body() body: ICbnUpdateBody) {
+    return await this.reportsService.calcForUpdateCbn(body)
+  }
+
   @Report('Bank liquidity', ReportsPaths.currencyPosition)
   async currencyPosition(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
@@ -186,6 +193,12 @@ export class ReportsController {
   async gm(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.gm(date)
+  }
+
+  @Report('Actives, passives', ReportsPaths.incomeAnalysis)
+  async incomeAnalysis(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.incomeAnalysis(date)
   }
 
   @ReportWithoutDate('Gap analyze', ReportsPaths.gap)

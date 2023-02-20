@@ -42,6 +42,7 @@ import CorrAccountsAnalyze from './pages/dealingOperations/CorrAccountsAnalyze'
 import CAAManual from './pages/dealingOperations/CAAManual'
 import CorrOperations from './pages/dealingOperations/CorrOperations'
 import FilialCp from './pages/dealingOperations/FilialCp'
+import IncomeAnalysis from './pages/keyIndicators/IncomeAnalysis'
 
 function App() {
 	const {
@@ -56,6 +57,7 @@ function App() {
 						<Switch>
 							<Route component={LoginPage} path="/login" />
 							<PrivateRoute component={Dashboard} path="/" exact />
+							<PrivateRoute component={IncomeAnalysis} path="/incomeAnalysis" />
 							<PrivateRoute component={MainIndicators} path="/mainIndicators" />
 							<PrivateRoute component={Capital} path="/capital" />
 							<PrivateRoute component={ProfitAndLost} path="/profitAndLost" />

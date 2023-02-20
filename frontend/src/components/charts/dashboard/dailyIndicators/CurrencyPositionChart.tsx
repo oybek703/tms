@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import { chartSubtitle } from '../../../../utils'
+import { chartSubtitle, formatNumber } from '../../../../utils'
 import Paper from '@mui/material/Paper'
 
 async function renderOptions(series: any = []) {
@@ -37,6 +37,9 @@ async function renderOptions(series: any = []) {
 			style: {
 				fontSize: '14px',
 				colors: ['#000']
+			},
+			formatter: function (value: number) {
+				return formatNumber(value)
 			}
 		},
 		legend: {

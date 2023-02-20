@@ -51,11 +51,7 @@ export class Actives extends MainIndicatorsBase {
   } /* Ценные бумаги */
 
   private async government_bills() {
-    return await this.getOneRow(
-      '',
-      'Государственные ценные бумаги',
-      `CODE_COA IN ('10705', '10709')`
-    )
+    return await this.getOneRow('', 'Государственные ценные бумаги', `CODE_COA LIKE '107%'`)
   } /* Государственные ценные бумаги */
 
   private async non_government_bills() {

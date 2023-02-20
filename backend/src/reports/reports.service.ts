@@ -33,9 +33,15 @@ import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
 import getCorrAccountsAnalyzeData from '../core/dealing-operations/corr-accounts-anaylze'
 import { CAAColNames, UpdateCAADto } from './dto/update-caa.dto'
-import { CAAChangeHistory, CAAColLabelNames, ICorrOperationsOptions } from './reports.interfaces'
+import {
+  CAAChangeHistory,
+  CAAColLabelNames,
+  ICbnUpdateBody,
+  ICorrOperationsOptions
+} from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
+import getIncomeAnalysisData from '../core/actives-and-passives/income-analysis'
 
 @Injectable()
 export class ReportsService {
@@ -78,6 +84,10 @@ export class ReportsService {
     return { lastUpdate }
   }
 
+  async incomeAnalysis(date: Date) {
+    return await getIncomeAnalysisData(date, this.oracleService)
+  }
+
   async mainIndicators(date: Date) {
     return await getMainIndicatorsData(date, this.oracleService)
   }
@@ -108,6 +118,29 @@ export class ReportsService {
 
   async calcFor(date: Date) {
     return await getCalcFor(date, this.oracleService)
+  }
+
+  async calcForUpdateCbn(body: ICbnUpdateBody) {
+    const { toDate, fromDate, cbNorm } = body
+    const existingDataQuery = `SELECT *
+                               FROM FOR_STANDARD
+                               WHERE FROM_DATE = DATE '${fromDate}'
+                                 AND END_DATE = DATE '${toDate}'`
+    const existingData = await this.oracleService.executeQuery(existingDataQuery)
+    if (existingData) {
+      await this.oracleService.executeQuery(
+        `UPDATE FOR_STANDARD
+         SET CB_STANDARD='${cbNorm}'
+         WHERE FROM_DATE = DATE '${fromDate}'
+           AND END_DATE = DATE '${toDate}'`
+      )
+      return { success: true, message: 'Existing normative successfully updated.' }
+    }
+    await this.oracleService.executeQuery(
+      `INSERT INTO FOR_STANDARD(CB_STANDARD, FROM_DATE, END_DATE)
+       VALUES ('${cbNorm}', DATE '${fromDate}', DATE '${toDate}')`
+    )
+    return { success: true, message: 'Central bank normative added successfully.' }
   }
 
   async currencyPosition(date: Date) {

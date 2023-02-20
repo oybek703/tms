@@ -13,6 +13,7 @@ import Dialog from '@mui/material/Dialog'
 import { withToken } from '../../../utils/axiosUtils'
 import Alert from '../../../components/layout/Alert'
 import axios from 'axios'
+import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
 
 const CbnUpdate = () => {
 	const [updateMsg, setUpdateMsg] = useState('')
@@ -28,8 +29,8 @@ const CbnUpdate = () => {
 				try {
 					const {
 						data: { message }
-					} = await axios.put(`/api/calcfor/updatecbn`, { fromDate, toDate, cbNorm }, withToken())
-					localStorage.removeItem('calcfor')
+					} = await axios.put(APIRoutes.calcForUpdateCbn, { fromDate, toDate, cbNorm }, withToken())
+					localStorage.removeItem('calcFor')
 					setUpdateMsg(message)
 					setDialog(false)
 					setToDate('')

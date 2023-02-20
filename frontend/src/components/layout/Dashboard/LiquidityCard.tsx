@@ -7,7 +7,7 @@ import useTypedSelector from '../../../hooks/useTypedSelector'
 import globalStyles from '../../../styles/globalStyles'
 import { Typography } from '@mui/material'
 import { ISxStyles } from '../../../interfaces/styles.interface'
-import { DASHBOARD_VLA } from '../../../constants'
+import { DASHBOARD_IL, DASHBOARD_VLA } from '../../../constants'
 
 const styles: ISxStyles = {
 	totalText: {
@@ -39,6 +39,7 @@ const styles: ISxStyles = {
 	stateCard: {
 		position: 'absolute',
 		bottom: -6,
+		left: 0,
 		background: '#7794aa',
 		fontSize: '0.65em',
 		fontWeight: 'bold',
@@ -79,7 +80,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ data = [], label, totalOn
 				justifyContent={totalOnly ? 'center' : 'space-between'}
 				alignItems="center"
 			>
-				{isToday && label === 'ЮЛА (HQLA)' && <StateCard />}
+				{((isToday && label === DASHBOARD_VLA) || label === DASHBOARD_IL) && <StateCard />}
 				<Grid item xs={6}>
 					<Grid
 						container

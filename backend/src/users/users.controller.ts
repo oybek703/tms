@@ -3,14 +3,14 @@ import { UsersService } from './users.service'
 import { EditUserDto } from './dto/edit-user.dto'
 import { ApiTags } from '@nestjs/swagger'
 import { AddUserDto } from './dto/add-user.dto'
-import { UsersGuard } from './users.decorator'
+import { AdminUserGuard } from './users.decorator'
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UsersGuard()
+  @AdminUserGuard()
   @Get(':userId')
   getUser(@Param('userId') userId: number) {
     const user = this.usersService.getUser(userId)
@@ -18,27 +18,27 @@ export class UsersController {
     return user
   }
 
-  @UsersGuard()
+  @AdminUserGuard()
   @Get()
   getAllUsers() {
     return this.usersService.getAllUsers()
   }
 
-  @UsersGuard()
+  @AdminUserGuard()
   @Post('addUser')
   async addUser(@Body() dto: AddUserDto) {
     await this.usersService.addUser(dto)
     return { success: true, message: 'User added successfully!' }
   }
 
-  @UsersGuard()
+  @AdminUserGuard()
   @Delete(':userId')
   async deleteUser(@Param('userId') userId: number) {
     await this.usersService.deleteUser(userId)
     return { success: true, message: `User with id of ${userId} deleted successfully!` }
   }
 
-  @UsersGuard()
+  @AdminUserGuard()
   @Put(':userId')
   async editUser(@Body() dto: EditUserDto, @Param('userId') userId: number) {
     await this.usersService.editUser(dto, userId)
