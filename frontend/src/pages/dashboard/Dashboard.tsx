@@ -9,7 +9,6 @@ import Normatives from '../../components/layout/Dashboard/Normatives'
 import BankLimits from '../../components/layout/Dashboard/BankLimits'
 import DailyIndicators from '../../components/layout/Dashboard/DailyIndicators'
 import CurrencyRatesTab from '../../components/layout/Dashboard/DashboardCurrencyRates'
-import CapitalTab from '../../components/layout/Dashboard/CapitalTab'
 import FundingTab from '../../components/layout/Dashboard/FundingTab'
 import CreditPortfolioTab from '../../components/layout/Dashboard/CreditPortfolioTab'
 import useTypedSelector from '../../hooks/useTypedSelector'
@@ -83,10 +82,6 @@ const Dashboard = () => {
 								<PlacedAndAttracted forDashboard />
 							</WithDetailsButton>
 						)
-					},
-					{
-						name: 'Капитал',
-						panel: <CapitalTab vla={vla} />
 					},
 					{
 						name: 'Фондирование',
