@@ -12,13 +12,20 @@ import { getDashboardLiquidityIndicator, mergeStyles } from '../../../utils'
 import globalStyles from '../../../styles/globalStyles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
 import { DASHBOARD_IL, DASHBOARD_LCR, DASHBOARD_NSFR, DASHBOARD_VLA, IL_ID } from '../../../constants'
+import theme from '../../theme'
 
 const styles: ISxStyles = {
 	liqRate: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(4, 1fr)',
 		gap: '10px',
-		margin: '10px auto'
+		margin: '10px auto',
+		[theme.breakpoints.down('lg')]: {
+			gridTemplateColumns: 'repeat(2, 1fr)'
+		},
+		[theme.breakpoints.down('md')]: {
+			gridTemplateColumns: '1fr'
+		}
 	}
 }
 
@@ -93,10 +100,10 @@ const DailyIndicators: React.FC<DailyIndicatorsProps> = ({
 				Валютные позиции
 			</Grid>
 			<Grid container justifyContent="space-between" spacing={1}>
-				<Grid item xs={12} sm={6} md={4}>
+				<Grid item xs={12} sm={12} md={12} lg={4}>
 					<Position position={position} />
 				</Grid>
-				<Grid item xs={12} sm={6} md={8}>
+				<Grid item xs={12} sm={12} md={12} lg={8}>
 					<CurrencyPositionChart series={currencyPosition} />
 				</Grid>
 			</Grid>

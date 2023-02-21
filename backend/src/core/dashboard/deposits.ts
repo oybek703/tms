@@ -15,21 +15,23 @@ export class Deposits extends Base {
   }
 
   protected currencyMfiQuery = () => {
-    return `SELECT
-                    TRUNC(SUM(UZS)/POWER(10, 11), 2) "uzs",
-                    TRUNC(SUM(USD)/POWER(10, 11), 2) "usd",
-                    TRUNC(SUM(EUR)/POWER(10, 11), 2) "eur",
-                    TRUNC(SUM(JPY)/POWER(10, 11), 2) "jpy"
-                FROM DASHBOARD_DEPOSIT
-                WHERE OPER_DAY = DATE '${this.date}' AND ROLE IN ('IFI_short', 'IFI_long')`
+    return `SELECT TRUNC(SUM(UZS) / POWER(10, 11), 2) "uzs",
+                   TRUNC(SUM(USD) / POWER(10, 11), 2) "usd",
+                   TRUNC(SUM(EUR) / POWER(10, 11), 2) "eur",
+                   TRUNC(SUM(JPY) / POWER(10, 11), 2) "jpy"
+            FROM DASHBOARD_DEPOSIT
+            WHERE OPER_DAY = DATE '${this.date}'
+              AND ROLE IN ('IFI_short', 'IFI_long')`
   }
 
   protected currencyTimeDepositsQuery = () => {
-    return `SELECT TRUNC(UZS/POWER(10, 11), 2) "uzs",
-                       TRUNC(USD/POWER(10, 11), 2) "usd",
-                       TRUNC(EUR/POWER(10, 11), 2) "eur"
-                FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
-                WHERE ROLE='T_D' AND OPER_DAY<=DATE '${this.date}' AND ROWNUM=1`
+    return `SELECT TRUNC(UZS / POWER(10, 11), 2) "uzs",
+                   TRUNC(USD / POWER(10, 11), 2) "usd",
+                   TRUNC(EUR / POWER(10, 11), 2) "eur"
+            FROM (SELECT * FROM DASHBOARD_DEPOSIT ORDER BY OPER_DAY DESC)
+            WHERE ROLE = 'T_D'
+              AND OPER_DAY <= DATE '${this.date}'
+              AND ROWNUM = 1`
   }
 
   protected interbankDepositsQuery = () => {
@@ -106,7 +108,7 @@ export class Deposits extends Base {
       eur: number
       jpy: number
     }>(undefined, this.currencyMfiQuery)
-    return [uzs, jpy, usd, eur].map(v => Number(v || 0).toFixed(2))
+    return [uzs, usd, eur, jpy].map(v => Number(v || 0).toFixed(2))
   }
 
   protected async currency_time_deposits() {

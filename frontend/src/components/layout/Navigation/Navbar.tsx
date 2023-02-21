@@ -22,6 +22,7 @@ import LastUpdate from './LastUpdate'
 import globalStyles from '../../../styles/globalStyles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
 import useActions from '../../../hooks/useActions'
+import theme from '../../theme'
 
 const styles: ISxStyles = {
 	menu: {
@@ -107,9 +108,31 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuOpen = () => {} }) => {
     }, [getOperDays])
 	return (
 		<Fragment>
-			<AppBar sx={{ bgcolor: '#eee' }} position="fixed" elevation={0} variant="outlined">
+			<AppBar
+				sx={{
+					bgcolor: '#eee',
+					[theme.breakpoints.down('lg')]: {
+						transform: 'scaleY(0.8)',
+						minHeight: '100px',
+						marginTop: '-10px'
+					}
+				}}
+				position="fixed"
+				elevation={0}
+				variant="outlined"
+			>
 				<Toolbar>
-					<Grid container sx={{ display: 'flex', justifyContent: 'space-between' }} alignItems="center">
+					<Grid
+						container
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							[theme.breakpoints.down('lg')]: {
+								justifyContent: 'center'
+							}
+						}}
+						alignItems="center"
+					>
 						<Grid item>
 							<Grid container alignItems="center">
 								<Grid item>
