@@ -90,9 +90,9 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => 
 				<WarningAlert rows={calcFor} role={role} />
 				{calcFor.length && (
 					<Fragment>
-						<CorrespondentDynamics series={correspondentSeries} categories={categories} />
-						<br />
 						<Deviation series={deviationSeries} categories={categories} />
+						<br />
+						<CorrespondentDynamics series={correspondentSeries} categories={categories} />
 					</Fragment>
 				)}
 			</Fragment>

@@ -16,6 +16,19 @@ function getColorByStatus(status: Status) {
 	return '#fff'
 }
 
+const bankNames = [
+	'China Development Bank',
+	'Landesbank Baden-Wuerttemberg',
+	'АБР',
+	'JPMorgan Chase Bank',
+	'Turkiye Ihracat Kredi Bankasi A.S.',
+	'Europe Asia Investment Finance B.V.',
+	'Европейский Банк Реконструкции и Развития',
+	'Deutsche Bank AG',
+	'Cargill',
+	'Credit Suisse AG'
+]
+
 const Covenants = () => {
 	return (
 		<TableContainer component={Paper}>
@@ -31,21 +44,12 @@ const Covenants = () => {
 						<TableCell align="center" rowSpan={2}>
 							<BoldWithColor>AO Асакабанк</BoldWithColor>
 						</TableCell>
-						<TableCell align="center" colSpan={9}>
+						<TableCell align="center" colSpan={bankNames.length}>
 							<BoldWithColor>Контрагент</BoldWithColor>
 						</TableCell>
 					</TableRow>
 					<TableRow>
-						{[
-							'China Development Bank',
-							'Landesbank Baden-Wuerttemberg',
-							'АБР',
-							'JPMorgan Chase Bank',
-							'Turkiye Ihracat Kredi Bankasi A.S.',
-							'Europe Asia Investment Finance B.V.',
-							'Европейский Банк Реконструкции и Развития',
-							'Deutsche Bank AG'
-						].map(bank => (
+						{bankNames.map(bank => (
 							<TableCell sx={globalStyles.blueBackground} key={uuid()} align="center">
 								<BoldWithColor>{bank}</BoldWithColor>
 							</TableCell>
@@ -64,28 +68,28 @@ const Covenants = () => {
 							<TableCell align="center" sx={globalStyles.noWrap}>
 								{b.main_bank} {typeof b.main_bank === 'number' && '%'}
 							</TableCell>
-							{Array(8)
+							{Array(bankNames.length)
 								.fill('')
-								.map((_, idx) => (
-									<TableCell
-										key={uuid()}
-										sx={globalStyles.noWrap}
-										align="center"
-										style={{
-											// @ts-ignore
-											backgroundColor: !b[`bank_${idx + 1}`].value
-												? 'inherit'
-												: // @ts-ignore
-												  getColorByStatus(b[`bank_${idx + 1}`].status),
-											color: '#fff'
-										}}
-									>
-										<b>
-											{/*  @ts-ignore */}
-											<i>{b[`bank_${idx + 1}`].value}</i>
-										</b>
-									</TableCell>
-								))}
+								.map((_, idx) => {
+									// @ts-ignore
+									const oneBankData = b[`bank_${idx + 1}`]
+									if (!oneBankData) return null
+									return (
+										<TableCell
+											key={uuid()}
+											sx={globalStyles.noWrap}
+											align="center"
+											style={{
+												backgroundColor: !oneBankData.value ? 'inherit' : getColorByStatus(oneBankData.status),
+												color: '#fff'
+											}}
+										>
+											<b>
+												<i>{oneBankData.value}</i>
+											</b>
+										</TableCell>
+									)
+								})}
 						</TableRow>
 					))}
 				</TableBody>
