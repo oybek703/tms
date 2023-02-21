@@ -23,7 +23,7 @@ const Normatives = () => {
 							<BoldWithColor>Установленные нормативы</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
-							<BoldWithColor>Показатели нормативов</BoldWithColor>
+							<BoldWithColor>Показатели нормативов на отчетный период</BoldWithColor>
 						</TableCell>
 					</TableRow>
 				</TableHead>
