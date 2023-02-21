@@ -34,7 +34,7 @@ const styles: ISxStyles = {
 		textOrientation: 'upright'
 	},
 	verticalCellStyles: {
-		backgroundColor: palette.darkGray,
+		backgroundColor: palette.lightGray,
 		border: '0'
 	},
 	titleTextStyles: {
@@ -102,37 +102,37 @@ function HeadTableRow({ income, bg, allSpan }: IIncomeRowProps & { bg?: string; 
 	return (
 		<TableRow sx={{ backgroundColor: bg }}>
 			<TableCell align={bg ? 'center' : 'left'} sx={rowSxStyles}>
-				<b>{income.indicatorName}</b>
+				<BoldWithColor>{income.indicatorName}</BoldWithColor>
 			</TableCell>
 			{allSpan && <VerticalCell />}
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentVlaTotal)}%</b>
+				<BoldWithColor>{formatNumber(income.percentVlaTotal)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentTotal)}%</b>
+				<BoldWithColor>{formatNumber(income.percentTotal)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.saldoTotal)}</b>
+				<BoldWithColor>{formatNumber(income.saldoTotal)}</BoldWithColor>
 			</TableCell>
 			{allSpan && <VerticalCell text="UZS" />}
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentVlaUzs)}%</b>
+				<BoldWithColor>{formatNumber(income.percentVlaUzs)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentUzs)}%</b>
+				<BoldWithColor>{formatNumber(income.percentUzs)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.saldoUzs)}</b>
+				<BoldWithColor>{formatNumber(income.saldoUzs)}</BoldWithColor>
 			</TableCell>
 			{allSpan && <VerticalCell text="USD" />}
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentVlaUsd)}%</b>
+				<BoldWithColor>{formatNumber(income.percentVlaUsd)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.percentUsd)}%</b>
+				<BoldWithColor>{formatNumber(income.percentUsd)}%</BoldWithColor>
 			</TableCell>
 			<TableCell sx={rowSxStyles} align="center">
-				<b>{formatNumber(income.saldoUsd)}</b>
+				<BoldWithColor>{formatNumber(income.saldoUsd)}</BoldWithColor>
 			</TableCell>
 		</TableRow>
 	)
@@ -196,7 +196,7 @@ const VLaBufferTable = () => {
 									incomeIndex === 0 ? (
 										<HeadTableRow
 											allSpan={itemIndex === 0 && incomeIndex === 0}
-											bg={itemIndex === 0 ? palette.lightGreen : palette.primary}
+											bg={itemIndex === 0 ? palette.lightGreen : palette.lightRed}
 											income={income}
 											key={uuid()}
 										/>
@@ -227,7 +227,7 @@ const VLaBufferTable = () => {
 						align="center"
 						sx={{
 							...styles.titleTextStyles,
-							backgroundColor: palette.lightBlue,
+							backgroundColor: palette.lightRed,
 							padding: '10px 20px',
 							marginTop: '35px'
 						}}

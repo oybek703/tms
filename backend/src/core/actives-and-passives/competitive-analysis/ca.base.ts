@@ -147,8 +147,6 @@ export class CompetitiveAnalysis extends Base {
       ({ monthFirstDate }) => monthFirstDate
     ) as typeof this.monthFirstDates
 
-    console.log(quarterDates)
-
     return quarterDates.map(({ quarterDates }) => quarterDates.replace(/\d/, '1'))
   }
 

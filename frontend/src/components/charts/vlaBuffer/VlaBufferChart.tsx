@@ -4,7 +4,7 @@ import { chartTooltip } from '../../../utils'
 import palette from '../../../styles/palette'
 
 function renderOptions(series: number[], id: string, labelText = 'ALL') {
-	const colors = ['#4CB9E1', '#00B050']
+	const colors = [palette.lightRed, palette.lightGreen]
 	const options = {
 		tooltip: { ...chartTooltip() },
 		series,
@@ -43,8 +43,8 @@ function renderOptions(series: number[], id: string, labelText = 'ALL') {
 				return `${w.config.series[seriesIndex].toFixed(2)}%`
 			},
 			style: {
-				fontSize: '20px',
-				colors: [palette.black]
+				fontSize: '15px',
+				colors: ['#fff']
 			}
 		},
 		responsive: [

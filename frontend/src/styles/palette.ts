@@ -6,6 +6,7 @@ const rootColors = {
 	lightBrown: '#ffb94f',
 	darkYellow: '#f38003',
 	darkGray: '#ccc',
+	lightGray: '#d9d9d9',
 	lightRed: '#ff6363',
 	black: '#000',
 	red: '#ff0000'
