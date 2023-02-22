@@ -454,6 +454,7 @@ export class DashboardMonthly extends Base {
     }
   }
 
+  // TODO This is temporary for month and year first dates
   protected setFirstOperDays = async () => {
     const yearFirstDate = format(new Date(this.secondDate), 'yyyy-01-01')
     const monthFirstDate = format(new Date(this.secondDate), 'yyyy-MM-01')
@@ -592,7 +593,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '2.2.1',
       ' - в нац. валюте',
-      `BAL LIKE '204%' AND BAL != '20406' AND VAL='000'`
+      `BAL LIKE '204%' AND BAL != '20406' AND VAL='000'`,
+      true
     )
   } /*  - в нац. валюте */
 
@@ -609,7 +611,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '2.2.3',
       ' - в иностранной. валюте',
-      `BAL LIKE '204%' AND BAL != '20406' AND VAL!='000'`
+      `BAL LIKE '204%' AND BAL != '20406' AND VAL!='000'`,
+      true
     )
   } /*  - в иностранной. валюте */
 
@@ -634,7 +637,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '2.3.1',
       ' - в нац. валюте',
-      `BAL LIKE '206%' AND BAL != '20606' AND VAL='000'`
+      `BAL LIKE '206%' AND BAL != '20606' AND VAL='000'`,
+      true
     )
   } /*  - в нац. валюте */
 
@@ -651,7 +655,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '2.3.3',
       ' - в иностранной. валюте',
-      `BAL LIKE '206%' AND BAL != '20606' AND VAL!='000'`
+      `BAL LIKE '206%' AND BAL != '20606' AND VAL!='000'`,
+      true
     )
   } /*  - в иностранной. валюте */
 
@@ -682,7 +687,7 @@ export class DashboardMonthly extends Base {
   } /* Сберегательные депозиты физ. лиц */
 
   private async saving_physicals_deposits_nat_curr() {
-    return await this.getOneRow('3.2.1', ' - в нац. валюте', `BAL='20406' AND VAL='000'`)
+    return await this.getOneRow('3.2.1', ' - в нац. валюте', `BAL='20406' AND VAL='000'`, true)
   } /*  - в нац. валюте */
 
   private async spd_weighted_avg_rates_NC() {
@@ -695,7 +700,12 @@ export class DashboardMonthly extends Base {
   } /*  -средневзвешенные процентные ставки */
 
   private async saving_physicals_deposits_for_curr() {
-    return await this.getOneRow('3.2.3', ' - в иностранной. валюте', `BAL='20406' AND VAL!='000'`)
+    return await this.getOneRow(
+      '3.2.3',
+      ' - в иностранной. валюте',
+      `BAL='20406' AND VAL!='000'`,
+      true
+    )
   } /*  - в иностранной. валюте */
 
   private async spd_weighted_avg_rates_FC() {
@@ -712,7 +722,7 @@ export class DashboardMonthly extends Base {
   } /* срочные депозиты физ. лиц */
 
   private async time_physicals_deposits_nat_curr() {
-    return await this.getOneRow('3.3.1', ' - в нац. валюте', `BAL='20606' AND VAL='000'`)
+    return await this.getOneRow('3.3.1', ' - в нац. валюте', `BAL='20606' AND VAL='000'`, true)
   } /*  - в нац. валюте */
 
   private async tpd_weighted_avg_rates_NC() {
@@ -725,7 +735,12 @@ export class DashboardMonthly extends Base {
   } /*  -средневзвешенные процентные ставки */
 
   private async time_physicals_deposits_for_curr() {
-    return await this.getOneRow('3.3.3', ' - в иностранной. валюте', `BAL='20606' AND VAL!='000'`)
+    return await this.getOneRow(
+      '3.3.3',
+      ' - в иностранной. валюте',
+      `BAL='20606' AND VAL!='000'`,
+      true
+    )
   } /*  - в иностранной. валюте */
 
   private async tpd_weighted_avg_rates_FC() {
@@ -750,7 +765,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '4.1',
       'в том числе в нац.валюте',
-      `BAL LIKE '216%' OR BAL LIKE '220%' AND VAL = '000'`
+      `BAL LIKE '216%' OR BAL LIKE '220%' AND VAL = '000'`,
+      true
     )
   } /* в том числе в нац.валюте */
 
@@ -767,7 +783,8 @@ export class DashboardMonthly extends Base {
     return await this.getOneRow(
       '4.2',
       'в том числе в иностранной валюте',
-      `BAL LIKE '216%' OR BAL LIKE '220%' AND VAL != '000'`
+      `BAL LIKE '216%' OR BAL LIKE '220%' AND VAL != '000'`,
+      true
     )
   } /* в том числе в иностранной валюте */
 
@@ -795,7 +812,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('LCR_NAT'),
       true
     )
-    return this.createData('5.1', '- в нац.валюте', data, false, true)
+    return this.createData('5.1', '- в нац.валюте', data, true, true)
   } /*  - в нац.валюте */
 
   private async LCR_for_curr() {
@@ -804,7 +821,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('LCR_FOR'),
       true
     )
-    return this.createData('5.2', '- в иностранной валюте', data, false, true)
+    return this.createData('5.2', '- в иностранной валюте', data, true, true)
   } /*  - в иностранной валюте */
 
   private async NSFR_total() {
@@ -822,7 +839,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('NSFR_NAT'),
       true
     )
-    return this.createData('6.1', '- в нац.валюте', data, false, true)
+    return this.createData('6.1', '- в нац.валюте', data, true, true)
   } /*  - в нац.валюте */
 
   private async NSFR_for_curr() {
@@ -831,7 +848,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('NSFR_FOR'),
       true
     )
-    return this.createData('6.2', '- в иностранной валюте', data, false, true)
+    return this.createData('6.2', '- в иностранной валюте', data, true, true)
   } /*  - в иностранной валюте */
 
   private async VLA_total() {
@@ -855,7 +872,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('VLA_NAT'),
       true
     )
-    return this.createData('7.1', '- в нац.валюте', data, false, true)
+    return this.createData('7.1', '- в нац.валюте', data, true, true)
   } /*  - в нац.валюте */
 
   private async VLA_for_curr() {
@@ -864,7 +881,7 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('VLA_FOR'),
       true
     )
-    return this.createData('7.2', '- в иностранной валюте', data, false, true)
+    return this.createData('7.2', '- в иностранной валюте', data, true, true)
   } /*  - в иностранной валюте */
 
   async getRows() {

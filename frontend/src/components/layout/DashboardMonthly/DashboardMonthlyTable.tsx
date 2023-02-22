@@ -21,6 +21,25 @@ interface DashboardMonthlyTableProps {
 	handleDateChange: (date: string) => void
 }
 
+function RenderBoldOrIndent({ row }: { row: any }) {
+	const { indicatorName } = row
+	return (
+		<TableCell>
+			{row['isTableHead'] ? (
+				<b>{indicatorName}</b>
+			) : (
+				<>
+					{indicatorName === '-средневзвешенные процентные ставки' ? (
+						<span>&nbsp; &nbsp; &nbsp;{indicatorName}</span>
+					) : (
+						indicatorName
+					)}
+				</>
+			)}
+		</TableCell>
+	)
+}
+
 const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 	rows = [],
 	firstDate,
@@ -94,7 +113,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 									<TableCell align="center">
 										<b>{row['count']}</b>
 									</TableCell>
-									<TableCell>{row['isTableHead'] ? <b>{row['indicatorName']}</b> : row['indicatorName']}</TableCell>
+									<RenderBoldOrIndent row={row} />
 									{row['data'].map((d: any, j: number) => (
 										<TableCell sx={globalStyles.noWrap} align="center" key={uuid()}>
 											{formatNumber(d['sum'])} {row['withPercent'] ? '%' : ''}
