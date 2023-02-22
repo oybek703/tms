@@ -1,11 +1,12 @@
 import { Base } from '../../base'
 import { OracleService } from '../../../oracle/oracle.service'
 import { IDashboardMonthlyDbData } from '../dashboard.interface'
+import { format } from 'date-fns'
 
 export class DashboardMonthly extends Base {
   constructor(
-    protected readonly firstDate,
-    protected readonly secondDate,
+    protected firstDate,
+    protected secondDate,
     oracleService: OracleService,
     protected readonly dateOption?
   ) {
@@ -13,7 +14,10 @@ export class DashboardMonthly extends Base {
   }
 
   protected formatQuery(whereQuery: string): string {
-    return ''
+    return `SELECT TO_CHAR(OPER_DAY, 'YYYY-MM-DD') AS "firstOperDay"
+            FROM IBS.DAY_OPERATIONAL@IABS
+            WHERE OPER_DAY >= DATE '${whereQuery}'
+              AND ROWNUM = 1`
   }
 
   protected chooseQuery = (onlyTwoQuery: string, allQuery: string, monthQuery: string) => {
@@ -430,8 +434,9 @@ export class DashboardMonthly extends Base {
     isTableHead = false,
     withPercent?: boolean
   ) {
-    if (!data.length)
+    if (!data.length) {
       return { count, indicatorName, data: [], differ: 0, differPercent: 0, isTableHead }
+    }
     const clonedData = [...data]
     const differ = +(clonedData[clonedData.length - 1]['sum'] - clonedData[0]['sum']).toFixed(2)
     const calculatedDifferPercent = +(
@@ -447,6 +452,19 @@ export class DashboardMonthly extends Base {
       isTableHead,
       withPercent
     }
+  }
+
+  protected setFirstOperDays = async () => {
+    const yearFirstDate = format(new Date(this.secondDate), 'yyyy-01-01')
+    const monthFirstDate = format(new Date(this.secondDate), 'yyyy-MM-01')
+    const { firstOperDay: yearFirstOperDay } = await this.getDataInDates<{ firstOperDay: Date }>(
+      yearFirstDate
+    )
+    const { firstOperDay: monthFirstOperDay } = await this.getDataInDates<{ firstOperDay: Date }>(
+      monthFirstDate
+    )
+    this.firstDate = yearFirstOperDay
+    this.secondDate = monthFirstOperDay
   }
 
   private async getOneRow(count: string, state: string, whereQuery: string, isTableHead = false) {
@@ -850,6 +868,7 @@ export class DashboardMonthly extends Base {
   } /*  - в иностранной валюте */
 
   async getRows() {
+    await this.setFirstOperDays()
     const [
       allActives,
       authorizedCapital,

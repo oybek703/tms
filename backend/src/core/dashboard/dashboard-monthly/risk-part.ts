@@ -352,6 +352,7 @@ export class RiskPart extends DashboardMonthly {
   } /* NPL */
 
   async getRows(): Promise<any[]> {
+    await this.setFirstOperDays()
     try {
       const [
         creditPortfolio,
