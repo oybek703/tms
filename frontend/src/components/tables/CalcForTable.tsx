@@ -71,28 +71,28 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => 
 	const {
 		user: { role }
 	} = useTypedSelector(state => state.auth)
-	const { calcFor = [] } = useTypedSelector(state => state.calcFor)
+	const { calcFor } = useTypedSelector(state => state.calcFor)
 	const { reportDate } = useTypedSelector(state => state.operDays)
-	const forValues = calcFor.filter((r: any) => r['forValue'] !== 0)
-	const forSum = calcFor.reduce((acc: any, val: any) => (acc += val['forValue']), 0) / forValues.length
-	const consumptionSum = calcFor.reduce((acc: any, val: any) => (acc += val['avgConsumption']), 0)
-	const cbStandards = calcFor.filter((r: any) => r['cbStandard'] !== 0)
-	const cbStandardAverage =
-		cbStandards.reduce((acc: any, val: any) => (acc += val['cbStandard']), 0) / cbStandards.length
-	const deviationSum = forSum - cbStandardAverage
-	const categories = calcFor.map((r: any) => r['date'])
-	const expenditureSeries = calcFor.map((r: any) => r['avgConsumption'])
-	const correspondentSeries = calcFor.map((r: any) => r['forValue'])
-	const deviationSeries = calcFor.map((r: any) => r['stDeviation'])
+	const forValues = []
+	const forNums = calcFor.map(({ forValue }) => {
+		if (forValue !== 0) forValues.push(forValue)
+		return forValue
+	})
+	const forSum = calcFor.reduce((acc, val) => (acc += val['forValue']), 0) / forValues.length
+	const consumptionSum = calcFor.reduce((acc, val) => (acc += val['avgConsumption']), 0)
+	const cbStandard = calcFor[0] && calcFor[0].cbStandard
+	const deviationSum = forSum - cbStandard
+	const categories = calcFor.map(({ date }) => date)
+	const expenditureSeries = calcFor.map(({ avgConsumption }) => avgConsumption)
 	if (forDashboard) {
 		return (
 			<Fragment>
 				<WarningAlert rows={calcFor} role={role} />
 				{calcFor.length && (
 					<Fragment>
-						<Deviation series={deviationSeries} categories={categories} />
+						<Deviation cbNormative={cbStandard} series={forNums} categories={categories} />
 						<br />
-						<CorrespondentDynamics series={correspondentSeries} categories={categories} />
+						<CorrespondentDynamics series={forNums} categories={categories} />
 					</Fragment>
 				)}
 			</Fragment>
@@ -109,19 +109,19 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => 
 						<TableHead sx={globalStyles.stickyTableHead}>
 							<TableRow>
 								<TableCell align="center">
-									<BoldWithColor>
-										<h3>Исполнение норматива, в %</h3>
-									</BoldWithColor>
+									<Typography component="span" variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+										Исполнение норматива, в %
+									</Typography>
 								</TableCell>
 								<TableCell align="center">
-									<BoldWithColor>
-										<h3>Разница (+;-)</h3>
-									</BoldWithColor>
+									<Typography component="span" variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+										Разница (+;-)
+									</Typography>
 								</TableCell>
 								<TableCell align="center">
-									<BoldWithColor>
-										<h3>Средний расход за превышенную сумму</h3>
-									</BoldWithColor>
+									<Typography component="span" variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+										Средний расход за превышенную сумму
+									</Typography>
 								</TableCell>
 							</TableRow>
 						</TableHead>
@@ -130,7 +130,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => 
 								<TableCell align="center">
 									<b>
 										<FormattedData
-											number={Number.isNaN((forSum * 100) / cbStandardAverage) ? 0 : (forSum * 100) / cbStandardAverage}
+											number={Number.isNaN((forSum * 100) / cbStandard) ? 0 : (forSum * 100) / cbStandard}
 											variant="h6"
 										/>
 									</b>
@@ -195,7 +195,7 @@ const CalcForTable: React.FC<CalcForTableProps> = ({ forDashboard = false }) => 
 									<b>{formatNumber(forSum || 0, 'e')}</b>
 								</TableCell>
 								<TableCell scope="row" align="center">
-									<b>{formatNumber(cbStandardAverage || 0, 'e')}</b>
+									<b>{formatNumber(cbStandard || 0, 'e')}</b>
 								</TableCell>
 								<TableCell align="center">
 									<FormattedData number={deviationSum} />

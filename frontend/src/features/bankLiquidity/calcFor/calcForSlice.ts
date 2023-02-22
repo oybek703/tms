@@ -1,8 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
+import { ICalcForData } from '../../../interfaces/calcFor.interfaces'
 
-const initialState = {
+interface ICalcInitialState {
+	loading: boolean
+	calcFor: ICalcForData[]
+	error: undefined
+}
+
+const initialState: ICalcInitialState = {
 	loading: false,
 	calcFor: [],
 	error: undefined

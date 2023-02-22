@@ -4,19 +4,16 @@ import Card from '@mui/material/Card'
 import { CardContent } from '@mui/material'
 import { chartTooltip, formatNumber } from '../../../../utils'
 
-function renderOptions(values: any, categories: any) {
+function renderOptions(values: any, categories: any, cbNormative: number) {
 	const options = {
 		series: [
 			{
-				name: 'Значение:',
+				name: 'Остаток на корсчете',
 				data: values.map((v: number) => (v === 0 ? null : v))
 			},
 			{
-				name: 'Значение:',
-				data: values
-					.map((v: number) => (v === 0 ? null : v))
-					.filter(Boolean)
-					.map((v: number) => 0)
+				name: 'Норматив ЦБ',
+				data: values.map((v: number) => cbNormative)
 			}
 		],
 		colors: ['#00B050', '#ff6363'],
@@ -35,7 +32,10 @@ function renderOptions(values: any, categories: any) {
 			enabled: false
 		},
 		legend: {
-			show: false
+			show: true,
+			onItemHover: {
+				highlightDataSeries: true
+			}
 		},
 		title: {
 			text: 'Отклонение от норматива ЦБ',
@@ -73,15 +73,16 @@ function renderOptions(values: any, categories: any) {
 interface DeviationProps {
 	series: any
 	categories: any
+	cbNormative: number
 }
 
-const Deviation: React.FC<DeviationProps> = ({ series = [], categories = [] }) => {
+const Deviation: React.FC<DeviationProps> = ({ series = [], categories = [], cbNormative }) => {
 	useEffect(() => {
 		if (series.length) {
 			document.querySelector('#deviation')!.innerHTML = ''
-			renderOptions(series, categories)
+			renderOptions(series, categories, cbNormative)
 		}
-	}, [series, categories])
+	}, [cbNormative, series, categories])
 	return (
 		<Card>
 			<CardContent>
