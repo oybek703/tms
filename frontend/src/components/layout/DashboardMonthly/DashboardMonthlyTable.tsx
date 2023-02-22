@@ -54,7 +54,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 						</TableCell>
 						<TableCell sx={globalStyles.inlinePickerCell} align="center" rowSpan={2}>
 							<span hidden>{firstDate}</span>
-							<InlineDatePicker reportDate={firstDate} handleDateChange={handleDateChange('first_date')} />
+							<InlineDatePicker disabled reportDate={firstDate} handleDateChange={handleDateChange('first_date')} />
 						</TableCell>
 						{colsHead.map((h: any) => (
 							<TableCell align="center" sx={globalStyles.noWrap} key={uuid()} rowSpan={2}>
@@ -63,7 +63,7 @@ const DashboardMonthlyTable: React.FC<DashboardMonthlyTableProps> = ({
 						))}
 						<TableCell sx={globalStyles.inlinePickerCell} align="center" rowSpan={2}>
 							<span hidden>{secondDate}</span>
-							<InlineDatePicker reportDate={secondDate} handleDateChange={handleDateChange('second_date')} />
+							<InlineDatePicker disabled reportDate={secondDate} handleDateChange={handleDateChange('second_date')} />
 						</TableCell>
 						<TableCell align="center" colSpan={2}>
 							<b>Разница</b>
