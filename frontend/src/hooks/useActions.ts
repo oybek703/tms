@@ -1,10 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { useMemo } from 'react'
-import { operDaysActions, getOperDays, getDashBoardLastUpdate } from '../features/dashboard/operDays/operDaysSlice'
+import { getDashBoardLastUpdate, getOperDays, operDaysActions } from '../features/dashboard/operDays/operDaysSlice'
 import { dashboardActions, fetchDashboard } from '../features/dashboard/dashboard/dashboardSlice'
 import { fetchMainIndicators } from '../features/keyIndicators/mainIndicators/mainIndicatorsSlice'
-import { fetchFcrb } from '../features/dashboard/fcrb/fcrbSlice'
 import { fetchCalcFor } from '../features/bankLiquidity/calcFor/calcForSlice'
 import { fetchCapital } from '../features/keyIndicators/capital/capitalSlice'
 import { fetchProfitAndLost } from '../features/keyIndicators/profitAndLost/profitAndLostSlice'
@@ -14,9 +13,9 @@ import {
 	liquidityActions
 } from '../features/bankLiquidity/liquidity/liquiditySlice'
 import {
+	correspondentActions,
 	fetchCorrespondent,
-	fetchCorrespondentCurrent,
-	correspondentActions
+	fetchCorrespondentCurrent
 } from '../features/bankLiquidity/correspondent/correspondentSlice'
 import { fetchCurrencyPosition } from '../features/bankLiquidity/currencyPosition/currencyPositionSlice'
 import { fetchDashboardMonthly } from '../features/dashboard/dashboardMonthly/dashboardMonthlySlice'
@@ -52,7 +51,6 @@ const actions = {
 	fetchDashboard,
 	fetchDashboardCreditData,
 	fetchMainIndicators,
-	fetchFcrb,
 	fetchCalcFor,
 	fetchCapital,
 	fetchProfitAndLost,

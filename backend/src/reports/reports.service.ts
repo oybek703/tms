@@ -23,11 +23,7 @@ import getFilialEffectivenessData from '../core/actives-and-passives/filial-effe
 import getGmData from '../core/actives-and-passives/gm'
 import getGapData, { getGapManualData } from '../core/gap'
 import { GapColNames, UpdateGapDto } from './dto/update-gap.dto'
-import getDashboardData, {
-  getCreditData,
-  getDashboardMonthlyData,
-  getFcrbData
-} from '../core/dashboard'
+import getDashboardData, { getCreditData, getDashboardMonthlyData } from '../core/dashboard'
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from '@nestjs/axios'
 import getCompetitiveAnalysisData from '../core/actives-and-passives/competitive-analysis'
@@ -247,10 +243,6 @@ export class ReportsService {
       password: this.configService.get('CURRENCY_PASSWORD')
     }
     return await getDashboardData(date, this.oracleService, configOptions, this.httpService)
-  }
-
-  async fcrb(date: Date) {
-    return await getFcrbData(date, this.oracleService)
   }
 
   async creditData(date: Date) {

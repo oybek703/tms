@@ -10,7 +10,6 @@ const ReloadBtn = () => {
 	const { getDashBoardLastUpdate, fetchDashboard } = useActions()
 	function handleClick() {
 		localStorage.removeItem('dashboard')
-		localStorage.removeItem('fcrb')
 		localStorage.removeItem('calcFor')
 		localStorage.removeItem('placedAttracted')
 		localStorage.removeItem('creditData')

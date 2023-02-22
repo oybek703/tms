@@ -2,7 +2,6 @@ import { combineReducers } from '@reduxjs/toolkit'
 import { operDaysReducer } from '../features/dashboard/operDays/operDaysSlice'
 import { dashboardReducer } from '../features/dashboard/dashboard/dashboardSlice'
 import { mainIndicatorsReducer } from '../features/keyIndicators/mainIndicators/mainIndicatorsSlice'
-import { fcrbReducer } from '../features/dashboard/fcrb/fcrbSlice'
 import { calcForReducer } from '../features/bankLiquidity/calcFor/calcForSlice'
 import { capitalReducer } from '../features/keyIndicators/capital/capitalSlice'
 import { profitAndLostReducer } from '../features/keyIndicators/profitAndLost/profitAndLostSlice'
@@ -51,7 +50,6 @@ const rootReducer = combineReducers({
 	depositsByDeadline: depositsByDeadlineReducer,
 	gm: GMReducer,
 	reportLiabilities: reportLiabilitiesReducer,
-	fcrb: fcrbReducer,
 	creditData: creditDataReducer,
 	nostroMatrix: nostroMatrixReducer,
 	vlaBuffer: vlaBufferReducer,

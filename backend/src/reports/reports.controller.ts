@@ -45,12 +45,6 @@ export class ReportsController {
     return await this.reportsService.dashboard(date)
   }
 
-  @Report('dashboard', ReportsPaths.fcrb, true)
-  async fcrb(@Query('date') date: Date) {
-    if (!date) throw this.dateBadRequestException
-    return await this.reportsService.fcrb(date)
-  }
-
   @Report('dashboard', ReportsPaths.creditData, true)
   async creditData(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException

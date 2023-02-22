@@ -3,7 +3,6 @@ import DashboardMonthly from '../../components/layout/DashboardMonthly'
 import PlacedAndAttracted from '../activesPassives/PlacedAttracted'
 import CalcFor from '../bankLiquidity/CalcFor'
 import WithDetailsButton from '../../components/layout/Dashboard/WithDetailsButton'
-import Fcrb from '../../components/layout/Dashboard/Fcrb'
 import Covenants from '../../components/layout/Dashboard/Covenants'
 import Normatives from '../../components/layout/Dashboard/Normatives'
 import BankLimits from '../../components/layout/Dashboard/BankLimits'
@@ -62,7 +61,6 @@ const Dashboard = () => {
 						name: 'Курсы валют',
 						panel: <CurrencyRatesTab currencyRates={currencyRates} />
 					},
-					{ name: 'ЦРБ', panel: <Fcrb /> },
 					{
 						name: 'Лимиты',
 						panel: <BankLimits bankLimits={bankLimits as any} />

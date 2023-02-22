@@ -1,7 +1,6 @@
 export enum ReportsPaths {
   dashboardLastUpdate = 'dashboard/lastUpdate',
   dashboard = 'dashboard',
-  fcrb = 'fcrb',
   creditData = 'creditData',
   dashboardMonthly = 'dashboardMonthly',
   mainIndicators = 'mainIndicators',
