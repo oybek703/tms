@@ -30,7 +30,6 @@ export interface ICARow {
 
 export interface ICARowOptions {
   tabbed?: boolean
-  redBold?: boolean
 }
 
 export enum CASaldoQueries {

@@ -17,7 +17,6 @@ export interface BanksInnerData {
 			thirdDate: number
 			fourthDate: number
 			tabbed?: boolean
-			redBold?: boolean
 		}
 	}
 	chartData: {

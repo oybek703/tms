@@ -22,7 +22,7 @@ function renderOptions(series: ICACorporateRetail, categories: string[], title: 
 		],
 		colors,
 		chart: {
-			height: 400,
+			height: 300,
 			type: 'line',
 			stacked: false,
 			toolbar: {

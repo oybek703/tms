@@ -135,8 +135,7 @@ export class CompetitiveAnalysis extends Base {
       secondDate: data[1].value,
       thirdDate: data[2].value,
       fourthDate: data[3].value,
-      tabbed: options?.tabbed,
-      redBold: options?.redBold
+      tabbed: options?.tabbed
     }
   }
 
@@ -167,7 +166,7 @@ export class CompetitiveAnalysis extends Base {
   } /* Корпоративный, Розничный */
 
   protected async actives(col: ActivesCols) {
-    return await this.getOneRow('Активы', this.activesQuery(col), { redBold: true })
+    return await this.getOneRow('Активы', this.activesQuery(col))
   } /* Активы */
 
   protected async client_deposits(
@@ -183,9 +182,7 @@ export class CompetitiveAnalysis extends Base {
   } /* Кредитные линии */
 
   protected async liabilities(type: CASaldoQueries, currency?: 'foreign' | 'national') {
-    return await this.getOneRow('Обязательства', this.saldoQuery(type, currency), {
-      redBold: true
-    })
+    return await this.getOneRow('Обязательства', this.saldoQuery(type, currency))
   } /* Обязательства */
 
   protected async capital() {
@@ -197,16 +194,16 @@ export class CompetitiveAnalysis extends Base {
   } /* Чистая прибыль */
 
   protected liquidity(indicatorName: string, role: LiquidityRoles) {
-    return this.getOneRow(indicatorName, this.liquidityQuery(role), { redBold: true })
+    return this.getOneRow(indicatorName, this.liquidityQuery(role))
   } /* ВЛА, LCR, NSFR */
 
   protected async car() {
-    return this.getOneRow('CAR', this.manualDataQuery(19), { redBold: true })
+    return this.getOneRow('CAR', this.manualDataQuery(19))
   } /* CAR */
 
   protected async roa_roe(query: RoaRoeQueries) {
     const indicatorName = query === RoaRoeQueries.ROA ? 'ROA' : 'ROE'
-    return await this.getOneRow(indicatorName, this.roaRoeQuery(query), { redBold: true })
+    return await this.getOneRow(indicatorName, this.roaRoeQuery(query))
   } /* ROA, ROE */
 
   protected async cir() {
@@ -244,7 +241,7 @@ export class CompetitiveAnalysis extends Base {
       this.risk_data('PFL_BALANCE', 'Кредитный портфель'),
       this.credit_types('Корпоративный', CASaldoQueries.corporateCredits, { tabbed: true }),
       this.credit_types('Розничный', CASaldoQueries.retailCredits, { tabbed: true }),
-      this.risk_data('NPL_BALANCE', 'NPL', { tabbed: true, redBold: true }),
+      this.risk_data('NPL_BALANCE', 'NPL', { tabbed: true }),
       this.risk_data('RES_BALANCE', 'Резервы'),
       this.actives('TOTAL'),
       this.client_deposits('Депозиты клиентов', CASaldoQueries.totalClientDeposits),
@@ -272,7 +269,7 @@ export class CompetitiveAnalysis extends Base {
       creditPortfolio,
       corporate,
       retail,
-      npl,
+      // npl,
       reserve,
       actives,
       totalDeposits,
@@ -282,13 +279,13 @@ export class CompetitiveAnalysis extends Base {
       liabilities,
       capital,
       cleanProfit,
-      vla,
+      // vla,
       lcr,
-      nsfr,
-      car,
-      roa,
-      roe,
-      cir
+      nsfr
+      // car,
+      // roa,
+      // roe,
+      // cir
     }
     const chartData = {
       creditPortfolioGrow: {

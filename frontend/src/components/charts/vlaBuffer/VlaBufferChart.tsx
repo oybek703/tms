@@ -43,7 +43,7 @@ function renderOptions(series: number[], id: string, labelText = 'ALL') {
 				return `${w.config.series[seriesIndex].toFixed(2)}%`
 			},
 			style: {
-				fontSize: '15px',
+				fontSize: '18px',
 				colors: ['#fff']
 			}
 		},

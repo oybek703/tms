@@ -34,8 +34,9 @@ const styles: ISxStyles = {
 		textOrientation: 'upright'
 	},
 	verticalCellStyles: {
-		backgroundColor: palette.lightGray,
-		border: '0'
+		backgroundColor: palette.primary,
+		border: '0',
+		color: '#fff'
 	},
 	titleTextStyles: {
 		fontSize: 60,
@@ -156,10 +157,10 @@ const VLaBufferTable = () => {
 							</TableCell>
 							<TableCell sx={styles.verticalCellStyles} />
 							<TableCell align="center">
-								<BoldWithColor>Доля в ВЛА общий(100%)</BoldWithColor>
+								<BoldWithColor>Доля в ВЛА (100%)</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
-								<BoldWithColor>Доля в активе ОБЩИЙ</BoldWithColor>
+								<BoldWithColor>Доля в совокупном активе</BoldWithColor>
 							</TableCell>
 							<TableCell align="center">
 								<BoldWithColor>Итого</BoldWithColor>

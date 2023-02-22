@@ -33,8 +33,7 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       secondDate: data[1].value,
       thirdDate: data[2].value,
       fourthDate: data[3].value,
-      tabbed: options?.tabbed,
-      redBold: options?.redBold
+      tabbed: options?.tabbed
     }
   }
 
@@ -69,22 +68,22 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       this.getOtherBanksOneRow('P_L'),
       this.getOtherBanksOneRow('P_L_J', { tabbed: true }),
       this.getOtherBanksOneRow('P_L_L', { tabbed: true }),
-      this.getOtherBanksOneRow('NPL', { tabbed: true, redBold: true }),
+      this.getOtherBanksOneRow('NPL', { tabbed: true }),
       this.getOtherBanksOneRow('R'),
-      this.getOtherBanksOneRow('A_T', { redBold: true }),
+      this.getOtherBanksOneRow('A_T'),
       this.getOtherBanksOneRow('C_D'),
       this.getOtherBanksOneRow('C_D_J', { tabbed: true }),
       this.getOtherBanksOneRow('C_D_L', { tabbed: true }),
       this.getOtherBanksOneRow('C_L'),
-      this.getOtherBanksOneRow('O', { redBold: true }),
+      this.getOtherBanksOneRow('O'),
       this.getOtherBanksOneRow('C'),
       this.getOtherBanksOneRow('N_P'),
-      this.getOtherBanksOneRow('VLA', { redBold: true }),
-      this.getOtherBanksOneRow('LCR', { redBold: true }),
-      this.getOtherBanksOneRow('NSFR', { redBold: true }),
-      this.getOtherBanksOneRow('CAR', { redBold: true }),
-      this.getOtherBanksOneRow('ROA', { redBold: true }),
-      this.getOtherBanksOneRow('ROE', { redBold: true }),
+      this.getOtherBanksOneRow('VLA'),
+      this.getOtherBanksOneRow('LCR'),
+      this.getOtherBanksOneRow('NSFR'),
+      this.getOtherBanksOneRow('CAR'),
+      this.getOtherBanksOneRow('ROA'),
+      this.getOtherBanksOneRow('ROE'),
       this.getOtherBanksOneRow('CIR'),
       this.getOtherBanksOneRow('A_N'),
       this.getOtherBanksOneRow('A_F'),
@@ -95,7 +94,7 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       creditPortfolio,
       corporate,
       retail,
-      npl,
+      // npl,
       reserve,
       actives,
       totalDeposits,
@@ -105,13 +104,13 @@ export class CaOtherBanks extends CompetitiveAnalysis {
       liabilities,
       capital,
       cleanProfit,
-      vla,
+      // vla,
       lcr,
-      nsfr,
-      car,
-      roa,
-      roe,
-      cir
+      nsfr
+      // car,
+      // roa,
+      // roe,
+      // cir
     }
     const chartData = {
       creditPortfolioGrow: {

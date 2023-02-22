@@ -46,13 +46,11 @@ const pageStyles: ISxStyles = {
 interface IndicatorNameCellProps {
 	indicatorName: string
 	tabbed?: boolean
-	redBold?: boolean
 }
 
-const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicatorName, redBold }) => {
-	const styles = { color: 'red', fontWeight: 'bold' }
+const IndicatorNameCell: React.FC<IndicatorNameCellProps> = ({ tabbed, indicatorName }) => {
 	return (
-		<TableCell sx={redBold ? styles : {}}>
+		<TableCell>
 			{tabbed && <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>}
 			{indicatorName}
 		</TableCell>
@@ -106,26 +104,26 @@ const CompetitiveAnalysisTable = function () {
 										))}
 									</TableRow>
 									{Object.keys(data.totalData).map((value, index, array) => {
-										const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, redBold, tabbed } =
+										const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, tabbed } =
 											data.totalData[value]
 										const percent = index > array.length - 8 ? ' %' : ''
 										return (
 											<TableRow key={uuid()}>
-												<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} redBold={redBold} />
+												<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} />
 												<TableCell sx={globalStyles.noWrap} align="center">
-													{formatNumber(firstDate)}
+													{formatNumber(firstDate, 'e')}
 													{percent}
 												</TableCell>
 												<TableCell sx={globalStyles.noWrap} align="center">
-													{formatNumber(secondDate)}
+													{formatNumber(secondDate, 'e')}
 													{percent}
 												</TableCell>
 												<TableCell sx={globalStyles.noWrap} align="center">
-													{formatNumber(thirdDate)}
+													{formatNumber(thirdDate, 'e')}
 													{percent}
 												</TableCell>
 												<TableCell sx={globalStyles.noWrap} align="center">
-													{formatNumber(fourthDate)}
+													{formatNumber(fourthDate, 'e')}
 													{percent}
 												</TableCell>
 											</TableRow>
