@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Paper, Table, TableBody, TableHead, TableRow } from '@mui/material'
+import { Paper, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../../../utils'
@@ -24,7 +24,7 @@ const Position = ({ position = [] }) => {
 		[position]
 	)
 	return (
-		<Paper sx={{ minHeight: 372 }}>
+		<TableContainer component={Paper} sx={{ maxHeight: 380, pb: 0 }}>
 			<Table size="small">
 				<TableHead>
 					<TableRow sx={globalStyles.stickyTableHead}>
@@ -61,7 +61,6 @@ const Position = ({ position = [] }) => {
 						<TableCell align="center" colSpan={2}>
 							<b>Суммарная величина позиций</b>
 						</TableCell>
-						{/* <TableCell align="center" sx={{ ...globalStyles.noWrap, color: '#009c34' }}></TableCell> */}
 						<TableCell align="center" sx={{ ...globalStyles.noWrap, color: '#009c34' }}>
 							<b>{formatNumber(totalSumEquivalent())}</b>
 						</TableCell>
@@ -71,7 +70,7 @@ const Position = ({ position = [] }) => {
 					</TableRow>
 				</TableBody>
 			</Table>
-		</Paper>
+		</TableContainer>
 	)
 }
 

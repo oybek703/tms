@@ -86,7 +86,7 @@ const CompetitiveAnalysisTable = function () {
 										<TableCell colSpan={5}>
 											<BoldWithColor>
 												<Typography variant="h5" component="b" sx={{ fontWeight: 'bold' }}>
-													{bankName}
+													{bankName} (Кварталний)
 												</Typography>
 											</BoldWithColor>
 										</TableCell>
@@ -106,7 +106,7 @@ const CompetitiveAnalysisTable = function () {
 									{Object.keys(data.totalData).map((value, index, array) => {
 										const { firstDate, secondDate, fourthDate, thirdDate, indicatorName, tabbed } =
 											data.totalData[value]
-										const percent = index > array.length - 8 ? ' %' : ''
+										const percent = index > array.length - 3 ? ' %' : ''
 										return (
 											<TableRow key={uuid()}>
 												<IndicatorNameCell indicatorName={indicatorName} tabbed={tabbed} />

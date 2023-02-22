@@ -19,7 +19,7 @@ function renderOptions(values: any, categories: any, cbNormative: number) {
 		colors: ['#00B050', '#ff6363'],
 		chart: {
 			type: 'area',
-			height: 350,
+			height: 450,
 			toolbar: {
 				show: false
 			}

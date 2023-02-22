@@ -992,9 +992,9 @@ export class DashboardMonthly extends Base {
       currentProfit,
       regularCapital,
       capitalFirstDegree,
-      capitalAdequacyRatio,
-      ROA,
-      ROE
+      capitalAdequacyRatio
+      // ROA,
+      // ROE
     ]
     const liquidity = [
       totalLiabilities,

@@ -87,6 +87,46 @@ export const covenantData = [
 		bank_10: getMinBankData(13.44, 8)
 	},
 	{
+		title: 'Соотношение обязательство по одному инсайдеру капиталу уровня I',
+		main_bank: 11.81,
+		bank_1: getEmptyBankData(),
+		bank_2: getEmptyBankData(),
+		bank_3: getMaxBankData(11.81, 25),
+		bank_4: getEmptyBankData(),
+		bank_5: getEmptyBankData(),
+		bank_6: getEmptyBankData(),
+		bank_7: getEmptyBankData(),
+		bank_8: getEmptyBankData(),
+		bank_9: getEmptyBankData(),
+		bank_10: getEmptyBankData()
+	},
+	{
+		title: 'Соотношение портфеля всех инсайдеров капиталу уровня I',
+		main_bank: 25.99,
+		bank_1: getEmptyBankData(),
+		bank_2: getEmptyBankData(),
+		bank_3: getMaxBankData(25.99, 50),
+		bank_4: getEmptyBankData(),
+		bank_5: getEmptyBankData(),
+		bank_6: getEmptyBankData(),
+		bank_7: getEmptyBankData(),
+		bank_8: getEmptyBankData(),
+		bank_9: getEmptyBankData(),
+		bank_10: getEmptyBankData()
+	},
+	{
+		title: 'Собственный капитал',
+		main_bank: '6.5 трлн.сум',
+		bank_1: getEmptyBankData(),
+		bank_2: getEmptyBankData(),
+		bank_3: getEmptyBankData(),
+		bank_4: getEmptyBankData(),
+		bank_5: getEmptyBankData(),
+		bank_6: getEmptyBankData(),
+		bank_7: getEmptyBankData(),
+		bank_8: getPureBankData('мин 6.2 трлн.сум', Status.safe)
+	},
+	{
 		title: 'Коэффициент не действующих активов (NPL) МСФО',
 		main_bank: 4.79,
 		bank_1: getMaxBankData(4.79, 5),
@@ -173,7 +213,7 @@ export const covenantData = [
 		bank_10: getEmptyBankData()
 	},
 	{
-		title: 'Соотношение среднего показателя доходности активов (ROA)',
+		title: 'Соотношение среднего показателя доходности активов (ROA) (получено waiver letter)',
 		main_bank: 0.74,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),
@@ -215,34 +255,6 @@ export const covenantData = [
 		bank_10: getEmptyBankData()
 	},
 	{
-		title: 'Соотношение обязательство по одному инсайдеру капиталу уровня I',
-		main_bank: 11.81,
-		bank_1: getEmptyBankData(),
-		bank_2: getEmptyBankData(),
-		bank_3: getMaxBankData(11.81, 25),
-		bank_4: getEmptyBankData(),
-		bank_5: getEmptyBankData(),
-		bank_6: getEmptyBankData(),
-		bank_7: getEmptyBankData(),
-		bank_8: getEmptyBankData(),
-		bank_9: getEmptyBankData(),
-		bank_10: getEmptyBankData()
-	},
-	{
-		title: 'Соотношение портфеля всех инсайдеров капиталу уровня I',
-		main_bank: 25.99,
-		bank_1: getEmptyBankData(),
-		bank_2: getEmptyBankData(),
-		bank_3: getMaxBankData(25.99, 50),
-		bank_4: getEmptyBankData(),
-		bank_5: getEmptyBankData(),
-		bank_6: getEmptyBankData(),
-		bank_7: getEmptyBankData(),
-		bank_8: getEmptyBankData(),
-		bank_9: getEmptyBankData(),
-		bank_10: getEmptyBankData()
-	},
-	{
 		title: 'Левераж',
 		main_bank: 9.42,
 		bank_1: getEmptyBankData(),
@@ -271,7 +283,7 @@ export const covenantData = [
 		bank_10: getEmptyBankData()
 	},
 	{
-		title: 'Коэффициент ликвидности',
+		title: 'Коэффициент мгновенной ликвидности',
 		main_bank: 161.85,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),
@@ -302,8 +314,7 @@ export const covenantData = [
 	{
 		title: `Максимальный размер риска на одного заемщика или группу взаимосвязанных заемщиков / 
   Регулятивный капитал (согласно контракту 20% при этом, 
-  получено письмо об
-   изменении требования до 26% до 31.12.2022г).(ТМЗ)`,
+  получено письмо об изменении требования до 26% до 01.01.2023г).(ТМЗ)`,
 		main_bank: 17.68,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),
@@ -331,10 +342,7 @@ export const covenantData = [
 		bank_10: getEmptyBankData()
 	},
 	{
-		title: `Выданные кредиты (не включая государственных гарантий обеспеченных Правительством 
-  Узбекистан) компании UzAutoMotors не превышает 65% регулятивного капитала до 01.01.2021. 
-  (согласно контракту 20% при этом, 
-  получено письмо об изменении требования до 55% до 31.12.2021г).`,
+		title: `Выданные кредиты (UzAutoMotors) (согласно контракту 20% при этом, получено письмо об изменении требования до 50% до 31.12.2023г).`,
 		main_bank: 47.96,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),
@@ -342,7 +350,7 @@ export const covenantData = [
 		bank_4: getEmptyBankData(),
 		bank_5: getEmptyBankData(),
 		bank_6: getEmptyBankData(),
-		bank_7: getMaxBankData(47.96, 20),
+		bank_7: getMaxBankData(47.96, 50),
 		bank_8: getEmptyBankData(),
 		bank_9: getEmptyBankData(),
 		bank_10: getEmptyBankData()
@@ -388,17 +396,10 @@ export const covenantData = [
 		bank_8: getEmptyBankData(),
 		bank_9: getEmptyBankData(),
 		bank_10: getEmptyBankData()
-	},
-	{
-		title: 'Собственный капитал',
-		main_bank: '6.5 трлн.сум',
-		bank_1: getEmptyBankData(),
-		bank_2: getEmptyBankData(),
-		bank_3: getEmptyBankData(),
-		bank_4: getEmptyBankData(),
-		bank_5: getEmptyBankData(),
-		bank_6: getEmptyBankData(),
-		bank_7: getEmptyBankData(),
-		bank_8: getPureBankData('мин 6.2 трлн.сум', Status.safe)
 	}
 ]
+
+//Выданные кредиты (не включая государственных гарантий обеспеченных Правительством
+//   Узбекистан) компании UzAutoMotors не превышает 65% регулятивного капитала до 01.01.2021.
+//   (согласно контракту 20% при этом,
+//   получено письмо об изменении требования до 55% до 31.12.2021г).

@@ -18,7 +18,7 @@ async function renderOptions(series: any = []) {
 		},
 		labels,
 		chart: {
-			height: 365,
+			height: 363,
 			type: 'bar',
 			toolbar: {
 				show: false
