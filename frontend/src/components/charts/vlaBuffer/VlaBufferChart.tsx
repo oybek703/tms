@@ -4,7 +4,7 @@ import { chartTooltip } from '../../../utils'
 import palette from '../../../styles/palette'
 
 function renderOptions(series: number[], id: string, labelText = 'ALL') {
-	const colors = [palette.lightRed, palette.lightGreen]
+	const colors = [palette.red, palette.lightGreen]
 	const options = {
 		tooltip: { ...chartTooltip() },
 		series,
@@ -16,7 +16,7 @@ function renderOptions(series: number[], id: string, labelText = 'ALL') {
 		legend: {
 			show: false
 		},
-		labels: ['Доходнеприносяюший', 'Доходприносяюший'],
+		labels: ['Доходонеприносящие', 'Доходоприносящие'],
 		fill: {
 			colors
 		},
@@ -25,6 +25,9 @@ function renderOptions(series: number[], id: string, labelText = 'ALL') {
 				donut: {
 					labels: {
 						show: true,
+						name: {
+							offsetY: 10
+						},
 						total: {
 							show: true,
 							showAlways: true,
@@ -65,12 +68,12 @@ function renderOptions(series: number[], id: string, labelText = 'ALL') {
 	chart.render()
 }
 
-interface CurrencyMFIProps {
+interface VlaBufferChartProps {
 	series: number[]
 	labelText?: string
 }
 
-const VlaBufferChart: React.FC<CurrencyMFIProps> = ({ series, labelText }) => {
+const VlaBufferChart: React.FC<VlaBufferChartProps> = ({ series, labelText }) => {
 	const id = `vla_buffer_${labelText?.toLowerCase()}`
 	useEffect(() => {
 		if (series.filter(Boolean).length && series.length) {

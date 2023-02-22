@@ -257,8 +257,8 @@ export class VlaBufferBase extends Base {
   } /* Депозиты в ЦБ Руз */
 
   private income_bringing(args: IVlaBufferDbData[]) {
-    return this.addValuesByProperty('Доходприносяюший', ...args)
-  } /* Доходприносяюший */
+    return this.addValuesByProperty('Доходоприносящие', ...args)
+  } /* Доходоприносящие */
 
   private async nostro_in_cb() {
     return await this.getOneRow(`BAL='10301'`, 'Ностро счет в ЦБ Руз')
@@ -285,8 +285,8 @@ export class VlaBufferBase extends Base {
   } /* Касса */
 
   private non_profitable(args: IVlaBufferDbData[]) {
-    return this.addValuesByProperty('Доходнеприносяюший', ...args)
-  } /* Доходнеприносяюший */
+    return this.addValuesByProperty('Доходонеприносящие', ...args)
+  } /* Доходонеприносящие */
 
   private high_liquidity_assets(...args: IVlaBufferDbData[]) {
     return this.addValuesByProperty('ИТОГО ВЫСОКО ликвидных активов', ...args)
