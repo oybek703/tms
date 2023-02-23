@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useCallback, useEffect, useState } from 'react'
+import React, { Fragment, memo, PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import List from '@mui/material/List'
 import Divider from '@mui/material/Divider'
 import ListItem from '@mui/material/ListItem'
@@ -19,6 +19,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
+import LayersIcon from '@mui/icons-material/Layers'
 import useTypedSelector from '../../../hooks/useTypedSelector'
 import globalStyles from '../../../styles/globalStyles'
 import { ISxStyles } from '../../../interfaces/styles.interface'
@@ -30,7 +31,18 @@ interface BaseRoute {
 	forAll?: boolean
 }
 
+enum MenuTitles {
+	keyIndicators = 'Ключевые показатели',
+	bankLiquidity = 'Ликвидность банка',
+	activesPassives = 'Активы и пассивы',
+	gap = 'ГЭП Анализ',
+	dealingOpeations = 'Дилинговые операции',
+	deposits = 'Депозиты',
+	prudentialNormatives = 'Пруденциальные нормативы'
+}
+
 export const baseRoutes: BaseRoute[] = [
+	// Ключевые показатели
 	{
 		title: 'Основные показатели',
 		route: '/mainIndicators',
@@ -43,6 +55,7 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'key_indicators'
 	},
 	{ title: 'Анализ дох. и рос.', route: '/incomeAnalysis', group: 'key_indicators' },
+	// Ликвидность банка
 	{
 		title: 'Ликвидность',
 		route: '/liquidity',
@@ -74,6 +87,7 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/vlaBuffer',
 		group: 'liquidity_indicators'
 	},
+	// Активы и пассивы
 	{
 		title: 'Привлеченные и размещенные',
 		route: '/plat',
@@ -83,27 +97,27 @@ export const baseRoutes: BaseRoute[] = [
 	{
 		title: 'Межбанковские депозиты',
 		route: '/interbankDeposits',
-		group: 'active_passive'
+		group: 'deposit'
 	},
 	{
 		title: 'Топ-20 крупных депозитов',
 		route: '/topDeposits',
-		group: 'active_passive'
+		group: 'deposit'
 	},
 	{
 		title: 'СД юр.лиц. - по клиентам',
 		route: '/timeDepoClients',
-		group: 'active_passive'
+		group: 'deposit'
 	},
 	{
 		title: 'Срочные депозиты юр. лиц',
 		route: '/timeDeposits',
-		group: 'active_passive'
+		group: 'deposit'
 	},
 	{
 		title: 'Депозиты по срокам',
 		route: '/depositsByDeadline',
-		group: 'active_passive'
+		group: 'deposit'
 	},
 	{
 		title: 'Отчет об обязательствах',
@@ -117,8 +131,10 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{ title: 'Эффективност филиалов', route: '/filialEffectiveness', group: 'active_passive' },
 	{ title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
+	// ГЭП Анализ
 	{ title: 'ГЭП', route: '/gap', group: 'gap' },
 	{ title: 'ГЭП симуляция', route: '/gapManual', group: 'gap' },
+	// Дилинговые операции
 	{
 		title: 'Анализ корр.счетов',
 		route: '/corrAccountsAnalyze',
@@ -139,6 +155,7 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/filialCp',
 		group: 'dealing_operations'
 	},
+	// Пруденциальные нормативы
 	{
 		title: 'Капитал',
 		route: '/in_process/n1',
@@ -192,16 +209,27 @@ interface GroupedRoutesProps {
 	handleAnchorClose: () => void
 	Icon: any
 	title: string
+	childrenRoutes?: BaseRoute[]
 }
 
-const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchorClose, Icon, title }) => {
+const GroupedRoutes: React.FC<PropsWithChildren<GroupedRoutesProps>> = ({
+	routes = [],
+	handleAnchorClose,
+	Icon,
+	title,
+	children,
+	childrenRoutes
+}) => {
 	const { pathname } = useLocation()
-	const isRouteCovered = Boolean(routes.find(({ route }) => route === pathname))
+	let isRouteCovered = Boolean(routes.find(({ route }) => route === pathname))
+	if (childrenRoutes) {
+		isRouteCovered = Boolean([...routes, ...childrenRoutes].find(({ route }) => route === pathname))
+	}
 	const [open, setOpen] = useState(isRouteCovered)
 	if (!routes.length) return <Fragment />
 	return (
 		<>
-			<ListItem button onClick={setOpen.bind(null, !open)}>
+			<ListItem button onClick={() => setOpen(!open)}>
 				<ListItemIcon>
 					<Icon />
 				</ListItemIcon>
@@ -210,7 +238,7 @@ const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchor
 			</ListItem>
 			<Collapse in={open} timeout="auto" unmountOnExit>
 				<List component="div" disablePadding>
-					{routes.map(({ title, route }, index) => (
+					{routes.map(({ title, route, group }, index) => (
 						<ListItem
 							button
 							key={index}
@@ -229,6 +257,7 @@ const GroupedRoutes: React.FC<GroupedRoutesProps> = ({ routes = [], handleAnchor
 						</ListItem>
 					))}
 				</List>
+				{children && <Grid sx={{ paddingLeft: '20px' }}>{children}</Grid>}
 			</Collapse>
 		</>
 	)
@@ -239,12 +268,12 @@ function Header() {
 	const { push } = useHistory()
 	const [anchor, setAnchor] = useState(false)
 	const [routes, setRoutes] = useState<BaseRoute[]>(baseRoutes)
-	const {
-		user: { pages = [], role }
-	} = useTypedSelector(state => state.auth)
+	const { user } = useTypedSelector(state => state.auth)
+	const { pages = [], role } = user
 	const keyIndicatorsRoutes = groupRoutes(routes, 'key_indicators')
 	const liquidityIndicatorsRoutes = groupRoutes(routes, 'liquidity_indicators')
 	const activePassiveRoutes = groupRoutes(routes, 'active_passive')
+	const depositRoutes = groupRoutes(routes, 'deposit')
 	const dealingOperationsRoutes = groupRoutes(routes, 'dealing_operations')
 	const prudentialStandardsRoutes = groupRoutes(routes, 'prudential_standards')
 	const gapRoutes = groupRoutes(routes, 'gap')
@@ -284,37 +313,45 @@ function Header() {
 						handleAnchorClose={handleAnchorClose}
 						Icon={AccountBalanceIcon}
 						routes={keyIndicatorsRoutes}
-						title="Ключевые показатели"
+						title={MenuTitles.keyIndicators}
 					/>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
 						Icon={TimelineIcon}
 						routes={liquidityIndicatorsRoutes}
-						title="Ликвидность банка"
+						title={MenuTitles.bankLiquidity}
 					/>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
 						Icon={CreditCardIcon}
 						routes={activePassiveRoutes}
-						title="Активы и пассивы"
-					/>
+						title={MenuTitles.activesPassives}
+						childrenRoutes={depositRoutes}
+					>
+						<GroupedRoutes
+							handleAnchorClose={handleAnchorClose}
+							Icon={LayersIcon}
+							routes={depositRoutes}
+							title={MenuTitles.deposits}
+						/>
+					</GroupedRoutes>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
 						Icon={AssessmentIcon}
 						routes={gapRoutes}
-						title="ГЭП Анализ"
+						title={MenuTitles.gap}
 					/>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
 						Icon={MonetizationOnIcon}
 						routes={dealingOperationsRoutes}
-						title="Дилинговые операции"
+						title={MenuTitles.dealingOpeations}
 					/>
 					<GroupedRoutes
 						handleAnchorClose={handleAnchorClose}
 						Icon={FeaturedPlayListIcon}
 						routes={prudentialStandardsRoutes}
-						title="Пруденциальные нормативы"
+						title={MenuTitles.prudentialNormatives}
 					/>
 				</List>
 			</Fragment>
@@ -326,7 +363,8 @@ function Header() {
 			activePassiveRoutes,
 			liquidityIndicatorsRoutes,
 			prudentialStandardsRoutes,
-			dealingOperationsRoutes
+			dealingOperationsRoutes,
+			depositRoutes
 		]
 	)
 
