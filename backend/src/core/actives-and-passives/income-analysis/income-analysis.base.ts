@@ -31,7 +31,7 @@ export class IncomeAnalysisBase extends Base {
                           AND DAT IN (${dates})
                         GROUP BY DAT)
               SELECT INITCAP(TO_CHAR(TRUNC(ADD_MONTHS(DAT, 1), 'MM'), 'month', 'NLS_DATE_LANGUAGE=RUSSIAN')) AS "monthName",
-                     DECODE(EXTRACT(MONTH FROM DAT), 1, SUM_EQV, SUM_EQV - LAG(SUM_EQV) OVER (ORDER BY DAT))                     AS "saldo"
+                     ABS(DECODE(EXTRACT(MONTH FROM DAT), 1, SUM_EQV, SUM_EQV - LAG(SUM_EQV) OVER (ORDER BY DAT))) AS "saldo"
               FROM BENIFIT
               OFFSET 1 ROWS`
     }

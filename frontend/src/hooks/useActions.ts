@@ -41,7 +41,7 @@ import {
 } from '../features/dealingOperations/corrAccountsAnalyze/corrAccountsAnalyzeSlice'
 import { fetchCorrOperations } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 import { fetchFilialCp } from '../features/dealingOperations/filialCp/filialCpSlice'
-import { fetchIncomeAnalysis } from '../features/activesPassives/incomeAnalysis/incomeAnalysisSlice'
+import { fetchIncomeAnalysis } from '../features/keyIndicators/incomeAnalysis/incomeAnalysisSlice'
 
 const actions = {
 	...operDaysActions,

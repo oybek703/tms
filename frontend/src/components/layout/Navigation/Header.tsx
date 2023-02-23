@@ -38,10 +38,11 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{ title: 'Расчет капитала', route: '/capital', group: 'key_indicators' },
 	{
-		title: 'Прибыл и убыток банка',
+		title: 'Прибыль и убыток банка',
 		route: '/profitAndLost',
 		group: 'key_indicators'
 	},
+	{ title: 'Анализ дох. и рос.', route: '/incomeAnalysis', group: 'key_indicators' },
 	{
 		title: 'Ликвидность',
 		route: '/liquidity',
@@ -116,7 +117,6 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{ title: 'Эффективност филиалов', route: '/filialEffectiveness', group: 'active_passive' },
 	{ title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
-	{ title: 'Анализ дох. и рос.', route: '/incomeAnalysis', group: 'active_passive' },
 	{ title: 'ГЭП', route: '/gap', group: 'gap' },
 	{ title: 'ГЭП симуляция', route: '/gapManual', group: 'gap' },
 	{
