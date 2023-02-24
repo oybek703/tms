@@ -54,7 +54,7 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/profitAndLost',
 		group: 'key_indicators'
 	},
-	{ title: 'Анализ дох. и рас.', route: '/incomeAnalysis', group: 'key_indicators' },
+	{ title: 'Анализ доходов и расходов', route: '/incomeAnalysis', group: 'key_indicators' },
 	// Ликвидность банка
 	{
 		title: 'Ликвидность',

@@ -8,7 +8,7 @@ function renderOptions(series: any, categories: any) {
 	const colors = ['#4CB9E1', '#f38003', '#00B050', '#ff6363', '#546e7a', '#a19a8b']
 	const options = {
 		title: {
-			text: 'Привлеченные средства банка "Асака" (млрд.сум)',
+			text: 'Привлеченные средства "АО Асакабанк" (млрд.сум)',
 			align: 'center',
 			style: {
 				fontSize: 22

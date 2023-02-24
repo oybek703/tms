@@ -86,7 +86,7 @@ const CompetitiveAnalysisTable = function () {
 										<TableCell colSpan={5}>
 											<BoldWithColor>
 												<Typography variant="h5" component="b" sx={{ fontWeight: 'bold' }}>
-													{bankName} (Кварталний)
+													{bankName} (Квартальный)
 												</Typography>
 											</BoldWithColor>
 										</TableCell>
