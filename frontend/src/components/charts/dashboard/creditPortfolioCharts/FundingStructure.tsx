@@ -6,7 +6,7 @@ import { chartSubtitle, chartTitle, chartTooltip, formatChartLegend } from '../.
 
 function renderOptions(series: any) {
 	const colors = ['#4CB9E1', '#f38003', '#00B050', '#ff6363']
-	const labels = ['МБД', 'Сроч.депо', 'МФИ: Крат.', 'МФИ: Долг.']
+	const labels = ['МБД', 'Сроч.депо', 'МФИ: Долг.', 'МФИ: Крат.']
 
 	const options = {
 		title: {
