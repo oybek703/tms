@@ -77,7 +77,6 @@ const pageStyles: ISxStyles = {
 	sideBarBankItem: {
 		padding: '5px',
 		cursor: 'pointer',
-		textTransform: 'uppercase',
 		'&:hover': {
 			backgroundColor: palette.darkGray,
 			color: '#000',
