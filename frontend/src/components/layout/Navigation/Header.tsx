@@ -78,11 +78,6 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'liquidity_indicators'
 	},
 	{
-		title: 'Матрица вал. корр. счетов',
-		route: '/nostroMatrix',
-		group: 'liquidity_indicators'
-	},
-	{
 		title: 'Буфер ВЛА',
 		route: '/vlaBuffer',
 		group: 'liquidity_indicators'

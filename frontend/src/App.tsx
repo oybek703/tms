@@ -34,7 +34,6 @@ import InProcess from './pages/inProcess/InProcess'
 import Forbidden from './pages/admin/Forbidden'
 import AdminRoute from './components/layout/Admin/AdminRoute'
 import Settings from './pages/admin/settings'
-import NostroMatrix from './pages/bankLiquidity/NostroMatrix'
 import VlaBuffer from './pages/bankLiquidity/VlaBuffer'
 import FilialEffectiveness from './pages/activesPassives/FilialEffectiviness'
 import CompetitiveAnalysis from './pages/activesPassives/CompetitiveAnalysis'
@@ -72,7 +71,6 @@ function App() {
 							<PrivateRoute component={TimeDeposits} path="/timeDeposits" />
 							<PrivateRoute component={DepositsByDeadline} path="/depositsByDeadline" />
 							<PrivateRoute component={ReportLiabilities} path="/reportLiabilities" />
-							<PrivateRoute component={NostroMatrix} path="/nostroMatrix" />
 							<PrivateRoute component={VlaBuffer} path="/vlaBuffer" />
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />
 							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />

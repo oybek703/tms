@@ -10,7 +10,6 @@ import getCorrespondentData, {
 import { ILastUpdate } from '../core/core.interface'
 import getCalcFor from '../core/bank-liquidity/calc-for'
 import getCurrencyPositionData from '../core/bank-liquidity/currency-position'
-import { getNostroMatrixData } from '../core/bank-liquidity/nostro-matrix'
 import { getVlaBufferData } from '../core/bank-liquidity/vla-buffer'
 import getPlacedAttractedData from '../core/actives-and-passives/placed-attracted'
 import { getInterbankDepositsData } from '../core/actives-and-passives/interbank-deposits'
@@ -141,10 +140,6 @@ export class ReportsService {
 
   async currencyPosition(date: Date) {
     return await getCurrencyPositionData(date, this.oracleService)
-  }
-
-  async nostroMatrix(firstDate: Date, secondDate: Date) {
-    return await getNostroMatrixData(firstDate, secondDate, this.oracleService)
   }
 
   async vlaBuffer(date: Date) {

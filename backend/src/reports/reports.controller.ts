@@ -122,13 +122,6 @@ export class ReportsController {
     return await this.reportsService.currencyPosition(date)
   }
 
-  @ReportBetweenDates('Bank liquidity', ReportsPaths.nostroMatrix)
-  async nostroMatrix(@Query() query: IReportTwoDates) {
-    if (!query.firstDate || !query.secondDate)
-      throw new BadRequestException('Two dates are required!')
-    return await this.reportsService.nostroMatrix(query.firstDate, query.secondDate)
-  }
-
   @Report('Bank liquidity', ReportsPaths.vlaBuffer)
   async vlaBuffer(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException

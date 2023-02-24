@@ -8,7 +8,6 @@ export enum APIRoutes {
 	capital = 'capital',
 	profitAndLost = 'profitAndLost',
 	liquidity = 'liquidity',
-	nostroMatrix = 'nostroMatrix',
 	liquidityCurrent = '/api/liquidity/currentState',
 	correspondent = 'correspondent',
 	correspondentCurrent = '/api/correspondent/currentState',

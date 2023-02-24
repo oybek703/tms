@@ -8,7 +8,7 @@ function renderOptions(series: any, categories: any) {
 	const colors = ['#4CB9E1', '#00B050', '#f38003', '#ff6363', '#546e7a', '#a19a8b']
 	const options = {
 		title: {
-			text: 'Размещенные средства "АО Асакабанк" (млрд.сум)',
+			text: 'Размещенные средства АО "Асакабанк" (млрд.сум)',
 			align: 'center',
 			style: {
 				fontSize: 22

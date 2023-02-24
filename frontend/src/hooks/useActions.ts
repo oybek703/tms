@@ -20,7 +20,6 @@ import {
 import { fetchCurrencyPosition } from '../features/bankLiquidity/currencyPosition/currencyPositionSlice'
 import { fetchDashboardMonthly } from '../features/dashboard/dashboardMonthly/dashboardMonthlySlice'
 import { fetchDashboardCreditData } from '../features/dashboard/creditData/creditDataSlice'
-import { fetchNostroMatrix } from '../features/bankLiquidity/nostroMatrix/nostroMatrixSlice'
 import { fetchVlaBuffer } from '../features/bankLiquidity/vlaBuffer/vlaBufferSlice'
 import { fetchPlat } from '../features/activesPassives/plat/platSlice'
 import { fetchInterbankDeposits } from '../features/activesPassives/interbankDeposits/interbankDepositsSlice'
@@ -63,7 +62,6 @@ const actions = {
 	fetchCurrencyPosition,
 	fetchDashboardMonthly,
 	fetchIncomeAnalysis,
-	fetchNostroMatrix,
 	fetchVlaBuffer,
 	fetchPlat,
 	fetchInterbankDeposits,

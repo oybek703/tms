@@ -13,7 +13,6 @@ export enum ReportsPaths {
   calcFor = 'calcFor',
   calcForUpdateCbn = '/calcFor/updateCbn',
   currencyPosition = 'currencyPosition',
-  nostroMatrix = 'nostroMatrix',
   vlaBuffer = 'vlaBuffer',
   placedAttracted = 'placedAttracted',
   interbankDeposits = 'interbankDeposits',

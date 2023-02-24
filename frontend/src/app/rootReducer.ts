@@ -10,7 +10,6 @@ import { correspondentReducer } from '../features/bankLiquidity/correspondent/co
 import { currencyPositionReducer } from '../features/bankLiquidity/currencyPosition/currencyPositionSlice'
 import { dashboardMonthlyReducer } from '../features/dashboard/dashboardMonthly/dashboardMonthlySlice'
 import { creditDataReducer } from '../features/dashboard/creditData/creditDataSlice'
-import { nostroMatrixReducer } from '../features/bankLiquidity/nostroMatrix/nostroMatrixSlice'
 import { vlaBufferReducer } from '../features/bankLiquidity/vlaBuffer/vlaBufferSlice'
 import { platReducer } from '../features/activesPassives/plat/platSlice'
 import { interbankDepositsReducer } from '../features/activesPassives/interbankDeposits/interbankDepositsSlice'
@@ -51,7 +50,6 @@ const rootReducer = combineReducers({
 	gm: GMReducer,
 	reportLiabilities: reportLiabilitiesReducer,
 	creditData: creditDataReducer,
-	nostroMatrix: nostroMatrixReducer,
 	vlaBuffer: vlaBufferReducer,
 	filialEffectiveness: filialEffectivenessReducer,
 	competitiveAnalysis: competitiveAnalysisReducer,
