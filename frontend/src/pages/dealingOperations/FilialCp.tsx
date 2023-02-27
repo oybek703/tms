@@ -20,7 +20,7 @@ const FilialCp = () => {
 	}, [fetchFilialCp, firstDate, secondDate, currencyCode])
 	return (
 		<>
-			<PageTitle title="Валютные позиции филиалов" />
+			<PageTitle title="Валютная позиция филиалов" />
 			<Paper>
 				<Grid sx={{ pt: 2, pb: 1, my: 1, pr: 1 }} container justifyContent="flex-end" alignItems="center">
 					<InlineDatePicker

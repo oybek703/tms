@@ -50,7 +50,7 @@ export const baseRoutes: BaseRoute[] = [
 	},
 	{ title: 'Расчет капитала', route: '/capital', group: 'key_indicators' },
 	{
-		title: 'Прибыль и убыток банка',
+		title: 'Прибыль и убыток',
 		route: '/profitAndLost',
 		group: 'key_indicators'
 	},
@@ -100,18 +100,18 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'deposit'
 	},
 	{
-		title: 'СД юр.лиц. - по клиентам',
+		title: 'Депозиты по срокам',
+		route: '/depositsByDeadline',
+		group: 'deposit'
+	},
+	{
+		title: 'Депозиты по клиентам',
 		route: '/timeDepoClients',
 		group: 'deposit'
 	},
 	{
 		title: 'Срочные депозиты юр. лиц',
 		route: '/timeDeposits',
-		group: 'deposit'
-	},
-	{
-		title: 'Депозиты по срокам',
-		route: '/depositsByDeadline',
 		group: 'deposit'
 	},
 	{
@@ -124,7 +124,7 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/competitiveAnalysis',
 		group: 'active_passive'
 	},
-	{ title: 'Эффективност филиалов', route: '/filialEffectiveness', group: 'active_passive' },
+	{ title: 'Эффективность филиалов', route: '/filialEffectiveness', group: 'active_passive' },
 	{ title: 'АО "UzAuto Motors"', route: '/gm', group: 'active_passive' },
 	// ГЭП Анализ
 	{ title: 'ГЭП', route: '/gap', group: 'gap' },
@@ -146,7 +146,7 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'dealing_operations'
 	},
 	{
-		title: 'Вал. поз. филиалов',
+		title: 'Валютная позиция филиалов',
 		route: '/filialCp',
 		group: 'dealing_operations'
 	},

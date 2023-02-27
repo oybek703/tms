@@ -222,7 +222,13 @@ export class ProfitAndLostBase extends Base {
   private report_for_period(oper_result: IProfitLostRow, tax_ass: IProfitLostRow) {
     return {
       count: '',
-      ...this.returnDiffer('Чистая прибыль (убыток) на отчетный период', oper_result, tax_ass, true)
+      ...this.returnDiffer(
+        'Чистая прибыль (убыток) на отчетный период',
+        oper_result,
+        tax_ass,
+        true,
+        false
+      )
     }
   } /* Чистая прибыль (убыток) на отчетный период */
 

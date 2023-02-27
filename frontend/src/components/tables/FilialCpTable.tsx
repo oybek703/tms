@@ -9,15 +9,17 @@ import palette from '../../styles/palette'
 
 const colNames = [
 	'Конвертации с ин. банком',
-	'Конвертации для юр.клиентов за нац. Вал.',
-	'Конвертации для юр.лиц за нац. Вал.(обязательство)',
+	'Конвертации для юридических лиц. (импорт)',
+	'Конвертации для юридических лиц. (обязательство)',
 	'Меж филиал спот',
 	'Банкомат',
-	'ОП',
+	'Обменный пункт',
 	'Asaka Mobile',
 	'Резервы по кредитам/лизингам',
 	'Начисленные проценты по кредитам/лизингам юр.лиц/ИП'
 ]
+
+const totalLabel = 'Итого'
 
 const FilialCpTable = () => {
 	const { filialCp } = useTypedSelector(state => state.filialCp)
@@ -67,58 +69,58 @@ const FilialCpTable = () => {
 								<BoldWithColor>{row.filialName}</BoldWithColor>
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase1)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase1)}</b> : formatNumber(row.purchase1)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale1)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale1)}</b> : formatNumber(row.sale1)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase2)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase2)}</b> : formatNumber(row.purchase2)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale2)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale2)}</b> : formatNumber(row.sale2)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase3)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase3)}</b> : formatNumber(row.purchase3)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale3)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale3)}</b> : formatNumber(row.sale3)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase4)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase4)}</b> : formatNumber(row.purchase4)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale4)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale4)}</b> : formatNumber(row.sale4)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase5)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase5)}</b> : formatNumber(row.purchase5)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale5)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale5)}</b> : formatNumber(row.sale5)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase6)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase6)}</b> : formatNumber(row.purchase6)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale6)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale6)}</b> : formatNumber(row.sale6)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase7)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase7)}</b> : formatNumber(row.purchase7)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale7)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale7)}</b> : formatNumber(row.sale7)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase8)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase8)}</b> : formatNumber(row.purchase8)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale8)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale8)}</b> : formatNumber(row.sale8)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.purchase9)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.purchase9)}</b> : formatNumber(row.purchase9)}
 							</TableCell>
 							<TableCell align="center" sx={globalStyles.noWrap}>
-								{formatNumber(row.sale9)}
+								{row.filialName === totalLabel ? <b>{formatNumber(row.sale9)}</b> : formatNumber(row.sale9)}
 							</TableCell>
 						</TableRow>
 					))}

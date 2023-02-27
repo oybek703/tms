@@ -14,7 +14,7 @@ const CorrAccountsAnalyze = () => {
 	}, [fetchCorrAccountsAnalyze])
 	return (
 		<>
-			<PageTitle title="Анализ корр.счетов(матрица)" />
+			<PageTitle title="Анализ корр.счетов (матрица)" />
 			{loading ? (
 				<Loader />
 			) : error ? (

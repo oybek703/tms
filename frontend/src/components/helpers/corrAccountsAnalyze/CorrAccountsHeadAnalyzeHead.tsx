@@ -54,7 +54,7 @@ const CorrAccountsHeadAnalyzeHead = () => {
 					<BoldWithColor>Востро</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
-					<BoldWithColor>Причие</BoldWithColor>
+					<BoldWithColor>Прочие</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
 					<BoldWithColor>Корр. счет</BoldWithColor>
@@ -69,16 +69,16 @@ const CorrAccountsHeadAnalyzeHead = () => {
 					<BoldWithColor>Прочие</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
-					<BoldWithColor>Обьем операции</BoldWithColor>
+					<BoldWithColor>Обьем операций</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
-					<BoldWithColor>Скорость обслуживание</BoldWithColor>
+					<BoldWithColor>Скорость обслуживания</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
-					<BoldWithColor>Качество обслуживание</BoldWithColor>
+					<BoldWithColor>Качество обслуживания</BoldWithColor>
 				</TableCell>
 				<TableCell align="center">
-					<BoldWithColor>Стоимость услуг(тарифы)</BoldWithColor>
+					<BoldWithColor>Стоимость услуг (тарифы)</BoldWithColor>
 				</TableCell>
 			</TableRow>
 		</TableHead>
