@@ -17,7 +17,9 @@ import getTopDepositsData from '../core/actives-and-passives/top-deposits'
 import getTimeDepoClientsData from '../core/actives-and-passives/time-depo-clients'
 import getTimeDepositsData from '../core/actives-and-passives/time-deposits'
 import getDepositsByDeadlineData from '../core/actives-and-passives/deposits-by-deadline'
-import getReportLiabilitiesData from '../core/actives-and-passives/report-liabilities'
+import getReportLiabilitiesData, {
+  getReportLiabilities216Data
+} from '../core/actives-and-passives/report-liabilities'
 import getFilialEffectivenessData from '../core/actives-and-passives/filial-effectiveness'
 import getGmData from '../core/actives-and-passives/gm'
 import getGapData, { getGapManualData } from '../core/gap'
@@ -172,6 +174,10 @@ export class ReportsService {
 
   async reportLiabilities(date: Date) {
     return await getReportLiabilitiesData(date, this.oracleService)
+  }
+
+  async reportLiabilities216(date: Date) {
+    return await getReportLiabilities216Data(date, this.oracleService)
   }
 
   async filialEffectiveness(date: Date) {

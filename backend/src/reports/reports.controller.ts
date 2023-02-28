@@ -170,6 +170,12 @@ export class ReportsController {
     return await this.reportsService.reportLiabilities(date)
   }
 
+  @Report('Actives, passives', ReportsPaths.reportLiabilities216)
+  async reportLiabilities216(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.reportLiabilities216(date)
+  }
+
   @Report('Actives, passives', ReportsPaths.filialEffectiveness)
   async filialEffectiveness(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
