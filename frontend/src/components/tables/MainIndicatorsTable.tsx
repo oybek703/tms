@@ -20,7 +20,7 @@ const MainIndicatorsTable = () => {
 	const { mainIndicators } = useTypedSelector(state => state.mainIndicators)
 	return (
 		<TableContainer component={Paper}>
-			<ExportButton id={`main-indicators-${selectedDate}`} />
+			<ExportButton data={{ yearFirstDate, monthFirstDate, selectedDate }} id={`main-indicators-${selectedDate}`} />
 			<Table id={`main-indicators-${selectedDate}`} size="small" aria-label="a dense table">
 				<TableCap textAlign="right" rows={7} text={'млрд.сум'} />
 				<TableHead sx={globalStyles.stickyTableHead}>

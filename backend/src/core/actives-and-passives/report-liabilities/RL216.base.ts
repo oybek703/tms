@@ -11,10 +11,10 @@ export class ReportLiabilities216 extends Base {
                     WHERE S.ACCOUNT_CODE = AC.CODE
                       AND OPER_DAY < DATE '${this.date}'
                       AND ROWNUM = 1) / DECODE(CODE_CURRENCY, '392', 1, 100) AS "saldoOut",
-                   DEP_CON.CONTRACT_DATE                                     AS "contractDate",
-                   DEP_CON.DATE_BEGIN                                        AS "beginDate",
-                   DEP_CON.DATE_END                                          AS "endDate",
-                   F.DATE_VALIDATE                                           AS "dateValidate",
+                   TO_CHAR(DEP_CON.CONTRACT_DATE, 'YYYY-MM-DD')                                     AS "contractDate",
+                   TO_CHAR(DEP_CON.DATE_BEGIN, 'YYYY-MM-DD')                                        AS "beginDate",
+                   TO_CHAR(DEP_CON.DATE_END, 'YYYY-MM-DD')                                          AS "endDate",
+                   TO_CHAR(F.DATE_VALIDATE, 'YYYY-MM-DD')                                           AS "dateValidate",
                    F.AMOUNT / DECODE(CODE_CURRENCY, '392', 1, 100)           AS "amount"
             FROM IBS.ACCOUNTS@IABS AC
                      JOIN IBS.DEP_ACCOUNTS@IABS DEP_AC

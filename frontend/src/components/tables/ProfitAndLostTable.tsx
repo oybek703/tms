@@ -19,7 +19,7 @@ const ProfitAndLostTable = () => {
 	const { yearFirstDate, monthFirstDate, selectedDate } = formatDate(reportDate)
 	return (
 		<TableContainer component={Paper}>
-			<ExportButton id={`profit-and-lost-${selectedDate}`} />
+			<ExportButton data={{ yearFirstDate, monthFirstDate, selectedDate }} id={`profit-and-lost-${selectedDate}`} />
 			<Table id={`profit-and-lost-${selectedDate}`} size="small" aria-label="a dense table">
 				<TableCap rows={7} text={'млрд. сум'} />
 				<TableHead sx={globalStyles.stickyTableHead}>

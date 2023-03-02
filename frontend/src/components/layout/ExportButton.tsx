@@ -1,17 +1,19 @@
 import React, { useCallback, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
-import { TableExport } from 'tableexport'
 import { IconButton } from '@mui/material'
 import Popover from '@mui/material/Popover'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import excelImage from '../../images/excel.png'
+import { utils, writeFile } from 'sheetjs-style'
+import { ExcelProcessor } from '../../utils/excelProcessor'
 
-interface ExportButtonProps {
+interface ExportButtonProps<T> {
 	id: string
+	data?: T
 }
 
-const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
+const ExportButton: React.FC<ExportButtonProps<Record<string, unknown>>> = ({ data, id = 'table_id' }) => {
 	const [anchorEl, setAnchorEl] = useState(null)
 
 	const handleClick = useCallback((event: any) => {
@@ -22,20 +24,15 @@ const ExportButton: React.FC<ExportButtonProps> = ({ id = 'table_id' }) => {
 		setAnchorEl(null)
 	}, [])
 	const export2Excel = useCallback(() => {
-		const table = new TableExport(document.getElementById(id) as Node, {
-			formats: ['xlsx'],
-			position: 'top',
-			exportButtons: false,
-			trimWhitespace: true
-		})
-		const exportData: any = table.getExportData()
-		/* convert export data to a file for download */
-		const xlsxData = exportData[id]['xlsx']
-		table.export2file(xlsxData.data, xlsxData.mimeType, xlsxData.filename, xlsxData.fileExtension)
-		table.remove()
-		table.reset()
+		const tableElement = document.getElementById(id)
+		const workbook = utils.table_to_book(tableElement)
+		const workSheet = workbook.Sheets.Sheet1
+		const excelProcessor = new ExcelProcessor(workSheet, data)
+		if (id.startsWith('main-indicators')) excelProcessor.mainIndicators()
+		if (id.startsWith('profit-and-lost')) excelProcessor.profitAndLost()
+		writeFile(workbook, `${id}.xlsx`)
 		handleClose()
-	}, [id, handleClose])
+	}, [id, data, handleClose])
 
 	const open = Boolean(anchorEl)
 	const popoverId = open ? 'simple-popover' : undefined

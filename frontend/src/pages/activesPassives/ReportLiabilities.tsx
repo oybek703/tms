@@ -5,11 +5,11 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import useActions from '../../hooks/useActions'
 import { LoaderWrapper } from '../../components/helpers/LoaderWrapper'
 import { toast } from 'react-toastify'
-import { utils, writeFile } from 'xlsx'
 import axios from 'axios'
 import { APIRoutes } from '../../interfaces/apiRoutes.interface'
 import { withToken } from '../../utils/axiosUtils'
 import Divider from '@mui/material/Divider'
+import { utils, writeFile } from 'sheetjs-style'
 
 function RL216() {
 	const [date, setDate] = useState<string>('')
