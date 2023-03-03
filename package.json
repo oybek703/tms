@@ -4,15 +4,12 @@
   "description": "Treasury Management System",
   "main": "index.js",
   "scripts": {
-    "start": "npm start --prefix backend",
     "client": "npm start --prefix frontend",
     "server": "npm run start:dev --prefix backend",
-    "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
     "build": "npm run build --prefix frontend && npm run build --prefix backend",
     "deploy": "npm run build && ./copy.sh",
     "deploy:frontend": "npm run build --prefix frontend && ./copy.sh",
-    "deploy:backend": "npm run build --prefix backend && ./copy.sh",
-    "poststart": "npm run start --prefix frontend"
+    "deploy:backend": "npm run build --prefix backend && ./copy.sh"
   },
   "repository": {
     "type": "git",
@@ -29,8 +26,5 @@
   "bugs": {
     "url": "https://github.com/oybek703/tms/issues"
   },
-  "homepage": "https://github.com/oybek703/tms#readme",
-  "devDependencies": {
-    "concurrently": "^7.2.2"
-  }
+  "homepage": "https://github.com/oybek703/tms#readme"
 }
