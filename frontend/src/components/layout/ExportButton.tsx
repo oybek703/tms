@@ -30,6 +30,7 @@ const ExportButton: React.FC<ExportButtonProps<Record<string, unknown>>> = ({ da
 		const excelProcessor = new ExcelProcessor(workSheet, data)
 		if (id.startsWith('main-indicators')) excelProcessor.mainIndicators()
 		if (id.startsWith('profit-and-lost')) excelProcessor.profitAndLost()
+		if (id.startsWith('capital')) excelProcessor.capital()
 		writeFile(workbook, `${id}.xlsx`)
 		handleClose()
 	}, [id, data, handleClose])

@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import Paper from '@mui/material/Paper'
-import { formatNumber, formatOneDate } from '../../utils'
+import { formatNumber } from '../../utils'
 import TableCap from '../helpers/TableCap'
 import ExportButton from '../layout/ExportButton'
 import BoldWithColor from '../helpers/BoldWithColor'
@@ -18,12 +18,14 @@ const CapitalTable = function () {
 	const { capital } = useTypedSelector(state => state.capital)
 	return (
 		<TableContainer component={Paper}>
-			<ExportButton id={`capital-${formatOneDate(reportDate)}`} />
-			<Table id={`capital-${formatOneDate(reportDate)}`} size="small" aria-label="a dense table">
+			<ExportButton id={`capital-${reportDate}`} />
+			<Table id={`capital-${reportDate}`} size="small" aria-label="a dense table">
 				<TableCap rows={3} text={'тыс. сум'} />
 				<TableHead sx={globalStyles.stickyTableHead}>
 					<TableRow>
-						<TableCell component="th" scope="row" />
+						<TableCell component="th" scope="row" align="center">
+							<BoldWithColor>№</BoldWithColor>
+						</TableCell>
 						<TableCell component="th" scope="row" align="center">
 							<BoldWithColor>КАПИТАЛ УРОВНЯ 1</BoldWithColor>
 						</TableCell>
