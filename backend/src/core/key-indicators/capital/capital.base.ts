@@ -15,55 +15,42 @@ export class CapitalBase extends Base {
                   WHERE ${whereQuery})`
   }
 
-  private fullPaidSharesQuery = () => {
-    return `SELECT ROUND((NVL(COL1, 0) + NVL(COL2, 0) - NVL(COL3, 0)) / POWER(10, 5), 2) AS "saldoEquivalOut"
-            FROM (SELECT (SELECT SUM(SALDO_EQUIVAL_OUT)
-                          FROM (SELECT AC.CODE,
-                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                               SALDO_EQUIVAL_OUT
-                                        FROM IBS.SALDO@IABS SL
-                                        WHERE SL.ACCOUNT_CODE = AC.CODE
-                                          AND SL.OPER_DAY < DATE '${this.date}'
-                                          AND ROWNUM = 1) AS saldo_equival_out
-                                FROM IBS.ACCOUNTS@IABS AC
-                                WHERE CODE_COA = '30312')) AS col1,
-                         (SELECT SUM(SALDO_EQUIVAL_OUT)
-                          FROM (SELECT AC.CODE,
-                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                               OPER_DAY
-                                        FROM IBS.SALDO@IABS SL
-                                        WHERE SL.ACCOUNT_CODE = AC.CODE
-                                          AND SL.OPER_DAY < DATE '${this.date}'
-                                          AND ROWNUM = 1) AS oper_day,
-                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                               SALDO_EQUIVAL_OUT
-                                        FROM IBS.SALDO@IABS SL
-                                        WHERE SL.ACCOUNT_CODE = AC.CODE
-                                          AND SL.OPER_DAY < DATE '${this.date}'
-                                          AND ROWNUM = 1) AS saldo_equival_out
-                                FROM IBS.ACCOUNTS@IABS AC
-                                WHERE CODE_COA = '30318')) AS col2,
-                         (SELECT SUM(SALDO_EQUIVAL_OUT)
-                          FROM (SELECT AC.CODE,
-                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                               OPER_DAY
-                                        FROM IBS.SALDO@IABS SL
-                                        WHERE SL.ACCOUNT_CODE = AC.CODE
-                                          AND SL.OPER_DAY < DATE '${this.date}'
-                                          AND ROWNUM = 1) AS oper_day,
-                                       (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                               SALDO_EQUIVAL_OUT
-                                        FROM IBS.SALDO@IABS SL
-                                        WHERE SL.ACCOUNT_CODE = AC.CODE
-                                          AND SL.OPER_DAY < DATE '${this.date}'
-                                          AND ROWNUM = 1) AS saldo_equival_out
-                                FROM IBS.ACCOUNTS@IABS AC
-                                WHERE CODE_COA = '30306')) AS col3
-                  FROM IBS.SALDO@IABS S,
-                       IBS.ACCOUNTS@IABS A
-                  WHERE A.CODE = S.ACCOUNT_CODE
-                    AND ROWNUM = 1)`
+
+  protected svodFormatQuery(whereQuery: string): string {
+    return `SELECT
+    nvl(round(SUM(saldo_active_eq + saldo_passive_eq) / power(10, 5), 2),0) AS "saldoEquivalOut"
+FROM
+    ibs.svod_saldo_dump@iabs
+WHERE ( ${whereQuery})
+AND dat = DATE '${this.date}'`
   }
+
+
+  private fullPaidSharesQuery = () => {
+    return `SELECT
+    round((nvl(sv_30318, 0) + nvl(sv_30606, 0) - nvl(sv_30312, 0)) / power(10, 5), 2) AS "saldoEquivalOut"
+FROM
+    (
+        SELECT
+            bal,
+            saldo_active_eq,
+            saldo_passive_eq
+        FROM
+            ibs.svod_saldo_dump@iabs
+        WHERE
+            bal IN (
+                '30306',
+                '30312',
+                '30318'
+            )
+            AND dat = DATE'${this.date}'
+    ) PIVOT (
+        SUM ( saldo_active_eq + saldo_passive_eq )
+        FOR bal
+        IN ( '30606' AS sv_30606, '30312' AS sv_30312, '30318' AS sv_30318 )
+    )`
+  }
+  
 
   private reversePurchasedQuery = () => {
     return `SELECT ROUND(NVL(SUM(SALDO_EQUIVAL_OUT), 0) / POWER(10, 5), 2) AS "saldoEquivalOut"
@@ -91,28 +78,18 @@ export class CapitalBase extends Base {
   }
 
   private currentYearQuery = () => {
-    return `SELECT ROUND(DECODE(SUM_31206, 0, SUM_4_5, SUM_31206) / POWER(10, 5), 2) AS "saldoEquivalOut"
-            FROM (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, SUM(SALDO_EQUIVAL_OUT),
-                                0) AS SUM_31206
-                  FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       SALDO_EQUIVAL_OUT
-                                FROM IBS.SALDO@IABS SL
-                                WHERE SL.ACCOUNT_CODE = AC.CODE
-                                  AND SL.OPER_DAY < DATE '${this.date}'
-                                  AND ROWNUM = 1) AS saldo_equival_out
-                        FROM IBS.ACCOUNTS@IABS AC
-                        WHERE CODE_COA = '31206')),
-                 (SELECT DECODE(SIGN(SUM(SALDO_EQUIVAL_OUT)), -1, ABS(SUM(SALDO_EQUIVAL_OUT)),
-                                0) AS SUM_4_5
-                  FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                       SALDO_EQUIVAL_OUT
-                                FROM IBS.SALDO@IABS SL
-                                WHERE SL.ACCOUNT_CODE = AC.CODE
-                                  AND SL.OPER_DAY < DATE '${this.date}'
-                                  AND ROWNUM = 1) AS saldo_equival_out
-                        FROM IBS.ACCOUNTS@IABS AC
-                        WHERE CODE_COA LIKE '4%'
-                           OR CODE_COA LIKE '5%'))`
+    return `                           
+    SELECT
+        decode(sign(SUM(saldo_active_eq + saldo_passive_eq)), - 1, SUM(saldo_active_eq + saldo_passive_eq), 0) AS "saldoEquivalOut"
+    FROM
+        ibs.svod_saldo_dump@iabs
+    WHERE
+        ( bal = '31206'
+          OR substr(bal, 1, 1) IN (
+            '4',
+            '5'
+        ) )
+        AND dat = DATE '${this.date}'`
   }
 
   private fullyPaidSharesQuery = () => {
@@ -142,34 +119,35 @@ export class CapitalBase extends Base {
   }
 
   private totalCapitalInvestmentQuery = () => {
-    return `SELECT ROUND(((SELECT SUM(SALDO_EQUIVAL_OUT)
-                           FROM (SELECT (SELECT --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                SALDO_EQUIVAL_OUT
-                                         FROM IBS.SALDO@IABS SL
-                                         WHERE SL.ACCOUNT_CODE = AC.CODE
-                                           AND SL.OPER_DAY < DATE '${this.date}'
-                                           AND ROWNUM = 1) AS saldo_equival_out
-                                 FROM IBS.ACCOUNTS@IABS AC
-                                 WHERE CODE_COA IN ('10711', '10719', '10779', '10821',
-                                                    '10813', '10823', '10825', '10879',
-                                                    '10899')
-                                    OR CODE_COA LIKE '158%'
-                                    OR CODE_COA LIKE '159%')) - (SELECT SUM(SALDO_EQUIVAL_OUT)
-                                                                 FROM (SELECT (SELECT
-                                                                                   --+index_desc (sl UK_SALDO_ACCOUNT_DAY)
-                                                                                   SALDO_EQUIVAL_OUT
-                                                                               FROM IBS.SALDO@IABS SL
-                                                                               WHERE SL.ACCOUNT_CODE = AC.CODE
-                                                                                 AND SL.OPER_DAY < DATE '${this.date}'
-                                                                                 AND ROWNUM = 1) AS
-                                                                                  saldo_equival_out
-                                                                       FROM IBS.ACCOUNTS@IABS AC
-                                                                       WHERE CODE_COA IN
-                                                                             ('10723', '10725',
-                                                                              '10799', '10823',
-                                                                              '10825', '15913',
-                                                                              '10899')))) / POWER(10, 5), 2) AS "saldoEquivalOut"
-            FROM DUAL`
+    return `SELECT
+    round(((
+        SELECT
+            SUM(saldo_active_eq + saldo_passive_eq)
+        FROM
+            ibs.svod_saldo_dump@iabs
+        WHERE
+            (bal IN(
+                '10711', '10719', '10779', '10821', '10813',
+                '10823', '10825', '10879', '10899'
+            )
+             OR substr(bal, 1, 3) IN(
+                '158', '159'
+            ))
+            AND dat = DATE '${this.date}'
+    ) -(
+        SELECT
+            SUM(saldo_active_eq + saldo_passive_eq)
+        FROM
+            ibs.svod_saldo_dump@iabs
+        WHERE
+            (bal IN(
+                '10723', '10725', '10799', '10823',
+                '10825', '15913', '10899'
+            ))
+            AND dat = DATE '${this.date}'
+    )) / power(10, 5), 2) AS "saldoEquivalOut"
+FROM
+    dual`
   }
 
   private currentYearProfitQuery = () => {
@@ -270,11 +248,12 @@ export class CapitalBase extends Base {
   } /* Минус: Обратно Выкупленные обыкновенные акции */
 
   private async capital_added() {
+
     return await this.getOneRow(
       '1.2.',
       'Добавленный капитал - Обыкновенные',
-      `CODE_COA='30606'`,
       undefined,
+      this.svodFormatQuery.bind(this, 'bal=30606'),
       true
     )
   } /* Добавленный капитал - Обыкновенные */
@@ -283,12 +262,18 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       'а',
       'Капитальные резервы ',
-      `CODE_COA IN ('30903', '30904', '30910')`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal IN ('30903', '30904', '30910')`)
     )
   } /* Капитальные резервы  */
 
   private async undistributed_profits() {
-    return await this.getOneRow('б', 'Нераспределенная прибыль', `CODE_COA='31203'`)
+    return await this.getOneRow(
+      'б', 
+      'Нераспределенная прибыль',
+      undefined,
+       this.svodFormatQuery.bind(this, `bal=31203`)
+       )
   } /* Нераспределенная прибыль */
 
   private async los_for_past_periods() {
@@ -328,8 +313,9 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       '1.5.',
       'Резерв на девальвацию',
-      `CODE_COA='30906'`,
+      // `CODE_COA='30906'`,
       undefined,
+      this.svodFormatQuery.bind(this, `bal='30906'`),
       true
     )
   } /* Резерв на девальвацию */
@@ -378,7 +364,9 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       'в',
       'Инвестиции в капитал других банков',
-      `CODE_COA IN ('10723', '10725', '10799', '10823', '10825', '10899')`
+      // `CODE_COA IN ('10723', '10725', '10799', '10823', '10825', '10899')`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal  IN ('10723', '10725', '10799', '10823', '10825', '10899')`)
     )
   } /* Инвестиции в капитал других банков */
 
@@ -424,7 +412,9 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       'б',
       'Минус: Обратно Выкупленные привилегированные акции',
-      `CODE_COA='30321'`
+      // `CODE_COA='30321'`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal='30321'`)
     )
   } /* Минус: Обратно Выкупленные привилегированные акции */
 
@@ -432,7 +422,9 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       '2.2.',
       'Добавленный капитал - Привилегированные',
-      `CODE_COA='30603'`
+      // `CODE_COA='30603'`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal='30603'`)
     )
   } /* Добавленный капитал - Привилегированные  */
 
@@ -484,15 +476,13 @@ export class CapitalBase extends Base {
   } /* КАПИТАЛ УРОВНЯ II */
 
   private async current_year_profit() {
-    const currentDate = this.date
-    await this.getBeforeDate()
+
     const currentProfitRow = await this.getOneRow(
       '3.1.',
       'Прибыль за текущий год (при подтверждении аудиторами - 100%, в противном случае 50% от суммы)',
       undefined,
       this.currentYearProfitQuery
     )
-    this.date = currentDate
     return currentProfitRow
   } /* Прибыль за текущий год (при подтверждении аудиторами - 100%, в противном случае 50% от суммы) */
 
@@ -500,7 +490,9 @@ export class CapitalBase extends Base {
     return await this.getOneRow(
       '3.2.',
       'Резервы, создаваемые на стандартные кредиты (активы), в размере не более 1.25% от общей суммы активов, взвешенных с учетом риска',
-      `CODE_COA='30911' OR CODE_COA LIKE '177%' OR CODE_COA=29807`
+      // `CODE_COA='30911' OR CODE_COA LIKE '177%' OR CODE_COA=29807`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal IN ('30911','29807') OR bal like'177%'`)
     )
   } /* Резервы, создаваемые на стандартные кредиты (активы), в размере не более 1.25% от общей суммы активов, взвешенных с учетом риска */
 
@@ -508,7 +500,9 @@ export class CapitalBase extends Base {
     const res = await this.getOneRow(
       '3.3.',
       'Излишки оценочной стоимости прироста над первоначальной стоимостью',
-      `CODE_COA='30908'`
+      // `CODE_COA='30908'`
+      undefined,
+      this.svodFormatQuery.bind(this, `bal='30908'`)
     )
     return {
       ...res,
@@ -563,6 +557,7 @@ export class CapitalBase extends Base {
   } /* ВСЕГО РЕГУЛЯТИВНЫЙ КАПИТАЛ */
 
   async getRows(): Promise<ICapitalRow[]> {
+    await this.getBeforeDate()
     const [
       fullPaidShares,
       reverseRepurchased,

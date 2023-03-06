@@ -6,7 +6,7 @@ async function bootstrap() {
   const PORT = process.env.PORT || 4202
   const apiPrefix = process.env.API_PREFIX
   const app = await NestFactory.create(AppModule)
-
+  
   app.setGlobalPrefix(apiPrefix)
 
   app.enableShutdownHooks()

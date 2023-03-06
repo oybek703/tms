@@ -9,7 +9,7 @@
     "build": "npm run build --prefix frontend && npm run build --prefix backend",
     "deploy": "npm run build && ./copy.sh",
     "deploy:frontend": "npm run build --prefix frontend && ./copy.sh",
-    "deploy:backend": "npm run build --prefix backend && ./copy.sh",
+    "deploy:backend": "npm run build --prefix backend && ./copy.sh"
   },
   "repository": {
     "type": "git",
