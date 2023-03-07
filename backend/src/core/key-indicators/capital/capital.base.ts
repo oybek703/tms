@@ -15,42 +15,26 @@ export class CapitalBase extends Base {
                   WHERE ${whereQuery})`
   }
 
-
   protected svodFormatQuery(whereQuery: string): string {
-    return `SELECT
-    nvl(round(SUM(saldo_active_eq + saldo_passive_eq) / power(10, 5), 2),0) AS "saldoEquivalOut"
-FROM
-    ibs.svod_saldo_dump@iabs
-WHERE ( ${whereQuery})
-AND dat = DATE '${this.date}'`
+    return `SELECT NVL(ROUND(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / POWER(10, 5), 2), 0) AS "saldoEquivalOut"
+            FROM IBS.SVOD_SALDO_DUMP@IABS
+            WHERE (${whereQuery})
+              AND DAT = DATE '${this.date}'`
   }
-
 
   private fullPaidSharesQuery = () => {
-    return `SELECT
-    round((nvl(sv_30318, 0) + nvl(sv_30606, 0) - nvl(sv_30312, 0)) / power(10, 5), 2) AS "saldoEquivalOut"
-FROM
-    (
-        SELECT
-            bal,
-            saldo_active_eq,
-            saldo_passive_eq
-        FROM
-            ibs.svod_saldo_dump@iabs
-        WHERE
-            bal IN (
-                '30306',
-                '30312',
-                '30318'
-            )
-            AND dat = DATE'${this.date}'
-    ) PIVOT (
-        SUM ( saldo_active_eq + saldo_passive_eq )
-        FOR bal
-        IN ( '30606' AS sv_30606, '30312' AS sv_30312, '30318' AS sv_30318 )
-    )`
+    return `SELECT ROUND((NVL(SV_30318, 0) + NVL(SV_30606, 0) - NVL(SV_30312, 0)) / POWER(10, 5), 2) AS "saldoEquivalOut"
+            FROM (SELECT BAL,
+                         SALDO_ACTIVE_EQ,
+                         SALDO_PASSIVE_EQ
+                  FROM IBS.SVOD_SALDO_DUMP@IABS
+                  WHERE BAL IN ('30306',
+                                '30312',
+                                '30318')
+                    AND DAT = DATE '${this.date}') PIVOT ( SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) FOR BAL IN ( '30606' AS SV_30606,
+                '30312' AS SV_30312,
+                '30318' AS SV_30318 ) )`
   }
-  
 
   private reversePurchasedQuery = () => {
     return `SELECT ROUND(NVL(SUM(SALDO_EQUIVAL_OUT), 0) / POWER(10, 5), 2) AS "saldoEquivalOut"
@@ -78,18 +62,12 @@ FROM
   }
 
   private currentYearQuery = () => {
-    return `                           
-    SELECT
-        decode(sign(SUM(saldo_active_eq + saldo_passive_eq)), - 1, SUM(saldo_active_eq + saldo_passive_eq), 0) AS "saldoEquivalOut"
-    FROM
-        ibs.svod_saldo_dump@iabs
-    WHERE
-        ( bal = '31206'
-          OR substr(bal, 1, 1) IN (
-            '4',
-            '5'
-        ) )
-        AND dat = DATE '${this.date}'`
+    return `SELECT DECODE(SIGN(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)), -1, SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ), 0) AS
+                       "saldoEquivalOut"
+            FROM IBS.SVOD_SALDO_DUMP@IABS
+            WHERE (BAL = '31206'
+                OR SUBSTR(BAL, 1, 1) IN ('4', '5'))
+              AND DAT = DATE '${this.date}'`
   }
 
   private fullyPaidSharesQuery = () => {
@@ -119,35 +97,18 @@ FROM
   }
 
   private totalCapitalInvestmentQuery = () => {
-    return `SELECT
-    round(((
-        SELECT
-            SUM(saldo_active_eq + saldo_passive_eq)
-        FROM
-            ibs.svod_saldo_dump@iabs
-        WHERE
-            (bal IN(
-                '10711', '10719', '10779', '10821', '10813',
-                '10823', '10825', '10879', '10899'
-            )
-             OR substr(bal, 1, 3) IN(
-                '158', '159'
-            ))
-            AND dat = DATE '${this.date}'
-    ) -(
-        SELECT
-            SUM(saldo_active_eq + saldo_passive_eq)
-        FROM
-            ibs.svod_saldo_dump@iabs
-        WHERE
-            (bal IN(
-                '10723', '10725', '10799', '10823',
-                '10825', '15913', '10899'
-            ))
-            AND dat = DATE '${this.date}'
-    )) / power(10, 5), 2) AS "saldoEquivalOut"
-FROM
-    dual`
+    return `SELECT ROUND(((SELECT SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)
+                           FROM IBS.SVOD_SALDO_DUMP@IABS
+                           WHERE (BAL IN ('10711', '10719', '10779', '10821',
+                                          '10813', '10823', '10825', '10879', '10899')
+                               OR SUBSTR(BAL, 1, 3) IN ('158', '159'))
+                             AND DAT = DATE '${this.date}') - (SELECT SUM(SALDO_ACTIVE_EQ +
+                                                                          SALDO_PASSIVE_EQ)
+                                                               FROM IBS.SVOD_SALDO_DUMP@IABS
+                                                               WHERE (BAL IN ('10723', '10725', '10799', '10823', '10825', '15913', '10899'))
+                                                                 AND DAT = DATE '${this.date}')) / POWER(10, 5), 2) AS
+                       "saldoEquivalOut"
+            FROM DUAL `
   }
 
   private currentYearProfitQuery = () => {
@@ -178,10 +139,7 @@ FROM
               AND CONDITION = 'A'
               AND DS.TYPE = 1
               AND DS.DATE_VALIDATE > DATE '${this.date}'
-            GROUP BY AC.NAME,
-                     AC.CODE,
-                     DEP_ACC.CONTRACT_ID,
-                     SALDO_EQUIVAL_OUT`
+            GROUP BY AC.NAME, AC.CODE, DEP_ACC.CONTRACT_ID, SALDO_EQUIVAL_OUT`
   }
 
   private createData = (
@@ -248,7 +206,6 @@ FROM
   } /* Минус: Обратно Выкупленные обыкновенные акции */
 
   private async capital_added() {
-
     return await this.getOneRow(
       '1.2.',
       'Добавленный капитал - Обыкновенные',
@@ -269,11 +226,11 @@ FROM
 
   private async undistributed_profits() {
     return await this.getOneRow(
-      'б', 
+      'б',
       'Нераспределенная прибыль',
       undefined,
-       this.svodFormatQuery.bind(this, `bal=31203`)
-       )
+      this.svodFormatQuery.bind(this, `bal=31203`)
+    )
   } /* Нераспределенная прибыль */
 
   private async los_for_past_periods() {
@@ -366,7 +323,10 @@ FROM
       'Инвестиции в капитал других банков',
       // `CODE_COA IN ('10723', '10725', '10799', '10823', '10825', '10899')`
       undefined,
-      this.svodFormatQuery.bind(this, `bal  IN ('10723', '10725', '10799', '10823', '10825', '10899')`)
+      this.svodFormatQuery.bind(
+        this,
+        `bal  IN ('10723', '10725', '10799', '10823', '10825', '10899')`
+      )
     )
   } /* Инвестиции в капитал других банков */
 
@@ -476,7 +436,6 @@ FROM
   } /* КАПИТАЛ УРОВНЯ II */
 
   private async current_year_profit() {
-
     const currentProfitRow = await this.getOneRow(
       '3.1.',
       'Прибыль за текущий год (при подтверждении аудиторами - 100%, в противном случае 50% от суммы)',
