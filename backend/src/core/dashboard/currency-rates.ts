@@ -72,7 +72,7 @@ export class CurrencyRates extends Base {
                   GROUP BY TO_CHAR(TO_DATE(DATE_CROSS, 'DD.MM.YYYY'), 'WW')) EVERY_FRIDAY
                      JOIN IBS.S_RATE_CUR@IABS CURR
                           ON CURR.DATE_CROSS = EVERY_FRIDAY.MAX_DAY
-            WHERE CURR.CODE = '${currencyCode}'`
+            WHERE CURR.CODE = '${currencyCode}' ORDER BY DATE_CROSS`
   }
 
   protected getOtherRatesWithDiffer(rate = [], rateBeforeDay = []) {
