@@ -56,17 +56,14 @@ export class CorrOperationsBase extends Base {
   }
 
   protected bankListQuery = () => {
-    return `SELECT  AC.CLIENT_CODE AS "clientCode",
-    BR.SHORT_NAME  AS "bankName"
-FROM IBS.ACCOUNTS@IABS AC
-LEFT OUTER JOIN BANK_INFO_RATING BR
-             ON BR.CLIENT_CODE = AC.CLIENT_CODE
-WHERE AC.CODE_COA = '10501'
-AND AC.CONDITION = 'A'
-AND AC.CODE_FILIAL = '00873'
-GROUP BY  AC.CLIENT_CODE, BR.SHORT_NAME
-ORDER BY  ABS(SUM(SALDO_EQUIVAL_OUT)) DESC    
-`
+    return `SELECT DISTINCT AC.CLIENT_CODE AS "clientCode",
+                            BR.SHORT_NAME  AS "bankName"
+            FROM IBS.ACCOUNTS@IABS AC
+                     LEFT OUTER JOIN BANK_INFO_RATING BR
+                                     ON BR.CLIENT_CODE = AC.CLIENT_CODE
+            WHERE AC.CODE_COA = '10501'
+              AND AC.CONDITION = 'A'
+              AND AC.CODE_FILIAL = '00873'`
   }
 
   protected bankDataQuery = () => {
