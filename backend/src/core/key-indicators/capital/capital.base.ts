@@ -62,11 +62,10 @@ export class CapitalBase extends Base {
   }
 
   private currentYearQuery = () => {
-    return `SELECT DECODE(SIGN(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)), -1, SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ), 0) AS
+    return `SELECT DECODE(SIGN(SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ)), -1, SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ), 0) / POWER(10, 5) AS
                        "saldoEquivalOut"
             FROM IBS.SVOD_SALDO_DUMP@IABS
-            WHERE (BAL = '31206'
-                OR SUBSTR(BAL, 1, 1) IN ('4', '5'))
+            WHERE (BAL = '31206' OR SUBSTR(BAL, 1, 1) IN ('4', '5'))
               AND DAT = DATE '${this.date}'`
   }
 
