@@ -39,6 +39,7 @@ import {
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
 import getIncomeAnalysisData from '../core/actives-and-passives/income-analysis'
+import { getVlaAndForData } from '../core/bank-liquidity/vla-and-for'
 
 @Injectable()
 export class ReportsService {
@@ -146,6 +147,10 @@ export class ReportsService {
 
   async vlaBuffer(date: Date) {
     return await getVlaBufferData(date, this.oracleService)
+  }
+
+  async vlaAndFor(date: Date) {
+    return await getVlaAndForData(date, this.oracleService)
   }
 
   async placedAttracted(date: Date) {

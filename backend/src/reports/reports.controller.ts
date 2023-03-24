@@ -128,6 +128,12 @@ export class ReportsController {
     return await this.reportsService.vlaBuffer(date)
   }
 
+  @Report('Bank liquidity', ReportsPaths.vlaAndFor)
+  async vlaAndFor(@Query('date') date: Date) {
+    if (!date) throw this.dateBadRequestException
+    return await this.reportsService.vlaAndFor(date)
+  }
+
   @Report('Actives, passives', ReportsPaths.placedAttracted, true)
   async placedAttracted(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException

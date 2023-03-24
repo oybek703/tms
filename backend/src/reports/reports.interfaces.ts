@@ -14,6 +14,7 @@ export enum ReportsPaths {
   calcForUpdateCbn = '/calcFor/updateCbn',
   currencyPosition = 'currencyPosition',
   vlaBuffer = 'vlaBuffer',
+  vlaAndFor = 'vlaAndFor',
   placedAttracted = 'placedAttracted',
   interbankDeposits = 'interbankDeposits',
   topDeposits = 'topDeposits',

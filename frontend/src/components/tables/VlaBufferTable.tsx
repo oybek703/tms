@@ -142,7 +142,7 @@ function HeadTableRow({ income, bg, allSpan }: IIncomeRowProps & { bg?: string; 
 	)
 }
 
-const VLaBufferTable = () => {
+const VlaBufferTable = () => {
 	const { vlaBuffer } = useTypedSelector(state => state.vlaBuffer)
 	const { incomes, incomeBringing, nonProfits, nonProfitable, highLiquidityAssets } = vlaBuffer
 	const allPercents = [nonProfitable.percentTotal, incomeBringing.percentTotal]
@@ -253,4 +253,4 @@ const VLaBufferTable = () => {
 	)
 }
 
-export default memo(VLaBufferTable)
+export default memo(VlaBufferTable)

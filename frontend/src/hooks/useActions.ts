@@ -41,6 +41,7 @@ import {
 import { fetchCorrOperations } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 import { fetchFilialCp } from '../features/dealingOperations/filialCp/filialCpSlice'
 import { fetchIncomeAnalysis } from '../features/keyIndicators/incomeAnalysis/incomeAnalysisSlice'
+import { fetchVlaAndFor } from '../features/bankLiquidity/vlaAndFor/vlaAndForSlice'
 
 const actions = {
 	...operDaysActions,
@@ -63,6 +64,7 @@ const actions = {
 	fetchDashboardMonthly,
 	fetchIncomeAnalysis,
 	fetchVlaBuffer,
+	fetchVlaAndFor,
 	fetchPlat,
 	fetchInterbankDeposits,
 	fetchTopDeposits,

@@ -13,6 +13,7 @@ export enum APIRoutes {
 	correspondentCurrent = '/api/correspondent/currentState',
 	currencyPosition = 'currencyPosition',
 	vlaBuffer = 'vlaBuffer',
+	vlaAndFor = 'vlaAndFor',
 	placedAttracted = 'placedAttracted',
 	interbankDeposits = 'interbankDeposits',
 	topDeposits = 'topDeposits',

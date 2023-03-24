@@ -28,6 +28,7 @@ import { corrAccountsAnalyzeReducer } from '../features/dealingOperations/corrAc
 import { corrOperationsActionsReducer } from '../features/dealingOperations/corrOperations/corrOperationsSlice'
 import { filialCpActionsReducer } from '../features/dealingOperations/filialCp/filialCpSlice'
 import { incomeAnalysisReducer } from '../features/keyIndicators/incomeAnalysis/incomeAnalysisSlice'
+import { vlaAndForReducer } from '../features/bankLiquidity/vlaAndFor/vlaAndForSlice'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
 	reportLiabilities: reportLiabilitiesReducer,
 	creditData: creditDataReducer,
 	vlaBuffer: vlaBufferReducer,
+	vlaAndFor: vlaAndForReducer,
 	filialEffectiveness: filialEffectivenessReducer,
 	competitiveAnalysis: competitiveAnalysisReducer,
 	corrAccountsAnalyze: corrAccountsAnalyzeReducer,

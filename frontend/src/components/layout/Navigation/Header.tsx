@@ -82,6 +82,11 @@ export const baseRoutes: BaseRoute[] = [
 		route: '/vlaBuffer',
 		group: 'liquidity_indicators'
 	},
+	{
+		title: 'Управление ВЛА и ФОР',
+		route: '/vlaAndFor',
+		group: 'liquidity_indicators'
+	},
 	// Активы и пассивы
 	{
 		title: 'Привлеченные и размещенные',

@@ -42,6 +42,7 @@ import CAAManual from './pages/dealingOperations/CAAManual'
 import CorrOperations from './pages/dealingOperations/CorrOperations'
 import FilialCp from './pages/dealingOperations/FilialCp'
 import IncomeAnalysis from './pages/keyIndicators/IncomeAnalysis'
+import VlaAndFor from './pages/bankLiquidity/VlaAndFor'
 
 function App() {
 	const {
@@ -72,6 +73,7 @@ function App() {
 							<PrivateRoute component={DepositsByDeadline} path="/depositsByDeadline" />
 							<PrivateRoute component={ReportLiabilities} path="/reportLiabilities" />
 							<PrivateRoute component={VlaBuffer} path="/vlaBuffer" />
+							<PrivateRoute component={VlaAndFor} path="/vlaAndFor" />
 							<PrivateRoute component={FilialEffectiveness} path="/filialEffectiveness" />
 							<PrivateRoute component={CompetitiveAnalysis} path="/competitiveAnalysis" />
 							<PrivateRoute component={CorrAccountsAnalyze} path="/corrAccountsAnalyze" />
