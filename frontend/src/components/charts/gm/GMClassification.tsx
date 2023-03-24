@@ -64,8 +64,9 @@ interface GMClassificationProps {
 }
 
 const GMClassification: React.FC<GMClassificationProps> = ({ series = [], data = [] }) => {
+	console.log(series, data)
 	useEffect(() => {
-		if (series.length) {
+		if (series.filter(Boolean).length) {
 			document.querySelector('#gm_classification')!.innerHTML = ''
 			renderOptions(series, data)
 		}
