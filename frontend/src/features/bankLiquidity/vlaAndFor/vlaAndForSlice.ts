@@ -7,6 +7,7 @@ interface IVlaBufferInitialState {
 	loading: boolean
 	vlaAndFor: {
 		liquidityAssets: ILiquidityRow[]
+		activesCurrent: Pick<ILiquidityRow, 'total' | 'natCurr' | 'forCurr'>[]
 	}
 	error: undefined
 }
@@ -14,7 +15,8 @@ interface IVlaBufferInitialState {
 const initialState: IVlaBufferInitialState = {
 	loading: false,
 	vlaAndFor: {
-		liquidityAssets: []
+		liquidityAssets: [],
+		activesCurrent: []
 	},
 	error: undefined
 }

@@ -14,6 +14,8 @@ import { ISxStyles } from '../../interfaces/styles.interface'
 import { format } from 'date-fns'
 import BoldWithColor from '../helpers/BoldWithColor'
 import RenderLiquidityBody from '../helpers/RenderLiquidityBody'
+import { v4 as uuid } from 'uuid'
+import { formatNumber } from '../../utils'
 
 const styles: ISxStyles = {
 	tableContainer: {
@@ -30,14 +32,14 @@ const styles: ISxStyles = {
 const VlaAndForTable = () => {
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
-	const { liquidityAssets } = vlaAndFor
+	const { liquidityAssets, activesCurrent } = vlaAndFor
 	return (
 		<Fragment>
-			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gap: '20px', gridTemplateColumns: '70% 29% 1%' }}>
+			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gap: '20px', gridTemplateColumns: '65% 34% 1%' }}>
 				<Grid>
 					<TableContainer sx={styles.tableContainer} component={Paper}>
 						<Table size="small" aria-label="a dense table">
-							<TableCap rows={6} text={'млн.'} />
+							<TableCap rows={7} text={'млн.'} />
 							<TableHead sx={globalStyles.stickyTableHead}>
 								<TableRow>
 									<TableCell rowSpan={2} />
@@ -79,7 +81,7 @@ const VlaAndForTable = () => {
 							<TableHead sx={globalStyles.stickyTableHead}>
 								<TableRow>
 									<TableCell colSpan={3} align="center">
-										<Typography color="white" variant="h4">
+										<Typography color="white" sx={{ fontSize: '24px' }}>
 											Текущий
 										</Typography>
 									</TableCell>
@@ -96,7 +98,21 @@ const VlaAndForTable = () => {
 									</TableCell>
 								</TableRow>
 							</TableHead>
-							<TableBody></TableBody>
+							<TableBody>
+								{activesCurrent.map(({ total, natCurr, forCurr }) => (
+									<TableRow key={uuid()}>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{formatNumber(natCurr)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{formatNumber(forCurr)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{formatNumber(total)}
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
 						</Table>
 					</TableContainer>
 				</Grid>

@@ -1,12 +1,13 @@
-export interface IVlaBufferDbData {
+export interface IVlaAndForDbData {
+  total: number
+  natCurr: number
+  forCurr: number
+  usaDollar: number
+  evro: number
+}
+
+export interface IVlaAndForRow extends IVlaAndForDbData {
+  count: string
   indicatorName: string
-  percentVlaTotal: number
-  percentTotal: number
-  saldoTotal: number
-  percentVlaUzs: number
-  percentUzs: number
-  saldoUzs: number
-  percentVlaUsd: number
-  percentUsd: number
-  saldoUsd: number
+  isTableHead: boolean
 }
