@@ -6,95 +6,102 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import BoldWithColor from '../helpers/BoldWithColor'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
-import { Typography } from '@mui/material'
-import palette from '../../styles/palette'
+import { Grid, Typography } from '@mui/material'
 import { ISxStyles } from '../../interfaces/styles.interface'
+import { format } from 'date-fns'
+import BoldWithColor from '../helpers/BoldWithColor'
+import RenderLiquidityBody from '../helpers/RenderLiquidityBody'
 
 const styles: ISxStyles = {
 	tableContainer: {
 		padding: 0,
 		marginBottom: '20px'
 	},
-	verticalCellGridStyles: {
-		...globalStyles.verticalText,
-		transform: 'rotate(0) translateY(-40px)',
-		writingMode: 'vertical-rl',
-		textOrientation: 'upright'
-	},
-	verticalCellStyles: {
-		backgroundColor: palette.primary,
-		border: '0',
-		color: '#fff'
-	},
 	titleTextStyles: {
 		fontSize: 60,
 		color: '#fff',
 		fontWeight: 'bold'
-	},
-	bottomContainer: {
-		display: 'grid',
-		gridAutoFlow: 'column',
-		gridTemplateColumns: 'minmax(1fr, auto)'
-	},
-	chartsContainer: {
-		display: 'grid',
-		gridAutoFlow: 'column',
-		gridTemplateColumns: 'repeat(3, 1fr)'
 	}
 }
 
 const VlaAndForTable = () => {
+	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
-	console.log(vlaAndFor)
+	const { liquidityAssets } = vlaAndFor
 	return (
 		<Fragment>
-			<TableContainer sx={styles.tableContainer} component={Paper}>
-				<Table size="small" aria-label="a dense table">
-					<TableCap rows={13} text={'млн.'} />
-					<TableHead sx={globalStyles.stickyTableHead}>
-						<TableRow>
-							<TableCell align="center">
-								<Typography sx={styles.titleTextStyles}>ВЛА</Typography>
-							</TableCell>
-							<TableCell sx={styles.verticalCellStyles} />
-							<TableCell align="center">
-								<BoldWithColor>Доля в ВЛА (100%)</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном активе</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Итого</BoldWithColor>
-							</TableCell>
-							<TableCell sx={styles.verticalCellStyles} />
-							<TableCell align="center">
-								<BoldWithColor>Доля в ВЛА в нац. вал.</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном активе в нац. валюте</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Национальная валюта</BoldWithColor>
-							</TableCell>
-							<TableCell sx={styles.verticalCellStyles} />
-							<TableCell align="center">
-								<BoldWithColor>Доля в ВЛА в ин. вал.</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Доля в совокупном активе в ин. валюте</BoldWithColor>
-							</TableCell>
-							<TableCell align="center">
-								<BoldWithColor>Иностранном валюте(долл.США)</BoldWithColor>
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody></TableBody>
-				</Table>
-			</TableContainer>
+			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gap: '20px', gridTemplateColumns: '70% 29% 1%' }}>
+				<Grid>
+					<TableContainer sx={styles.tableContainer} component={Paper}>
+						<Table size="small" aria-label="a dense table">
+							<TableCap rows={6} text={'млн.'} />
+							<TableHead sx={globalStyles.stickyTableHead}>
+								<TableRow>
+									<TableCell rowSpan={2} />
+									<TableCell rowSpan={2} align="center">
+										<Typography sx={styles.titleTextStyles}>Активы</Typography>
+									</TableCell>
+									<TableCell colSpan={5} align="center">
+										<Typography color="white" variant="h4">
+											{format(new Date(reportDate), 'dd.MM.yyyy')}
+										</Typography>
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell align="center">
+										<BoldWithColor> Итого</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Национальная валюта</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Долл. США</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Евро</BoldWithColor>
+									</TableCell>
+								</TableRow>
+							</TableHead>
+							<RenderLiquidityBody tableData={liquidityAssets} />
+						</Table>
+					</TableContainer>
+				</Grid>
+				<Grid>
+					<TableContainer sx={styles.tableContainer} component={Paper}>
+						<Table size="small" aria-label="a dense table">
+							<TableCap rows={3} text={'млн.'} />
+							<TableHead sx={globalStyles.stickyTableHead}>
+								<TableRow>
+									<TableCell colSpan={3} align="center">
+										<Typography color="white" variant="h4">
+											Текущий
+										</Typography>
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell align="center">
+										<BoldWithColor> Национальная валюта</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
+									</TableCell>
+									<TableCell align="center">
+										<BoldWithColor> Итого</BoldWithColor>
+									</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody></TableBody>
+						</Table>
+					</TableContainer>
+				</Grid>
+				<Grid />
+			</Grid>
 		</Fragment>
 	)
 }
