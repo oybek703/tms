@@ -11,3 +11,11 @@ export interface ILiquidityRow extends ILiquidityDbData {
   indicatorName: string
   isTableHead: boolean
 }
+
+export interface IFlowsRow {
+  indicatorName: string
+  uzs: string
+  usd: string
+  eur: string
+  rub: string
+}

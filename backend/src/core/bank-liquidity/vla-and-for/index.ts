@@ -8,7 +8,10 @@ export const getVlaAndForData = async (date: Date, oracleService: OracleService)
   liquidityAssets = liquidityAssets.filter(
     ({ indicatorName }) => !['Репо сделки', 'в том числе:'].includes(indicatorName)
   )
-  const [interbankDeposits, activesCurrent] = await new VlaAndForBase(date, oracleService).getRows()
+  const [interbankDeposits, activesCurrent, inFlow, outFlow] = await new VlaAndForBase(
+    date,
+    oracleService
+  ).getRows()
   liquidityAssets = [
     ...liquidityAssets.slice(0, 5),
     interbankDeposits,
@@ -24,5 +27,5 @@ export const getVlaAndForData = async (date: Date, oracleService: OracleService)
       currentNatCurr: activesCurrent[index].natCurr
     }
   })
-  return { liquidityAssets: updatedLiquidityAssets }
+  return { liquidityAssets: updatedLiquidityAssets, inFlow, outFlow }
 }

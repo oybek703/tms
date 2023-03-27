@@ -1,10 +1,16 @@
 import { Base } from '../../base'
 import { IVlaAndForDbData, IVlaAndForRow } from './vla-and-for.interface'
+import { IFlowsRow } from '../liquidity/liquidity.interface'
 
 export class VlaAndForBase extends Base {
   protected formatQuery(whereQuery: string): string {
-    return `SELECT *
-            FROM DUAL`
+    return `SELECT INDICATOR_NAME AS "indicatorName",
+                   UZS            AS "uzs",
+                   USD            AS "usd",
+                   EUR            AS "eur",
+                   RUB            AS "rub"
+            FROM LIQUIDITY_SIMULATION
+            WHERE INDICATOR_TYPE = ${whereQuery}`
   }
 
   interbankDepositsQuery = () => {
@@ -82,9 +88,14 @@ export class VlaAndForBase extends Base {
     )
   }
 
+  async getFlow(flowType: '1' | '2' | string) {
+    return this.getDataInDates<IFlowsRow, true>(flowType, undefined, true)
+  }
+
   async getRows() {
     const interbankDeposits = await this.interbank_deposits()
     const activesCurrent = await this.actives_current()
-    return [interbankDeposits, activesCurrent]
+    const [inFlow, outFlow] = await Promise.all(['1', '2'].map(v => this.getFlow(v)))
+    return [interbankDeposits, activesCurrent, inFlow, outFlow]
   }
 }

@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
-import { Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import { format } from 'date-fns'
 import BoldWithColor from '../helpers/BoldWithColor'
@@ -36,7 +36,7 @@ const WhiteCell = () => {
 const VlaAndForTable = () => {
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
-	const { liquidityAssets } = vlaAndFor
+	const { liquidityAssets, outFlow, inFlow } = vlaAndFor
 	return (
 		<Fragment>
 			<TableContainer sx={styles.tableContainer} component={Paper}>
@@ -185,6 +185,41 @@ const VlaAndForTable = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: '70% 30%' }}>
+				<Grid>
+					{['Приток', 'Отток'].map(title => (
+						<TableContainer key={uuid()} sx={styles.tableContainer} component={Paper}>
+							<Table size="small" aria-label="a dense table">
+								<TableCap rows={6} text={'млн.'} />
+								<TableHead sx={globalStyles.stickyTableHead}>
+									<TableRow>
+										<TableCell align="center">
+											<BoldWithColor>№</BoldWithColor>
+										</TableCell>
+										<TableCell align="center">
+											<BoldWithColor>{title}</BoldWithColor>
+										</TableCell>
+										<TableCell align="center">
+											<BoldWithColor>UZS</BoldWithColor>
+										</TableCell>
+										<TableCell align="center">
+											<BoldWithColor>USD</BoldWithColor>
+										</TableCell>
+										<TableCell align="center">
+											<BoldWithColor>EUR</BoldWithColor>
+										</TableCell>
+										<TableCell align="center">
+											<BoldWithColor>RUB</BoldWithColor>
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody></TableBody>
+							</Table>
+						</TableContainer>
+					))}
+				</Grid>
+				<Grid>IT IS LEFT PART</Grid>
+			</Grid>
 		</Fragment>
 	)
 }

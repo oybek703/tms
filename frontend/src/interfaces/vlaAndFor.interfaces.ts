@@ -5,3 +5,11 @@ export interface IVlaAndForRow extends ILiquidityRow {
 	currentForCurr: number
 	currentNatCurr: number
 }
+
+export interface IFlowsRow {
+	indicatorName: string
+	uzs: string
+	usd: string
+	eur: string
+	rub: string
+}
