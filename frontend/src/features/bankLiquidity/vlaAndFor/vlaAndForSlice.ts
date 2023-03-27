@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { checkCacheOrFetch } from '../../../utils/axiosUtils'
 import { APIRoutes } from '../../../interfaces/apiRoutes.interface'
-import { ILiquidityRow } from '../../../interfaces/liquidity.interfaces'
+import { IVlaAndForRow } from '../../../interfaces/vlaAndFor.interfaces'
 
 interface IVlaBufferInitialState {
 	loading: boolean
 	vlaAndFor: {
-		liquidityAssets: ILiquidityRow[]
-		activesCurrent: Pick<ILiquidityRow, 'total' | 'natCurr' | 'forCurr'>[]
+		liquidityAssets: IVlaAndForRow[]
 	}
 	error: undefined
 }
@@ -15,8 +14,7 @@ interface IVlaBufferInitialState {
 const initialState: IVlaBufferInitialState = {
 	loading: false,
 	vlaAndFor: {
-		liquidityAssets: [],
-		activesCurrent: []
+		liquidityAssets: []
 	},
 	error: undefined
 }

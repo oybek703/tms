@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ApexCharts from 'apexcharts'
-import { IIncomePointData } from '../../../interfaces/IncomeAnalysis.interfaces'
+import { IIncomePointData } from '../../../interfaces/incomeAnalysis.interfaces'
 import { Card, CardContent } from '@mui/material'
 import { chartSubtitle, chartTitle, formatNumber } from '../../../utils'
 import { number } from 'prop-types'

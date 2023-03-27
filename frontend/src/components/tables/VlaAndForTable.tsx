@@ -9,13 +9,13 @@ import Paper from '@mui/material/Paper'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
-import { Grid, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import { format } from 'date-fns'
 import BoldWithColor from '../helpers/BoldWithColor'
-import RenderLiquidityBody from '../helpers/RenderLiquidityBody'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../utils'
+import { singleColouredRow } from './LiqPointersTable'
 
 const styles: ISxStyles = {
 	tableContainer: {
@@ -29,95 +29,162 @@ const styles: ISxStyles = {
 	}
 }
 
+const WhiteCell = () => {
+	return <TableCell sx={{ backgroundColor: 'white', border: 'none' }} />
+}
+
 const VlaAndForTable = () => {
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
-	const { liquidityAssets, activesCurrent } = vlaAndFor
+	const { liquidityAssets } = vlaAndFor
 	return (
 		<Fragment>
-			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gap: '20px', gridTemplateColumns: '65% 34% 1%' }}>
-				<Grid>
-					<TableContainer sx={styles.tableContainer} component={Paper}>
-						<Table size="small" aria-label="a dense table">
-							<TableCap rows={7} text={'млн.'} />
-							<TableHead sx={globalStyles.stickyTableHead}>
-								<TableRow>
-									<TableCell rowSpan={2} />
-									<TableCell rowSpan={2} align="center">
-										<Typography sx={styles.titleTextStyles}>Активы</Typography>
-									</TableCell>
-									<TableCell colSpan={5} align="center">
-										<Typography color="white" variant="h4">
-											{format(new Date(reportDate), 'dd.MM.yyyy')}
-										</Typography>
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell align="center">
-										<BoldWithColor> Итого</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Национальная валюта</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Долл. США</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Евро</BoldWithColor>
-									</TableCell>
-								</TableRow>
-							</TableHead>
-							<RenderLiquidityBody tableData={liquidityAssets} />
-						</Table>
-					</TableContainer>
-				</Grid>
-				<Grid>
-					<TableContainer sx={styles.tableContainer} component={Paper}>
-						<Table size="small" aria-label="a dense table">
-							<TableCap rows={3} text={'млн.'} />
-							<TableHead sx={globalStyles.stickyTableHead}>
-								<TableRow>
-									<TableCell colSpan={3} align="center">
-										<Typography color="white" sx={{ fontSize: '24px' }}>
-											Текущий
-										</Typography>
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell align="center">
-										<BoldWithColor> Национальная валюта</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
-									</TableCell>
-									<TableCell align="center">
-										<BoldWithColor> Итого</BoldWithColor>
-									</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{activesCurrent.map(({ total, natCurr, forCurr }) => (
-									<TableRow key={uuid()}>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(natCurr)}
+			<TableContainer sx={styles.tableContainer} component={Paper}>
+				<Table size="small" aria-label="a dense table">
+					<TableCap rows={11} text={'млн.'} />
+					<TableHead sx={globalStyles.stickyTableHead}>
+						<TableRow>
+							<TableCell rowSpan={2} />
+							<TableCell rowSpan={2} align="center">
+								<Typography sx={styles.titleTextStyles}>Активы</Typography>
+							</TableCell>
+							<TableCell colSpan={5} align="center">
+								<Typography color="white" variant="h4">
+									{format(new Date(reportDate), 'dd.MM.yyyy')}
+								</Typography>
+							</TableCell>
+							<WhiteCell />
+							<TableCell sx={{ fontSize: '24px', fontWeight: '550', color: 'white' }} colSpan={3} align="center">
+								Текущий
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align="center">
+								<BoldWithColor> Итого</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Национальная валюта</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Долл. США</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Евро</BoldWithColor>
+							</TableCell>
+							<WhiteCell />
+							<TableCell align="center">
+								<BoldWithColor> Национальная валюта</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Иностранная валюта в суммовом эквиваленте</BoldWithColor>
+							</TableCell>
+							<TableCell align="center">
+								<BoldWithColor> Итого</BoldWithColor>
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{liquidityAssets.map((row, index) => (
+							<Fragment key={uuid()}>
+								{row.indicatorName === singleColouredRow ? (
+									<TableRow sx={{ backgroundColor: '#b4c6cf' }}>
+										<TableCell align="center">
+											<b>{index + 1}</b>
 										</TableCell>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(forCurr)}
+										<TableCell>
+											<b>{row.indicatorName}</b>
 										</TableCell>
-										<TableCell sx={globalStyles.noWrap} align="center">
-											{formatNumber(total)}
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.total)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.natCurr)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.forCurr)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.usaDollar)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.evro)}%</b>
+										</TableCell>
+										<WhiteCell />
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.currentNatCurr)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.currentForCurr)}%</b>
+										</TableCell>
+										<TableCell align="center" sx={globalStyles.noWrap}>
+											<b>{formatNumber(row.currentTotal)}%</b>
 										</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Grid>
-				<Grid />
-			</Grid>
+								) : (
+									<TableRow hover>
+										<TableCell align="center">{row['isTableHead'] ? <b>{index + 1}</b> : index + 1}</TableCell>
+										<TableCell align="left">
+											{row['isTableHead'] ? <b>{row.indicatorName}</b> : row.indicatorName}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? <b>{formatNumber(row.total)}</b> : formatNumber(row.total)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['natCurr'], true)}</b>
+											) : (
+												formatNumber(row['natCurr'], true)
+											)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['forCurr'], true)}</b>
+											) : (
+												formatNumber(row['forCurr'], true)
+											)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['usaDollar'], true)}</b>
+											) : (
+												formatNumber(row['usaDollar'], true)
+											)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? <b>{formatNumber(row['evro'], true)}</b> : formatNumber(row['evro'], true)}
+										</TableCell>
+										<WhiteCell />
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['currentNatCurr'], true)}</b>
+											) : (
+												formatNumber(row['currentNatCurr'], true)
+											)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['currentNatCurr'], true)}</b>
+											) : (
+												formatNumber(row['currentNatCurr'], true)
+											)}
+										</TableCell>
+										<TableCell sx={globalStyles.noWrap} align="center">
+											{row['isTableHead'] ? (
+												<b>{formatNumber(row['currentTotal'], true)}</b>
+											) : (
+												formatNumber(row['currentTotal'], true)
+											)}
+										</TableCell>
+									</TableRow>
+								)}
+							</Fragment>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</Fragment>
 	)
 }

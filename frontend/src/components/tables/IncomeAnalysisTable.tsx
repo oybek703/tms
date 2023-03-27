@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid'
 import { Grid } from '@mui/material'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import palette from '../../styles/palette'
-import { IIncomeData } from '../../interfaces/IncomeAnalysis.interfaces'
+import { IIncomeData } from '../../interfaces/incomeAnalysis.interfaces'
 
 enum Titles {
 	income = 'Анализ процентного дохода',

@@ -14,8 +14,15 @@ export const getVlaAndForData = async (date: Date, oracleService: OracleService)
     interbankDeposits,
     ...liquidityAssets.slice(5)
   ].map((v: ILiquidityRow) => {
-    v.count = undefined
     return v
   }) as ILiquidityRow[]
-  return { liquidityAssets, activesCurrent }
+  const updatedLiquidityAssets = liquidityAssets.map((v, index) => {
+    return {
+      ...v,
+      currentTotal: activesCurrent[index].total,
+      currentForCurr: activesCurrent[index].forCurr,
+      currentNatCurr: activesCurrent[index].natCurr
+    }
+  })
+  return { liquidityAssets: updatedLiquidityAssets }
 }
