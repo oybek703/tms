@@ -1,4 +1,15 @@
-import React, { Fragment, memo } from 'react'
+import React, {
+	Fragment,
+	memo,
+	useState,
+	FormEvent,
+	ReactNode,
+	DetailedHTMLProps,
+	HTMLAttributes,
+	PropsWithChildren,
+	useEffect,
+	useRef
+} from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -6,6 +17,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { TableCellProps } from '@mui/material'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
@@ -16,6 +28,7 @@ import BoldWithColor from '../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
 import { formatNumber } from '../../utils'
 import { singleColouredRow } from './LiqPointersTable'
+import palette from '../../styles/palette'
 
 const styles: ISxStyles = {
 	tableContainer: {
@@ -33,10 +46,39 @@ const WhiteCell = () => {
 	return <TableCell sx={{ backgroundColor: 'white', border: 'none' }} />
 }
 
+interface IFormattedCellProps extends PropsWithChildren {
+	backgroundColor: string
+}
+
+const FormattedCell = ({ children, backgroundColor }: IFormattedCellProps) => {
+	return (
+		<TableCell align="center" sx={{ fontWeight: 'bold', fontSize: '30px', backgroundColor }}>
+			{children}
+		</TableCell>
+	)
+}
+
 const VlaAndForTable = () => {
+	const [vlaPercentValue, setVlaPercentValue] = useState<number>(0)
+	const [current, setCurrent] = useState<number>(0)
+	const [differ, setDiffer] = useState<number>(0)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
 	const { liquidityAssets, outFlow, inFlow } = vlaAndFor
+	useEffect(() => {
+		if (liquidityAssets.length !== 0) {
+			const newCurrent = liquidityAssets.reduce((acc, val, index) => {
+				if ([1, 2, 6].includes(index)) {
+					acc += val.currentNatCurr
+				}
+				if (index === 7) acc -= val.currentNatCurr
+				return acc
+			}, 0)
+			setCurrent(newCurrent)
+			setVlaPercentValue(liquidityAssets[0].currentNatCurr)
+			setDiffer(liquidityAssets[0].currentNatCurr * 0.11 - newCurrent)
+		}
+	}, [liquidityAssets])
 	return (
 		<Fragment>
 			<TableContainer sx={styles.tableContainer} component={Paper}>
@@ -185,18 +227,21 @@ const VlaAndForTable = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: '70% 30%' }}>
+			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gridTemplateColumns: '62% 37% 1% ', columnGap: '20px' }}>
 				<Grid>
-					{['Приток', 'Отток'].map(title => (
+					{[
+						{ title: 'Приток', data: inFlow },
+						{ title: 'Отток', data: outFlow }
+					].map(({ title, data }) => (
 						<TableContainer key={uuid()} sx={styles.tableContainer} component={Paper}>
 							<Table size="small" aria-label="a dense table">
 								<TableCap rows={6} text={'млн.'} />
 								<TableHead sx={globalStyles.stickyTableHead}>
 									<TableRow>
-										<TableCell align="center">
+										<TableCell sx={{ maxWidth: '2px' }} align="center">
 											<BoldWithColor>№</BoldWithColor>
 										</TableCell>
-										<TableCell align="center">
+										<TableCell>
 											<BoldWithColor>{title}</BoldWithColor>
 										</TableCell>
 										<TableCell align="center">
@@ -213,12 +258,60 @@ const VlaAndForTable = () => {
 										</TableCell>
 									</TableRow>
 								</TableHead>
-								<TableBody></TableBody>
+								<TableBody>
+									{data.map((d, dIndex) => (
+										<TableRow key={uuid()}>
+											<TableCell sx={{ maxWidth: '2px' }} align="center">
+												{dIndex + 1}
+											</TableCell>
+											<TableCell>
+												<b>{d.indicatorName}</b>{' '}
+											</TableCell>
+											<TableCell align="center">{formatNumber(d.uzs)}</TableCell>
+											<TableCell align="center">{formatNumber(d.usd)}</TableCell>
+											<TableCell align="center">{formatNumber(d.eur)}</TableCell>
+											<TableCell align="center">{formatNumber(d.rub)}</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
 							</Table>
 						</TableContainer>
 					))}
 				</Grid>
-				<Grid>IT IS LEFT PART</Grid>
+				<Grid>
+					<TableContainer sx={styles.tableContainer} component={Paper}>
+						<Table size="small" aria-label="a dense table">
+							<TableBody>
+								<TableRow>
+									<TableCell
+										sx={{
+											backgroundColor: palette.primary,
+											color: 'white',
+											fontSize: '54px',
+											fontWeight: 'bold'
+										}}
+										rowSpan={3}
+										align="center"
+									>
+										ВЛА
+									</TableCell>
+									<FormattedCell backgroundColor={palette.lightGray}>11%</FormattedCell>
+									<FormattedCell backgroundColor={palette.lightBrown}>
+										{formatNumber(vlaPercentValue * 0.11)}
+									</FormattedCell>
+								</TableRow>
+								<TableRow>
+									<FormattedCell backgroundColor={palette.lightGray}>Текущий</FormattedCell>
+									<FormattedCell backgroundColor={palette.lightBrown}>{formatNumber(current)}</FormattedCell>
+								</TableRow>
+								<TableRow>
+									<FormattedCell backgroundColor={palette.lightGray}>Разница</FormattedCell>
+									<FormattedCell backgroundColor={palette.lightGreen}>{formatNumber(differ)}</FormattedCell>
+								</TableRow>
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</Grid>
 			</Grid>
 		</Fragment>
 	)
