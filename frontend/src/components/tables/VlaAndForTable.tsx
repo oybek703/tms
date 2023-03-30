@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Grid, Tooltip, Typography } from '@mui/material'
+import { CircularProgress, Grid, Tooltip, Typography } from '@mui/material'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
@@ -46,6 +46,13 @@ const styles: ISxStyles = {
 		gridAutoFlow: 'column',
 		gridTemplateColumns: '62% 37% 1% ',
 		columnGap: '20px'
+	},
+	editCellHoverStyles: {
+		'&:hover': {
+			fontWeight: `bold`,
+			cursor: 'pointer',
+			border: `5px solid ${palette.lightGreen}`
+		}
 	}
 }
 
@@ -73,6 +80,7 @@ enum FlowTypes {
 type UpdateColNameTypes = keyof Omit<IFlowsRow, 'indicatorType' | 'indicatorName' | 'indicatorId'>
 
 const VlaAndForTable = () => {
+	const [updateLoading, setUpdateLoading] = useState<boolean>(false)
 	const { fetchVlaAndFor } = useActions()
 	const [updateColName, setUpdateColName] = useState<UpdateColNameTypes | undefined>(undefined)
 	const dialogRef = useRef<HTMLInputElement | null>(null)
@@ -92,10 +100,12 @@ const VlaAndForTable = () => {
 		const newValue = dialogRef.current?.value
 		if (newValue) {
 			try {
-				await axios.post(`/api/${APIRoutes.vlaAndFor}`, { ...dialogData, [`${updateColName}`]: newValue }, withToken())
-				localStorage.removeItem(APIRoutes.vlaAndFor)
+				setUpdateLoading(true)
+				await axios.post(APIRoutes.vlaAndFor, { ...dialogData, [`${updateColName}`]: newValue }, withToken())
+				setUpdateLoading(false)
 				fetchVlaAndFor()
 			} catch (e: unknown) {
+				setUpdateLoading(false)
 				const message = getErrorMessage(e)
 				if (message === 'Unauthorized') {
 					localStorage.clear()
@@ -248,9 +258,9 @@ const VlaAndForTable = () => {
 										</TableCell>
 										<TableCell sx={globalStyles.noWrap} align="center">
 											{row['isTableHead'] ? (
-												<b>{formatNumber(row['currentNatCurr'], true)}</b>
+												<b>{formatNumber(row['currentForCurr'], true)}</b>
 											) : (
-												formatNumber(row['currentNatCurr'], true)
+												formatNumber(row['currentForCurr'], true)
 											)}
 										</TableCell>
 										<TableCell sx={globalStyles.noWrap} align="center">
@@ -300,43 +310,43 @@ const VlaAndForTable = () => {
 								</TableHead>
 								<TableBody>
 									{data.map((d, dIndex) => (
-										<TableRow key={uuid()}>
+										<TableRow hover key={uuid()}>
 											<TableCell sx={{ maxWidth: '2px' }} align="center">
 												{dIndex + 1}
 											</TableCell>
 											<TableCell>
 												<b>{d.indicatorName}</b>{' '}
 											</TableCell>
-											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+											<Tooltip arrow placement="right" title="Нажмите чтобы изменит">
 												<TableCell
-													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													sx={styles.editCellHoverStyles}
 													onClick={() => handleDialogOpen(d, 'uzs')}
 													align="center"
 												>
 													{formatNumber(d.uzs)}
 												</TableCell>
 											</Tooltip>
-											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+											<Tooltip arrow placement="right" title="Нажмите чтобы изменит">
 												<TableCell
-													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													sx={styles.editCellHoverStyles}
 													onClick={() => handleDialogOpen(d, 'usd')}
 													align="center"
 												>
 													{formatNumber(d.usd)}
 												</TableCell>
 											</Tooltip>
-											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+											<Tooltip arrow placement="right" title="Нажмите чтобы изменит">
 												<TableCell
-													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													sx={styles.editCellHoverStyles}
 													onClick={() => handleDialogOpen(d, 'eur')}
 													align="center"
 												>
 													{formatNumber(d.eur)}
 												</TableCell>
 											</Tooltip>
-											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+											<Tooltip arrow placement="right" title="Нажмите чтобы изменит">
 												<TableCell
-													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													sx={styles.editCellHoverStyles}
 													onClick={() => handleDialogOpen(d, 'rub')}
 													align="center"
 												>
@@ -405,7 +415,9 @@ const VlaAndForTable = () => {
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={() => setDialogData(null)}>Отмена</Button>
-						<Button type="submit">Обновить</Button>
+						<Button disabled={updateLoading} type="submit">
+							{updateLoading ? <CircularProgress size={20} color="info" /> : 'Обновить'}
+						</Button>
 					</DialogActions>
 				</form>
 			</Dialog>
