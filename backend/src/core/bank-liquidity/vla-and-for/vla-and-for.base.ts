@@ -1,10 +1,11 @@
 import { Base } from '../../base'
-import { IVlaAndForDbData, IVlaAndForRow } from './vla-and-for.interface'
-import { IFlowsRow } from '../liquidity/liquidity.interface'
+import { IFlowsRow, IVlaAndForRow } from './vla-and-for.interface'
 
 export class VlaAndForBase extends Base {
   protected formatQuery(whereQuery: string): string {
     return `SELECT INDICATOR_NAME AS "indicatorName",
+                   INDICATOR_TYPE AS "indicatorType",
+                   INDICATOR_ID   AS "indicatorId",
                    UZS            AS "uzs",
                    USD            AS "usd",
                    EUR            AS "eur",
@@ -81,11 +82,7 @@ export class VlaAndForBase extends Base {
   }
 
   async actives_current() {
-    return this.getDataInDates<Omit<IVlaAndForDbData, 'evro' | 'usaDollar'>, true>(
-      undefined,
-      this.activesCurrentQuery,
-      true
-    )
+    return this.getDataInDates<IFlowsRow, true>(undefined, this.activesCurrentQuery, true)
   }
 
   async getFlow(flowType: '1' | '2' | string) {

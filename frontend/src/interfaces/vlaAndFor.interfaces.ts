@@ -8,6 +8,8 @@ export interface IVlaAndForRow extends ILiquidityRow {
 
 export interface IFlowsRow {
 	indicatorName: string
+	indicatorType: number
+	indicatorId: number
 	uzs: string
 	usd: string
 	eur: string

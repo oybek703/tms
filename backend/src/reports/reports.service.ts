@@ -40,6 +40,7 @@ import { getCorrOperationsData } from '../core/dealing-operations/corr-operation
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
 import getIncomeAnalysisData from '../core/actives-and-passives/income-analysis'
 import { getVlaAndForData } from '../core/bank-liquidity/vla-and-for'
+import { IFlowsRow } from '../core/bank-liquidity/vla-and-for/vla-and-for.interface'
 
 @Injectable()
 export class ReportsService {
@@ -151,6 +152,30 @@ export class ReportsService {
 
   async vlaAndFor(date: Date) {
     return await getVlaAndForData(date, this.oracleService)
+  }
+
+  async updateVlaAndFor(body: IFlowsRow) {
+    const { uzs, eur, rub, usd, indicatorId, indicatorType } = body
+    const updateQuery = `
+        UPDATE LIQUIDITY_SIMULATION
+        SET UZS=${uzs},
+            EUR = ${eur},
+            RUB = ${rub},
+            USD = ${usd}
+        WHERE INDICATOR_ID = ${indicatorId}
+          AND INDICATOR_TYPE = ${indicatorType}
+    `
+    const updatePackageQuery = `
+        BEGIN
+            LIQUIDITY_SIMULATION_PACKAGE.RUN_SIMULATION();
+        EXCEPTION WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE(sqlcode);
+            DBMS_OUTPUT.PUT_LINE(sqlerrm);
+        END;
+    `
+    await this.oracleService.executeQuery(updateQuery)
+    await this.oracleService.executeQuery(updatePackageQuery)
+    return { success: true }
   }
 
   async placedAttracted(date: Date) {

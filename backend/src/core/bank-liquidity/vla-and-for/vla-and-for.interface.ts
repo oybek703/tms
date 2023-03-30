@@ -11,3 +11,13 @@ export interface IVlaAndForRow extends IVlaAndForDbData {
   indicatorName: string
   isTableHead: boolean
 }
+
+export interface IFlowsRow {
+  indicatorName: string
+  indicatorType: number
+  indicatorId: number
+  uzs: string
+  usd: string
+  eur: string
+  rub: string
+}

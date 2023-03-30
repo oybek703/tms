@@ -1,15 +1,4 @@
-import React, {
-	Fragment,
-	memo,
-	useState,
-	FormEvent,
-	ReactNode,
-	DetailedHTMLProps,
-	HTMLAttributes,
-	PropsWithChildren,
-	useEffect,
-	useRef
-} from 'react'
+import React, { Fragment, memo, PropsWithChildren, useEffect, useRef, useState, FormEvent } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -17,18 +6,30 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { TableCellProps } from '@mui/material'
+import { Grid, Tooltip, Typography } from '@mui/material'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import TableCap from '../helpers/TableCap'
 import globalStyles from '../../styles/globalStyles'
-import { Grid, Typography } from '@mui/material'
 import { ISxStyles } from '../../interfaces/styles.interface'
 import { format } from 'date-fns'
 import BoldWithColor from '../helpers/BoldWithColor'
 import { v4 as uuid } from 'uuid'
-import { formatNumber } from '../../utils'
+import { formatNumber, getErrorMessage } from '../../utils'
 import { singleColouredRow } from './LiqPointersTable'
 import palette from '../../styles/palette'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import TextField from '@mui/material/TextField'
+import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import { IFlowsRow } from '../../interfaces/vlaAndFor.interfaces'
+import axios from 'axios'
+import { APIRoutes } from '../../interfaces/apiRoutes.interface'
+import { withToken } from '../../utils/axiosUtils'
+import { toast } from 'react-toastify'
+import useActions from '../../hooks/useActions'
 
 const styles: ISxStyles = {
 	tableContainer: {
@@ -39,6 +40,12 @@ const styles: ISxStyles = {
 		fontSize: 60,
 		color: '#fff',
 		fontWeight: 'bold'
+	},
+	flowsGrid: {
+		display: 'grid',
+		gridAutoFlow: 'column',
+		gridTemplateColumns: '62% 37% 1% ',
+		columnGap: '20px'
 	}
 }
 
@@ -52,19 +59,52 @@ interface IFormattedCellProps extends PropsWithChildren {
 
 const FormattedCell = ({ children, backgroundColor }: IFormattedCellProps) => {
 	return (
-		<TableCell align="center" sx={{ fontWeight: 'bold', fontSize: '30px', backgroundColor }}>
+		<TableCell align="center" sx={{ fontWeight: 'bold', fontSize: '30px', backgroundColor, ...globalStyles.noWrap }}>
 			{children}
 		</TableCell>
 	)
 }
 
+enum FlowTypes {
+	inFlow = 'Приток',
+	outFlow = 'Отток'
+}
+
+type UpdateColNameTypes = keyof Omit<IFlowsRow, 'indicatorType' | 'indicatorName' | 'indicatorId'>
+
 const VlaAndForTable = () => {
+	const { fetchVlaAndFor } = useActions()
+	const [updateColName, setUpdateColName] = useState<UpdateColNameTypes | undefined>(undefined)
+	const dialogRef = useRef<HTMLInputElement | null>(null)
+	const [dialogData, setDialogData] = useState<IFlowsRow | null>(null)
 	const [vlaPercentValue, setVlaPercentValue] = useState<number>(0)
 	const [current, setCurrent] = useState<number>(0)
 	const [differ, setDiffer] = useState<number>(0)
 	const { reportDate } = useTypedSelector(state => state.operDays)
 	const { vlaAndFor } = useTypedSelector(state => state.vlaAndFor)
-	const { liquidityAssets, outFlow, inFlow } = vlaAndFor
+	const { liquidityAssets, inFlow, outFlow } = vlaAndFor
+	const handleDialogOpen = (d: IFlowsRow, colName: UpdateColNameTypes) => {
+		setUpdateColName(colName)
+		setDialogData(d)
+	}
+	const updateFlowData = async (event: FormEvent) => {
+		event.preventDefault()
+		const newValue = dialogRef.current?.value
+		if (newValue) {
+			try {
+				await axios.post(`/api/${APIRoutes.vlaAndFor}`, { ...dialogData, [`${updateColName}`]: newValue }, withToken())
+				localStorage.removeItem(APIRoutes.vlaAndFor)
+				fetchVlaAndFor()
+			} catch (e: unknown) {
+				const message = getErrorMessage(e)
+				if (message === 'Unauthorized') {
+					localStorage.clear()
+					window.location.reload()
+				}
+				toast.error(message)
+			}
+		}
+	}
 	useEffect(() => {
 		if (liquidityAssets.length !== 0) {
 			const newCurrent = liquidityAssets.reduce((acc, val, index) => {
@@ -227,11 +267,11 @@ const VlaAndForTable = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Grid sx={{ display: 'grid', gridAutoFlow: 'column', gridTemplateColumns: '62% 37% 1% ', columnGap: '20px' }}>
+			<Grid sx={styles.flowsGrid}>
 				<Grid>
 					{[
-						{ title: 'Приток', data: inFlow },
-						{ title: 'Отток', data: outFlow }
+						{ title: FlowTypes.inFlow, data: inFlow },
+						{ title: FlowTypes.outFlow, data: outFlow }
 					].map(({ title, data }) => (
 						<TableContainer key={uuid()} sx={styles.tableContainer} component={Paper}>
 							<Table size="small" aria-label="a dense table">
@@ -267,10 +307,42 @@ const VlaAndForTable = () => {
 											<TableCell>
 												<b>{d.indicatorName}</b>{' '}
 											</TableCell>
-											<TableCell align="center">{formatNumber(d.uzs)}</TableCell>
-											<TableCell align="center">{formatNumber(d.usd)}</TableCell>
-											<TableCell align="center">{formatNumber(d.eur)}</TableCell>
-											<TableCell align="center">{formatNumber(d.rub)}</TableCell>
+											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+												<TableCell
+													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													onClick={() => handleDialogOpen(d, 'uzs')}
+													align="center"
+												>
+													{formatNumber(d.uzs)}
+												</TableCell>
+											</Tooltip>
+											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+												<TableCell
+													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													onClick={() => handleDialogOpen(d, 'usd')}
+													align="center"
+												>
+													{formatNumber(d.usd)}
+												</TableCell>
+											</Tooltip>
+											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+												<TableCell
+													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													onClick={() => handleDialogOpen(d, 'eur')}
+													align="center"
+												>
+													{formatNumber(d.eur)}
+												</TableCell>
+											</Tooltip>
+											<Tooltip arrow placement="top" title="Нажмите чтобы изменит">
+												<TableCell
+													sx={{ '&:hover': { fontWeight: `bold`, cursor: 'pointer' } }}
+													onClick={() => handleDialogOpen(d, 'rub')}
+													align="center"
+												>
+													{formatNumber(d.rub)}
+												</TableCell>
+											</Tooltip>
 										</TableRow>
 									))}
 								</TableBody>
@@ -313,6 +385,30 @@ const VlaAndForTable = () => {
 					</TableContainer>
 				</Grid>
 			</Grid>
+			<Dialog open={Boolean(dialogData)} onClose={() => setDialogData(null)}>
+				<DialogTitle>{dialogData?.indicatorType == 1 ? FlowTypes.inFlow : FlowTypes.outFlow}</DialogTitle>
+				<form onSubmit={updateFlowData}>
+					<DialogContent>
+						<DialogContentText>{dialogData?.indicatorName}</DialogContentText>
+						<TextField
+							inputProps={{
+								ref: dialogRef
+							}}
+							required
+							autoFocus
+							margin="dense"
+							id="name"
+							type="number"
+							fullWidth
+							variant="standard"
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setDialogData(null)}>Отмена</Button>
+						<Button type="submit">Обновить</Button>
+					</DialogActions>
+				</form>
+			</Dialog>
 		</Fragment>
 	)
 }

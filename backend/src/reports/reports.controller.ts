@@ -23,6 +23,7 @@ import { UpdateCAADto } from './dto/update-caa.dto'
 import { Request } from 'express'
 import { User } from '../auth/auth.interface'
 import { AdminUserGuard } from '../users/users.decorator'
+import { IFlowsRow } from '../core/bank-liquidity/vla-and-for/vla-and-for.interface'
 
 @Controller()
 export class ReportsController {
@@ -132,6 +133,12 @@ export class ReportsController {
   async vlaAndFor(@Query('date') date: Date) {
     if (!date) throw this.dateBadRequestException
     return await this.reportsService.vlaAndFor(date)
+  }
+
+  @ReportUpdate('Bank liquidity', HttpStatus.OK)
+  @Post(ReportsPaths.vlaAndFor)
+  async updateVlaAndFor(@Body() body: IFlowsRow) {
+    return await this.reportsService.updateVlaAndFor(body)
   }
 
   @Report('Actives, passives', ReportsPaths.placedAttracted, true)
