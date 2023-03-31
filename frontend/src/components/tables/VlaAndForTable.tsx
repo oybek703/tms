@@ -401,6 +401,8 @@ const VlaAndForTable = () => {
 					<DialogContent>
 						<DialogContentText>{dialogData?.indicatorName}</DialogContentText>
 						<TextField
+							disabled={updateLoading}
+							defaultValue={dialogData && dialogData[updateColName as unknown as keyof IFlowsRow]}
 							inputProps={{
 								ref: dialogRef
 							}}
