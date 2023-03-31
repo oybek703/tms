@@ -87,7 +87,7 @@ export const covenantData = [
 		bank_10: getMinBankData(13.44, 8)
 	},
 	{
-		title: 'Соотношение обязательство по одному инсайдеру капиталу уровня I',
+		title: 'Соотношение обязательств по одному инсайдеру капитала уровня I',
 		main_bank: 11.81,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),
@@ -101,7 +101,7 @@ export const covenantData = [
 		bank_10: getEmptyBankData()
 	},
 	{
-		title: 'Соотношение портфеля всех инсайдеров капиталу уровня I',
+		title: 'Соотношение портфеля всех инсайдеров капитала уровня I',
 		main_bank: 25.99,
 		bank_1: getEmptyBankData(),
 		bank_2: getEmptyBankData(),

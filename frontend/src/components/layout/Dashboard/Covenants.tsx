@@ -15,7 +15,6 @@ function getColorByStatus(status: Status) {
 	if (status === Status.danger) return '#ff6363'
 	return '#fff'
 }
-
 const bankNames = [
 	'China Development Bank',
 	'Landesbank Baden-Wuerttemberg',
@@ -39,7 +38,7 @@ const Covenants = () => {
 							<BoldWithColor>№</BoldWithColor>
 						</TableCell>
 						<TableCell align="center" rowSpan={2}>
-							<BoldWithColor>Наименование ковенанти</BoldWithColor>
+							<BoldWithColor>Наименование ковенанта</BoldWithColor>
 						</TableCell>
 						<TableCell align="center" rowSpan={2}>
 							<BoldWithColor>AO Асакабанк</BoldWithColor>
