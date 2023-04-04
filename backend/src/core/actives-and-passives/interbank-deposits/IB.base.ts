@@ -3,7 +3,7 @@ import { OracleService } from '../../../oracle/oracle.service'
 import { IInterbankDepositsDbData, InterbankDepositsTypes, IRowsData } from './IB.interface'
 
 export class InterbankDepositsBase extends Base {
-  protected currencyCodes = ['000', '840', '978']
+  protected currencyCodes = ['000', '840', '978', '643']
   constructor(
     date: Date,
     oracleService: OracleService,
@@ -76,7 +76,6 @@ export class InterbankDepositsBase extends Base {
   }
 
   async getRows(type = 'borrow'): Promise<IRowsData[]> {
-    if (this.type === 'land') this.currencyCodes.push('643')
     return await Promise.all(this.currencyCodes.map(this.mapBanks.bind(this)))
   }
 }

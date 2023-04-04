@@ -64,7 +64,7 @@ const InterbankDepositsTable = function () {
 								/>
 							</Fragment>
 						)}
-						{expanded === 'borrow' && <InterbankDepositsBody rows={fullBorrowData} />}
+						{expanded === 'borrow' && <InterbankDepositsBody rows={fullBorrowData} extraCurrency="рубль" />}
 						{expanded === 'land' && <InterbankDepositsBody rows={fullLandData} extraCurrency="рубль" />}
 					</Table>
 				</TableContainer>
