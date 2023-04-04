@@ -38,7 +38,7 @@ import {
 } from './reports.interfaces'
 import { getCorrOperationsData } from '../core/dealing-operations/corr-operations'
 import { getFilialCpData } from '../core/dealing-operations/filial-cp'
-import getIncomeAnalysisData from '../core/actives-and-passives/income-analysis'
+import getIncomeAnalysisData from '../core/key-indicators/income-analysis'
 import { getVlaAndForData } from '../core/bank-liquidity/vla-and-for'
 import { IFlowsRow } from '../core/bank-liquidity/vla-and-for/vla-and-for.interface'
 

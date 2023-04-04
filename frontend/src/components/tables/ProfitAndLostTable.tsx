@@ -40,10 +40,10 @@ const ProfitAndLostTable = () => {
 							<BoldWithColor>{selectedDate}</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
-							<BoldWithColor>Ежемесячная разница</BoldWithColor>
+							<BoldWithColor>Разница за последний месяц</BoldWithColor>
 						</TableCell>
 						<TableCell align="center">
-							<BoldWithColor>Ежемесячная разница (%)</BoldWithColor>
+							<BoldWithColor>Разница за последний месяц (%)</BoldWithColor>
 						</TableCell>
 					</TableRow>
 				</TableHead>

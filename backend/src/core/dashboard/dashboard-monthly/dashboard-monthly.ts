@@ -830,7 +830,13 @@ export class DashboardMonthly extends Base {
       this.dashboardLiquidityQuery('NSFR'),
       true
     )
-    return this.createData('6', 'Норма чистого стабилного фондирование (> 100 %)', data, true, true)
+    return this.createData(
+      '6',
+      'Норма чистого стабильного фондирования (> 100 %)',
+      data,
+      true,
+      true
+    )
   } /*  Норма чистого стабилного фондирование (> 100 %) */
 
   private async NSFR_nat_curr() {
@@ -859,7 +865,7 @@ export class DashboardMonthly extends Base {
     )
     return this.createData(
       '7',
-      'Расчет коэффициента высоколиквыдных активов к всего актывам (> 10 %)',
+      'Расчет коэффициента высоколиквыдных активов к всего активам (> 10 %)',
       data,
       true,
       true

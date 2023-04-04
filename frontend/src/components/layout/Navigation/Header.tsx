@@ -146,7 +146,7 @@ export const baseRoutes: BaseRoute[] = [
 		group: 'dealing_operations'
 	},
 	{
-		title: 'Дешбоард по корр.опер',
+		title: 'Дешборд по корр.опер',
 		route: '/corrOperations',
 		group: 'dealing_operations'
 	},

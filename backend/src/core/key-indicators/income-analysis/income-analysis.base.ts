@@ -75,7 +75,7 @@ export class IncomeAnalysisBase extends Base {
     // По неоплаченными акцептам
     const unpaidAcceptances = await this.getChartData(
       IIncomeQueryCodes.unpaidAcceptances,
-      ' По неоплаченными акцептам'
+      ' По неоплаченным акцептам'
     )
     // По инвестициям
     const byInvestments = await this.getChartData(
