@@ -131,10 +131,10 @@ export class CompetitiveAnalysis extends Base {
     if (data.length === 0) data = Array(4).fill({ value: 0 })
     return {
       indicatorName,
-      firstDate: data[0].value,
-      secondDate: data[1].value,
-      thirdDate: data[2].value,
-      fourthDate: data[3].value,
+      firstDate: (data[0] || {}).value,
+      secondDate: (data[1] || {}).value,
+      thirdDate: (data[2] || {}).value,
+      fourthDate: (data[3] || {}).value,
       tabbed: options?.tabbed
     }
   }
