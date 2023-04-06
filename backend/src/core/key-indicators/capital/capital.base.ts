@@ -113,7 +113,7 @@ export class CapitalBase extends Base {
   private currentYearProfitQuery = () => {
     return `SELECT CASE
                        WHEN SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / 100 < 0 THEN 0
-                       ELSE SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / POWER(10, 2)
+                       ELSE SUM(SALDO_ACTIVE_EQ + SALDO_PASSIVE_EQ) / POWER(10, 5)
                        END AS "saldoEquivalOut"
             FROM IBS.SVOD_SALDO_DUMP@IABS
             WHERE DAT = DATE '${this.date}'
