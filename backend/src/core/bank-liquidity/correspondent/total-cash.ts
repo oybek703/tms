@@ -317,13 +317,17 @@ export class TotalCash extends CorrespondentBase {
   }
 
   async total_cash_on_hand() {
-    return await this.getOneRow(
+    const oldDate = this.date
+    await this.getBeforeDate()
+    const data = await this.getOneRow(
       '1',
       'Всего денежная наличность в кассе',
       undefined,
-      super.formatQuery.bind(this, '10100'),
+      super.formatQuery.bind(this, `BAL LIKE '101%'`),
       true
     )
+    this.date = oldDate
+    return data
   } /* Всего денежные наличности в кассе */
 
   cash_at_checkout(total: ICorrespondentRow, on_hand: ICorrespondentRow) {
@@ -346,12 +350,16 @@ export class TotalCash extends CorrespondentBase {
   } /* Наличные деньги в кассе */
 
   async cash_on_road() {
-    return await this.getOneRow(
+    const oldDate = this.date
+    await this.getBeforeDate()
+    const data = await this.getOneRow(
       '1.2',
       'Денежная наличность в обменных пунктах, банкоматах и деньги в пути',
       undefined,
-      super.formatQuery.bind(this, '10103')
+      super.formatQuery.bind(this, `BAL IN ('10103', '10107', '10109', '10111')`)
     )
+    this.date = oldDate
+    return data
   } /* Денежная наличность в обменных пунктах, банкоматах и деньги в пути */
 
   total_correspondent_accounts(

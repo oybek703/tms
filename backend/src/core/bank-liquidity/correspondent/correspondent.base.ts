@@ -5,20 +5,33 @@ import { ICorrespondentDbData, ICorrespondentRow } from './correspondent.interfa
 export class CorrespondentBase extends Base {
   currencyNames = ['uzs', 'cny', 'jpy', 'kzt', 'rub', 'chf', 'gbp', 'usd', 'eur']
 
-  formatQuery(role: string): string {
-    return `SELECT 
-                UZS AS "uzs", 
-                CNY AS "cny", 
-                JPY AS "jpy", 
-                KZT AS "kzt", 
-                RUB AS "rub", 
-                CHF AS "chf", 
-                GBP AS "gbp", 
-                USD AS "usd",
-                EUR AS "eur"
-            FROM (SELECT * FROM CORRESPONDENT ORDER BY OPER_DAY DESC)
-            WHERE OPER_DAY<DATE '${this.date}' AND CODE_COA='${role}'
-            AND ROWNUM=1`
+  formatQuery(whereQuery = '1=1'): string {
+    return `SELECT ROUND(NVL(UZS, 0), 2) AS "uzs",
+                   ROUND(NVL(JPY, 0), 2) AS "jpy",
+                   ROUND(NVL(KZT, 0), 2) AS "kzt",
+                   ROUND(NVL(RUB, 0), 2) AS "rub",
+                   ROUND(NVL(CHF, 0), 2) AS "chf",
+                   ROUND(NVL(GBP, 0), 2) AS "gbp",
+                   ROUND(NVL(USD, 0), 2) AS "usd",
+                   ROUND(NVL(EUR, 0), 2) AS "eur",
+                   ROUND(NVL(CNY, 0), 2) AS "cny"
+            FROM (SELECT VAL,
+                         ROUND(SUM(SALDO_ACTIVE + SALDO_PASSIVE) / POWER(10, 6), 2) AS SALDO_OUT
+                  FROM IBS.SVOD_SALDO_DUMP@IABS
+                  WHERE DAT = DATE '${this.date}'
+                    AND ${whereQuery}
+                  GROUP BY VAL) PIVOT (
+                SUM(DECODE(VAL, '392', SALDO_OUT, SALDO_OUT / 100)) FOR (VAL) IN (
+                    '000' AS UZS,
+                    '392' AS JPY,
+                    '398' AS KZT,
+                    '643' AS RUB,
+                    '756' AS CHF,
+                    '826' AS GBP,
+                    '840' AS USD,
+                    '978' AS EUR,
+                    '156' CNY )
+                )`
   }
 
   createData = (

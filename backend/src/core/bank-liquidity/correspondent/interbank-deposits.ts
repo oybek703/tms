@@ -375,12 +375,16 @@ export class InterbankDeposits extends CorrespondentBase {
   } /* Всего ликвидные средства */
 
   async accounts_settlement() {
-    return await this.getOneRow(
+    const oldDate = this.date
+    await this.getBeforeDate()
+    const data = await this.getOneRow(
       '-',
       'Расчеты с клиентами - 29801',
       '',
-      super.formatQuery.bind(this, '29801')
+      super.formatQuery.bind(this, 'BAL=29801')
     )
+    this.date = oldDate
+    return data
   } /* Расчеты с клиентами - 29801 */
 
   async customer_funds() {
