@@ -14,32 +14,34 @@ export class DashboardCurrencyPosition extends Base {
   ]
 
   protected formatQuery(whereQuery = '840') {
-    return `SELECT TRUNC(EQUIVAL* (  select equival from ibs.s_rate_cur@iabs
-      where date_cross=DATE '${this.date}'
-      and code=${whereQuery}) / POWER(10, ${whereQuery === '392' ? 6 : 8}), 2) AS "value"
-    FROM (SELECT * FROM DASHBOARD_CURRENCYPOSITION ORDER BY OPER_DAY DESC)
-    WHERE OPER_DAY <= DATE '${this.date}'
-      AND CURRENCY_CODE =${whereQuery}
-      AND ROWNUM = 1`
+    return `SELECT TRUNC(EQUIVAL * (select equival
+                                    from ibs.s_rate_cur@iabs
+                                    where date_cross = DATE '${this.date}'
+                                      and code = ${whereQuery}) / POWER(10, ${
+      whereQuery === '392' ? 6 : 8
+    }), 2) AS "value"
+            FROM (SELECT * FROM DASHBOARD_CURRENCYPOSITION ORDER BY OPER_DAY DESC)
+            WHERE OPER_DAY <= DATE '${this.date}'
+              AND CURRENCY_CODE = ${whereQuery}
+              AND ROWNUM = 1`
   }
 
   protected positionQuery = () => {
-    return `SELECT CURRENCY_CODE                                              AS "currencyCode",
-    DECODE(CURRENCY_CODE, '392', CP.EQUIVAL, CP.EQUIVAL / 100) AS "equival",
-    DECODE(CURRENCY_CODE, '392', RATE.EQUIVAL * CP.EQUIVAL,
-           RATE.EQUIVAL * CP.EQUIVAL/100)                    AS "sumEquival",
-    TRUNC(DECODE(CURRENCY_CODE, '392', RATE.EQUIVAL * CP.EQUIVAL*100, RATE.EQUIVAL * CP.EQUIVAL)
-/ (SELECT EQUIVAL
-                                       FROM REGULATORYCAPITAL
-                                       WHERE OPER_DAY = (SELECT MAX(OPER_DAY)
-                                                         FROM IBS.DAY_OPERATIONAL@IABS
-                                                         WHERE OPER_DAY < DATE '${this.date}')
-                                         AND ROLE = 'R_C'), 3) AS "percent"
-FROM DASHBOARD_CURRENCYPOSITION CP
-      JOIN IBS.S_RATE_CUR@IABS RATE
-           ON RATE.DATE_CROSS = CP.OPER_DAY
-WHERE RATE.CODE = CP.CURRENCY_CODE
-AND OPER_DAY = DATE '${this.date}'`
+    return `SELECT CURRENCY_CODE                                                                            AS "currencyCode",
+                   DECODE(CURRENCY_CODE, '392', CP.EQUIVAL, CP.EQUIVAL / 100)                               AS "equival",
+                   DECODE(CURRENCY_CODE, '392', RATE.EQUIVAL * CP.EQUIVAL, RATE.EQUIVAL * CP.EQUIVAL / 100) AS "sumEquival",
+                   TRUNC(DECODE(CURRENCY_CODE, '392', RATE.EQUIVAL * CP.EQUIVAL * 100, RATE.EQUIVAL * CP.EQUIVAL) / (SELECT EQUIVAL
+                                                                                                                     FROM REGULATORYCAPITAL
+                                                                                                                     WHERE OPER_DAY =
+                                                                                                                           (SELECT MAX(OPER_DAY)
+                                                                                                                            FROM IBS.DAY_OPERATIONAL@IABS
+                                                                                                                            WHERE OPER_DAY < DATE '${this.date}')
+                                                                                                                       AND ROLE = 'R_C'),
+                         3)                                                                                 AS "percent"
+            FROM DASHBOARD_CURRENCYPOSITION CP
+                     JOIN IBS.S_RATE_CUR@IABS RATE ON RATE.DATE_CROSS = CP.OPER_DAY
+            WHERE RATE.CODE = CP.CURRENCY_CODE
+              AND OPER_DAY = DATE '${this.date}'`
   }
 
   protected matchLabel(currencyCode: string) {
