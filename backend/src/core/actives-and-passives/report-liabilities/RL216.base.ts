@@ -32,6 +32,7 @@ export class ReportLiabilities216 extends Base {
                                   '22024', '22026', '22096')
               AND DEP_CON.STATE NOT IN ('DELETE', 'CLOSE')
               AND F.TYPE = 1`
+    // '21022', '21032', '21042', '21052' TODO
   }
 
   async getRows(): Promise<unknown[]> {
