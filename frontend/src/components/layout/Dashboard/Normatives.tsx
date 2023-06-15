@@ -33,25 +33,25 @@ const Normatives = () => {
 							count: '1.1',
 							title: 'Коэф. достат. Капитала',
 							min: 'мин 13%',
-							min_percent: '16.76%'
+							min_percent: '16.83%'
 						},
 						{
 							count: '1.2',
 							title: 'Коэф. достат. капитала – 1',
 							min: 'мин 10%',
-							min_percent: '13.13%'
+							min_percent: '13.25%'
 						},
 						{
 							count: '1.3',
 							title: 'Коэффициент достат. основ. капитала – 1',
 							min: 'мин 8%',
-							min_percent: '13.12%'
+							min_percent: '13.24%'
 						},
 						{
 							count: '1.4',
 							title: 'Левераж',
 							min: 'мин 6%',
-							min_percent: '9.99%'
+							min_percent: '9.75%'
 						}
 					].map(row => (
 						<TableRow hover key={uuid()}>
@@ -78,7 +78,7 @@ const Normatives = () => {
 							Доля высоколиквидных активов во всего активах <span style={{ color: 'red' }}>(ВЛА)</span>
 						</TableCell>
 						<TableCell align="center">мин 10%</TableCell>
-						<TableCell align="center">11.21%</TableCell>
+						<TableCell align="center">9.35%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell rowSpan={4} align="center">
@@ -91,17 +91,17 @@ const Normatives = () => {
 					<TableRow hover>
 						<TableCell>Всего</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">118.59%</TableCell>
+						<TableCell align="center">98.83%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>нац. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">106.59%</TableCell>
+						<TableCell align="center">103.83%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>ин. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">127.05%</TableCell>
+						<TableCell align="center">95.30%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell rowSpan={4} align="center">
@@ -114,17 +114,17 @@ const Normatives = () => {
 					<TableRow hover>
 						<TableCell>Всего</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">105.52%</TableCell>
+						<TableCell align="center">103.26%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>нац. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">105.39%</TableCell>
+						<TableCell align="center">105.11%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell>ин. Валюта</TableCell>
 						<TableCell align="center">мин 100%</TableCell>
-						<TableCell align="center">106.57%</TableCell>
+						<TableCell align="center">102.82%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -141,7 +141,7 @@ const Normatives = () => {
 							Макс. размер риска на одного или группу
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">19.79%</TableCell>
+						<TableCell align="center">19.05%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">3.2</TableCell>
@@ -149,7 +149,7 @@ const Normatives = () => {
 							Макс. размер риска на один банк или группу
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">18.17%</TableCell>
+						<TableCell align="center">17.99%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">3.3</TableCell>
@@ -165,7 +165,7 @@ const Normatives = () => {
 							Совокупная сумма всех крупных рисков
 						</TableCell>
 						<TableCell align="center">макс 500%</TableCell>
-						<TableCell align="center">180.43%</TableCell>
+						<TableCell align="center">163.84%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -182,7 +182,7 @@ const Normatives = () => {
 							Макс. размер инвестиций одного юр. лица
 						</TableCell>
 						<TableCell align="center">макс 15%</TableCell>
-						<TableCell align="center">11.82%</TableCell>
+						<TableCell align="center">13.42%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">4.2</TableCell>
@@ -198,7 +198,7 @@ const Normatives = () => {
 							Макс. общий размер инвестиций всех эмитентов
 						</TableCell>
 						<TableCell align="center">макс 50%</TableCell>
-						<TableCell align="center">21.22%</TableCell>
+						<TableCell align="center">21.41%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
@@ -215,7 +215,7 @@ const Normatives = () => {
 							Макс. размер риска на одного связанного с банком лица
 						</TableCell>
 						<TableCell align="center">макс 25%</TableCell>
-						<TableCell align="center">11.82%</TableCell>
+						<TableCell align="center">11.84%</TableCell>
 					</TableRow>
 					<TableRow hover>
 						<TableCell align="center">5.2</TableCell>
@@ -223,7 +223,7 @@ const Normatives = () => {
 							Макс. размер риска по всем связанным с банком лицам
 						</TableCell>
 						<TableCell align="center">макс 50%</TableCell>
-						<TableCell align="center">26.62%</TableCell>
+						<TableCell align="center">27.04%</TableCell>
 					</TableRow>
 					<TableRow style={{ background: '#7794aa' }}>
 						<TableCell align="center">
