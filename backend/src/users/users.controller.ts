@@ -4,8 +4,10 @@ import { EditUserDto } from './dto/edit-user.dto'
 import { ApiTags } from '@nestjs/swagger'
 import { AddUserDto } from './dto/add-user.dto'
 import { AdminUserGuard } from './users.decorator'
+import { SkipThrottle } from '@nestjs/throttler'
 
 @ApiTags('Users')
+@SkipThrottle()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

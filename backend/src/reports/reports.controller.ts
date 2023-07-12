@@ -24,7 +24,9 @@ import { Request } from 'express'
 import { User } from '../auth/auth.interface'
 import { AdminUserGuard } from '../users/users.decorator'
 import { IFlowsRow } from '../core/bank-liquidity/vla-and-for/vla-and-for.interface'
+import { SkipThrottle } from '@nestjs/throttler'
 
+@SkipThrottle()
 @Controller()
 export class ReportsController {
   dateBadRequestException = new BadRequestException('Date is not provided in query params!')
